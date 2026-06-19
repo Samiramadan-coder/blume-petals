@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import { hasLocale } from "next-intl";
+import "@/assets/css/globals.css";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { DirectionProvider } from "@/components/ui/direction";
@@ -42,9 +42,11 @@ export default async function RootLayout({
       dir={dir}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <DirectionProvider dir={dir}>
-        <body className="min-h-full flex flex-col">{children}</body>
-      </DirectionProvider>
+      <NextIntlClientProvider>
+        <DirectionProvider dir={dir}>
+          <body className="min-h-full flex flex-col">{children}</body>
+        </DirectionProvider>
+      </NextIntlClientProvider>
     </html>
   );
 }
