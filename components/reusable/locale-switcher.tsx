@@ -3,7 +3,6 @@
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { Separator } from "../ui/separator";
 
 export function LocaleSwitcher({ textColor }: { textColor?: string }) {
   const locale = useLocale();
@@ -13,13 +12,20 @@ export function LocaleSwitcher({ textColor }: { textColor?: string }) {
 
   return (
     <Button
-      variant="outline"
-      className="bg-transparent border-border rounded-sm text-sm font-semibold hover:bg-transparent cursor-pointer"
+      variant="ghost"
+      className="bg-transparent hover:bg-transparent cursor-pointer h-auto w-auto"
       onClick={() => router.replace(pathname, { locale: nextLocale })}
+      aria-label="switcher"
     >
-      <span className={`inline-block w-6 ${textColor}`}>EN</span>
-      <Separator orientation="vertical" className="h-4 my-auto" />
-      <span className={`inline-block w-6 ${textColor}`}>عربي</span>
+      <span className={`inline-block text-xs font-semibold ${textColor}`}>
+        EN
+      </span>
+      <span className={`mx-0.5 ${textColor}`}>|</span>
+      <span
+        className={`inline-block text-sx font-semibold relative bottom-0.5 ${textColor}`}
+      >
+        عربي
+      </span>
     </Button>
   );
 }

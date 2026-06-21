@@ -50,7 +50,16 @@ export default function AppHeaderControl() {
         <ShoppingCart size={20} className={textColor} />
       </Button>
 
-      <LocaleSwitcher textColor={textColor} />
+      <div className="border border-primary/60 rounded-[3px]">
+        <LocaleSwitcher textColor={textColor} />
+      </div>
+
+      <Button
+        variant="outline"
+        className={`rounded-full text-sm h-9.5 w-20 border border-secondary ${textColor} ${scrolled || pathname !== "/" ? "bg-secondary" : "bg-secondary/40"}`}
+      >
+        {t("SignIn")}
+      </Button>
 
       {/* <Separator orientation="vertical" className="h-6" /> */}
 
