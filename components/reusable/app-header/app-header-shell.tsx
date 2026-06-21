@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react";
 
+import { usePathname } from "@/i18n/navigation";
+
 export default function AppHeaderShell({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ export default function AppHeaderShell({
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition duration-200 ${scrolled ? "bg-primary/60" : ""}`}
+      className={`fixed top-0 w-full z-50 transition duration-200 ${scrolled || pathname !== "/" ? "bg-border shadow-[0_4px_30px_rgba(61,46,0,0.18)]" : ""}`}
     >
       {children}
     </header>
