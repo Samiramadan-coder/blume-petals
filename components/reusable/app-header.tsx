@@ -1,8 +1,8 @@
-import AppLogo from "../app-logo";
-import HeaderNavLink from "./header-nav-link";
+import AppLogo from "./app-logo";
+import HeaderNavLink from "./app-header/header-nav-link";
 import { getTranslations } from "next-intl/server";
-import AppHeaderShell from "./app-header-shell";
-import AppHeaderControl from "./app-header-control";
+import AppHeaderShell from "./app-header/app-header-shell";
+import AppHeaderControl from "./app-header/app-header-control";
 
 export default async function AppHeader() {
   const t = await getTranslations("AppHeader");
