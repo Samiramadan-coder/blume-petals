@@ -1,28 +1,29 @@
-import AppLogo from "./app-logo";
-import NavLink from "./nav-link";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
+import AppLogo from "../app-logo";
+import HeaderNavLink from "./header-nav-link";
+import { Separator } from "../../ui/separator";
+import { Button } from "../../ui/button";
 import { Bell, Heart, Search, ShoppingCart } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import AppHeaderShell from "./app-header-shell";
 
 export default async function AppHeader() {
   const t = await getTranslations("AppHeader");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border">
-      <div className="container flex items-center justify-between gap-4 py-6">
-        <AppLogo width={90} />
+    <AppHeaderShell>
+      <div className="container flex items-center justify-between gap-4 py-4">
+        <AppLogo width={80} />
 
         <nav className="flex items-center gap-8">
-          <NavLink href="/">{t("Home")}</NavLink>
-          <NavLink href="/shop">{t("Shop")}</NavLink>
-          <NavLink href="/builder">{t("Builder")}</NavLink>
-          <NavLink href="/about">{t("About")}</NavLink>
+          <HeaderNavLink href="/">{t("Home")}</HeaderNavLink>
+          <HeaderNavLink href="/shop">{t("Shop")}</HeaderNavLink>
+          <HeaderNavLink href="/builder">{t("Builder")}</HeaderNavLink>
+          <HeaderNavLink href="/about">{t("About")}</HeaderNavLink>
         </nav>
 
         <Control />
       </div>
-    </header>
+    </AppHeaderShell>
   );
 }
 
@@ -65,15 +66,15 @@ async function Control() {
 
       <Separator orientation="vertical" className="h-6" />
 
-      <NavLink href="/login" className="text-primary">
+      <HeaderNavLink href="/login" className="text-primary">
         {t("SignIn")}
-      </NavLink>
+      </HeaderNavLink>
 
       <Separator orientation="vertical" className="h-6" />
 
-      <NavLink href="/register" className="text-primary">
+      <HeaderNavLink href="/register" className="text-primary">
         {t("Register")}
-      </NavLink>
+      </HeaderNavLink>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import AppFooter from "@/components/reusable/app-footer";
-import AppHeader from "@/components/reusable/app-header";
+import AppHeader from "@/components/reusable/app-header/app-header";
 
 export default function MainLayout({
   children,
