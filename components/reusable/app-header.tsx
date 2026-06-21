@@ -27,29 +27,39 @@ export default async function AppHeader() {
 }
 
 async function Control() {
-  const t = await getTranslations();
+  const t = await getTranslations("AppHeader");
 
   return (
     <div className="flex items-center gap-3">
-      <Button variant="ghost" size="icon">
+      <Button variant="ghost" size="icon" aria-label="Search">
         <Search size={20} />
       </Button>
 
-      <Button variant="ghost" size="icon" className="relative">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="relative"
+        aria-label="Bell"
+      >
         <Bell size={20} />
         <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white">
           2
         </span>
       </Button>
 
-      <Button variant="ghost" size="icon" className="relative">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="relative"
+        aria-label="Heart"
+      >
         <Heart size={20} />
         <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white">
           2
         </span>
       </Button>
 
-      <Button variant="ghost" size="icon">
+      <Button variant="ghost" size="icon" aria-label="ShoppingCart">
         <ShoppingCart size={20} />
       </Button>
 
