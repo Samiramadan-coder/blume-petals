@@ -1,5 +1,41 @@
 {
   "AppHeader": {
-    "home": ""
+    "Home": "الرئيسية",
+    "Shop": "المتجر",
+    "Builder": "المصمم",
+    "About": "حول",
+    "SignIn": "تسجيل الدخول",
+    "Register": "إنشاء حساب"
+  },
+  "AppFooter": {
+    "DesignYourDream": "صمم باقة أحلامك — مصممة لكل لحظة مهمة.",
+    "GetOffer": "احصل على خصم 10% على أول طلب لك",
+    "EmailPlaceholder": "name@example.com",
+    "Subscribe": "اشترك",
+    "Shop": "المتجر",
+    "Bouquets": "باقات",
+    "Preserved": "زهور محفوظة",
+    "Gifting": "هدايا",
+    "CustomBuilder": "مصمم حسب الطلب",
+    "Seasonal": "موسمي",
+    "Occasions": "المناسبات",
+    "Company": "الشركة",
+    "AboutUs": "من نحن",
+    "OurStory": "قصتنا",
+    "Careers": "الوظائف",
+    "Contact": "اتصل بنا",
+    "Support": "الدعم",
+    "HelpCenter": "مركز المساعدة",
+    "TrackOrder": "تتبع الطلب",
+    "ReturnsRefunds": "الإرجاع والاسترداد",
+    "FAQ": "الأسئلة الشائعة",
+    "PrivacyPolicy": "سياسة الخصوصية",
+    "Terms": "الشروط",
+    "Connect": "تواصل",
+    "InstagramHandle": "@blumepetals",
+    "WhatsAppUs": "راسلنا واتساب",
+    "EmailUs": "hello@blumepetals.ae",
+    "CallUs": "+971 50 123 4567",
+    "Copyright": "© 2026 بلومي بيتالز. جميع الحقوق محفوظة."
   }
 }

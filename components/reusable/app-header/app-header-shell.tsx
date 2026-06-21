@@ -14,7 +14,7 @@ export default function AppHeaderShell({
   return (
     <header
       className={`
-        fixed 
+        ${pathname === "/" ? "fixed" : "sticky"} 
         top-0 
         w-full 
         z-50 

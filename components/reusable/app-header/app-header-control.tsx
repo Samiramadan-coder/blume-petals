@@ -56,7 +56,7 @@ export default function AppHeaderControl() {
 
       <Button
         variant="outline"
-        className={`rounded-full text-sm h-9.5 w-20 border border-secondary hidden lg:block ${textColor} ${scrolled || pathname !== "/" ? "bg-secondary" : "bg-secondary/40"}`}
+        className={`rounded-full text-sm h-9.5 min-w-20 border border-secondary hidden lg:block ${textColor} ${scrolled || pathname !== "/" ? "bg-secondary" : "bg-secondary/40"}`}
       >
         {t("SignIn")}
       </Button>

@@ -10,7 +10,7 @@ export default async function AppHeader() {
   return (
     <AppHeaderShell>
       <div className="container flex items-center justify-between gap-4 py-4">
-        <AppLogo width={80} />
+        <AppLogo width={90} />
         <nav className=" items-center gap-8 hidden lg:flex">
           <HeaderNavLink href="/">{t("Home")}</HeaderNavLink>
           <HeaderNavLink href="/shop">{t("Shop")}</HeaderNavLink>
