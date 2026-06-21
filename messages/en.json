@@ -1,5 +1,10 @@
 {
-  "Home": {
-    "title": "Hello"
+  "AppHeader": {
+    "Home": "Home",
+    "Shop": "Shop",
+    "Builder": "Builder",
+    "About": "About",
+    "SignIn": "Sign In",
+    "Register": "Register"
   }
 }
