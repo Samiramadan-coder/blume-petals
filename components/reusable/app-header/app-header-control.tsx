@@ -5,26 +5,25 @@ import { useIsScroll } from "@/hooks/use-is-scroll";
 import { usePathname } from "@/i18n/navigation";
 import { Bell, Heart, ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { LocaleSwitcher } from "../locale-switcher";
 
 export default function AppHeaderControl() {
   const scrolled = useIsScroll();
   const t = useTranslations("AppHeader");
   const pathname = usePathname();
 
+  const textColor =
+    pathname !== "/" || scrolled ? "text-foreground" : "text-white/90";
+
   return (
     <div className="flex items-center gap-3">
       <Button
         variant="ghost"
         size="icon"
-        className="relative"
+        className="relative hover:bg-transparent cursor-pointer"
         aria-label="Bell"
       >
-        <Bell
-          size={20}
-          className={
-            pathname !== "/" || scrolled ? "text-foreground" : "text-white"
-          }
-        />
+        <Bell size={20} className={textColor} />
         <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white">
           2
         </span>
@@ -33,28 +32,25 @@ export default function AppHeaderControl() {
       <Button
         variant="ghost"
         size="icon"
-        className="relative"
+        className="relative hover:bg-transparent cursor-pointer"
         aria-label="Heart"
       >
-        <Heart
-          size={20}
-          className={
-            pathname !== "/" || scrolled ? "text-foreground" : "text-white"
-          }
-        />
-        <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white">
+        <Heart size={20} className={textColor} />
+        <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white/90">
           2
         </span>
       </Button>
 
-      <Button variant="ghost" size="icon" aria-label="ShoppingCart">
-        <ShoppingCart
-          size={20}
-          className={
-            pathname !== "/" || scrolled ? "text-foreground" : "text-white"
-          }
-        />
+      <Button
+        variant="ghost"
+        size="icon"
+        aria-label="ShoppingCart"
+        className="hover:bg-transparent cursor-pointer"
+      >
+        <ShoppingCart size={20} className={textColor} />
       </Button>
+
+      <LocaleSwitcher textColor={textColor} />
 
       {/* <Separator orientation="vertical" className="h-6" /> */}
 

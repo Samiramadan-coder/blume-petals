@@ -22,7 +22,7 @@ export default function HeaderNavLink({
         ease-in-out 
         text-sm 
         ${isActive ? "text-primary" : ""} 
-        ${scrolled || pathname !== "/" ? "text-foreground" : "text-white"}
+        ${scrolled || pathname !== "/" ? "text-foreground" : "text-white/90"}
       `}
       href={href}
     >
