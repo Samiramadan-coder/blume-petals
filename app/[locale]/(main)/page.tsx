@@ -1,4 +1,5 @@
 import BouquetBuilder from "@/components/landing/bouquet-builder";
+import FeaturedCollections from "@/components/landing/featured-collections";
 import Hero from "@/components/landing/hero";
 import HowItWorks from "@/components/landing/how-it-works";
 import ShopByCategory from "@/components/landing/shop-by-category";
@@ -12,6 +13,7 @@ export default async function Home() {
       <HowItWorks />
       <BouquetBuilder />
       <ShopTheMoment />
+      <FeaturedCollections />
     </main>
   );
 }
