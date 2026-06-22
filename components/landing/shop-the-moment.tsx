@@ -2,10 +2,11 @@ import Image from "next/image";
 import { Card } from "../ui/card";
 import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
 type Category = {
   image: string;
-  title: string;
+  key: string;
   className?: string;
   href: string;
 };
@@ -13,54 +14,62 @@ type Category = {
 const categories: Category[] = [
   {
     image: "valantine",
-    title: "Valentine's Day",
+    key: "Valentine",
     className: "md:row-span-2",
-    href: "",
+    href: "/shop",
   },
   {
     image: "birthday",
-    title: "Birthday",
-    href: "",
+    key: "Birthday",
+    href: "/shop",
   },
   {
     image: "wedding",
-    title: "Wedding",
-    href: "",
+    key: "Wedding",
+    href: "/shop",
   },
   {
     image: "eid",
-    title: "Eid",
+    key: "Eid",
     className: "md:row-span-2",
-    href: "",
+    href: "/shop",
   },
   {
     image: "anniversary",
-    title: "Anniversary",
-    href: "",
+    key: "Anniversary",
+    href: "/shop",
   },
   {
     image: "mother",
-    title: "Mother's Day",
-    href: "",
+    key: "MothersDay",
+    href: "/shop",
   },
 ];
 
-export default function ShopTheMoment() {
+export default async function ShopTheMoment() {
+  const t = await getTranslations("LandingShopTheMoment");
+
   return (
     <div className="bg-border">
       <div className="container">
         <div className="py-20">
           <p className="text-xs font-semibold uppercase mb-3 text-secondary">
-            Shop the Moment
+            {t("Eyebrow")}
           </p>
 
           <h2 className="font-heading font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground mb-12">
-            Shop by Occasion
+            {t("Title")}
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[220px]">
             {categories.map((category) => (
-              <CategoryCard key={category.title} {...category} />
+              <CategoryCard
+                key={category.key}
+                title={t(`Occasions.${category.key}`)}
+                href={category.href}
+                image={category.image}
+                className={category.className}
+              />
             ))}
           </div>
         </div>
@@ -69,10 +78,9 @@ export default function ShopTheMoment() {
   );
 }
 
-type CategoryCardProps = Pick<
-  Category,
-  "image" | "className" | "href" | "title"
->;
+type CategoryCardProps = Pick<Category, "image" | "className" | "href"> & {
+  title: string;
+};
 
 function CategoryCard({ image, title, className, href }: CategoryCardProps) {
   return (
@@ -90,7 +98,7 @@ function CategoryCard({ image, title, className, href }: CategoryCardProps) {
         sizes="(min-width: 768px) 33vw, 100vw"
       />
       <Link
-        href={href || "#"}
+        href={href}
         aria-label={title}
         className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition duration-200 hover:bg-black/20"
       >

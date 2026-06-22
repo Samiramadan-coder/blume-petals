@@ -37,5 +37,85 @@
     "EmailUs": "hello@blumepetals.ae",
     "CallUs": "+971 50 123 4567",
     "Copyright": "© 2026 بلومي بيتالز. جميع الحقوق محفوظة."
+  },
+  "LandingHero": {
+    "Eyebrow": "مصمم خصيصا لك",
+    "Title": "اصنع باقة أحلامك",
+    "Description": "اختر الشكل، وحدد كل زهرة، ثم أضف اللمسات النهائية.",
+    "PrimaryCta": "ابدأ التصميم",
+    "SecondaryCta": "تصفح المجموعات",
+    "Stats": "+2000 باقة مصممة · تقييم 4.9★ · استلام في نفس اليوم"
+  },
+  "LandingShopByCategory": {
+    "Eyebrow": "تصفح تشكيلتنا",
+    "Title": "تسوق حسب الفئة",
+    "Categories": {
+      "Bouquets": "باقات",
+      "Preserved": "زهور محفوظة",
+      "Gifting": "هدايا",
+      "CustomBuilder": "مصمم حسب الطلب",
+      "Seasonal": "موسمي"
+    }
+  },
+  "LandingHowItWorks": {
+    "Eyebrow": "كيف يعمل",
+    "Title": "أربع خطوات لباقة مثالية",
+    "PrimaryCta": "ابدأ التصميم",
+    "Steps": {
+      "ChooseShape": {
+        "Title": "اختر الشكل",
+        "Description": "دائري، متدفق، مربوط يدويا أو كورساج للمعصم."
+      },
+      "PickFlowers": {
+        "Title": "اختر كل زهرة",
+        "Description": "حدد كل ساق لتصنع تنسيقا يعبر عن ذوقك."
+      },
+      "FinishingTouches": {
+        "Title": "أضف اللمسات النهائية",
+        "Description": "ورق كرافت، حرير، شريط ساتان أو صندوق مخملي."
+      },
+      "CraftAndDeliver": {
+        "Title": "نجهز ونوصل",
+        "Description": "يقوم خبراؤنا بتجهيز باقتك بعناية وتوصيلها طازجة."
+      }
+    }
+  },
+  "LandingBouquetBuilder": {
+    "CardEyebrow": "خيارات لا نهائية",
+    "CardTitle": "+80 زهرة",
+    "Eyebrow": "مصمم الباقات",
+    "Title": "اصنع تصميما لا يشبه إلا ذوقك",
+    "Description": "يوفر لك المصمم التفاعلي حرية كاملة في كل قرار إبداعي، من أول ساق حتى آخر ربطة.",
+    "PrimaryCta": "ابدأ التصميم",
+    "Features": {
+      "ChooseShape": {
+        "Title": "اختر الشكل",
+        "Description": "دائري، متدفق، مربوط يدويا أو كورساج للمعصم."
+      },
+      "SelectStem": {
+        "Title": "اختر كل ساق",
+        "Description": "امزج بين أكثر من 80 زهرة طازجة."
+      },
+      "PickWrapping": {
+        "Title": "اختر التغليف",
+        "Description": "ورق كرافت، حرير، شريط ساتان أو صندوق مخملي."
+      },
+      "AddMessage": {
+        "Title": "أضف رسالة",
+        "Description": "ملاحظة شخصية مكتوبة بخط اليد من فريقنا."
+      }
+    }
+  },
+  "LandingShopTheMoment": {
+    "Eyebrow": "تسوق حسب المناسبة",
+    "Title": "اختر باقتك للمناسبة",
+    "Occasions": {
+      "Valentine": "عيد الحب",
+      "Birthday": "عيد ميلاد",
+      "Wedding": "زفاف",
+      "Eid": "العيد",
+      "Anniversary": "ذكرى سنوية",
+      "MothersDay": "عيد الأم"
+    }
   }
 }

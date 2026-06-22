@@ -37,5 +37,85 @@
     "EmailUs": "hello@blumepetals.ae",
     "CallUs": "+971 50 123 4567",
     "Copyright": "© 2026 Blúme Petals. All rights reserved."
+  },
+  "LandingHero": {
+    "Eyebrow": "Crafted just for you",
+    "Title": "Design Your Dream Bouquet",
+    "Description": "Choose your shape, pick every flower, and add the finishing touches.",
+    "PrimaryCta": "Start Building",
+    "SecondaryCta": "Browse Collections",
+    "Stats": "2,000+ bouquets designed · 4.9★ rating · same-day pickup"
+  },
+  "LandingShopByCategory": {
+    "Eyebrow": "Browse our range",
+    "Title": "Shop by Category",
+    "Categories": {
+      "Bouquets": "Bouquets",
+      "Preserved": "Preserved",
+      "Gifting": "Gifting",
+      "CustomBuilder": "Custom Builder",
+      "Seasonal": "Seasonal"
+    }
+  },
+  "LandingHowItWorks": {
+    "Eyebrow": "How it works",
+    "Title": "Four Steps to Your Perfect Bouquet",
+    "PrimaryCta": "Start Building",
+    "Steps": {
+      "ChooseShape": {
+        "Title": "Choose Your Shape",
+        "Description": "Round, cascading, hand-tied, or wrist corsage."
+      },
+      "PickFlowers": {
+        "Title": "Pick Every Flower",
+        "Description": "Select each stem to create your own signature arrangement."
+      },
+      "FinishingTouches": {
+        "Title": "Add Finishing Touches",
+        "Description": "Kraft paper, silk, satin ribbon, or a velvet box."
+      },
+      "CraftAndDeliver": {
+        "Title": "We Craft and Deliver",
+        "Description": "Our florists prepare your bouquet with care and deliver it fresh."
+      }
+    }
+  },
+  "LandingBouquetBuilder": {
+    "CardEyebrow": "Infinite combinations",
+    "CardTitle": "80+ Flowers",
+    "Eyebrow": "The bouquet builder",
+    "Title": "Build Something Only You Could Design",
+    "Description": "Our interactive builder puts every creative choice in your hands, from the very first stem to the final ribbon tie.",
+    "PrimaryCta": "Start Building",
+    "Features": {
+      "ChooseShape": {
+        "Title": "Choose Your Shape",
+        "Description": "Round, cascading, hand-tied, or wrist corsage."
+      },
+      "SelectStem": {
+        "Title": "Select Every Stem",
+        "Description": "Mix and match from 80+ fresh flowers."
+      },
+      "PickWrapping": {
+        "Title": "Pick Your Wrapping",
+        "Description": "Kraft paper, silk, satin ribbon, or a velvet box."
+      },
+      "AddMessage": {
+        "Title": "Add a Message",
+        "Description": "A personalized note, handwritten by our team."
+      }
+    }
+  },
+  "LandingShopTheMoment": {
+    "Eyebrow": "Shop the moment",
+    "Title": "Shop by Occasion",
+    "Occasions": {
+      "Valentine": "Valentine's Day",
+      "Birthday": "Birthday",
+      "Wedding": "Wedding",
+      "Eid": "Eid",
+      "Anniversary": "Anniversary",
+      "MothersDay": "Mother's Day"
+    }
   }
 }
