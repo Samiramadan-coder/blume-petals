@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 type CountdownProps = {
-  targetDate: string | Date;
-  labels?: {
+  targetDate: string;
+  labels: {
     eyebrow: string;
     hours: string;
     minutes: string;
@@ -12,32 +12,28 @@ type CountdownProps = {
   };
 };
 
-function getTimeLeft(targetDate: string | Date) {
-  const target = new Date(targetDate).getTime();
-  const now = new Date().getTime();
+const initialTimeLeft = {
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+};
 
-  const difference = Math.max(target - now, 0);
+function getTimeLeft(targetDate: string) {
+  const diff = Math.max(new Date(targetDate).getTime() - Date.now(), 0);
 
   return {
-    hours: Math.floor(difference / (1000 * 60 * 60)),
-    minutes: Math.floor((difference / (1000 * 60)) % 60),
-    seconds: Math.floor((difference / 1000) % 60),
+    hours: Math.floor(diff / (1000 * 60 * 60)),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
   };
 }
 
-function formatNumber(value: number) {
+function pad(value: number) {
   return String(value).padStart(2, "0");
 }
 
 export function Countdown({ targetDate, labels }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(targetDate));
-
-  const content = labels ?? {
-    eyebrow: "Ends In",
-    hours: "HOURS",
-    minutes: "MINS",
-    seconds: "SECS",
-  };
+  const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -48,15 +44,15 @@ export function Countdown({ targetDate, labels }: CountdownProps) {
   }, [targetDate]);
 
   const items = [
-    { value: formatNumber(timeLeft.hours), label: content.hours },
-    { value: formatNumber(timeLeft.minutes), label: content.minutes },
-    { value: formatNumber(timeLeft.seconds), label: content.seconds },
+    { value: pad(timeLeft.hours), label: labels.hours },
+    { value: pad(timeLeft.minutes), label: labels.minutes },
+    { value: pad(timeLeft.seconds), label: labels.seconds },
   ];
 
   return (
     <div className="flex flex-col items-center">
       <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-        {content.eyebrow}
+        {labels.eyebrow}
       </p>
 
       <div className="flex items-start gap-3">

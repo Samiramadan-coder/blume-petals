@@ -38,13 +38,13 @@ export default function SubscribeSection() {
           {stats.map((item) => (
             <div key={item.key}>
               <div className="font-heading text-4xl font-bold text-foreground lg:text-5xl">
-                <CountUp
+                {/* <CountUp
                   end={item.end}
                   decimals={item.decimals ?? 0}
                   duration={1.5}
                   separator=","
                   suffix={item.suffix ?? ""}
-                />
+                /> */}
               </div>
               <p className="mt-2 text-sm text-foreground">
                 {t(`Stats.${item.key}`)}
