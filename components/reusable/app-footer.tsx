@@ -236,14 +236,14 @@ export default async function AppFooter() {
                   cy="11"
                   r="10"
                   fill="#CBB682"
-                  fill-opacity="0.6"
+                  fillOpacity="0.6"
                 ></circle>
                 <circle
                   cx="26"
                   cy="11"
                   r="10"
                   fill="#ED8074"
-                  fill-opacity="0.6"
+                  fillOpacity="0.6"
                 ></circle>
               </svg>
             </div>
