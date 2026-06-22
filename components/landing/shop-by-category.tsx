@@ -4,23 +4,23 @@ import { Card, CardContent } from "@/components/ui/card";
 const collections = [
   {
     title: "Bouquets",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
   {
     title: "Preserved",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
   {
     title: "Gifting",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
   {
     title: "Custom Builder",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
   {
     title: "Seasonal",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
 ];
 

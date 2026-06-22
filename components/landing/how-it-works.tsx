@@ -9,25 +9,25 @@ const steps = [
     id: 1,
     title: "Choose Your Shape",
     description: "Round, cascading, hand-tied, or wrist corsage.",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
   {
     id: 2,
     title: "Pick Every Flower",
     description: "Hands placing roses one by one into your design.",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
   {
     id: 3,
     title: "Add Finishing Touches",
     description: "Kraft paper, silk, satin ribbon, or velvet box.",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
   {
     id: 4,
     title: "We Craft & Deliver",
     description: "Completed and packaged with care, delivered to you.",
-    image: "/images/hero/bouquet-of-rose.png",
+    image: "/images/home/hero/bouquet-of-rose.png",
   },
 ];
 
