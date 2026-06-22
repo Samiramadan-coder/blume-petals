@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 
 type CountdownProps = {
   targetDate: string | Date;
+  labels?: {
+    eyebrow: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+  };
 };
 
 function getTimeLeft(targetDate: string | Date) {
@@ -23,8 +29,15 @@ function formatNumber(value: number) {
   return String(value).padStart(2, "0");
 }
 
-export function Countdown({ targetDate }: CountdownProps) {
+export function Countdown({ targetDate, labels }: CountdownProps) {
   const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(targetDate));
+
+  const content = labels ?? {
+    eyebrow: "Ends In",
+    hours: "HOURS",
+    minutes: "MINS",
+    seconds: "SECS",
+  };
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -35,15 +48,15 @@ export function Countdown({ targetDate }: CountdownProps) {
   }, [targetDate]);
 
   const items = [
-    { value: formatNumber(timeLeft.hours), label: "HOURS" },
-    { value: formatNumber(timeLeft.minutes), label: "MINS" },
-    { value: formatNumber(timeLeft.seconds), label: "SECS" },
+    { value: formatNumber(timeLeft.hours), label: content.hours },
+    { value: formatNumber(timeLeft.minutes), label: content.minutes },
+    { value: formatNumber(timeLeft.seconds), label: content.seconds },
   ];
 
   return (
     <div className="flex flex-col items-center">
       <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-        Ends In
+        {content.eyebrow}
       </p>
 
       <div className="flex items-start gap-3">

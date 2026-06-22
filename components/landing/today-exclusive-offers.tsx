@@ -3,8 +3,11 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { Countdown } from "./count-down";
+import { getTranslations } from "next-intl/server";
 
-export default function TodayExclusiveOffers() {
+export default async function TodayExclusiveOffers() {
+  const t = await getTranslations("LandingTodayExclusiveOffers");
+
   return (
     <div className="bg-[url('/images/home/today-exclusive-offers/rose.png')] bg-cover bg-center bg-no-repeat">
       <div className="container">
@@ -14,14 +17,13 @@ export default function TodayExclusiveOffers() {
               variant="ghost"
               className="bg-[#ed8074] text-xs font-bold uppercase text-white mb-4 px-4 py-1.5"
             >
-              Flash Sale — Up to 30% Off
+              {t("Badge")}
             </Badge>
             <h2 className="font-heading font-bold text-4xl md:text-5xl text-white text-balance leading-tight mb-4 max-w-105">
-              Today&apos;s Exclusive Offers
+              {t("Title")}
             </h2>
             <p className="text-sm md:text-base mb-6 text-white/70 max-w-85">
-              Select bouquets and preserved arrangements at special prices — for
-              today only.
+              {t("Description")}
             </p>
 
             <Link href="/builder">
@@ -29,13 +31,21 @@ export default function TodayExclusiveOffers() {
                 variant="default"
                 className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
               >
-                Shop Sale
+                {t("PrimaryCta")}
                 <ArrowRight />
               </Button>
             </Link>
           </div>
 
-          <Countdown targetDate="2026-06-25T23:59:59" />
+          <Countdown
+            targetDate="2026-06-25T23:59:59"
+            labels={{
+              eyebrow: t("Countdown.Eyebrow"),
+              hours: t("Countdown.Hours"),
+              minutes: t("Countdown.Minutes"),
+              seconds: t("Countdown.Seconds"),
+            }}
+          />
         </div>
       </div>
     </div>

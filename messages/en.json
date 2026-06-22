@@ -117,5 +117,97 @@
       "Anniversary": "Anniversary",
       "MothersDay": "Mother's Day"
     }
+  },
+  "LandingFeaturedCollections": {
+    "Eyebrow": "Our Selection",
+    "Title": "Featured Collections",
+    "Badge": "Bestsellers",
+    "FavoriteAria": "Save to favorites",
+    "AddToCart": "Add to Cart",
+    "AddToCartAria": "Add item to cart",
+    "Items": {
+      "GoldenHour": {
+        "Title": "Golden Hour Preserved Roses",
+        "Price": "AED 285"
+      },
+      "MoonlightBox": {
+        "Title": "Moonlight Signature Box",
+        "Price": "AED 320"
+      },
+      "DawnGift": {
+        "Title": "Dawn Gift Bouquet",
+        "Price": "AED 265"
+      },
+      "SignatureBuild": {
+        "Title": "Signature Custom Build",
+        "Price": "AED 350"
+      }
+    }
+  },
+  "LandingPerfectAddOns": {
+    "Eyebrow": "Complete the Gift",
+    "Title": "Perfect Add-ons",
+    "Description": "Elevate your bouquet with a thoughtful extra, chosen to complement every arrangement.",
+    "Badge": "Bestsellers",
+    "AddItemAria": "Add add-on",
+    "Items": {
+      "TeddyBear": {
+        "Title": "Teddy Bear",
+        "Description": "Soft and cuddly companion",
+        "Price": "AED 85"
+      },
+      "ScentedCandle": {
+        "Title": "Scented Candle",
+        "Description": "Warm vanilla and rose notes",
+        "Price": "AED 65"
+      },
+      "MacaronBox": {
+        "Title": "Macaron Box",
+        "Description": "Assorted handcrafted flavors",
+        "Price": "AED 95"
+      },
+      "GreetingCard": {
+        "Title": "Greeting Card",
+        "Description": "Premium textured card stock",
+        "Price": "AED 25"
+      },
+      "SilkRibbon": {
+        "Title": "Silk Ribbon Upgrade",
+        "Description": "Elegant double wrap finish",
+        "Price": "AED 30"
+      },
+      "ChocolateBox": {
+        "Title": "Chocolate Box",
+        "Description": "Luxury mixed pralines",
+        "Price": "AED 110"
+      }
+    }
+  },
+  "LandingTodayExclusiveOffers": {
+    "Badge": "Flash Sale - Up to 30% Off",
+    "Title": "Today's Exclusive Offers",
+    "Description": "Select bouquets and preserved arrangements at special prices for today only.",
+    "PrimaryCta": "Shop Sale",
+    "Countdown": {
+      "Eyebrow": "Ends In",
+      "Hours": "HOURS",
+      "Minutes": "MINS",
+      "Seconds": "SECS"
+    }
+  },
+  "LandingSubscribeSection": {
+    "Eyebrow": "Stay Inspired",
+    "Title": "Get 10% Off Your First Order",
+    "Description": "Subscribe for seasonal inspiration, new collection drops, and an exclusive welcome discount.",
+    "EmailAria": "Email address",
+    "EmailPlaceholder": "your@email.com",
+    "PrimaryCta": "Subscribe",
+    "Disclaimer": "No spam. Unsubscribe anytime.",
+    "Stats": {
+      "BouquetsDesigned": "Bouquets Designed",
+      "AverageRating": "Average Rating",
+      "EmiratesDelivered": "Emirates Delivered",
+      "HappyCustomers": "Happy Customers"
+    }
   }
 }

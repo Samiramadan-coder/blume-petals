@@ -117,5 +117,97 @@
       "Anniversary": "ذكرى سنوية",
       "MothersDay": "عيد الأم"
     }
+  },
+  "LandingFeaturedCollections": {
+    "Eyebrow": "تشكيلتنا المختارة",
+    "Title": "مجموعات مميزة",
+    "Badge": "الأكثر مبيعا",
+    "FavoriteAria": "حفظ في المفضلة",
+    "AddToCart": "أضف إلى السلة",
+    "AddToCartAria": "أضف المنتج إلى السلة",
+    "Items": {
+      "GoldenHour": {
+        "Title": "ورد محفوظ بلمسة الغروب",
+        "Price": "285 درهم"
+      },
+      "MoonlightBox": {
+        "Title": "صندوق موون لايت المميز",
+        "Price": "320 درهم"
+      },
+      "DawnGift": {
+        "Title": "باقة هدية الفجر",
+        "Price": "265 درهم"
+      },
+      "SignatureBuild": {
+        "Title": "تصميم مخصص بتوقيعك",
+        "Price": "350 درهم"
+      }
+    }
+  },
+  "LandingPerfectAddOns": {
+    "Eyebrow": "أكمل الهدية",
+    "Title": "إضافات مثالية",
+    "Description": "ارفع قيمة باقتك بإضافة مدروسة تكمل كل تنسيق.",
+    "Badge": "الأكثر مبيعا",
+    "AddItemAria": "إضافة ملحق",
+    "Items": {
+      "TeddyBear": {
+        "Title": "دبدوب",
+        "Description": "رفيق ناعم ومحبب",
+        "Price": "85 درهم"
+      },
+      "ScentedCandle": {
+        "Title": "شمعة معطرة",
+        "Description": "نفحات فانيلا وورد دافئة",
+        "Price": "65 درهم"
+      },
+      "MacaronBox": {
+        "Title": "علبة ماكرون",
+        "Description": "تشكيلة نكهات مصنوعة يدويا",
+        "Price": "95 درهم"
+      },
+      "GreetingCard": {
+        "Title": "بطاقة تهنئة",
+        "Description": "ورق فاخر بملمس مميز",
+        "Price": "25 درهم"
+      },
+      "SilkRibbon": {
+        "Title": "ترقية شريط حرير",
+        "Description": "لمسة أنيقة بربطة مزدوجة",
+        "Price": "30 درهم"
+      },
+      "ChocolateBox": {
+        "Title": "علبة شوكولاتة",
+        "Description": "برالين فاخر بتشكيلة متنوعة",
+        "Price": "110 درهم"
+      }
+    }
+  },
+  "LandingTodayExclusiveOffers": {
+    "Badge": "تخفيض سريع - حتى 30%",
+    "Title": "عروض اليوم الحصرية",
+    "Description": "باقات مختارة وتنسيقات محفوظة بأسعار خاصة لليوم فقط.",
+    "PrimaryCta": "تسوق التخفيض",
+    "Countdown": {
+      "Eyebrow": "ينتهي خلال",
+      "Hours": "ساعة",
+      "Minutes": "دقيقة",
+      "Seconds": "ثانية"
+    }
+  },
+  "LandingSubscribeSection": {
+    "Eyebrow": "ابق ملهمًا",
+    "Title": "احصل على خصم 10% على أول طلب",
+    "Description": "اشترك ليصلك إلهام موسمي وإطلاقات جديدة وخصم ترحيبي حصري.",
+    "EmailAria": "البريد الإلكتروني",
+    "EmailPlaceholder": "name@example.com",
+    "PrimaryCta": "اشترك",
+    "Disclaimer": "بدون رسائل مزعجة. يمكنك إلغاء الاشتراك في أي وقت.",
+    "Stats": {
+      "BouquetsDesigned": "باقات مصممة",
+      "AverageRating": "متوسط التقييم",
+      "EmiratesDelivered": "الإمارات التي نخدمها",
+      "HappyCustomers": "عملاء سعداء"
+    }
   }
 }
