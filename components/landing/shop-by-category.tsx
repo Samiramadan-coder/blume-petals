@@ -5,23 +5,23 @@ import { getTranslations } from "next-intl/server";
 const collections = [
   {
     key: "Bouquets",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/shop-by-category/1.png",
   },
   {
     key: "Preserved",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/shop-by-category/2.png",
   },
   {
     key: "Gifting",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/shop-by-category/3.png",
   },
   {
     key: "CustomBuilder",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/shop-by-category/4.png",
   },
   {
     key: "Seasonal",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/shop-by-category/5.png",
   },
 ] as const;
 

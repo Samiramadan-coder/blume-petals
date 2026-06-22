@@ -7,22 +7,22 @@ const steps = [
   {
     id: 1,
     key: "ChooseShape",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/how-it-works/1.png",
   },
   {
     id: 2,
     key: "PickFlowers",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/how-it-works/2.png",
   },
   {
     id: 3,
     key: "FinishingTouches",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/how-it-works/3.png",
   },
   {
     id: 4,
     key: "CraftAndDeliver",
-    image: "/images/home/hero/bouquet-of-rose.png",
+    image: "/images/home/how-it-works/4.png",
   },
 ] as const;
 
