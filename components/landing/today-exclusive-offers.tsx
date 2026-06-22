@@ -1,9 +1,7 @@
-import { Link } from "@/i18n/navigation";
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { ArrowRight } from "lucide-react";
 import { Countdown } from "./count-down";
 import { getTranslations } from "next-intl/server";
+import MainButton from "../ui/main-button";
 
 export default async function TodayExclusiveOffers() {
   const t = await getTranslations("LandingTodayExclusiveOffers");
@@ -26,15 +24,7 @@ export default async function TodayExclusiveOffers() {
               {t("Description")}
             </p>
 
-            <Link href="/builder">
-              <Button
-                variant="default"
-                className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
-              >
-                {t("PrimaryCta")}
-                <ArrowRight />
-              </Button>
-            </Link>
+            <MainButton href="/builder" label={t("PrimaryCta")} />
           </div>
 
           <Countdown

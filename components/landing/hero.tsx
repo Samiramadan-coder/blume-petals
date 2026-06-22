@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import { Button } from "../ui/button";
-import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import MainButton from "../ui/main-button";
 
 export default async function Hero() {
   const t = await getTranslations("LandingHero");
@@ -21,15 +21,7 @@ export default async function Hero() {
             {t("Description")}
           </p>
           <div className="flex gap-4 mb-8">
-            <Link href="/builder">
-              <Button
-                variant="default"
-                className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
-              >
-                {t("PrimaryCta")}
-                <ArrowRight />
-              </Button>
-            </Link>
+            <MainButton href="/builder" label={t("PrimaryCta")} />
             <Link href="/shop">
               <Button
                 variant="ghost"

@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "@/i18n/navigation";
-import { Button } from "../ui/button";
-import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import MainButton from "../ui/main-button";
 
 const steps = [
   {
@@ -78,15 +76,7 @@ export default async function HowItWorks() {
           </div>
 
           <div className="text-center mt-8">
-            <Link href="/builder">
-              <Button
-                variant="default"
-                className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
-              >
-                {t("PrimaryCta")}
-                <ArrowRight />
-              </Button>
-            </Link>
+            <MainButton href="/builder" label={t("PrimaryCta")} />
           </div>
         </div>
       </div>
