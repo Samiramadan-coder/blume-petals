@@ -1,4 +1,5 @@
 import Hero from "@/components/about/hero";
+import OurPerform from "@/components/about/our-perform";
 import WhoWeAre from "@/components/about/who-we-are";
 
 export default function AboutPage() {
@@ -6,6 +7,7 @@ export default function AboutPage() {
     <div>
       <Hero />
       <WhoWeAre />
+      <OurPerform />
     </div>
   );
 }
