@@ -17,7 +17,7 @@ export default async function AppFooter() {
 
   return (
     <footer className="pt-16 bg-foreground">
-      <div className="container">
+      <div className="container max-w-7xl">
         <header className="flex items-center justify-between flex-wrap gap-6">
           <div className="flex flex-col gap-6">
             <AppLogo width={80} />

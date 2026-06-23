@@ -14,13 +14,35 @@ import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import { Slider } from "../ui/slider";
 
+const sizes = [
+  { id: "small", label: "S" },
+  { id: "medium", label: "M" },
+  { id: "large", label: "L" },
+  { id: "extra_large", label: "XL" },
+];
+
+const occasions = [
+  { id: "valentine", label: "Valentine" },
+  { id: "birthday", label: "Birthday" },
+  { id: "wedding", label: "Wedding" },
+  { id: "eid", label: "Eid" },
+  { id: "anniversary", label: "Anniversary" },
+  { id: "mothers-day", label: "Mother' Day" },
+  { id: "graduation", label: "Graduation" },
+  { id: "add-ons", label: "Add-ons" },
+];
+
 export default function Filters() {
   const [min, setMin] = useState([0]);
   const [max, setMax] = useState([500]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [isOnStock, setIsOnStock] = useState(0);
+  const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
 
   return (
     <Card className="border border-border shadow-sm sticky top-24">
       <CardContent>
+        {/* Price Range */}
         <Accordion type="single" collapsible defaultValue="price_range">
           <AccordionItem value="price_range">
             <AccordionTrigger className="hover:text-primary hover:no-underline">
@@ -52,146 +74,99 @@ export default function Filters() {
                   className="mx-auto w-full max-w-xs"
                 />
               </div>
+
+              <p className="text-primary font-semibold">
+                AED {min[0]} - AED {max[0]}
+              </p>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
 
         <Separator className="my-2" />
 
+        {/* Size */}
         <Accordion type="single" collapsible defaultValue="size">
           <AccordionItem value="size">
             <AccordionTrigger className="hover:text-primary hover:no-underline">
               Size
             </AccordionTrigger>
-
             <AccordionContent className="space-y-3">
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="small" name="small" />
-                  <Label htmlFor="small" className="text-foreground/50">
-                    S
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="medium" name="medium" />
-                  <Label htmlFor="medium" className="text-foreground/50">
-                    M
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="large" name="large" />
-                  <Label htmlFor="large" className="text-foreground/50">
-                    L
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="extra_large" name="extra_large" />
-                  <Label htmlFor="extra_large" className="text-foreground/50">
-                    XL
-                  </Label>
-                </Field>
-              </FieldGroup>
+              {sizes.map((size) => (
+                <FieldGroup key={size.id} className="max-w-sm">
+                  <Field orientation="horizontal">
+                    <Checkbox
+                      id={size.id}
+                      name={size.id}
+                      checked={selectedSizes.includes(size.id)}
+                      onCheckedChange={(checked) => {
+                        setSelectedSizes((prev) =>
+                          checked
+                            ? [...prev, size.id]
+                            : selectedSizes.filter(
+                                (selectedSize) => selectedSize !== size.id,
+                              ),
+                        );
+                      }}
+                    />
+                    <Label htmlFor={size.id} className="text-foreground/50">
+                      {size.label}
+                    </Label>
+                  </Field>
+                </FieldGroup>
+              ))}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
 
         <Separator className="my-2" />
 
+        {/* In Stock */}
         <FieldGroup className="max-w-sm my-4">
           <Field orientation="horizontal">
-            <Checkbox id="in_stock_only" name="in_stock_only" />
+            <Checkbox
+              id="in_stock_only"
+              name="in_stock_only"
+              value={isOnStock}
+              onCheckedChange={(checked) => setIsOnStock(checked ? 1 : 0)}
+              checked={Boolean(isOnStock)}
+            />
             <Label htmlFor="in_stock_only">In Stock Only</Label>
           </Field>
         </FieldGroup>
 
         <Separator className="my-2" />
 
+        {/* Occasions */}
         <Accordion type="single" collapsible defaultValue="occasion">
           <AccordionItem value="occasion">
             <AccordionTrigger className="hover:text-primary hover:no-underline">
               Occasion
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="valentine" name="valentine" />
-                  <Label htmlFor="valentine" className="text-foreground/50">
-                    Valentine
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="birthday" name="birthday" />
-                  <Label htmlFor="birthday" className="text-foreground/50">
-                    Birthday
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="wedding" name="wedding" />
-                  <Label htmlFor="wedding" className="text-foreground/50">
-                    Wedding
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="eid" name="eid" />
-                  <Label htmlFor="eid" className="text-foreground/50">
-                    Eid
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="anniversary" name="anniversary" />
-                  <Label htmlFor="anniversary" className="text-foreground/50">
-                    Anniversary
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="mothers-day" name="mothers-day" />
-                  <Label htmlFor="mothers-day" className="text-foreground/50">
-                    Mother&apos;s Day
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="graduation" name="graduation" />
-                  <Label htmlFor="graduation" className="text-foreground/50">
-                    Graduation
-                  </Label>
-                </Field>
-              </FieldGroup>
-
-              <FieldGroup className="max-w-sm">
-                <Field orientation="horizontal">
-                  <Checkbox id="add-ons" name="add-ons" />
-                  <Label htmlFor="add-ons" className="text-foreground/50">
-                    Add-ons
-                  </Label>
-                </Field>
-              </FieldGroup>
+              {occasions.map((occasion) => (
+                <FieldGroup key={occasion.id} className="max-w-sm">
+                  <Field orientation="horizontal">
+                    <Checkbox
+                      id={occasion.id}
+                      name={occasion.id}
+                      checked={selectedOccasions.includes(occasion.id)}
+                      onCheckedChange={(checked) =>
+                        setSelectedOccasions((prev) =>
+                          checked
+                            ? [...prev, occasion.id]
+                            : selectedOccasions.filter(
+                                (selectedOccasion) =>
+                                  selectedOccasion !== occasion.id,
+                              ),
+                        )
+                      }
+                    />
+                    <Label htmlFor={occasion.id} className="text-foreground/50">
+                      {occasion.label}
+                    </Label>
+                  </Field>
+                </FieldGroup>
+              ))}
             </AccordionContent>
           </AccordionItem>
         </Accordion>

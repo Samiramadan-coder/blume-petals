@@ -43,7 +43,7 @@ export default async function PerfectAddOns() {
 
   return (
     <div className="bg-[#faf8f5]">
-      <div className="container">
+      <div className="container max-w-7xl">
         <div className="py-20">
           <p className="text-xs font-semibold uppercase mb-3 text-secondary">
             {t("Eyebrow")}
@@ -57,7 +57,7 @@ export default async function PerfectAddOns() {
             {t("Description")}
           </p>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-6">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
             {addOns.map((item) => (
               <Card
                 key={item.id}

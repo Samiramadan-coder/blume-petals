@@ -31,7 +31,7 @@ export default async function HowItWorks() {
 
   return (
     <div className="bg-border">
-      <div className="container">
+      <div className="container max-w-7xl">
         <div className="py-20">
           <p className="text-xs font-semibold uppercase mb-3 text-secondary text-center">
             {t("Eyebrow")}

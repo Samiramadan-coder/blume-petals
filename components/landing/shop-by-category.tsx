@@ -29,7 +29,7 @@ export default async function ShopByCategory() {
   const t = await getTranslations("LandingShopByCategory");
 
   return (
-    <div className="container">
+    <div className="container max-w-7xl">
       <div className="py-20">
         <p className="text-xs font-semibold uppercase mb-3 text-secondary">
           {t("Eyebrow")}

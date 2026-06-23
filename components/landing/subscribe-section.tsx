@@ -34,7 +34,7 @@ export default function SubscribeSection() {
   return (
     <section className="bg-border">
       <div className="border-y border-foreground/10">
-        <div className="container grid gap-10 py-16 text-center sm:grid-cols-2 lg:grid-cols-4">
+        <div className="container max-w-7xl grid gap-10 py-16 text-center sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((item) => (
             <div key={item.key}>
               <div className="font-heading text-4xl font-bold text-foreground lg:text-5xl">
@@ -55,7 +55,7 @@ export default function SubscribeSection() {
         </div>
       </div>
 
-      <div className="container py-24 text-center">
+      <div className="container max-w-7xl py-24 text-center">
         <p className="mb-6 text-xs font-bold uppercase tracking-[0.35em] text-foreground">
           {t("Eyebrow")}
         </p>

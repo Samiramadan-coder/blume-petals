@@ -40,7 +40,7 @@ export default async function DesignedByOurCustomers() {
 
   return (
     <div className="bg-[#faf8f5]">
-      <div className="container">
+      <div className="container max-w-7xl">
         <div className="py-20">
           <p className="text-xs font-semibold uppercase mb-3 text-secondary text-center">
             Real Creations

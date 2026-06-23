@@ -12,7 +12,7 @@ export default async function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(20,12,0,0.82)_0%,rgba(20,12,0,0.4)_40%,rgba(20,12,0,0.05)_70%,transparent_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,12,0,0.5)_0%,rgba(20,12,0,0.1)_50%,transparent_100%)]" />
       <div className="absolute inset-0 flex items-end">
-        <div className="container pb-12">
+        <div className="container max-w-7xl pb-12">
           <p className="uppercase text-xs text-primary mb-5">{t("Eyebrow")}</p>
           <h1 className="font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] max-w-xl mb-5 text-white">
             {t("Title")}

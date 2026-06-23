@@ -51,7 +51,7 @@ export default async function ShopTheMoment() {
 
   return (
     <div className="bg-border">
-      <div className="container">
+      <div className="container max-w-7xl">
         <div className="py-20">
           <p className="text-xs font-semibold uppercase mb-3 text-secondary">
             {t("Eyebrow")}
