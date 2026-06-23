@@ -17,7 +17,6 @@ export default async function Home() {
       <HowItWorks />
       <BouquetBuilder />
       <ShopTheMoment />
-
       <FeaturedCollections />
       <PerfectAddOns />
       <TodayExclusiveOffers />

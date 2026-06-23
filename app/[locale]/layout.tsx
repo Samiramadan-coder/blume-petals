@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "@/assets/css/globals.css";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
@@ -9,6 +9,12 @@ import { DirectionProvider } from "@/components/ui/direction";
 const InterFont = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const PlayfairDisplayFont = Playfair_Display({
+  variable: "--font-playfair-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -38,7 +44,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${InterFont.variable} h-full antialiased`}
+      className={`${InterFont.variable} ${PlayfairDisplayFont.variable} h-full antialiased`}
     >
       <NextIntlClientProvider>
         <DirectionProvider dir={dir}>

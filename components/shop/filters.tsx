@@ -85,7 +85,7 @@ export default function Filters() {
         <Separator className="my-2" />
 
         {/* Size */}
-        <Accordion type="single" collapsible defaultValue="size">
+        <Accordion type="single" collapsible>
           <AccordionItem value="size">
             <AccordionTrigger className="hover:text-primary hover:no-underline">
               Size
@@ -137,7 +137,7 @@ export default function Filters() {
         <Separator className="my-2" />
 
         {/* Occasions */}
-        <Accordion type="single" collapsible defaultValue="occasion">
+        <Accordion type="single" collapsible>
           <AccordionItem value="occasion">
             <AccordionTrigger className="hover:text-primary hover:no-underline">
               Occasion

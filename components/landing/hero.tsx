@@ -14,7 +14,7 @@ export default async function Hero() {
       <div className="absolute inset-0 flex items-end">
         <div className="container max-w-7xl pb-12">
           <p className="uppercase text-xs text-primary mb-5">{t("Eyebrow")}</p>
-          <h1 className="font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] max-w-xl mb-5 text-white">
+          <h1 className="font-heading font-bold text-5xl md:text-6xl lg:text-7xl leading-[1.05] max-w-xl mb-5 text-white">
             {t("Title")}
           </h1>
           <p className="text-base md:text-lg leading-relaxed text-white/80 mb-8">

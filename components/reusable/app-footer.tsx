@@ -79,9 +79,9 @@ export default async function AppFooter() {
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase text-primary">
+            <div className="text-sm font-semibold uppercase text-primary">
               {t("Shop")}
-            </h4>
+            </div>
             <nav>
               <ul className="space-y-2.5">
                 <li>
@@ -107,9 +107,9 @@ export default async function AppFooter() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase text-primary">
+            <div className="text-sm font-semibold uppercase text-primary">
               {t("Company")}
-            </h4>
+            </div>
             <nav>
               <ul className="space-y-2.5">
                 <li>
@@ -129,9 +129,9 @@ export default async function AppFooter() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase text-primary">
+            <div className="text-sm font-semibold uppercase text-primary">
               {t("Support")}
-            </h4>
+            </div>
             <nav>
               <ul className="space-y-2.5">
                 <li>
@@ -157,9 +157,9 @@ export default async function AppFooter() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase text-primary">
+            <div className="text-sm font-semibold uppercase text-primary">
               {t("Connect")}
-            </h4>
+            </div>
             <nav>
               <ul className="space-y-2.5">
                 <li>
