@@ -10,32 +10,17 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
 import { Link } from "@/i18n/navigation";
 import { Separator } from "@/components/ui/separator";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 
-const registerSchema = z
-  .object({
-    fullName: z.string().min(2, "Full Name is required"),
-    email: z.email("Invalid email address"),
-    phone: z.string().min(10, "Phone number is required"),
-    password: z.string().min(8, "Password must be at least 6 characters"),
-    confirmPassword: z
-      .string()
-      .min(8, "Confirm Password must be at least 6 characters"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+const loginSchema = z.object({
+  email: z.email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 6 characters"),
+});
 
-type RegisterForm = z.infer<typeof registerSchema>;
+type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -43,11 +28,11 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterForm>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
+  const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     console.log(data);
   };
 
@@ -107,12 +92,18 @@ export default function LoginPage() {
             </FieldContent>
           </Field>
 
+          <div className="flex justify-end">
+            <Link href="/forgot-password" className="text-sm text-primary">
+              Forgot Password?
+            </Link>
+          </div>
+
           <Button
             variant="ghost"
             type="submit"
             className="h-11 text-foreground font-semibold bg-primary"
           >
-            Create Account
+            Sign In
           </Button>
         </form>
 
