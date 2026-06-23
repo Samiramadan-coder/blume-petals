@@ -9,7 +9,7 @@ export default async function TodayExclusiveOffers() {
   return (
     <div className="bg-[url('/images/home/today-exclusive-offers/rose.png')] bg-cover bg-center bg-no-repeat">
       <div className="container">
-        <div className="py-20 flex items-center justify-between">
+        <div className="py-20 flex items-center justify-center md:justify-between flex-wrap gap-10">
           <div>
             <Badge
               variant="ghost"

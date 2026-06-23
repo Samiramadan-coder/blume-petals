@@ -209,5 +209,92 @@
       "EmiratesDelivered": "Emirates Delivered",
       "HappyCustomers": "Happy Customers"
     }
+  },
+  "AboutHero": {
+    "Eyebrow": "About Blúme Petals",
+    "Title": "Crafted Luxury. Made to Last.",
+    "Description": "Blúme Petals brings artificial flowers to life — beautifully crafted, lasting forever, made for every moment that matters."
+  },
+  "AboutWhoWeAre": {
+    "Eyebrow": "Who We Are",
+    "Title": "Why Blúme Petals",
+    "Paragraph1": "Blúme Petals was born from a simple idea — that beauty shouldn't fade. We craft luxury artificial flower arrangements that capture the elegance of fresh blooms, designed to stay stunning for years, not days.",
+    "Paragraph2": "Based in the UAE, every bouquet we create blends premium materials with thoughtful design — whether it's one of our signature collections or a one-of-a-kind arrangement built through our Custom Bouquet Builder.",
+    "Paragraph3": "We believe gifting flowers should feel personal. That's why we let you choose every detail — from the shape and flowers to the ribbon and message card — so every bouquet tells your story.",
+    "ImageAlt": "A bouquet arrangement from Blúme Petals",
+    "Highlights": {
+      "Materials": {
+        "Label": "Materials",
+        "Description": "Premium stems and thoughtful finishes"
+      },
+      "Builder": {
+        "Label": "Custom Builder",
+        "Description": "A bouquet made around your taste"
+      },
+      "Personal": {
+        "Label": "Personal Touch",
+        "Description": "Details chosen to tell your story"
+      }
+    }
+  },
+  "AboutOurPromise": {
+    "Eyebrow": "Our Promise",
+    "Title": "What Makes Us Different",
+    "Cards": {
+      "Last": {
+        "Title": "Made to Last",
+        "Description": "Premium artificial flowers that stay beautiful for years, not days."
+      },
+      "Customizable": {
+        "Title": "Fully Customizable",
+        "Description": "Design your own bouquet with our interactive Custom Builder — every detail, your choice."
+      },
+      "Delivery": {
+        "Title": "UAE-Wide Delivery & Pickup",
+        "Description": "Delivered to your door across the Emirates, or pick up from our store."
+      }
+    }
+  },
+  "AboutDetailsConsidered": {
+    "Statement": "Every detail, considered.",
+    "Caption": "Inspired by nature, designed for elegance.",
+    "Palette": {
+      "Gold": "Gold",
+      "Sage": "Sage",
+      "Beige": "Beige",
+      "Terracotta": "Terracotta"
+    },
+    "PaletteDescriptions": {
+      "Gold": "Warm accent",
+      "Sage": "Natural balance",
+      "Beige": "Soft base",
+      "Terracotta": "Earthy depth"
+    }
+  },
+  "AboutGetStarted": {
+    "Eyebrow": "Get Started",
+    "Title": "Ready to create something beautiful?",
+    "Description": "Choose the custom builder for a one-of-one bouquet, or browse our collection to find the perfect fit.",
+    "PrimaryCta": "Start Building",
+    "SecondaryCta": "Browse Our Collection",
+    "ContactLabel": "Find Us",
+    "Contact": {
+      "Instagram": {
+        "Label": "Instagram",
+        "Value": "@blumepetals.ae"
+      },
+      "WhatsApp": {
+        "Label": "WhatsApp",
+        "Value": "+971 50 000 0000"
+      },
+      "Email": {
+        "Label": "Email",
+        "Value": "hello@blumepetals.ae"
+      },
+      "Phone": {
+        "Label": "Call",
+        "Value": "+971 50 000 0000"
+      }
+    }
   }
 }
