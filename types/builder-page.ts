@@ -15,3 +15,10 @@ export type BouquetShapes = {
   image: string;
   price: number;
 };
+
+export type BouquetSizes = {
+  label: "S" | "M" | "L" | "XL";
+  value: BuilderFormData["size"];
+  price: number;
+  numberOfFlowers: number;
+};

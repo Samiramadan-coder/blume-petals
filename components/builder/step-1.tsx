@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent } from "../ui/card";
-import { bouquetShapes } from "@/constants/builder-page";
+import { bouquetShapes, bouquetSizes } from "@/constants/builder-page";
 import { UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { BuilderFormData } from "@/types/builder-page";
 import { Check } from "lucide-react";
@@ -48,6 +48,33 @@ export default function Step1({
                 From AED {shape.price}
               </p>
             </div>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="col-span-1 md:col-span-2 lg:col-span-4">
+          <p className="text-sm font-semibold text-foreground">Size</p>
+        </div>
+
+        {bouquetSizes.map((size) => (
+          <Card key={size.label} className="bg-transparent p-0">
+            <CardContent className="p-0">
+              <div
+                className={`group cursor-pointer relative overflow-hidden rounded-[24px] border border-border p-4 flex flex-col items-center justify-center ${watch("size") === size.value ? "border-2 border-primary" : ""}`}
+                onClick={() => setValue("size", size.value)}
+              >
+                <p className="font-semibold text-lg text-foreground">
+                  {size.label}
+                </p>
+                <p className="text-sm mt-2 text-foreground/60 text-center">
+                  From AED {size.price}
+                </p>
+                <p className="text-sm mt-1 text-foreground/60 text-center">
+                  {size.numberOfFlowers} flowers
+                </p>
+              </div>
+            </CardContent>
           </Card>
         ))}
       </div>

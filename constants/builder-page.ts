@@ -1,4 +1,4 @@
-import { BouquetShapes } from "@/types/builder-page";
+import { BouquetShapes, BouquetSizes } from "@/types/builder-page";
 
 export const bouquetShapes: BouquetShapes[] = [
   {
@@ -36,5 +36,32 @@ export const bouquetShapes: BouquetShapes[] = [
     value: "box",
     image: "/images/builder/box.png",
     price: 50,
+  },
+];
+
+export const bouquetSizes: BouquetSizes[] = [
+  {
+    label: "S",
+    value: "small",
+    price: 25,
+    numberOfFlowers: 8,
+  },
+  {
+    label: "M",
+    value: "medium",
+    price: 35,
+    numberOfFlowers: 12,
+  },
+  {
+    label: "L",
+    value: "large",
+    price: 45,
+    numberOfFlowers: 18,
+  },
+  {
+    label: "XL",
+    value: "extra-large",
+    price: 55,
+    numberOfFlowers: 24,
   },
 ];
