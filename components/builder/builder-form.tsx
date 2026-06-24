@@ -78,14 +78,14 @@ export default function BuilderForm() {
             type="button"
             onClick={() => setCurrentStep((prev) => prev - 1)}
           >
-            Back
+            Back: {steps[currentStep - 1]}
           </Button>
         )}
         <Button
           className="flex-1 h-12 rounded-full cursor-pointer"
           type="submit"
         >
-          {isLastStep ? "Submit" : "Next"}
+          {isLastStep ? "Submit" : `Next: ${steps[currentStep + 1]}`}
         </Button>
       </footer>
     </form>

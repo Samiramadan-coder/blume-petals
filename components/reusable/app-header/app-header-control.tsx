@@ -2,10 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import { useIsScroll } from "@/hooks/use-is-scroll";
-import { usePathname } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "../locale-switcher";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export default function AppHeaderControl() {
   const scrolled = useIsScroll();
@@ -54,19 +63,66 @@ export default function AppHeaderControl() {
         <LocaleSwitcher textColor={textColor} />
       </div>
 
-      <Button
-        variant="outline"
-        className={`rounded-full text-sm h-9.5 min-w-20 border border-secondary hidden lg:block ${textColor} ${scrolled || pathname !== "/" ? "bg-secondary" : "bg-secondary/40"}`}
-      >
-        {t("SignIn")}
-      </Button>
+      <Link href="/login">
+        <Button
+          variant="outline"
+          className={`cursor-pointer rounded-full text-sm h-9.5 min-w-20 border border-secondary hidden lg:block ${textColor} ${scrolled || pathname !== "/" ? "bg-secondary" : "bg-secondary/40"}`}
+        >
+          {t("SignIn")}
+        </Button>
+      </Link>
 
-      <Button
-        variant="ghost"
-        className="bg-transparent hover:bg-transparent block lg:hidden"
-      >
-        <Menu size={20} className={textColor} />
-      </Button>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            variant="ghost"
+            className="bg-transparent hover:bg-transparent block lg:hidden cursor-pointer"
+          >
+            <Menu size={20} className={textColor} />
+          </Button>
+        </SheetTrigger>
+        <SheetContent showCloseButton={true}>
+          <SheetHeader>
+            <SheetTitle className="border-b-2 border-border py-2 -mx-4 px-4 font-heading text-lg font-semibold">
+              Blúme Petals
+            </SheetTitle>
+            <SheetDescription className="py-4 flex flex-col gap-3">
+              <SheetClose asChild>
+                <Link
+                  href="/"
+                  className={`text-foreground ${pathname === "/" ? "font-semibold text-primary" : ""}`}
+                >
+                  {t("Home")}
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/shop"
+                  className={`text-foreground ${pathname.startsWith("/shop") ? "font-semibold text-primary" : ""}`}
+                >
+                  {t("Shop")}
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/builder"
+                  className={`text-foreground ${pathname.startsWith("/builder") ? "font-semibold text-primary" : ""}`}
+                >
+                  {t("Builder")}
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/about"
+                  className={`text-foreground ${pathname.startsWith("/about") ? "font-semibold text-primary" : ""}`}
+                >
+                  {t("About")}
+                </Link>
+              </SheetClose>
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
