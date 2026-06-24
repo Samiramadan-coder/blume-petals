@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, LockIcon } from "lucide-react";
 import { FaEnvelope } from "react-icons/fa";
 
 const forgotPasswordSchema = z.object({
@@ -36,7 +36,9 @@ export default function ForgotPasswordPage() {
       <CardContent className="p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="text-center">
-            <div className="w-12 h-12 rounded-full bg-linear-to-br from-primary to-secondary mx-auto mb-4"></div>
+            <div className="w-14 h-14 rounded-full bg-border grid place-items-center mx-auto mb-4">
+              <LockIcon size={24} className="text-primary" />
+            </div>
             <h1 className="text-3xl font-playfair font-bold text-foreground">
               Forgot Password?
             </h1>
