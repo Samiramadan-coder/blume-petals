@@ -7,19 +7,22 @@ import Step1 from "./step-1";
 import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
+import { BuilderFormData } from "@/types/builder-page";
 
 const steps = ["Template", "Build", "Accessories", "Preview"];
 
-interface FormData {
-  name: string;
-}
-
 export default function BuilderForm() {
   const [currentStep, setCurrentStep] = useState(0);
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, setValue, watch } = useForm<BuilderFormData>({
+    defaultValues: {
+      bouquetShape: "circular",
+      size: "small",
+    },
+  });
+
   const isLastStep = currentStep === steps.length - 1;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<BuilderFormData> = (data) => {
     if (!isLastStep) {
       return setCurrentStep((prev) => prev + 1);
     }
@@ -61,8 +64,8 @@ export default function BuilderForm() {
         </div>
       </header>
 
-      <div className="py-4">
-        {currentStep === 0 && <Step1 />}
+      <div className="py-6">
+        {currentStep === 0 && <Step1 setValue={setValue} watch={watch} />}
         {currentStep === 1 && <Step2 />}
         {currentStep === 2 && <Step3 />}
         {currentStep === 3 && <Step4 />}
@@ -71,14 +74,17 @@ export default function BuilderForm() {
       <footer className="flex gap-2">
         {currentStep > 0 && (
           <Button
-            className="flex-1 h-12 rounded-full"
+            className="flex-1 h-12 rounded-full cursor-pointer"
             type="button"
             onClick={() => setCurrentStep((prev) => prev - 1)}
           >
             Back
           </Button>
         )}
-        <Button className="flex-1 h-12 rounded-full" type="submit">
+        <Button
+          className="flex-1 h-12 rounded-full cursor-pointer"
+          type="submit"
+        >
           {isLastStep ? "Submit" : "Next"}
         </Button>
       </footer>

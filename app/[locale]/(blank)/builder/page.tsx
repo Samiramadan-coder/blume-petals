@@ -3,7 +3,7 @@ import BuilderHeader from "@/components/builder/builder-header";
 
 export default function ShopPage() {
   return (
-    <main>
+    <main className="pb-12">
       <BuilderHeader />
       <BuilderForm />
     </main>
