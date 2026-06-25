@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import * as motion from "motion/react-client";
+import AboutTitle from "./about-title";
+import AboutSubtitle from "./about-subtitle";
 
 export default async function WhoWeAre() {
   const t = await getTranslations("AboutWhoWeAre");
@@ -8,19 +11,20 @@ export default async function WhoWeAre() {
     <div className="container max-w-7xl">
       <div className="py-20 grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-20">
         <div>
-          <p className="text-xs font-semibold uppercase mb-3 tracking-[0.3em] text-primary">
-            {t("Eyebrow")}
-          </p>
+          <AboutSubtitle>{t("Eyebrow")}</AboutSubtitle>
 
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground mb-8">
-            {t("Title")}
-          </h2>
+          <AboutTitle>{t("Title")}</AboutTitle>
 
-          <div className="text-foreground/68 leading-relaxed text-[15px] max-w-137.5 space-y-5">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.2 }}
+            className="text-foreground/68 leading-relaxed text-[15px] max-w-137.5 space-y-5"
+          >
             <p>{t("Paragraph1")}</p>
             <p>{t("Paragraph2")}</p>
             <p>{t("Paragraph3")}</p>
-          </div>
+          </motion.div>
         </div>
 
         <div className="relative">

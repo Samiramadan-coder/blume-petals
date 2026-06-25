@@ -8,6 +8,8 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { getTranslations } from "next-intl/server";
+import AboutSubtitle from "./about-subtitle";
+import AboutTitle from "./about-title";
 
 export default async function GetStarted() {
   const t = await getTranslations("AboutGetStarted");
@@ -16,13 +18,10 @@ export default async function GetStarted() {
     <>
       <div className="container max-w-7xl">
         <div className="py-20 flex flex-col items-center gap-4 text-center">
-          <p className="text-xs font-semibold uppercase mb-3 tracking-[0.3em] text-primary text-center">
-            {t("Eyebrow")}
-          </p>
-
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground mb-8 text-center max-w-2xl">
+          <AboutSubtitle className="text-center">{t("Eyebrow")}</AboutSubtitle>
+          <AboutTitle className="text-center max-w-2xl">
             {t("Title")}
-          </h2>
+          </AboutTitle>
 
           <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
             <Link href="/builder">
