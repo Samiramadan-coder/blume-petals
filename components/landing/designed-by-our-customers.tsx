@@ -1,31 +1,11 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/utils";
 import MainButton from "../ui/main-button";
-
-const reviews = [
-  {
-    name: "Sara A.",
-    image: "/images/home/reviews/review.png",
-  },
-  {
-    name: "Fatima K.",
-    image: "/images/home/reviews/review.png",
-  },
-  {
-    name: "Leila M.",
-    image: "/images/home/reviews/review.png",
-  },
-  {
-    name: "Nour H.",
-    image: "/images/home/reviews/review.png",
-  },
-  {
-    name: "Amira S.",
-    image: "/images/home/reviews/review.png",
-  },
-];
+import LandingSubtitle from "./landing-subtitle";
+import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
+import { reviews } from "@/constants/home-page";
 
 const rotations = [
   "-rotate-2",
@@ -36,28 +16,35 @@ const rotations = [
 ];
 
 export default async function DesignedByOurCustomers() {
-  const t = await getTranslations("LandingHowItWorks");
-
   return (
     <div className="bg-[#faf8f5]">
       <div className="container max-w-7xl">
         <div className="py-20">
-          <p className="text-xs font-semibold uppercase mb-3 text-secondary text-center">
+          <LandingSubtitle className="text-center">
             Real Creations
-          </p>
-
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground text-center">
+          </LandingSubtitle>
+          <LandingTitle className="mb-6 text-center">
             Designed by Our Customers
-          </h2>
+          </LandingTitle>
 
-          <p className="mb-12 text-sm md:text-base mt-4 text-center mx-auto max-w-100">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.2 }}
+            className="mb-12 text-sm md:text-base mt-4 text-center mx-auto max-w-100"
+          >
             Every bouquet below was built using our Custom Bouquet Builder — no
             two are the same.
-          </p>
+          </motion.p>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {reviews.map((review, index) => (
-              <div key={review.name}>
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
+                key={review.name}
+              >
                 <Card
                   className={cn(
                     "p-0 pb-8 shadow-[0_8px_30px_rgba(61,46,0,0.08)] transition-transform duration-300 hover:rotate-0",
@@ -84,7 +71,7 @@ export default async function DesignedByOurCustomers() {
 
                   <p className="text-[11px]">Built with our Bouquet Builder</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 

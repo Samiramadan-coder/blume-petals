@@ -4,6 +4,8 @@ import {
   BouquetBuilderFeature,
   ShopTheMomentCategory,
   FeaturedCollection,
+  AddOnItem,
+  Review,
 } from "@/types/home-page";
 
 export const collections: ShopByCategoryItem[] = [
@@ -134,5 +136,61 @@ export const featuredCollections: FeaturedCollection[] = [
     image: "/images/home/hero/bouquet-of-rose.png",
     rating: 4.9,
     reviews: 142,
+  },
+];
+
+export const addOns: AddOnItem[] = [
+  {
+    id: "teddy-bear",
+    key: "TeddyBear",
+    image: "/images/home/hero/bouquet-of-rose.png",
+  },
+  {
+    id: "scented-candle",
+    key: "ScentedCandle",
+    image: "/images/home/hero/bouquet-of-rose.png",
+  },
+  {
+    id: "macaron-box",
+    key: "MacaronBox",
+    image: "/images/home/hero/bouquet-of-rose.png",
+  },
+  {
+    id: "greeting-card",
+    key: "GreetingCard",
+    image: "/images/home/hero/bouquet-of-rose.png",
+  },
+  {
+    id: "silk-ribbon",
+    key: "SilkRibbon",
+    image: "/images/home/hero/bouquet-of-rose.png",
+  },
+  {
+    id: "chocolate-box",
+    key: "ChocolateBox",
+    image: "/images/home/hero/bouquet-of-rose.png",
+  },
+];
+
+export const reviews: Review[] = [
+  {
+    name: "Sara A.",
+    image: "/images/home/reviews/review.png",
+  },
+  {
+    name: "Fatima K.",
+    image: "/images/home/reviews/review.png",
+  },
+  {
+    name: "Leila M.",
+    image: "/images/home/reviews/review.png",
+  },
+  {
+    name: "Nour H.",
+    image: "/images/home/reviews/review.png",
+  },
+  {
+    name: "Amira S.",
+    image: "/images/home/reviews/review.png",
   },
 ];

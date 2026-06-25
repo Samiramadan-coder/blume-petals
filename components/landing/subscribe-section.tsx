@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CountUp from "react-countup";
 import { useTranslations } from "next-intl";
+import LandingSubtitle from "./landing-subtitle";
+import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
 
 const stats = [
   {
@@ -56,19 +59,24 @@ export default function SubscribeSection() {
       </div>
 
       <div className="container max-w-7xl py-24 text-center">
-        <p className="mb-6 text-xs font-bold uppercase tracking-[0.35em] text-foreground">
-          {t("Eyebrow")}
-        </p>
+        <LandingSubtitle className="mb-6">{t("Eyebrow")}</LandingSubtitle>
+        <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
 
-        <h2 className="font-heading text-4xl font-bold text-foreground lg:text-5xl">
-          {t("Title")}
-        </h2>
-
-        <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-foreground">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.2 }}
+          className="mx-auto mt-6 max-w-xl text-lg leading-8 text-foreground"
+        >
           {t("Description")}
-        </p>
+        </motion.p>
 
-        <form className="mx-auto mt-9 flex max-w-md overflow-hidden rounded-full bg-white">
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.4 }}
+          className="mx-auto mt-9 flex max-w-md overflow-hidden rounded-full bg-white"
+        >
           <Input
             type="email"
             aria-label={t("EmailAria")}
@@ -82,9 +90,16 @@ export default function SubscribeSection() {
           >
             {t("PrimaryCta")}
           </Button>
-        </form>
+        </motion.form>
 
-        <p className="mt-4 text-xs text-foreground">{t("Disclaimer")}</p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.6 }}
+          className="mt-4 text-xs text-foreground"
+        >
+          {t("Disclaimer")}
+        </motion.p>
       </div>
     </section>
   );

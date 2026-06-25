@@ -2,6 +2,8 @@ import { Badge } from "../ui/badge";
 import { Countdown } from "./count-down";
 import { getTranslations } from "next-intl/server";
 import MainButton from "../ui/main-button";
+import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
 
 export default async function TodayExclusiveOffers() {
   const t = await getTranslations("LandingTodayExclusiveOffers");
@@ -17,12 +19,19 @@ export default async function TodayExclusiveOffers() {
             >
               {t("Badge")}
             </Badge>
-            <h2 className="font-heading font-bold text-4xl md:text-5xl text-white text-balance leading-tight mb-4 max-w-105">
+
+            <LandingTitle className="text-white max-w-105">
               {t("Title")}
-            </h2>
-            <p className="text-sm md:text-base mb-6 text-white/70 max-w-85">
+            </LandingTitle>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.2 }}
+              className="text-sm md:text-base mb-6 text-white/70 max-w-85"
+            >
               {t("Description")}
-            </p>
+            </motion.p>
 
             <MainButton href="/builder" label={t("PrimaryCta")} />
           </div>
