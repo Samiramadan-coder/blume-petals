@@ -119,26 +119,8 @@ export default function ProductPage() {
           </div>
         </div>
 
-        {/*  */}
+        {/* Product Details */}
         <ProductDetails />
-        {/* <div>
-          <div className="mb-6 flex border-b border-border">
-            <Button
-              variant="ghost"
-              className={`flex-1 h-11 rounded-none border-0 ${activeTab === "email" ? "border-b-4 border-primary" : ""}`}
-              onClick={() => setActiveTab("email")}
-            >
-              Email
-            </Button>
-            <Button
-              variant="ghost"
-              className={`flex-1 h-11 rounded-none border-0 ${activeTab === "phone" ? "border-b-4 border-primary" : ""}`}
-              onClick={() => setActiveTab("phone")}
-            >
-              Phone Number
-            </Button>
-          </div>
-        </div> */}
       </div>
     </main>
   );
