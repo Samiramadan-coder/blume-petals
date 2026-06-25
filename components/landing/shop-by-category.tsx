@@ -52,7 +52,7 @@ export default async function ShopByCategory() {
                     alt={t(`Categories.${item.key}`)}
                     fill
                     className="object-cover"
-                    sizes="100vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                   />
                 </div>
 
