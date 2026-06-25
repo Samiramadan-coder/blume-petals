@@ -14,7 +14,7 @@ export default function ProductDetails() {
   const [activeTab, setActiveTab] = useState<Tab>("description");
 
   return (
-    <div className="col-span-2">
+    <div className="md:col-span-2">
       <div className="mb-6 flex border-b border-border">
         {tabs.map((tab) => (
           <Button

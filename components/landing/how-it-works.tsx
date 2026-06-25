@@ -44,7 +44,7 @@ export default async function HowItWorks() {
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
             {steps.map((step) => (
               <div key={step.id} className="relative">
-                <Card className="border-transparent bg-transparent shadow-none py-0">
+                <Card className="group border-transparent bg-transparent shadow-none py-0">
                   <CardContent className="p-0">
                     <div className="relative overflow-hidden rounded-[24px]">
                       <Image
@@ -52,7 +52,7 @@ export default async function HowItWorks() {
                         alt={t(`Steps.${step.key}.Title`)}
                         width={500}
                         height={500}
-                        className="aspect-square w-full object-cover"
+                        className="aspect-square w-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
 
                       <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#d8c07f] text-sm font-semibold text-[#3d2e00]">

@@ -20,8 +20,8 @@ export default function ProductPage() {
     <main className="container max-w-7xl py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Images */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="col-span-1 space-y-4">
+        <div className="grid grid-cols-4 gap-6">
+          <div className="space-y-4">
             {Array.from({ length: 4 }).map((_, index) => (
               <div className="relative" key={index}>
                 <Image
