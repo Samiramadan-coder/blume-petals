@@ -1,4 +1,5 @@
 import ProductDetails from "@/components/shop/product-details";
+import SimilarProducts from "@/components/shop/similar-products";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -121,6 +122,9 @@ export default function ProductPage() {
 
         {/* Product Details */}
         <ProductDetails />
+
+        {/* Similar Products */}
+        <SimilarProducts />
       </div>
     </main>
   );
