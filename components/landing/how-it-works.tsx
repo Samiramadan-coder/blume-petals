@@ -2,29 +2,10 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
 import MainButton from "../ui/main-button";
-
-const steps = [
-  {
-    id: 1,
-    key: "ChooseShape",
-    image: "/images/home/how-it-works/1.png",
-  },
-  {
-    id: 2,
-    key: "PickFlowers",
-    image: "/images/home/how-it-works/2.png",
-  },
-  {
-    id: 3,
-    key: "FinishingTouches",
-    image: "/images/home/how-it-works/3.png",
-  },
-  {
-    id: 4,
-    key: "CraftAndDeliver",
-    image: "/images/home/how-it-works/4.png",
-  },
-] as const;
+import { steps } from "@/constants/home-page";
+import * as motion from "motion/react-client";
+import LandingSubtitle from "./landing-subtitle";
+import LandingTitle from "./landing-title";
 
 export default async function HowItWorks() {
   const t = await getTranslations("LandingHowItWorks");
@@ -33,17 +14,21 @@ export default async function HowItWorks() {
     <div className="bg-border">
       <div className="container max-w-7xl">
         <div className="py-20">
-          <p className="text-xs font-semibold uppercase mb-3 text-secondary text-center">
+          <LandingSubtitle className="text-center">
             {t("Eyebrow")}
-          </p>
+          </LandingSubtitle>
 
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground mb-12 text-center">
-            {t("Title")}
-          </h2>
+          <LandingTitle className="text-center">{t("Title")}</LandingTitle>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {steps.map((step) => (
-              <div key={step.id} className="relative">
+            {steps.map((step, index) => (
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
+                key={step.id}
+                className="relative"
+              >
                 <Card className="group border-transparent bg-transparent shadow-none py-0">
                   <CardContent className="p-0">
                     <div className="relative overflow-hidden rounded-[24px]">
@@ -71,7 +56,7 @@ export default async function HowItWorks() {
                     </div>
                   </CardContent>
                 </Card>
-              </div>
+              </motion.div>
             ))}
           </div>
 

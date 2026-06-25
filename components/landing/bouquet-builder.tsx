@@ -1,25 +1,10 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import MainButton from "../ui/main-button";
-
-const features = [
-  {
-    key: "ChooseShape",
-    icon: "❋",
-  },
-  {
-    key: "SelectStem",
-    icon: "⊕",
-  },
-  {
-    key: "PickWrapping",
-    icon: "⊛",
-  },
-  {
-    key: "AddMessage",
-    icon: "✉",
-  },
-] as const;
+import LandingSubtitle from "./landing-subtitle";
+import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
+import { features } from "@/constants/home-page";
 
 export default async function BouquetBuilder() {
   const t = await getTranslations("LandingBouquetBuilder");
@@ -28,7 +13,12 @@ export default async function BouquetBuilder() {
     <div>
       <div className="container max-w-7xl">
         <div className="py-20 grid grid-cols-1 md:grid-cols-2 items-center gap-14">
-          <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35 }}
+            className="relative"
+          >
             <Image
               src="/images/home/bouquet-builder/bouquet-builder.png"
               alt="bouquet builder"
@@ -44,24 +34,30 @@ export default async function BouquetBuilder() {
                 {t("CardTitle")}
               </p>
             </div>
-          </div>
+          </motion.div>
 
           <div>
-            <p className="text-xs font-semibold uppercase mb-3 text-secondary">
-              {t("Eyebrow")}
-            </p>
+            <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+            <LandingTitle>{t("Title")}</LandingTitle>
 
-            <h2 className="font-heading font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground">
-              {t("Title")}
-            </h2>
-
-            <p className="text-base leading-relaxed mt-5 mb-10 max-w-100">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.2 }}
+              className="text-base leading-relaxed mt-5 mb-10 max-w-100"
+            >
               {t("Description")}
-            </p>
+            </motion.p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
-              {features.map((feature) => (
-                <div key={feature.key} className="flex items-start gap-4">
+              {features.map((feature, index) => (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.35, delay: 0.2 + index * 0.1 }}
+                  key={feature.key}
+                  className="flex items-start gap-4"
+                >
                   <div className="bg-border w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-base">
                     {feature.icon}
                   </div>
@@ -73,7 +69,7 @@ export default async function BouquetBuilder() {
                       {t(`Features.${feature.key}.Description`)}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 

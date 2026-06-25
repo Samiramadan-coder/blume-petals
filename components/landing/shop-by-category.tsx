@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
 import { collections } from "@/constants/home-page";
 import * as motion from "motion/react-client";
+import LandingSubtitle from "./landing-subtitle";
+import LandingTitle from "./landing-title";
 
 export default async function ShopByCategory() {
   const t = await getTranslations("LandingShopByCategory");
@@ -10,23 +12,8 @@ export default async function ShopByCategory() {
   return (
     <div className="container max-w-7xl">
       <div className="py-20">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="text-xs font-semibold uppercase mb-3 text-secondary"
-        >
-          {t("Eyebrow")}
-        </motion.p>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.1 }}
-          className="font-heading font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground mb-12"
-        >
-          {t("Title")}
-        </motion.h2>
+        <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+        <LandingTitle>{t("Title")}</LandingTitle>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {collections.map((item, index) => (
