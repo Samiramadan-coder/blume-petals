@@ -12,21 +12,25 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
+import { Spinner } from "../ui/spinner";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
+import { Link, useRouter } from "@/i18n/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { RegisterForm, registerSchema } from "@/types/auth";
-import { Spinner } from "../ui/spinner";
+import { toast } from "sonner";
 
 export default function Register() {
+  const locale = useLocale();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -41,7 +45,9 @@ export default function Register() {
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
     setIsLoading(true);
     try {
-      await http.post("/api/v1/auth/register", data);
+      await http.post("/api/v1/auth/register", { ...data, locale });
+      toast.success("Account created successfully. Please login.");
+      router.push("/login");
     } catch (err) {
       if (err instanceof ValidationError) {
         Object.entries(err.errors).forEach(([field, messages]) => {
@@ -186,8 +192,7 @@ export default function Register() {
             type="submit"
             className="h-11 text-foreground font-semibold bg-primary cursor-pointer"
           >
-            Create Account
-            <Spinner />
+            {isLoading ? <Spinner className="mr-2" /> : "Create Account"}
           </Button>
         </form>
 

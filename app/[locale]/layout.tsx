@@ -5,6 +5,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { DirectionProvider } from "@/components/ui/direction";
+import { Toaster } from "@/components/ui/sonner";
 
 const InterFont = Inter({
   variable: "--font-inter",
@@ -49,6 +50,7 @@ export default async function RootLayout({
       <NextIntlClientProvider>
         <DirectionProvider dir={dir}>
           <body className="min-h-full flex flex-col">{children}</body>
+          <Toaster />
         </DirectionProvider>
       </NextIntlClientProvider>
     </html>
