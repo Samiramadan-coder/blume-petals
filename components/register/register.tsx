@@ -11,9 +11,9 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { toast } from "sonner";
 import { useState } from "react";
 import { useLocale } from "next-intl";
-import { Spinner } from "../ui/spinner";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
@@ -21,12 +21,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
 import { Link, useRouter } from "@/i18n/navigation";
+import AuthSubmitBtn from "../auth/auth-submit-btn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { RegisterForm, registerSchema } from "@/types/auth";
-import { toast } from "sonner";
 
 export default function Register() {
   const locale = useLocale();
@@ -187,13 +187,7 @@ export default function Register() {
             </Link>
           </p>
 
-          <Button
-            variant="ghost"
-            type="submit"
-            className="h-11 text-foreground font-semibold bg-primary cursor-pointer"
-          >
-            {isLoading ? <Spinner className="mr-2" /> : "Create Account"}
-          </Button>
+          <AuthSubmitBtn isLoading={isLoading} label="Create Account" />
         </form>
 
         <div className="my-6 relative">

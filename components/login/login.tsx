@@ -19,19 +19,19 @@ import {
 } from "@/types/auth";
 import { toast } from "sonner";
 import { useState } from "react";
-import { Spinner } from "../ui/spinner";
-import { Link, useRouter } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { http, ValidationError } from "@/lib/http";
+import AuthSubmitBtn from "../auth/auth-submit-btn";
+import { Link, useRouter } from "@/i18n/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
-import { http, ValidationError } from "@/lib/http";
-import { useLocale } from "next-intl";
 
 export default function Login() {
   const router = useRouter();
@@ -179,13 +179,7 @@ export default function Login() {
               </Link>
             </div>
 
-            <Button
-              variant="ghost"
-              type="submit"
-              className="h-11 text-foreground font-semibold bg-primary hover:bg-primary"
-            >
-              {isLoading ? <Spinner /> : "Sign In"}
-            </Button>
+            <AuthSubmitBtn isLoading={isLoading} label="Sign In" />
           </form>
         )}
 
@@ -214,13 +208,7 @@ export default function Login() {
               </FieldContent>
             </Field>
 
-            <Button
-              variant="ghost"
-              type="submit"
-              className="h-11 text-foreground font-semibold bg-primary hover:bg-primary"
-            >
-              {isLoading ? <Spinner /> : "Send OTP"}
-            </Button>
+            <AuthSubmitBtn isLoading={isLoading} label="Send OTP" />
           </form>
         )}
 
