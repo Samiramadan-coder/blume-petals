@@ -22,6 +22,30 @@ class HttpError extends Error {
   }
 }
 
+class ValidationError extends Error {
+  status: 422;
+  errors: Record<string, string[]>;
+
+  constructor(data: unknown) {
+    super("Validation failed");
+    this.name = "ValidationError";
+    this.status = 422;
+    this.errors = ValidationError.parseErrors(data);
+  }
+
+  private static parseErrors(data: unknown): Record<string, string[]> {
+    if (
+      data !== null &&
+      typeof data === "object" &&
+      "errors" in data &&
+      typeof (data as Record<string, unknown>).errors === "object"
+    ) {
+      return (data as { errors: Record<string, string[]> }).errors;
+    }
+    return {};
+  }
+}
+
 function buildUrl(
   baseURL: string,
   path: string,
@@ -68,6 +92,10 @@ function createHttp(baseURL: string) {
     }
 
     if (!response.ok) {
+      if (response.status === 422) {
+        throw new ValidationError(data);
+      }
+
       throw new HttpError(
         `Request failed with status ${response.status}`,
         response.status,
@@ -107,5 +135,5 @@ function createHttp(baseURL: string) {
 
 const http = createHttp(process.env.NEXT_PUBLIC_API_URL ?? "");
 
-export { http, createHttp, HttpError };
+export { http, createHttp, HttpError, ValidationError };
 export type { HttpResponse, RequestConfig };
