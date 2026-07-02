@@ -1,3 +1,4 @@
+// Registration form validation schema using Zod
 import z from "zod";
 
 export const registerSchema = z
@@ -16,3 +17,16 @@ export const registerSchema = z
   });
 
 export type RegisterForm = z.infer<typeof registerSchema>;
+
+// Login form validation schema using Zod
+export const loginSchema = z.object({
+  email: z.email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 6 characters"),
+});
+
+export const phoneLoginSchema = z.object({
+  phone: z.string().min(10, "Invalid phone number"),
+});
+
+export type loginForm = z.infer<typeof loginSchema>;
+export type PhoneLoginForm = z.infer<typeof phoneLoginSchema>;
