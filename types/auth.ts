@@ -28,5 +28,10 @@ export const phoneLoginSchema = z.object({
   phone: z.string().min(10, "Invalid phone number"),
 });
 
+export const otpSchema = z.object({
+  code: z.string().length(6, "OTP must be 6 digits"),
+});
+
 export type loginForm = z.infer<typeof loginSchema>;
 export type PhoneLoginForm = z.infer<typeof phoneLoginSchema>;
+export type OTPForm = z.infer<typeof otpSchema>;
