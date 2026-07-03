@@ -7,7 +7,8 @@
     "SignIn": "Sign In",
     "Register": "Register",
     "LogoutError": "Logout failed. Please try again.",
-    "LogoutSuccess": "Successfully logged out."
+    "LogoutSuccess": "Successfully logged out.",
+    "Logout": "Logout"
   },
   "AppFooter": {
     "DesignYourDream": "Design your dream bouquet — crafted for every moment that matters.",
@@ -382,5 +383,13 @@
         "Value": "+971 50 000 0000"
       }
     }
+  },
+  "Account": {
+    "MyProfile": "My Profile",
+    "MyOrders": "My Orders",
+    "MyDesigns": "My Designs",
+    "SavedAddresses": "Saved Addresses",
+    "Settings": "Settings",
+    "BackToHome": "Back to Home"
   }
 }

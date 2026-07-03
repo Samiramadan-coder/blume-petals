@@ -17,7 +17,6 @@ export default function LogoutBtn() {
       await http.post("/api/v1/auth/logout");
       await deleteToken();
       toast.success(t("LogoutSuccess"));
-
       router.push("/login");
     } catch (err) {
       console.error("Logout error:", err);
@@ -32,7 +31,7 @@ export default function LogoutBtn() {
       onClick={logout}
     >
       <LogOut className="mr-2 h-4 w-4" />
-      Logout
+      {t("Logout")}
     </Button>
   );
 }

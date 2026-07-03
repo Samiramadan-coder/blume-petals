@@ -7,7 +7,8 @@
     "SignIn": "تسجيل الدخول",
     "Register": "إنشاء حساب",
     "LogoutError": "فشل تسجيل الخروج. يرجى المحاولة مرة أخرى.",
-    "LogoutSuccess": "تم تسجيل الخروج بنجاح."
+    "LogoutSuccess": "تم تسجيل الخروج بنجاح.",
+    "Logout": "تسجيل الخروج"
   },
   "AppFooter": {
     "DesignYourDream": "صمم باقة أحلامك — مصممة لكل لحظة مهمة.",
@@ -384,5 +385,13 @@
         "Value": "+971 50 000 0000"
       }
     }
+  },
+  "Account": {
+    "MyProfile": "ملفي الشخصي",
+    "MyOrders": "طلباتي",
+    "MyDesigns": "تصاميمي",
+    "SavedAddresses": "العناوين المحفوظة",
+    "Settings": "الإعدادات",
+    "BackToHome": "العودة إلى الرئيسية"
   }
 }

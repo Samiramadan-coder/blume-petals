@@ -4,41 +4,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { UserResponse } from "@/components/reusable/app-header";
 import SidebarNavItem from "@/components/account/sidebar-nav-item";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import LogoutBtn from "@/components/account/logout-btn";
-
-const links: {
-  label: string;
-  href: string;
-}[] = [
-  {
-    label: "My Profile",
-    href: "/account/profile",
-  },
-  {
-    label: "My Orders",
-    href: "/account/orders",
-  },
-  {
-    label: "My Designs",
-    href: "/account/designs",
-  },
-  {
-    label: "Saved Addresses",
-    href: "/account/addresses",
-  },
-  {
-    label: "Settings",
-    href: "/account/settings",
-  },
-];
+import { links } from "@/constants/account";
+import { getTranslations, getLocale } from "next-intl/server";
 
 export default async function AccountLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const t = await getTranslations("Account");
+  const locale = await getLocale();
   const { data } = await http.get<UserResponse>("/api/v1/auth/me");
 
   return (
@@ -58,7 +36,7 @@ export default async function AccountLayout({
             <Separator />
 
             <nav className="space-y-1">
-              {links.map((link) => {
+              {links(t).map((link) => {
                 return (
                   <SidebarNavItem
                     key={link.href}
@@ -81,8 +59,8 @@ export default async function AccountLayout({
               variant="ghost"
               className="cursor-pointer text-primary hover:text-primary hover:bg-primary/20 h-10"
             >
-              <ArrowLeft />
-              Back To Home
+              {locale === "ar" ? <ArrowRight /> : <ArrowLeft />}
+              {t("BackToHome")}
             </Button>
           </Link>
           {children}

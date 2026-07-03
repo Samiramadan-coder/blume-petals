@@ -36,6 +36,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("AppHeader");
+  const tAccount = useTranslations("Account");
 
   const textColor =
     pathname !== "/" || scrolled ? "text-foreground" : "text-white/90";
@@ -105,19 +106,19 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
           <DropdownMenuContent align="end" className="w-40">
             <DropdownMenuGroup>
               <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
-                My Profile
+                {tAccount("MyProfile")}
               </DropdownMenuItem>
               <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
-                My Orders
+                {tAccount("MyOrders")}
               </DropdownMenuItem>
               <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
-                My Design
+                {tAccount("MyDesigns")}
               </DropdownMenuItem>
               <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none whitespace-nowrap">
-                Saved Addresses
+                {tAccount("SavedAddresses")}
               </DropdownMenuItem>
               <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
-                Settings
+                {tAccount("Settings")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -127,7 +128,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
                 await logout();
               }}
             >
-              Logout
+              {t("Logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
