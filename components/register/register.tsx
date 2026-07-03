@@ -34,19 +34,17 @@ export default function Register() {
   const t = useTranslations("Register");
   const locale = useLocale();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
 
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
-    setIsLoading(true);
     try {
       await http.post("/api/v1/auth/register", { ...data, locale });
       toast.success(t("CreateAccountSuccess"));
@@ -59,9 +57,9 @@ export default function Register() {
             message: messages[0],
           });
         });
+      } else {
+        toast.error(t("CreateAccountError"));
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -193,7 +191,7 @@ export default function Register() {
           </p>
 
           <AuthSubmitBtn
-            isLoading={isLoading}
+            isLoading={isSubmitting}
             label={t("CreateAccountButton")}
           />
         </form>

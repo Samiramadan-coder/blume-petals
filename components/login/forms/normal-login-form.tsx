@@ -17,24 +17,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthSubmitBtn from "@/components/auth/auth-submit-btn";
 
-export default // Normal login form component
-function NormalLoginForm() {
+export default function NormalLoginForm() {
   const t = useTranslations("Login");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<loginForm>({
     resolver: zodResolver(loginSchema),
   });
 
   const onSubmit: SubmitHandler<loginForm> = async (data) => {
-    setIsLoading(true);
     try {
       await http.post("/api/v1/auth/login", data);
       toast.success(t("SignInSuccess"));
@@ -48,8 +45,6 @@ function NormalLoginForm() {
           });
         });
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -101,7 +96,7 @@ function NormalLoginForm() {
         </Link>
       </div>
 
-      <AuthSubmitBtn isLoading={isLoading} label={t("SignInButton")} />
+      <AuthSubmitBtn isLoading={isSubmitting} label={t("SignInButton")} />
     </form>
   );
 }

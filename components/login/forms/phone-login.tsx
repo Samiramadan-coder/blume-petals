@@ -45,7 +45,6 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 export default function PhoneLogin() {
   const t = useTranslations("Login");
-  const [isLoading, setIsLoading] = useState(false);
   const [openOTP, setOpenOTP] = useState(false);
   const [phone, setPhone] = useState("");
 
@@ -53,13 +52,12 @@ export default function PhoneLogin() {
     register,
     handleSubmit,
     setError,
-    formState: { errors: errorsPhone },
+    formState: { errors, isSubmitting },
   } = useForm<PhoneLoginForm>({
     resolver: zodResolver(phoneLoginSchema),
   });
 
   const onSubmit: SubmitHandler<PhoneLoginForm> = async (data) => {
-    setIsLoading(true);
     try {
       await http.post("/api/v1/auth/otp/request", {
         ...data,
@@ -80,8 +78,6 @@ export default function PhoneLogin() {
       } else {
         toast.error(t("OTPSentFailed"));
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -103,12 +99,12 @@ export default function PhoneLogin() {
                   {...register("phone")}
                 />
               </InputGroup>
-              <FieldError errors={[errorsPhone.phone]} />
+              <FieldError errors={[errors.phone]} />
             </div>
           </FieldContent>
         </Field>
 
-        <AuthSubmitBtn isLoading={isLoading} label={t("SendOTP")} />
+        <AuthSubmitBtn isLoading={isSubmitting} label={t("SendOTP")} />
       </form>
 
       <Dialog open={openOTP} onOpenChange={setOpenOTP}>
@@ -131,19 +127,17 @@ function OTPVerificationDialog({
 }) {
   const t = useTranslations("Login");
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
     handleSubmit,
     setError,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<OTPForm>({
     resolver: zodResolver(otpSchema),
   });
 
   const onSubmit: SubmitHandler<OTPForm> = async (data) => {
-    setIsLoading(true);
     try {
       await http.post("/api/v1/auth/otp/verify", {
         phone,
@@ -165,8 +159,6 @@ function OTPVerificationDialog({
       } else {
         toast.error(t("InvalidOTP"));
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -212,7 +204,7 @@ function OTPVerificationDialog({
         />
 
         <FieldError errors={[errors.code]} />
-        <AuthSubmitBtn isLoading={isLoading} label={t("VerifyOTP")} />
+        <AuthSubmitBtn isLoading={isSubmitting} label={t("VerifyOTP")} />
       </form>
     </DialogContent>
   );

@@ -35,3 +35,10 @@ export const otpSchema = z.object({
 export type loginForm = z.infer<typeof loginSchema>;
 export type PhoneLoginForm = z.infer<typeof phoneLoginSchema>;
 export type OTPForm = z.infer<typeof otpSchema>;
+
+// Forgot password form validation schema using Zod
+export const forgotPasswordSchema = z.object({
+  email: z.email("Invalid email address"),
+});
+
+export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
