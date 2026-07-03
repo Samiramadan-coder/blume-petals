@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { User } from "@/types/shared";
 import { http } from "@/lib/http";
 
-interface UserResponse {
+export interface UserResponse {
   data: {
     user: User;
   };
