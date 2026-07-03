@@ -10,14 +10,19 @@ import { toast } from "sonner";
 import { Link } from "@/i18n/navigation";
 import AuthCard from "../shared/auth-card";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, LockIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { ArrowLeft, ArrowRight, LockIcon } from "lucide-react";
 import { http, ValidationError } from "@/lib/http";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthSubmitBtn from "../shared/auth-submit-btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ForgotPasswordForm, forgotPasswordSchema } from "@/types/auth";
+import { useLocale } from "next-intl";
 
 export default function ForgotPassword() {
+  const t = useTranslations("ForgotPassword");
+  const locale = useLocale();
+
   const {
     register,
     handleSubmit,
@@ -30,7 +35,7 @@ export default function ForgotPassword() {
   const onSubmit: SubmitHandler<ForgotPasswordForm> = async (data) => {
     try {
       await http.post("/api/v1/auth/password/forgot", data);
-      toast.success("Reset link sent to your email.");
+      toast.success(t("ResetLinkSent"));
     } catch (err) {
       if (err instanceof ValidationError) {
         Object.entries(err.errors).forEach(([field, messages]) => {
@@ -41,7 +46,7 @@ export default function ForgotPassword() {
           });
         });
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(t("SomethingWrong"));
       }
     }
   };
@@ -54,20 +59,18 @@ export default function ForgotPassword() {
             <LockIcon size={24} className="text-primary" />
           </div>
           <h1 className="text-3xl font-playfair font-bold text-foreground">
-            Forgot Password?
+            {t("Title")}
           </h1>
-          <p className="text-foreground/60 text-sm mt-2">
-            Enter your email and we&apos;ll send you a reset link.
-          </p>
+          <p className="text-foreground/60 text-sm mt-2">{t("Description")}</p>
         </div>
 
         <Field>
-          <FieldLabel htmlFor="email">Email Address</FieldLabel>
+          <FieldLabel htmlFor="email">{t("EmailLabel")}</FieldLabel>
           <FieldContent>
             <div className="space-y-1">
               <Input
                 {...register("email")}
-                placeholder="Email Address"
+                placeholder={t("EmailPlaceholder")}
                 className="h-11"
               />
               <FieldError errors={[errors.email]} />
@@ -75,13 +78,17 @@ export default function ForgotPassword() {
           </FieldContent>
         </Field>
 
-        <AuthSubmitBtn isLoading={isSubmitting} label="Send Reset Link" />
+        <AuthSubmitBtn isLoading={isSubmitting} label={t("SendResetLink")} />
       </form>
 
       <div className="flex justify-center mt-4">
         <Link href="/login" className="text-primary flex items-center">
-          <ArrowLeft className="mr-2" size={16} />
-          Back to Sign In
+          {locale === "ar" ? (
+            <ArrowRight className="ml-2" size={16} />
+          ) : (
+            <ArrowLeft className="mr-2" size={16} />
+          )}
+          {t("BackToSignIn")}
         </Link>
       </div>
     </AuthCard>

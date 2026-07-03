@@ -9,6 +9,7 @@ import {
 
 import { toast } from "sonner";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Eye, EyeOff } from "lucide-react";
 import AuthCard from "../shared/auth-card";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,7 @@ import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { ResetPasswordForm, resetPasswordSchema } from "@/types/auth";
 
 export default function ResetPassword() {
+  const t = useTranslations("ResetPassword");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -38,9 +40,7 @@ export default function ResetPassword() {
         ...data,
         token: "test",
       });
-      toast.success(
-        "Password reset successful. Please log in with your new password.",
-      );
+      toast.success(t("ResetSuccess"));
       router.push("/login");
     } catch (err) {
       if (err instanceof ValidationError) {
@@ -52,9 +52,7 @@ export default function ResetPassword() {
           });
         });
       } else {
-        toast.error(
-          "An error occurred while resetting the password. Please try again.",
-        );
+        toast.error(t("ResetError"));
       }
     }
   };
@@ -64,17 +62,17 @@ export default function ResetPassword() {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="text-center">
           <h1 className="text-3xl font-playfair font-bold text-foreground">
-            Reset Password
+            {t("Title")}
           </h1>
         </div>
 
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel htmlFor="email">{t("EmailLabel")}</FieldLabel>
           <FieldContent>
             <div className="space-y-1">
               <Input
                 {...register("email")}
-                placeholder="Enter your email"
+                placeholder={t("EmailPlaceholder")}
                 className="h-11"
               />
               <FieldError errors={[errors.email]} />
@@ -83,7 +81,7 @@ export default function ResetPassword() {
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="password">Password</FieldLabel>
+          <FieldLabel htmlFor="password">{t("PasswordLabel")}</FieldLabel>
           <FieldContent>
             <div className="space-y-1">
               <div className="relative">
@@ -109,7 +107,9 @@ export default function ResetPassword() {
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+          <FieldLabel htmlFor="confirmPassword">
+            {t("ConfirmPasswordLabel")}
+          </FieldLabel>
           <FieldContent>
             <div className="space-y-1">
               <div className="relative">
@@ -134,7 +134,10 @@ export default function ResetPassword() {
           </FieldContent>
         </Field>
 
-        <AuthSubmitBtn isLoading={isSubmitting} label="Reset Password" />
+        <AuthSubmitBtn
+          isLoading={isSubmitting}
+          label={t("ResetPasswordButton")}
+        />
       </form>
     </AuthCard>
   );

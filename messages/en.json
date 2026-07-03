@@ -320,6 +320,26 @@
     "SignIn": "Sign In",
     "CreateAccountSuccess": "Account created successfully. Please login."
   },
+  "ForgotPassword": {
+    "Title": "Forgot Password?",
+    "Description": "Enter your email and we'll send you a reset link.",
+    "EmailLabel": "Email Address",
+    "EmailPlaceholder": "Email Address",
+    "SendResetLink": "Send Reset Link",
+    "BackToSignIn": "Back to Sign In",
+    "ResetLinkSent": "Reset link sent to your email.",
+    "SomethingWrong": "Something went wrong. Please try again."
+  },
+  "ResetPassword": {
+    "Title": "Reset Password",
+    "EmailLabel": "Email",
+    "EmailPlaceholder": "Enter your email",
+    "PasswordLabel": "Password",
+    "ConfirmPasswordLabel": "Confirm Password",
+    "ResetPasswordButton": "Reset Password",
+    "ResetSuccess": "Password reset successful. Please log in with your new password.",
+    "ResetError": "An error occurred while resetting the password. Please try again."
+  },
   "AboutGetStarted": {
     "Eyebrow": "Get Started",
     "Title": "Ready to create something beautiful?",
