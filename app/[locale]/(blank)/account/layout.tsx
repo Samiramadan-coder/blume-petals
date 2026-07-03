@@ -3,6 +3,10 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { UserResponse } from "@/components/reusable/app-header";
 import SidebarNavItem from "@/components/account/sidebar-nav-item";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import LogoutBtn from "@/components/account/logout-btn";
 
 const links: {
   label: string;
@@ -38,7 +42,7 @@ export default async function AccountLayout({
   const { data } = await http.get<UserResponse>("/api/v1/auth/me");
 
   return (
-    <div className="container py-16">
+    <div className="container max-w-7xl py-16">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="shadow-sm py-6">
           <CardContent className="flex flex-col items-center gap-4 px-6">
@@ -66,10 +70,23 @@ export default async function AccountLayout({
             </nav>
 
             <Separator />
+
+            <LogoutBtn />
           </CardContent>
         </Card>
 
-        <div className="col-span-3">{children}</div>
+        <div className="col-span-3">
+          <Link href="/" className="mb-4">
+            <Button
+              variant="ghost"
+              className="cursor-pointer text-primary hover:text-primary hover:bg-primary/20 h-10"
+            >
+              <ArrowLeft />
+              Back To Home
+            </Button>
+          </Link>
+          {children}
+        </div>
       </div>
     </div>
   );
