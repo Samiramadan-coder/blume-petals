@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
-import AuthSubmitBtn from "../auth/auth-submit-btn";
+import AuthSubmitBtn from "../auth-submit-btn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";

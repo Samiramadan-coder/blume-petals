@@ -11,7 +11,7 @@ import { Link } from "@/i18n/navigation";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, LockIcon } from "lucide-react";
 import { http, ValidationError } from "@/lib/http";
-import AuthSubmitBtn from "../auth/auth-submit-btn";
+import AuthSubmitBtn from "../auth-submit-btn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";

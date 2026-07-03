@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
 import { Link, useRouter } from "@/i18n/navigation";
-import AuthSubmitBtn from "../auth/auth-submit-btn";
+import AuthSubmitBtn from "../auth-submit-btn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
 import { useLocale, useTranslations } from "next-intl";
