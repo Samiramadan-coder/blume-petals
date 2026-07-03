@@ -16,12 +16,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { User } from "@/types/shared";
 
-export default function AppHeaderControl({
-  isAuthorized,
-}: {
-  isAuthorized: boolean;
-}) {
+export default function AppHeaderControl({ user }: { user: User | null }) {
   const scrolled = useIsScroll();
   const pathname = usePathname();
   const t = useTranslations("AppHeader");
@@ -31,6 +28,18 @@ export default function AppHeaderControl({
 
   return (
     <div className="flex items-center gap-3">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="relative hover:bg-transparent cursor-pointer"
+        aria-label="Heart"
+      >
+        <Heart size={20} className={textColor} />
+        <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white/90">
+          2
+        </span>
+      </Button>
+
       <Button
         variant="ghost"
         size="icon"
@@ -52,23 +61,18 @@ export default function AppHeaderControl({
         <ShoppingCart size={20} className={textColor} />
       </Button>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        className="relative hover:bg-transparent cursor-pointer"
-        aria-label="Heart"
-      >
-        <Heart size={20} className={textColor} />
-        <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white/90">
-          2
-        </span>
-      </Button>
-
       <div className="border border-primary/60 rounded-[3px] hidden lg:block">
         <LocaleSwitcher textColor={textColor} />
       </div>
 
-      {!isAuthorized && (
+      {user ? (
+        <Button
+          variant="ghost"
+          className="w-9 h-9 bg-secondary hover:bg-secondary rounded-full cursor-pointer"
+        >
+          {user.name?.charAt(0).toUpperCase() || "U"}
+        </Button>
+      ) : (
         <Link href="/login">
           <Button
             variant="outline"

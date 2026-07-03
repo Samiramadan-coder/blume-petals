@@ -1,4 +1,5 @@
 import z from "zod";
+import { User } from "./shared";
 
 type T = (key: string) => string;
 
@@ -62,7 +63,7 @@ export type PhoneLoginForm = z.infer<ReturnType<typeof phoneLoginSchema>>;
 export type OTPForm = z.infer<ReturnType<typeof otpSchema>>;
 
 export type LoginResponse = {
-  data: { token: string };
+  data: { token: string; user: User };
   success: boolean;
 };
 
