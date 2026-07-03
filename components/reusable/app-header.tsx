@@ -6,17 +6,18 @@ import AppHeaderControl from "./app-header/app-header-control";
 import { cookies } from "next/headers";
 import { serverHttp } from "@/lib/serverhttp";
 import { User } from "@/types/shared";
+import { http } from "@/lib/http";
 
 export default async function AppHeader() {
-  const t = await getTranslations("AppHeader");
   const cookieStore = await cookies();
+  const t = await getTranslations("AppHeader");
   const isAuthorized = cookieStore.has("token");
 
   let user: User | null = null;
 
   if (isAuthorized) {
     try {
-      const { data } = await serverHttp.get<{
+      const { data } = await http.get<{
         data: { user: User };
       }>("/api/v1/auth/me");
 

@@ -1,11 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useIsScroll } from "@/hooks/use-is-scroll";
-import { Link, usePathname } from "@/i18n/navigation";
-import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { LocaleSwitcher } from "../locale-switcher";
 import {
   Sheet,
   SheetClose,
@@ -15,8 +9,22 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { User } from "@/types/shared";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { LocaleSwitcher } from "../locale-switcher";
+import { useIsScroll } from "@/hooks/use-is-scroll";
+import { Link, usePathname } from "@/i18n/navigation";
+import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
 
 export default function AppHeaderControl({ user }: { user: User | null }) {
   const scrolled = useIsScroll();
@@ -66,12 +74,40 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
       </div>
 
       {user ? (
-        <Button
-          variant="ghost"
-          className="w-9 h-9 bg-secondary hover:bg-secondary rounded-full cursor-pointer"
-        >
-          {user.name?.charAt(0).toUpperCase() || "U"}
-        </Button>
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-9 rounded-full bg-secondary hover:bg-secondary focus:bg-secondary cursor-pointer"
+            >
+              {user.name?.charAt(0).toUpperCase() || "U"}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+                My Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+                My Orders
+              </DropdownMenuItem>
+              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+                My Design
+              </DropdownMenuItem>
+              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none whitespace-nowrap">
+                Saved Addresses
+              </DropdownMenuItem>
+              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+                Settings
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="py-2 text-red-500 cursor-pointer rounded-none">
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <Link href="/login">
           <Button
