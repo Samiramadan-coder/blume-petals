@@ -40,7 +40,7 @@ import { useRouter } from "@/i18n/navigation";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { http, ValidationError } from "@/lib/http";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AuthSubmitBtn from "@/components/auth/auth-submit-btn";
+import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 export default function PhoneLogin() {

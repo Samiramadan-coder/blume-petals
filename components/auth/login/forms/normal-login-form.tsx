@@ -15,7 +15,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { loginForm, loginSchema } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import AuthSubmitBtn from "@/components/auth/auth-submit-btn";
+import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 
 export default function NormalLoginForm() {
   const t = useTranslations("Login");

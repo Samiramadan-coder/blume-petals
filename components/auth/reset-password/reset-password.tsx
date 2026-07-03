@@ -10,14 +10,14 @@ import {
 import { toast } from "sonner";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import AuthCard from "../shared/auth-card";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
-import AuthSubmitBtn from "../auth-submit-btn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, CardContent } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
+import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { ResetPasswordForm, resetPasswordSchema } from "@/types/auth";
 
 export default function ResetPassword() {
@@ -60,84 +60,82 @@ export default function ResetPassword() {
   };
 
   return (
-    <Card className="w-md mx-4">
-      <CardContent className="p-8">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <div className="text-center">
-            <h1 className="text-3xl font-playfair font-bold text-foreground">
-              Reset Password
-            </h1>
-          </div>
+    <AuthCard>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <div className="text-center">
+          <h1 className="text-3xl font-playfair font-bold text-foreground">
+            Reset Password
+          </h1>
+        </div>
 
-          <Field>
-            <FieldLabel htmlFor="email">Email</FieldLabel>
-            <FieldContent>
-              <div className="space-y-1">
+        <Field>
+          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldContent>
+            <div className="space-y-1">
+              <Input
+                {...register("email")}
+                placeholder="Enter your email"
+                className="h-11"
+              />
+              <FieldError errors={[errors.email]} />
+            </div>
+          </FieldContent>
+        </Field>
+
+        <Field>
+          <FieldLabel htmlFor="password">Password</FieldLabel>
+          <FieldContent>
+            <div className="space-y-1">
+              <div className="relative">
                 <Input
-                  {...register("email")}
-                  placeholder="Enter your email"
+                  type={showPassword ? "text" : "password"}
                   className="h-11"
+                  {...register("password")}
                 />
-                <FieldError errors={[errors.email]} />
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute inset-e-2 top-1/2 h-8 w-8 -translate-y-1/2"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </Button>
               </div>
-            </FieldContent>
-          </Field>
+              <FieldError errors={[errors.password]} />
+            </div>
+          </FieldContent>
+        </Field>
 
-          <Field>
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <FieldContent>
-              <div className="space-y-1">
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    className="h-11"
-                    {...register("password")}
-                  />
+        <Field>
+          <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+          <FieldContent>
+            <div className="space-y-1">
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  className="h-11"
+                  {...register("password_confirmation")}
+                />
 
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute inset-e-2 top-1/2 h-8 w-8 -translate-y-1/2"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </Button>
-                </div>
-                <FieldError errors={[errors.password]} />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute inset-e-2 top-1/2 h-8 w-8 -translate-y-1/2"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </Button>
               </div>
-            </FieldContent>
-          </Field>
+              <FieldError errors={[errors.password_confirmation]} />
+            </div>
+          </FieldContent>
+        </Field>
 
-          <Field>
-            <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
-            <FieldContent>
-              <div className="space-y-1">
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    className="h-11"
-                    {...register("password_confirmation")}
-                  />
-
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute inset-e-2 top-1/2 h-8 w-8 -translate-y-1/2"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </Button>
-                </div>
-                <FieldError errors={[errors.password_confirmation]} />
-              </div>
-            </FieldContent>
-          </Field>
-
-          <AuthSubmitBtn isLoading={isSubmitting} label="Reset Password" />
-        </form>
-      </CardContent>
-    </Card>
+        <AuthSubmitBtn isLoading={isSubmitting} label="Reset Password" />
+      </form>
+    </AuthCard>
   );
 }
