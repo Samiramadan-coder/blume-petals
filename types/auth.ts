@@ -1,36 +1,39 @@
 import z from "zod";
 
+type T = (key: string) => string;
+
 /**
  * Register form validation schema using Zod
  * This schema validates the user input for the registration form.
  */
-export const registerSchema = z
-  .object({
-    name: z.string().min(2, "Full Name is required"),
-    email: z.email("Invalid email address"),
-    phone: z.string().min(10, "Phone number is required"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    password_confirmation: z
-      .string()
-      .min(8, "Confirm Password must be at least 8 characters"),
-  })
-  .superRefine((data, ctx) => {
-    if (data.password !== data.password_confirmation) {
-      ctx.addIssue({
-        code: "custom",
-        message: "Passwords do not match",
-        path: ["password"],
-      });
+export const registerSchema = (t: T) =>
+  z
+    .object({
+      name: z.string().min(2, t("nameIsRequired")),
+      email: z.email(t("emailIsInvalid")),
+      phone: z.string().min(10, t("phoneIsRequired")),
+      password: z.string().min(8, t("passwordIsRequired")),
+      password_confirmation: z
+        .string()
+        .min(8, t("passwordConfirmationIsRequired")),
+    })
+    .superRefine((data, ctx) => {
+      if (data.password !== data.password_confirmation) {
+        ctx.addIssue({
+          code: "custom",
+          message: t("passwordsDoNotMatch"),
+          path: ["password"],
+        });
 
-      ctx.addIssue({
-        code: "custom",
-        message: "Passwords do not match",
-        path: ["password_confirmation"],
-      });
-    }
-  });
+        ctx.addIssue({
+          code: "custom",
+          message: t("passwordsDoNotMatch"),
+          path: ["password_confirmation"],
+        });
+      }
+    });
 
-export type RegisterForm = z.infer<typeof registerSchema>;
+export type RegisterForm = z.infer<ReturnType<typeof registerSchema>>;
 
 /**
  * Login form validation schema using Zod

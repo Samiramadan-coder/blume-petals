@@ -299,6 +299,12 @@
     "SignInError": "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك والمحاولة مرة أخرى."
   },
   "Register": {
+    "nameIsRequired": "الاسم الكامل مطلوب",
+    "emailIsInvalid": "البريد الإلكتروني غير صالح",
+    "phoneIsRequired": "رقم الهاتف مطلوب",
+    "passwordIsRequired": "كلمة المرور 8 حروف على الأقل",
+    "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+    "passwordConfirmationIsRequired": "تأكيد كلمة المرور 8 حروف على الأقل",
     "CreateAccountTitle": "إنشاء حساب",
     "JoinMessage": "انضم إلى بلومي بيتالز اليوم",
     "FullNameLabel": "الاسم الكامل",

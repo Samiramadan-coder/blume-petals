@@ -298,6 +298,12 @@
     "InvalidOTP": "Invalid OTP. Please try again."
   },
   "Register": {
+    "nameIsRequired": "Full Name is required",
+    "emailIsInvalid": "Invalid email address",
+    "phoneIsRequired": "Phone number is required",
+    "passwordIsRequired": "Password must be at least 8 characters",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "passwordConfirmationIsRequired": "Confirm Password must be at least 8 characters",
     "CreateAccountTitle": "Create Account",
     "JoinMessage": "Join Blúme Petals today",
     "FullNameLabel": "Full Name",
