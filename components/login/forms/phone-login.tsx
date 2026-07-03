@@ -121,6 +121,7 @@ export default function PhoneLogin() {
   );
 }
 
+// OTP Verification Dialog Component
 function OTPVerificationDialog({
   phone,
   onClose,

@@ -1,15 +1,22 @@
-import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import "@/assets/css/globals.css";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
+import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
-import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "@/components/ui/sonner";
+import { Inter, Playfair_Display, Tajawal } from "next/font/google";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { DirectionProvider } from "@/components/ui/direction";
+import { cn } from "@/lib/utils";
 
 const InterFont = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const TajawalFont = Tajawal({
+  variable: "--font-tajawal",
+  subsets: ["arabic"],
+  weight: ["400", "500", "700", "200"],
 });
 
 const PlayfairDisplayFont = Playfair_Display({
@@ -45,7 +52,12 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${InterFont.variable} ${PlayfairDisplayFont.variable} h-full antialiased`}
+      className={cn(
+        InterFont.variable,
+        TajawalFont.variable,
+        PlayfairDisplayFont.variable,
+        "h-full antialiased",
+      )}
     >
       <NextIntlClientProvider>
         <DirectionProvider dir={dir}>
