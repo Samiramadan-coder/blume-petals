@@ -1,3 +1,5 @@
+import { getTokenHeaders } from "./actions";
+
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 interface RequestConfig extends Omit<RequestInit, "method" | "body"> {
@@ -78,7 +80,11 @@ function createHttp(baseURL: string) {
 
     const response = await fetch(url, {
       method,
-      headers: { ...defaultHeaders, ...extraHeaders },
+      headers: {
+        ...defaultHeaders,
+        ...extraHeaders,
+        ...(await getTokenHeaders()),
+      },
       body: body !== undefined ? JSON.stringify(body) : undefined,
       ...restConfig,
     });

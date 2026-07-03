@@ -25,15 +25,16 @@ import { http } from "@/lib/http";
 import { User } from "@/types/shared";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { deleteToken, getTokenHeaders } from "@/lib/actions";
+import { deleteToken } from "@/lib/actions";
 import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
 
 export default function AppHeaderControl({ user }: { user: User | null }) {
   const scrolled = useIsScroll();
   const pathname = usePathname();
+  const router = useRouter();
   const t = useTranslations("AppHeader");
 
   const textColor =
@@ -41,11 +42,10 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
 
   async function logout() {
     try {
-      await http.post("/api/v1/auth/logout", undefined, {
-        headers: await getTokenHeaders(),
-      });
+      await http.post("/api/v1/auth/logout");
       await deleteToken();
       toast.success(t("LogoutSuccess"));
+      router.push("/login");
     } catch (err) {
       console.error("Logout error:", err);
       toast.error(t("LogoutError"));

@@ -6,7 +6,12 @@ import AppHeaderControl from "./app-header/app-header-control";
 import { cookies } from "next/headers";
 import { User } from "@/types/shared";
 import { http } from "@/lib/http";
-import { getTokenHeaders } from "@/lib/actions";
+
+interface UserResponse {
+  data: {
+    user: User;
+  };
+}
 
 export default async function AppHeader() {
   const cookieStore = await cookies();
@@ -17,10 +22,7 @@ export default async function AppHeader() {
 
   if (isAuthenticated) {
     try {
-      const { data } = await http.get<{
-        data: { user: User };
-      }>("/api/v1/auth/me", { headers: await getTokenHeaders() });
-
+      const { data } = await http.get<UserResponse>("/api/v1/auth/me");
       user = data.data.user;
     } catch (error) {
       console.error("Error fetching user data:", error);
