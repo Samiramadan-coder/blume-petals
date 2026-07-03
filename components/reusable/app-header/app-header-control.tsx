@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,10 +18,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { http } from "@/lib/http";
 import { User } from "@/types/shared";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { deleteToken, getTokenHeaders } from "@/lib/actions";
 import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -33,6 +38,19 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
 
   const textColor =
     pathname !== "/" || scrolled ? "text-foreground" : "text-white/90";
+
+  async function logout() {
+    try {
+      await http.post("/api/v1/auth/logout", undefined, {
+        headers: await getTokenHeaders(),
+      });
+      await deleteToken();
+      toast.success(t("LogoutSuccess"));
+    } catch (err) {
+      console.error("Logout error:", err);
+      toast.error(t("LogoutError"));
+    }
+  }
 
   return (
     <div className="flex items-center gap-3">
@@ -103,7 +121,12 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="py-2 text-red-500 cursor-pointer rounded-none">
+            <DropdownMenuItem
+              className="py-2 text-red-500 cursor-pointer rounded-none"
+              onClick={async () => {
+                await logout();
+              }}
+            >
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

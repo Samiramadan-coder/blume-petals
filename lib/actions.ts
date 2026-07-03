@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 
 /**
  * Save token in HTTP-only cookie for authentication.
- * @param token - The authentication token to be saved in the cookie.
  */
 export async function saveToken(token: string) {
   (await cookies()).set("token", token, {
@@ -14,4 +13,19 @@ export async function saveToken(token: string) {
     maxAge: 60 * 60 * 24 * 7,
     secure: process.env.NODE_ENV === "production",
   });
+}
+
+/**
+ * Return Token
+ */
+export async function getTokenHeaders() {
+  const token = (await cookies()).get("token")?.value || null;
+  return token ? { Authorization: `Bearer ${token}` } : { Authorization: "" };
+}
+
+/**
+ * Delete token from HTTP-only cookie for logout.
+ */
+export async function deleteToken() {
+  (await cookies()).delete("token");
 }

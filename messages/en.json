@@ -5,7 +5,9 @@
     "Builder": "Custom Builder",
     "About": "About",
     "SignIn": "Sign In",
-    "Register": "Register"
+    "Register": "Register",
+    "LogoutError": "Logout failed. Please try again.",
+    "LogoutSuccess": "Successfully logged out."
   },
   "AppFooter": {
     "DesignYourDream": "Design your dream bouquet — crafted for every moment that matters.",
