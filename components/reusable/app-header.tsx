@@ -3,9 +3,12 @@ import HeaderNavLink from "./app-header/header-nav-link";
 import { getTranslations } from "next-intl/server";
 import AppHeaderShell from "./app-header/app-header-shell";
 import AppHeaderControl from "./app-header/app-header-control";
+import { cookies } from "next/headers";
 
 export default async function AppHeader() {
   const t = await getTranslations("AppHeader");
+  const cookieStore = await cookies();
+  const isAuthorized = cookieStore.has("token");
 
   return (
     <AppHeaderShell>
@@ -17,7 +20,7 @@ export default async function AppHeader() {
           <HeaderNavLink href="/builder">{t("Builder")}</HeaderNavLink>
           <HeaderNavLink href="/about">{t("About")}</HeaderNavLink>
         </nav>
-        <AppHeaderControl />
+        <AppHeaderControl isAuthorized={isAuthorized} />
       </div>
     </AppHeaderShell>
   );

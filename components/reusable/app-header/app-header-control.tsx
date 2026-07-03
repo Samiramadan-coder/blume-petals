@@ -15,11 +15,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
-export default function AppHeaderControl() {
+export default function AppHeaderControl({
+  isAuthorized,
+}: {
+  isAuthorized: boolean;
+}) {
   const scrolled = useIsScroll();
-  const t = useTranslations("AppHeader");
   const pathname = usePathname();
+  const t = useTranslations("AppHeader");
 
   const textColor =
     pathname !== "/" || scrolled ? "text-foreground" : "text-white/90";
@@ -41,6 +46,15 @@ export default function AppHeaderControl() {
       <Button
         variant="ghost"
         size="icon"
+        aria-label="ShoppingCart"
+        className="hover:bg-transparent cursor-pointer"
+      >
+        <ShoppingCart size={20} className={textColor} />
+      </Button>
+
+      <Button
+        variant="ghost"
+        size="icon"
         className="relative hover:bg-transparent cursor-pointer"
         aria-label="Heart"
       >
@@ -50,27 +64,36 @@ export default function AppHeaderControl() {
         </span>
       </Button>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        aria-label="ShoppingCart"
-        className="hover:bg-transparent cursor-pointer"
-      >
-        <ShoppingCart size={20} className={textColor} />
-      </Button>
-
       <div className="border border-primary/60 rounded-[3px] hidden lg:block">
         <LocaleSwitcher textColor={textColor} />
       </div>
 
-      <Link href="/login">
-        <Button
-          variant="outline"
-          className={`cursor-pointer rounded-full text-sm h-9.5 min-w-20 border border-secondary hidden lg:block ${textColor} ${scrolled || pathname !== "/" ? "bg-secondary" : "bg-secondary/40"}`}
-        >
-          {t("SignIn")}
-        </Button>
-      </Link>
+      {!isAuthorized && (
+        <Link href="/login">
+          <Button
+            variant="outline"
+            className={cn(
+              `
+              cursor-pointer 
+              rounded-full 
+              text-sm 
+              h-9.5 
+              min-w-20 
+              border 
+              border-secondary 
+              hidden 
+              lg:block`,
+              textColor,
+              {
+                "bg-secondary": scrolled || pathname !== "/",
+                "bg-secondary/40": !scrolled && pathname === "/",
+              },
+            )}
+          >
+            {t("SignIn")}
+          </Button>
+        </Link>
+      )}
 
       <Sheet>
         <SheetTrigger asChild>
