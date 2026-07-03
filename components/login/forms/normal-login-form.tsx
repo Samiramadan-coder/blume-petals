@@ -39,11 +39,14 @@ export default function NormalLoginForm() {
     } catch (err) {
       if (err instanceof ValidationError) {
         Object.entries(err.errors).forEach(([field, messages]) => {
+          toast.error(messages[0]);
           setError(field as keyof loginForm, {
             type: "server",
             message: messages[0],
           });
         });
+      } else {
+        toast.error(t("SignInError"));
       }
     }
   };
