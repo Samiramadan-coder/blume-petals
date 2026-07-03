@@ -6,17 +6,17 @@ import {
 } from "@/components/ui/field";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { saveToken } from "@/lib/actions";
 import { Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
 import { Link, useRouter } from "@/i18n/navigation";
-import { LoginForm, LoginResponse, loginSchema } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
-import { saveToken } from "@/lib/actions";
+import { LoginForm, LoginResponse, loginSchema } from "@/types/auth";
 
 export default function NormalLoginForm() {
   const t = useTranslations("Login");

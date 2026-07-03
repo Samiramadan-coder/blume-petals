@@ -6,7 +6,6 @@ import AppHeaderControl from "./app-header/app-header-control";
 import { cookies } from "next/headers";
 import { serverHttp } from "@/lib/serverhttp";
 import { User } from "@/types/shared";
-import { http } from "@/lib/http";
 
 export default async function AppHeader() {
   const cookieStore = await cookies();
@@ -17,7 +16,7 @@ export default async function AppHeader() {
 
   if (isAuthorized) {
     try {
-      const { data } = await http.get<{
+      const { data } = await serverHttp.get<{
         data: { user: User };
       }>("/api/v1/auth/me");
 
