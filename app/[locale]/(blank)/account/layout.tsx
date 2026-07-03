@@ -54,10 +54,10 @@ export default async function AccountLayout({
         </Card>
 
         <div className="col-span-3">
-          <Link href="/" className="mb-4">
+          <Link href="/">
             <Button
               variant="ghost"
-              className="cursor-pointer text-primary hover:text-primary hover:bg-primary/20 h-10"
+              className="cursor-pointer text-primary hover:text-primary hover:bg-primary/20 h-10 mb-6"
             >
               {locale === "ar" ? <ArrowRight /> : <ArrowLeft />}
               {t("BackToHome")}
