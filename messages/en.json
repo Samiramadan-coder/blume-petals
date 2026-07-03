@@ -272,6 +272,10 @@
     }
   },
   "Login": {
+    "invalidEmail": "Invalid email address",
+    "invalidPassword": "Password must be at least 8 characters",
+    "invalidPhone": "Invalid phone number",
+    "invalidOTP": "Invalid OTP. Please try again.",
     "WelcomeBack": "Welcome Back",
     "SignInDescription": "Sign in to your account",
     "EmailTab": "Email",
@@ -327,6 +331,7 @@
     "CreateAccountSuccess": "Account created successfully. Please login."
   },
   "ForgotPassword": {
+    "invalidEmail": "Invalid email address",
     "Title": "Forgot Password?",
     "Description": "Enter your email and we'll send you a reset link.",
     "EmailLabel": "Email Address",
@@ -337,6 +342,10 @@
     "SomethingWrong": "Something went wrong. Please try again."
   },
   "ResetPassword": {
+    "invalidEmail": "Invalid email address",
+    "invalidPassword": "Password must be at least 8 characters",
+    "invalidPasswordConfirmation": "Confirm Password must be at least 8 characters",
+    "passwordsDoNotMatch": "Passwords do not match",
     "Title": "Reset Password",
     "EmailLabel": "Email",
     "EmailPlaceholder": "Enter your email",

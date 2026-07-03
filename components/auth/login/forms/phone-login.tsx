@@ -54,7 +54,7 @@ export default function PhoneLogin() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<PhoneLoginForm>({
-    resolver: zodResolver(phoneLoginSchema),
+    resolver: zodResolver(phoneLoginSchema(t)),
   });
 
   const onSubmit: SubmitHandler<PhoneLoginForm> = async (data) => {
@@ -135,7 +135,7 @@ function OTPVerificationDialog({
     control,
     formState: { errors, isSubmitting },
   } = useForm<OTPForm>({
-    resolver: zodResolver(otpSchema),
+    resolver: zodResolver(otpSchema(t)),
   });
 
   const onSubmit: SubmitHandler<OTPForm> = async (data) => {
