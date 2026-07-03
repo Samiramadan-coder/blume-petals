@@ -12,10 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
 import { Link, useRouter } from "@/i18n/navigation";
-import { LoginForm, loginSchema } from "@/types/auth";
+import { LoginForm, LoginResponse, loginSchema } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
+import { saveToken } from "@/lib/actions";
 
 export default function NormalLoginForm() {
   const t = useTranslations("Login");
@@ -33,10 +34,14 @@ export default function NormalLoginForm() {
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
-      const { data: response } = await http.post("/api/v1/auth/login", data);
-      console.log("Login response:", response); // Log the response for debugging
-      // toast.success(t("SignInSuccess"));
-      // router.push("/");
+      const { data: response } = await http.post<LoginResponse>(
+        "/api/v1/auth/login",
+        data,
+      );
+
+      await saveToken(response.data.token);
+      toast.success(t("SignInSuccess"));
+      router.push("/");
     } catch (err) {
       if (err instanceof ValidationError) {
         Object.entries(err.errors).forEach(([field, messages]) => {
