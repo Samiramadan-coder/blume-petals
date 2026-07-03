@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
 import { Link, useRouter } from "@/i18n/navigation";
-import { loginForm, loginSchema } from "@/types/auth";
+import { LoginForm, loginSchema } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
@@ -27,20 +27,21 @@ export default function NormalLoginForm() {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<loginForm>({
+  } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema(t)),
   });
 
-  const onSubmit: SubmitHandler<loginForm> = async (data) => {
+  const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
-      await http.post("/api/v1/auth/login", data);
-      toast.success(t("SignInSuccess"));
-      router.push("/");
+      const { data: response } = await http.post("/api/v1/auth/login", data);
+      console.log("Login response:", response); // Log the response for debugging
+      // toast.success(t("SignInSuccess"));
+      // router.push("/");
     } catch (err) {
       if (err instanceof ValidationError) {
         Object.entries(err.errors).forEach(([field, messages]) => {
           toast.error(messages[0]);
-          setError(field as keyof loginForm, {
+          setError(field as keyof LoginForm, {
             type: "server",
             message: messages[0],
           });

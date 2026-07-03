@@ -55,9 +55,16 @@ export const otpSchema = (t: T) =>
     code: z.string().length(6, t("invalidOTP")),
   });
 
-export type loginForm = z.infer<ReturnType<typeof loginSchema>>;
+export type LoginForm = z.infer<ReturnType<typeof loginSchema>>;
+
 export type PhoneLoginForm = z.infer<ReturnType<typeof phoneLoginSchema>>;
+
 export type OTPForm = z.infer<ReturnType<typeof otpSchema>>;
+
+export type LoginResponse = {
+  data: { token: string };
+  success: boolean;
+};
 
 /**
  * Forgot password form validation schema using Zod
