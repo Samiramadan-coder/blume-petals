@@ -1,25 +1,11 @@
 "use client";
 
-import {
-  Field,
-  FieldContent,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
-
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-
 import { toast } from "sonner";
 import { useState } from "react";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
 import AuthCard from "../shared/auth-card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { http, ValidationError } from "@/lib/http";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -28,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { useLocale, useTranslations } from "next-intl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { RegisterForm, registerSchema } from "@/types/auth";
+import FormInput from "@/components/reusable/form/form-input";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 
 export default function Register() {
@@ -75,107 +62,75 @@ export default function Register() {
           <p className="text-foreground/60 text-sm mt-2">{t("JoinMessage")}</p>
         </div>
 
-        <Field>
-          <FieldLabel htmlFor="fullName">{t("FullNameLabel")}</FieldLabel>
-          <FieldContent>
-            <div className="space-y-1">
-              <Input
-                {...register("name")}
-                placeholder={t("FullNamePlaceholder")}
-                className="h-11"
-              />
-              <FieldError errors={[errors.name]} />
-            </div>
-          </FieldContent>
-        </Field>
+        <FormInput
+          register={register}
+          name="name"
+          errors={errors}
+          label={t("FullNameLabel")}
+          placeholder={t("FullNamePlaceholder")}
+          required
+        />
 
-        <Field>
-          <FieldLabel htmlFor="email">{t("EmailLabel")}</FieldLabel>
-          <FieldContent>
-            <div className="space-y-1">
-              <Input
-                {...register("email")}
-                placeholder={t("EmailPlaceholder")}
-                className="h-11"
-              />
-              <FieldError errors={[errors.email]} />
-            </div>
-          </FieldContent>
-        </Field>
+        <FormInput
+          register={register}
+          name="email"
+          errors={errors}
+          label={t("EmailLabel")}
+          placeholder={t("EmailPlaceholder")}
+          required
+        />
 
-        <Field>
-          <FieldLabel htmlFor="phone">{t("PhoneLabel")}</FieldLabel>
-          <FieldContent>
-            <div className="space-y-1">
-              <InputGroup className="h-11">
-                <InputGroupAddon className="border-e px-4">
-                  AE&nbsp;&nbsp;+971
-                </InputGroupAddon>
+        <FormInput
+          register={register}
+          name="phone"
+          errors={errors}
+          label={t("PhoneLabel")}
+          placeholder={t("PhonePlaceholder")}
+          required
+          prefix="AE +971"
+        />
 
-                <InputGroupInput
-                  type="tel"
-                  placeholder={t("PhonePlaceholder")}
-                  {...register("phone")}
-                />
-              </InputGroup>
-              <FieldError errors={[errors.phone]} />
-            </div>
-          </FieldContent>
-        </Field>
+        <FormInput
+          register={register}
+          name="password"
+          errors={errors}
+          label={t("PasswordLabel")}
+          placeholder={t("PasswordPlaceholder")}
+          required
+          type={showPassword ? "text" : "password"}
+          suffix={
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="w-8 h-8"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </Button>
+          }
+        />
 
-        <Field>
-          <FieldLabel htmlFor="password">{t("PasswordLabel")}</FieldLabel>
-          <FieldContent>
-            <div className="space-y-1">
-              <div className="relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  className="h-11"
-                  {...register("password")}
-                />
-
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute inset-e-2 top-1/2 h-8 w-8 -translate-y-1/2"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </Button>
-              </div>
-              <FieldError errors={[errors.password]} />
-            </div>
-          </FieldContent>
-        </Field>
-
-        <Field>
-          <FieldLabel htmlFor="confirmPassword">
-            {t("ConfirmPasswordLabel")}
-          </FieldLabel>
-          <FieldContent>
-            <div className="space-y-1">
-              <div className="relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  className="h-11"
-                  {...register("password_confirmation")}
-                />
-
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute inset-e-2 top-1/2 h-8 w-8 -translate-y-1/2"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </Button>
-              </div>
-              <FieldError errors={[errors.password_confirmation]} />
-            </div>
-          </FieldContent>
-        </Field>
+        <FormInput
+          register={register}
+          name="password_confirmation"
+          errors={errors}
+          label={t("ConfirmPasswordLabel")}
+          placeholder={t("ConfirmPasswordPlaceholder")}
+          required
+          type={showPassword ? "text" : "password"}
+          suffix={
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="w-8 h-8"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </Button>
+          }
+        />
 
         <p className="text-xs text-foreground/60 text-center">
           {t("AgreeText")}{" "}

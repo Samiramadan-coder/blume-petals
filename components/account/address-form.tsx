@@ -31,6 +31,7 @@ import FormSelect from "../reusable/form/form-select";
 import FormSwitch from "../reusable/form/form-switch";
 import { Field, FieldContent, FieldLabel } from "../ui/field";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 export default function AddressForm({
   address,
@@ -39,6 +40,7 @@ export default function AddressForm({
   address?: Address;
   trigger?: React.ReactNode;
 }) {
+  const t = useTranslations("Account.Address");
   const router = useRouter();
   const closeBtn = useRef<HTMLButtonElement>(null);
   const addresses: AddressLabel[] = ["Home", "Work", "Other"];
@@ -50,7 +52,7 @@ export default function AddressForm({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<AddressFormBody>({
-    resolver: zodResolver(addressSchema),
+    resolver: zodResolver(addressSchema(t)),
     defaultValues: {
       label: address?.label || "Work",
       recipient_name: address?.recipient_name || "",
@@ -74,7 +76,7 @@ export default function AddressForm({
         data,
       );
       toast.success(
-        address ? "Address updated successfully" : "Address added successfully",
+        address ? t("UpdatedSuccessfully") : t("AddedSuccessfully"),
       );
       closeBtn.current?.click();
       router.refresh();
@@ -88,9 +90,7 @@ export default function AddressForm({
           });
         });
       } else {
-        toast.error(
-          address ? "Error in updating address" : "Error in adding address",
-        );
+        toast.error(t("ErrorUploading"));
       }
     }
   };
@@ -110,7 +110,7 @@ export default function AddressForm({
             className="cursor-pointer border border-primary text-primary hover:text-primary font-semibold h-10 w-45"
           >
             <Plus />
-            Add New Address
+            {t("AddNewAddress")}
           </Button>
         )}
       </DialogTrigger>
@@ -121,7 +121,9 @@ export default function AddressForm({
         }}
       >
         <DialogHeader>
-          <DialogTitle>Add New Address</DialogTitle>
+          <DialogTitle>
+            {address ? t("EditAddress") : t("AddNewAddress")}
+          </DialogTitle>
         </DialogHeader>
 
         <form
@@ -141,7 +143,7 @@ export default function AddressForm({
                   return (
                     <Field>
                       <FieldLabel htmlFor="photo_path">
-                        Address Label
+                        {t("AddressLabel")}
                       </FieldLabel>
                       <FieldContent>
                         <div className="flex items-center gap-3">
@@ -157,7 +159,7 @@ export default function AddressForm({
                                 },
                               )}
                             >
-                              {address}
+                              {t(address)}
                             </Badge>
                           ))}
                         </div>
@@ -171,10 +173,10 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormInput
                 name="recipient_name"
-                placeholder="Enter Full Name"
+                placeholder={t("RecipientNamePlaceholder")}
                 register={register}
                 errors={errors}
-                label="Full Name"
+                label={t("RecipientName")}
                 required
               />
             </div>
@@ -182,10 +184,10 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormInput
                 name="recipient_phone"
-                placeholder="Enter Phone Number"
+                placeholder={t("RecipientPhonePlaceholder")}
                 register={register}
                 errors={errors}
-                label="Phone Number"
+                label={t("RecipientPhone")}
                 prefix="AE +971"
                 required
               />
@@ -194,10 +196,10 @@ export default function AddressForm({
             <div className="col-span-1 md:col-span-2">
               <FormInput
                 name="street"
-                placeholder="e.g 123 Sheikh Zayed Road, Dubai"
+                placeholder={t("StreetPlaceholder")}
                 register={register}
                 errors={errors}
-                label="Street/Building/Villa"
+                label={t("Street")}
                 required
               />
             </div>
@@ -205,10 +207,10 @@ export default function AddressForm({
             <div className="col-span-1 md:col-span-2">
               <FormInput
                 name="area"
-                placeholder="e.g Downtown Dubai"
+                placeholder={t("AreaPlaceholder")}
                 register={register}
                 errors={errors}
-                label="Area/District"
+                label={t("Area")}
                 required
               />
             </div>
@@ -216,7 +218,7 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormSelect
                 control={control}
-                label="City"
+                label={t("City")}
                 name="city"
                 options={[{ label: "Dubai", value: "Dubai" }]}
                 required
@@ -226,7 +228,7 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormSelect
                 control={control}
-                label="Emirates"
+                label={t("Emirate")}
                 name="emirate"
                 options={[{ label: "Dubai", value: "Dubai" }]}
                 required
@@ -236,10 +238,10 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormInput
                 name="building"
-                placeholder="e.g Building Name"
+                placeholder={t("BuildingPlaceholder")}
                 register={register}
                 errors={errors}
-                label="Building Name"
+                label={t("Building")}
                 required
               />
             </div>
@@ -247,10 +249,10 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormInput
                 name="landmark"
-                placeholder="e.g Near Mall of the Emirates"
+                placeholder={t("LandmarkPlaceholder")}
                 register={register}
                 errors={errors}
-                label="Landmark"
+                label={t("Landmark")}
                 required
               />
             </div>
@@ -258,7 +260,7 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormSwitch
                 name="is_default"
-                label="Set as Default Address"
+                label={t("IsDefault")}
                 control={control}
               />
             </div>
@@ -272,9 +274,9 @@ export default function AddressForm({
                 {isSubmitting ? (
                   <Spinner />
                 ) : address ? (
-                  "Update Address"
+                  t("SaveAddress")
                 ) : (
-                  "Save Address"
+                  t("SaveAddress")
                 )}
               </Button>
             </div>

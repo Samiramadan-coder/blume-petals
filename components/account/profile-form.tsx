@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { http } from "@/lib/http";
+import { http, ValidationError } from "@/lib/http";
 import { Button } from "../ui/button";
 import { User } from "@/types/shared";
 import { Spinner } from "../ui/spinner";
@@ -9,13 +9,16 @@ import { useRef, useState } from "react";
 import { Separator } from "../ui/separator";
 import { Pencil, Upload } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
+import { toast } from "sonner";
 import FormInput from "../reusable/form/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Account, accountSchema } from "@/types/account";
 import { Field, FieldContent, FieldLabel } from "../ui/field";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 export default function ProfileForm({ user }: { user: User }) {
+  const t = useTranslations("Account.Profile");
   const [editMode, setEditMode] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -23,9 +26,10 @@ export default function ProfileForm({ user }: { user: User }) {
     register,
     handleSubmit,
     control,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<Account>({
-    resolver: zodResolver(accountSchema),
+    resolver: zodResolver(accountSchema(t)),
     defaultValues: {
       name: user.name,
       email: user.email,
@@ -36,8 +40,20 @@ export default function ProfileForm({ user }: { user: User }) {
   const onSubmit: SubmitHandler<Account> = async (data) => {
     try {
       await http.put("/api/v1/auth/me", data);
+      toast.success(t("SaveChanges"));
     } catch (error) {
-      console.error("Failed to update profile:", error);
+      if (error instanceof ValidationError) {
+        Object.entries(error.errors).forEach(([field, messages]) => {
+          toast.error(messages[0]);
+          setError(field as keyof Account, {
+            type: "server",
+            message: messages[0],
+          });
+        });
+      } else {
+        console.error("Failed to update profile:", error);
+        toast.error("Error updating profile");
+      }
     }
   };
 
@@ -50,7 +66,7 @@ export default function ProfileForm({ user }: { user: User }) {
     <>
       <div className="flex items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold text-foreground font-heading">
-          My Profile
+          {t("Title")}
         </h1>
 
         <Button
@@ -65,17 +81,17 @@ export default function ProfileForm({ user }: { user: User }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
           <p className="text-lg font-semibold text-primary">12</p>
-          <p className="text-xs text-foreground/60 mt-1">orders</p>
+          <p className="text-xs text-foreground/60 mt-1">{t("Orders")}</p>
         </div>
 
         <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
           <p className="text-lg font-semibold text-primary">5</p>
-          <p className="text-xs text-foreground/60 mt-1">Saved</p>
+          <p className="text-xs text-foreground/60 mt-1">{t("Saved")}</p>
         </div>
 
         <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
           <p className="text-lg font-semibold text-primary">3</p>
-          <p className="text-xs text-foreground/60 mt-1">Design</p>
+          <p className="text-xs text-foreground/60 mt-1">{t("Design")}</p>
         </div>
       </div>
 
@@ -87,9 +103,9 @@ export default function ProfileForm({ user }: { user: User }) {
               register={register}
               errors={errors}
               required
-              placeholder="Enter your name"
+              placeholder={t("FullNamePlaceholder")}
               inputClassName="disabled:bg-primary/30 disabled:opacity-100"
-              label="Full Name"
+              label={t("FullName")}
               disabled={!editMode}
             />
 
@@ -98,9 +114,9 @@ export default function ProfileForm({ user }: { user: User }) {
               register={register}
               errors={errors}
               required
-              placeholder="Enter your email"
+              placeholder={t("EmailPlaceholder")}
               inputClassName="disabled:bg-primary/30 disabled:opacity-100"
-              label="Email"
+              label={t("Email")}
               disabled={!editMode}
             />
 
@@ -109,9 +125,9 @@ export default function ProfileForm({ user }: { user: User }) {
               register={register}
               errors={errors}
               required
-              placeholder="Enter your phone"
+              placeholder={t("PhonePlaceholder")}
               inputClassName="disabled:bg-primary/30 disabled:opacity-100"
-              label="Phone"
+              label={t("Phone")}
               disabled={!editMode}
               prefix={editMode ? "AE +971" : undefined}
             />
@@ -132,7 +148,9 @@ export default function ProfileForm({ user }: { user: User }) {
 
                 return (
                   <Field>
-                    <FieldLabel htmlFor="photo_path">Profile Photo</FieldLabel>
+                    <FieldLabel htmlFor="photo_path">
+                      {t("ProfilePhoto")}
+                    </FieldLabel>
                     <FieldContent>
                       <div className="flex items-center gap-4">
                         {profilePhotoUrl ? (
@@ -159,7 +177,7 @@ export default function ProfileForm({ user }: { user: User }) {
                             onClick={() => fileInputRef.current?.click()}
                           >
                             <Upload />
-                            Change Photo
+                            {t("ChangePhoto")}
                           </Button>
                         )}
                       </div>
@@ -189,7 +207,7 @@ export default function ProfileForm({ user }: { user: User }) {
                   disabled={isSubmitting}
                   className="h-12 text-white cursor-pointer flex-1"
                 >
-                  {isSubmitting ? <Spinner /> : "Save Changes"}
+                  {isSubmitting ? <Spinner /> : t("SaveChanges")}
                 </Button>
 
                 <Button
@@ -198,7 +216,7 @@ export default function ProfileForm({ user }: { user: User }) {
                   onClick={() => setEditMode(false)}
                   className="h-12 border-2 border-primary text-foreground cursor-pointer flex-1"
                 >
-                  Cancel
+                  {t("Cancel")}
                 </Button>
               </div>
             )}

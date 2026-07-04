@@ -6,13 +6,20 @@ import { Address } from "@/types/account";
 import { Card, CardContent } from "../ui/card";
 import { MapPin, Pencil, Trash2 } from "lucide-react";
 import DeleteAddress from "./delete-address";
+import { getTranslations } from "next-intl/server";
 
-export default function Addresses({ addresses }: { addresses: Address[] }) {
+export default async function Addresses({
+  addresses,
+}: {
+  addresses: Address[];
+}) {
+  const t = await getTranslations("Account.Address");
+
   return (
     <>
       <div className="flex items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold text-foreground font-heading">
-          My Addresses
+          {t("Title")}
         </h1>
 
         <AddressForm />
@@ -35,12 +42,12 @@ export default function Addresses({ addresses }: { addresses: Address[] }) {
                       "text-black-800 bg-blue-100": address.label === "Other",
                     })}
                   >
-                    {address.label}
+                    {t(address.label)}
                   </Badge>
 
                   {address.is_default && (
                     <Badge className="h-7 font-semibold mb-2 text-xs">
-                      Default
+                      {t("DefaultAddress")}
                     </Badge>
                   )}
                 </div>
@@ -59,7 +66,7 @@ export default function Addresses({ addresses }: { addresses: Address[] }) {
                 </p>
                 {address.is_default && (
                   <p className="text-green-600 text-xs font-medium">
-                    Default address
+                    {t("DefaultAddress")}
                   </p>
                 )}
               </div>
@@ -89,7 +96,7 @@ export default function Addresses({ addresses }: { addresses: Address[] }) {
                       variant="ghost"
                       className="cursor-pointer text-xs text-primary hover:text-primary"
                     >
-                      Set as Default
+                      {t("SetAsDefault")}
                     </Button>
                   </div>
                 )}
