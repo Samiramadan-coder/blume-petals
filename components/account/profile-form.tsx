@@ -23,7 +23,6 @@ import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 export default function ProfileForm({ user }: { user: User }) {
   const [editMode, setEditMode] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  console.log(user);
 
   const {
     register,
@@ -54,7 +53,7 @@ export default function ProfileForm({ user }: { user: User }) {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 mb-8">
+      <div className="flex items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold text-foreground font-heading">
           My Profile
         </h1>
@@ -66,6 +65,23 @@ export default function ProfileForm({ user }: { user: User }) {
         >
           <Pencil className="text-primary size-5" />
         </Button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+          <p className="text-lg font-semibold text-primary">12</p>
+          <p className="text-xs text-foreground/60 mt-1">orders</p>
+        </div>
+
+        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+          <p className="text-lg font-semibold text-primary">5</p>
+          <p className="text-xs text-foreground/60 mt-1">Saved</p>
+        </div>
+
+        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+          <p className="text-lg font-semibold text-primary">3</p>
+          <p className="text-xs text-foreground/60 mt-1">Design</p>
+        </div>
       </div>
 
       <Card className="shadow-sm">
