@@ -34,7 +34,7 @@ type FormInputProps<T extends FieldValues> = {
   suffix?: ReactNode;
 };
 
-export default function NormalFormInput<T extends FieldValues>({
+export default function FormInput<T extends FieldValues>({
   name,
   label,
   placeholder,
