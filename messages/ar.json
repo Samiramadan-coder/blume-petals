@@ -473,7 +473,9 @@
       "landmarkIsRequired": "المعلم المرجعي مطلوب",
       "landmarkMinLength": "يجب أن يكون المعلم 2 أحرف على الأقل",
       "latitudeIsRequired": "خط العرض مطلوب",
-      "longitudeIsRequired": "خط الطول مطلوب"
+      "longitudeIsRequired": "خط الطول مطلوب",
+      "SetAsDefaultSuccess": "تم تعيين العنوان كافتراضي بنجاح",
+      "SetAsDefaultError": "فشل تعيين العنوان كافتراضي."
     }
   }
 }

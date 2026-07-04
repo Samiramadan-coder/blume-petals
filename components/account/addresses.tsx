@@ -7,6 +7,7 @@ import { Card, CardContent } from "../ui/card";
 import { MapPin, Pencil, Trash2 } from "lucide-react";
 import DeleteAddress from "./delete-address";
 import { getTranslations } from "next-intl/server";
+import AddressAsDefault from "./address-as-default";
 
 export default async function Addresses({
   addresses,
@@ -71,7 +72,7 @@ export default async function Addresses({
                 )}
               </div>
 
-              <div>
+              <div className="flex flex-col items-end gap-1">
                 <AddressForm
                   address={address}
                   trigger={
@@ -90,16 +91,7 @@ export default async function Addresses({
                   }
                 />
 
-                {!address.is_default && (
-                  <div className="mt-2">
-                    <Button
-                      variant="ghost"
-                      className="cursor-pointer text-xs text-primary hover:text-primary"
-                    >
-                      {t("SetAsDefault")}
-                    </Button>
-                  </div>
-                )}
+                {!address.is_default && <AddressAsDefault address={address} />}
               </div>
             </CardContent>
           </Card>

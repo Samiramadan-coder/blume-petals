@@ -471,7 +471,9 @@
       "landmarkIsRequired": "Landmark is required",
       "landmarkMinLength": "Landmark must be at least 2 characters",
       "latitudeIsRequired": "Latitude is required",
-      "longitudeIsRequired": "Longitude is required"
+      "longitudeIsRequired": "Longitude is required",
+      "SetAsDefaultSuccess": "Address set as default successfully",
+      "SetAsDefaultError": "Failed to set address as default."
     }
   }
 }
