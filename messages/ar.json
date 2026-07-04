@@ -276,9 +276,12 @@
   },
   "Login": {
     "invalidEmail": "البريد الإلكتروني غير صالح",
+    "passwordIsRequired": "كلمة المرور مطلوبة",
     "invalidPassword": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
     "invalidPhone": "رقم الهاتف غير صالح",
+    "phoneIsRequired": "رقم الهاتف مطلوب",
     "invalidOTP": "رمز التحقق غير صالح. يرجى المحاولة مرة أخرى.",
+    "otpIsRequired": "رمز التحقق مطلوب",
     "WelcomeBack": "أهلا وسهلا",
     "SignInDescription": "قم بتسجيل الدخول إلى حسابك",
     "EmailTab": "البريد الإلكتروني",
@@ -303,7 +306,8 @@
     "OTPDescription": "أرسلنا لك رمز تحقق مكون من 6 أرقام",
     "VerifyOTP": "التحقق",
     "InvalidOTP": "رمز التحقق غير صحيح. يرجى المحاولة مرة أخرى.",
-    "SignInError": "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك والمحاولة مرة أخرى."
+    "SignInError": "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك والمحاولة مرة أخرى.",
+    "PasswordPlaceholder": "كلمة المرور"
   },
   "Register": {
     "nameIsRequired": "الاسم الكامل مطلوب",
@@ -349,13 +353,17 @@
   "ResetPassword": {
     "invalidEmail": "البريد الإلكتروني غير صالح",
     "invalidPassword": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+    "passwordIsRequired": "كلمة المرور مطلوبة",
     "invalidPasswordConfirmation": "تأكيد كلمة المرور يجب أن تكون 8 أحرف على الأقل",
+    "passwordConfirmationIsRequired": "تأكيد كلمة المرور مطلوب",
     "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
     "Title": "إعادة تعيين كلمة المرور",
     "EmailLabel": "البريد الإلكتروني",
     "EmailPlaceholder": "أدخل بريدك الإلكتروني",
     "PasswordLabel": "كلمة المرور",
+    "PasswordPlaceholder": "أدخل كلمة المرور الجديدة",
     "ConfirmPasswordLabel": "تأكيد كلمة المرور",
+    "ConfirmPasswordPlaceholder": "أعد إدخال كلمة المرور الجديدة",
     "ResetPasswordButton": "إعادة تعيين كلمة المرور",
     "ResetSuccess": "تم إعادة تعيين كلمة المرور بنجاح. يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
     "ResetError": "حدث خطأ أثناء إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى."

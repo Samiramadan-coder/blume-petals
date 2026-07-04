@@ -7,19 +7,6 @@ import {
 } from "@/components/ui/dialog";
 
 import {
-  Field,
-  FieldContent,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
-
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-
-import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
@@ -38,10 +25,12 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
+import { FieldError } from "@/components/ui/field";
 import { http, ValidationError } from "@/lib/http";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import FormInput from "@/components/reusable/form/form-input";
 
 export default function PhoneLogin() {
   const t = useTranslations("Login");
@@ -85,25 +74,15 @@ export default function PhoneLogin() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <Field>
-          <FieldLabel htmlFor="phone">{t("PhoneLabel")}</FieldLabel>
-          <FieldContent>
-            <div className="space-y-1">
-              <InputGroup className="h-11">
-                <InputGroupAddon className="border-e px-4">
-                  AE&nbsp;&nbsp;+971
-                </InputGroupAddon>
-
-                <InputGroupInput
-                  type="tel"
-                  placeholder={t("PhonePlaceholder")}
-                  {...register("phone")}
-                />
-              </InputGroup>
-              <FieldError errors={[errors.phone]} />
-            </div>
-          </FieldContent>
-        </Field>
+        <FormInput
+          register={register}
+          name="phone"
+          errors={errors}
+          label={t("PhoneLabel")}
+          placeholder={t("PhonePlaceholder")}
+          prefix="AE +971"
+          required
+        />
 
         <AuthSubmitBtn isLoading={isSubmitting} label={t("SendOTP")} />
       </form>

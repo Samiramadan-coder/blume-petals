@@ -276,9 +276,12 @@
   },
   "Login": {
     "invalidEmail": "Invalid email address",
+    "passwordIsRequired": "Password is required",
     "invalidPassword": "Password must be at least 8 characters",
     "invalidPhone": "Invalid phone number",
+    "phoneIsRequired": "Phone number is required",
     "invalidOTP": "Invalid OTP. Please try again.",
+    "otpIsRequired": "OTP is required",
     "WelcomeBack": "Welcome Back",
     "SignInDescription": "Sign in to your account",
     "EmailTab": "Email",
@@ -302,7 +305,8 @@
     "EnterOTP": "Enter OTP",
     "OTPDescription": "We sent a 6-digit code to your phone",
     "VerifyOTP": "Verify OTP",
-    "InvalidOTP": "Invalid OTP. Please try again."
+    "InvalidOTP": "Invalid OTP. Please try again.",
+    "PasswordPlaceholder": "Password"
   },
   "Register": {
     "nameIsRequired": "Full Name is required",
@@ -346,6 +350,8 @@
   },
   "ResetPassword": {
     "invalidEmail": "Invalid email address",
+    "passwordIsRequired": "Password is required",
+    "passwordConfirmationIsRequired": "Confirm Password is required",
     "invalidPassword": "Password must be at least 8 characters",
     "invalidPasswordConfirmation": "Confirm Password must be at least 8 characters",
     "passwordsDoNotMatch": "Passwords do not match",
@@ -353,7 +359,9 @@
     "EmailLabel": "Email",
     "EmailPlaceholder": "Enter your email",
     "PasswordLabel": "Password",
+    "PasswordPlaceholder": "Enter your new password",
     "ConfirmPasswordLabel": "Confirm Password",
+    "ConfirmPasswordPlaceholder": "Re-enter your new password",
     "ResetPasswordButton": "Reset Password",
     "ResetSuccess": "Password reset successful. Please log in with your new password.",
     "ResetError": "An error occurred while resetting the password. Please try again."

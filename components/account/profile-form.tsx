@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "../ui/input-group";
 import Image from "next/image";
 import { http } from "@/lib/http";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { User } from "@/types/shared";
 import { Spinner } from "../ui/spinner";
@@ -15,9 +9,10 @@ import { useRef, useState } from "react";
 import { Separator } from "../ui/separator";
 import { Pencil, Upload } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
+import FormInput from "../reusable/form/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Account, accountSchema } from "@/types/account";
-import { Field, FieldContent, FieldError, FieldLabel } from "../ui/field";
+import { Field, FieldContent, FieldLabel } from "../ui/field";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 
 export default function ProfileForm({ user }: { user: User }) {
@@ -87,73 +82,39 @@ export default function ProfileForm({ user }: { user: User }) {
       <Card className="shadow-sm">
         <CardContent>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-            <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <FieldContent>
-                <div className="space-y-1">
-                  <Input
-                    {...register("name")}
-                    placeholder={"Full Name"}
-                    className="h-11 disabled:bg-primary/30 disabled:opacity-100"
-                    disabled={!editMode}
-                  />
-                  <FieldError errors={[errors.name]} />
-                </div>
-              </FieldContent>
-            </Field>
+            <FormInput
+              name="name"
+              register={register}
+              errors={errors}
+              required
+              placeholder="Enter your name"
+              inputClassName="disabled:bg-primary/30 disabled:opacity-100"
+              label="Full Name"
+              disabled={!editMode}
+            />
 
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <FieldContent>
-                <div className="space-y-1">
-                  <Input
-                    {...register("email")}
-                    placeholder={"Email"}
-                    className="h-11 disabled:bg-primary/30 disabled:opacity-100"
-                    disabled={!editMode}
-                  />
-                  <FieldError errors={[errors.email]} />
-                </div>
-              </FieldContent>
-            </Field>
+            <FormInput
+              name="email"
+              register={register}
+              errors={errors}
+              required
+              placeholder="Enter your email"
+              inputClassName="disabled:bg-primary/30 disabled:opacity-100"
+              label="Email"
+              disabled={!editMode}
+            />
 
-            {editMode ? (
-              <Field>
-                <FieldLabel htmlFor="phone">Phone</FieldLabel>
-                <FieldContent>
-                  <div className="space-y-1">
-                    <InputGroup className="h-11">
-                      <InputGroupAddon className="border-e px-4">
-                        AE&nbsp;&nbsp;+971
-                      </InputGroupAddon>
-
-                      <InputGroupInput
-                        type="tel"
-                        placeholder={"Phone"}
-                        {...register("phone")}
-                        disabled={!editMode}
-                      />
-                    </InputGroup>
-                    <FieldError errors={[errors.phone]} />
-                  </div>
-                </FieldContent>
-              </Field>
-            ) : (
-              <Field>
-                <FieldLabel htmlFor="phone">Phone</FieldLabel>
-                <FieldContent>
-                  <div className="space-y-1">
-                    <Input
-                      {...register("phone")}
-                      placeholder={"Phone"}
-                      className="h-11 disabled:bg-primary/30 disabled:opacity-100"
-                      disabled={!editMode}
-                    />
-                    <FieldError errors={[errors.phone]} />
-                  </div>
-                </FieldContent>
-              </Field>
-            )}
+            <FormInput
+              name="phone"
+              register={register}
+              errors={errors}
+              required
+              placeholder="Enter your phone"
+              inputClassName="disabled:bg-primary/30 disabled:opacity-100"
+              label="Phone"
+              disabled={!editMode}
+              prefix={editMode ? "AE +971" : undefined}
+            />
 
             <Separator />
 

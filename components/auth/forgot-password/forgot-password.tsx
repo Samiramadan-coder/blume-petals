@@ -1,23 +1,17 @@
 "use client";
 
-import {
-  Field,
-  FieldContent,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
 import { toast } from "sonner";
+import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import AuthCard from "../shared/auth-card";
-import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
-import { ArrowLeft, ArrowRight, LockIcon } from "lucide-react";
 import { http, ValidationError } from "@/lib/http";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthSubmitBtn from "../shared/auth-submit-btn";
 import { useForm, SubmitHandler } from "react-hook-form";
+import FormInput from "@/components/reusable/form/form-input";
+import { ArrowLeft, ArrowRight, LockIcon } from "lucide-react";
 import { ForgotPasswordForm, forgotPasswordSchema } from "@/types/auth";
-import { useLocale } from "next-intl";
 
 export default function ForgotPassword() {
   const t = useTranslations("ForgotPassword");
@@ -64,19 +58,14 @@ export default function ForgotPassword() {
           <p className="text-foreground/60 text-sm mt-2">{t("Description")}</p>
         </div>
 
-        <Field>
-          <FieldLabel htmlFor="email">{t("EmailLabel")}</FieldLabel>
-          <FieldContent>
-            <div className="space-y-1">
-              <Input
-                {...register("email")}
-                placeholder={t("EmailPlaceholder")}
-                className="h-11"
-              />
-              <FieldError errors={[errors.email]} />
-            </div>
-          </FieldContent>
-        </Field>
+        <FormInput
+          register={register}
+          name="email"
+          errors={errors}
+          label={t("EmailLabel")}
+          placeholder={t("EmailPlaceholder")}
+          required
+        />
 
         <AuthSubmitBtn isLoading={isSubmitting} label={t("SendResetLink")} />
       </form>

@@ -43,17 +43,20 @@ export type RegisterForm = z.infer<ReturnType<typeof registerSchema>>;
 export const loginSchema = (t: T) =>
   z.object({
     email: z.email(t("invalidEmail")),
-    password: z.string().min(8, t("invalidPassword")),
+    password: z
+      .string()
+      .min(1, t("passwordIsRequired"))
+      .min(8, t("invalidPassword")),
   });
 
 export const phoneLoginSchema = (t: T) =>
   z.object({
-    phone: z.string().min(10, t("invalidPhone")),
+    phone: z.string().min(1, t("phoneIsRequired")).min(10, t("invalidPhone")),
   });
 
 export const otpSchema = (t: T) =>
   z.object({
-    code: z.string().length(6, t("invalidOTP")),
+    code: z.string().min(1, t("otpIsRequired")).length(6, t("invalidOTP")),
   });
 
 export type LoginForm = z.infer<ReturnType<typeof loginSchema>>;
@@ -88,9 +91,13 @@ export const resetPasswordSchema = (t: T) =>
   z
     .object({
       email: z.email(t("invalidEmail")),
-      password: z.string().min(8, t("invalidPassword")),
+      password: z
+        .string()
+        .min(1, t("passwordIsRequired"))
+        .min(8, t("invalidPassword")),
       password_confirmation: z
         .string()
+        .min(1, t("passwordConfirmationIsRequired"))
         .min(8, t("invalidPasswordConfirmation")),
     })
     .superRefine((data, ctx) => {
