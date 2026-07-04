@@ -19,7 +19,7 @@ export default async function Addresses({
   return (
     <>
       <div className="flex items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold text-foreground font-heading">
+        <h1 className="text-xl md:text-3xl font-bold text-foreground font-heading">
           {t("Title")}
         </h1>
 

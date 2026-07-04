@@ -16,12 +16,16 @@ export default async function AccountLayout({
   children: React.ReactNode;
 }) {
   const t = await getTranslations("Account");
-  const locale = await getLocale();
+
   const { data } = await http.get<UserResponse>("/api/v1/auth/me");
 
   return (
-    <div className="container max-w-7xl py-16">
-      <div className="grid items-start grid-cols-1 md:grid-cols-4 gap-6">
+    <div className="container max-w-7xl py-8 md:py-16">
+      <div className="grid items-start grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="block md:hidden">
+          <BackToHomeButton />
+        </div>
+
         <Card className="shadow-sm py-6">
           <CardContent className="flex flex-col items-center gap-4 px-6">
             <div className="flex flex-col items-center gap-3">
@@ -53,19 +57,30 @@ export default async function AccountLayout({
           </CardContent>
         </Card>
 
-        <div className="col-span-3">
-          <Link href="/">
-            <Button
-              variant="ghost"
-              className="cursor-pointer text-primary hover:text-primary hover:bg-primary/20 h-10 mb-6"
-            >
-              {locale === "ar" ? <ArrowRight /> : <ArrowLeft />}
-              {t("BackToHome")}
-            </Button>
-          </Link>
+        <div className="md:col-span-3">
+          <div className="hidden md:block mb-6">
+            <BackToHomeButton />
+          </div>
           {children}
         </div>
       </div>
     </div>
+  );
+}
+
+async function BackToHomeButton() {
+  const t = await getTranslations("Account");
+  const locale = await getLocale();
+
+  return (
+    <Link href="/">
+      <Button
+        variant="ghost"
+        className="cursor-pointer text-primary hover:text-primary hover:bg-primary/20 h-10"
+      >
+        {locale === "ar" ? <ArrowRight /> : <ArrowLeft />}
+        {t("BackToHome")}
+      </Button>
+    </Link>
   );
 }
