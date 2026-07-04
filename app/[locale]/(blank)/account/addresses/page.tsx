@@ -1,3 +1,8 @@
-export default function AddressesPage() {
-  return <div>-</div>;
+import Addresses from "@/components/account/addresses";
+import { http } from "@/lib/http";
+import { AddressesResponse } from "@/types/account";
+
+export default async function AddressesPage() {
+  const { data } = await http.get<AddressesResponse>("/api/v1/addresses");
+  return <Addresses addresses={data.data.items} />;
 }
