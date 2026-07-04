@@ -7,12 +7,16 @@ import { deleteToken } from "@/lib/actions";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
+import { useState } from "react";
+import { Spinner } from "../ui/spinner";
 
 export default function LogoutBtn() {
+  const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("AppHeader");
   const router = useRouter();
 
   async function logout() {
+    setIsLoading(true);
     try {
       await http.post("/api/v1/auth/logout");
       await deleteToken();
@@ -21,6 +25,8 @@ export default function LogoutBtn() {
     } catch (err) {
       console.error("Logout error:", err);
       toast.error(t("LogoutError"));
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -31,7 +37,7 @@ export default function LogoutBtn() {
       onClick={logout}
     >
       <LogOut className="mr-2 h-4 w-4" />
-      {t("Logout")}
+      {isLoading ? <Spinner /> : t("Logout")}
     </Button>
   );
 }
