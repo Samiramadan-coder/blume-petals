@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/input-otp";
 
 import {
+  LoginResponse,
   OTPForm,
   otpSchema,
   PhoneLoginForm,
@@ -31,6 +32,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
+import { saveToken } from "@/lib/actions";
 
 export default function PhoneLogin() {
   const t = useTranslations("Login");
@@ -119,14 +121,17 @@ function OTPVerificationDialog({
 
   const onSubmit: SubmitHandler<OTPForm> = async (data) => {
     try {
-      await http.post("/api/v1/auth/otp/verify", {
-        phone,
-        ...data,
-        purpose: "login",
-      });
+      const { data: response } = await http.post<LoginResponse>(
+        "/api/v1/auth/otp/verify",
+        {
+          phone,
+          ...data,
+          purpose: "login",
+        },
+      );
 
+      await saveToken(response.data.token);
       toast.success(t("SignInSuccess"));
-      onClose();
       router.push("/");
     } catch (err) {
       if (err instanceof ValidationError) {
