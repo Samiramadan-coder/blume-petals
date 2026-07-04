@@ -21,7 +21,7 @@ export default async function AccountLayout({
 
   return (
     <div className="container max-w-7xl py-16">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid items-start grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="shadow-sm py-6">
           <CardContent className="flex flex-col items-center gap-4 px-6">
             <div className="flex flex-col items-center gap-3">

@@ -5,26 +5,30 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "../ui/input-group";
-import { useState } from "react";
+import Image from "next/image";
+import { http } from "@/lib/http";
 import { Input } from "../ui/input";
-import { Pencil } from "lucide-react";
 import { Button } from "../ui/button";
 import { User } from "@/types/shared";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { Spinner } from "../ui/spinner";
+import { useRef, useState } from "react";
+import { Separator } from "../ui/separator";
+import { Pencil, Upload } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Account, accountSchema } from "@/types/account";
 import { Field, FieldContent, FieldError, FieldLabel } from "../ui/field";
-import { Spinner } from "../ui/spinner";
-import { http } from "@/lib/http";
+import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 
 export default function ProfileForm({ user }: { user: User }) {
   const [editMode, setEditMode] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   console.log(user);
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<Account>({
     resolver: zodResolver(accountSchema),
@@ -36,8 +40,17 @@ export default function ProfileForm({ user }: { user: User }) {
   });
 
   const onSubmit: SubmitHandler<Account> = async (data) => {
-    await http.put("/api/v1/auth/me", data);
+    try {
+      await http.put("/api/v1/auth/me", data);
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
   };
+
+  const name = useWatch({
+    control,
+    name: "name",
+  });
 
   return (
     <>
@@ -65,7 +78,7 @@ export default function ProfileForm({ user }: { user: User }) {
                   <Input
                     {...register("name")}
                     placeholder={"Full Name"}
-                    className="h-11"
+                    className="h-11 disabled:bg-primary/30 disabled:opacity-100"
                     disabled={!editMode}
                   />
                   <FieldError errors={[errors.name]} />
@@ -80,7 +93,7 @@ export default function ProfileForm({ user }: { user: User }) {
                   <Input
                     {...register("email")}
                     placeholder={"Email"}
-                    className="h-11"
+                    className="h-11 disabled:bg-primary/30 disabled:opacity-100"
                     disabled={!editMode}
                   />
                   <FieldError errors={[errors.email]} />
@@ -88,26 +101,109 @@ export default function ProfileForm({ user }: { user: User }) {
               </FieldContent>
             </Field>
 
-            <Field>
-              <FieldLabel htmlFor="phone">Phone</FieldLabel>
-              <FieldContent>
-                <div className="space-y-1">
-                  <InputGroup className="h-11">
-                    <InputGroupAddon className="border-e px-4">
-                      AE&nbsp;&nbsp;+971
-                    </InputGroupAddon>
+            {editMode ? (
+              <Field>
+                <FieldLabel htmlFor="phone">Phone</FieldLabel>
+                <FieldContent>
+                  <div className="space-y-1">
+                    <InputGroup className="h-11">
+                      <InputGroupAddon className="border-e px-4">
+                        AE&nbsp;&nbsp;+971
+                      </InputGroupAddon>
 
-                    <InputGroupInput
-                      type="tel"
-                      placeholder={"Phone"}
+                      <InputGroupInput
+                        type="tel"
+                        placeholder={"Phone"}
+                        {...register("phone")}
+                        disabled={!editMode}
+                      />
+                    </InputGroup>
+                    <FieldError errors={[errors.phone]} />
+                  </div>
+                </FieldContent>
+              </Field>
+            ) : (
+              <Field>
+                <FieldLabel htmlFor="phone">Phone</FieldLabel>
+                <FieldContent>
+                  <div className="space-y-1">
+                    <Input
                       {...register("phone")}
+                      placeholder={"Phone"}
+                      className="h-11 disabled:bg-primary/30 disabled:opacity-100"
                       disabled={!editMode}
                     />
-                  </InputGroup>
-                  <FieldError errors={[errors.phone]} />
-                </div>
-              </FieldContent>
-            </Field>
+                    <FieldError errors={[errors.phone]} />
+                  </div>
+                </FieldContent>
+              </Field>
+            )}
+
+            <Separator />
+
+            <Controller
+              control={control}
+              name="photo_path"
+              render={({ field }) => {
+                const selectedPhoto = field.value as string | Blob | null;
+                const profilePhotoUrl =
+                  typeof selectedPhoto === "string"
+                    ? selectedPhoto
+                    : selectedPhoto instanceof Blob
+                      ? URL.createObjectURL(selectedPhoto)
+                      : null;
+
+                return (
+                  <Field>
+                    <FieldLabel htmlFor="photo_path">Profile Photo</FieldLabel>
+                    <FieldContent>
+                      <div className="flex items-center gap-4">
+                        {profilePhotoUrl ? (
+                          <div className="w-20 h-20 rounded-full overflow-hidden shadow-sm">
+                            <Image
+                              src={profilePhotoUrl}
+                              height={400}
+                              width={400}
+                              className="h-35 w-full object-cover"
+                              alt="Profile Photo"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center text-xl font-semibold">
+                            {name.slice(0, 2).toUpperCase()}
+                          </div>
+                        )}
+
+                        {editMode && (
+                          <Button
+                            variant="outline"
+                            type="button"
+                            className="cursor-pointer h-12 w-38 border-2 border-primary text-primary hover:text-primary"
+                            onClick={() => fileInputRef.current?.click()}
+                          >
+                            <Upload />
+                            Change Photo
+                          </Button>
+                        )}
+                      </div>
+
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        ref={fileInputRef}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          field.onChange(file);
+                          e.target.value = "";
+                        }}
+                      />
+                    </FieldContent>
+                  </Field>
+                );
+              }}
+            />
 
             {editMode && (
               <div className="flex items-center gap-4">
