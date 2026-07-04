@@ -30,8 +30,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormSelect from "../reusable/form/form-select";
 import FormSwitch from "../reusable/form/form-switch";
 import { Field, FieldContent, FieldLabel } from "../ui/field";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import LocationPicker from "../reusable/form/location-picker";
 
 export default function AddressForm({
   address,
@@ -49,6 +50,7 @@ export default function AddressForm({
     register,
     control,
     setError,
+    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<AddressFormBody>({
@@ -63,8 +65,8 @@ export default function AddressForm({
       emirate: address?.emirate || "Dubai",
       building: address?.building || "",
       landmark: address?.landmark || "",
-      latitude: address?.latitude ? +address.latitude : 10,
-      longitude: address?.longitude ? +address.longitude : 10,
+      latitude: address?.latitude ? +address.latitude : 25.2048,
+      longitude: address?.longitude ? +address.longitude : 55.2708,
       is_default: address?.is_default || false,
     },
   });
@@ -95,6 +97,16 @@ export default function AddressForm({
     }
   };
 
+  const watchLatitude = useWatch({
+    control,
+    name: "latitude",
+  });
+
+  const watchLongitude = useWatch({
+    control,
+    name: "longitude",
+  });
+
   return (
     <Dialog>
       <DialogClose asChild>
@@ -115,7 +127,7 @@ export default function AddressForm({
         )}
       </DialogTrigger>
       <DialogContent
-        className="sm:max-w-lg"
+        className="sm:max-w-2xl"
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
@@ -133,6 +145,25 @@ export default function AddressForm({
           className="space-y-4"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="col-span-1 md:col-span-2">
+              <Controller
+                control={control}
+                name="latitude"
+                render={() => (
+                  <LocationPicker
+                    value={{
+                      latitude: watchLatitude,
+                      longitude: watchLongitude,
+                    }}
+                    onChange={(location) => {
+                      setValue("latitude", location.latitude);
+                      setValue("longitude", location.longitude);
+                    }}
+                  />
+                )}
+              />
+            </div>
+
             <div className="col-span-1 md:col-span-2">
               <Controller
                 control={control}

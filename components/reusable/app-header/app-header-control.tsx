@@ -105,28 +105,41 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40">
             <DropdownMenuGroup>
-              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+              <DropdownMenuItem
+                className="py-2 text-foreground cursor-pointer rounded-none"
+                onClick={() => router.push("/account/profile")}
+              >
                 {tAccount("MyProfile")}
               </DropdownMenuItem>
-              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+              <DropdownMenuItem
+                className="py-2 text-foreground cursor-pointer rounded-none"
+                onClick={() => router.push("/account/orders")}
+              >
                 {tAccount("MyOrders")}
               </DropdownMenuItem>
-              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+              <DropdownMenuItem
+                className="py-2 text-foreground cursor-pointer rounded-none"
+                onClick={() => router.push("/account/designs")}
+              >
                 {tAccount("MyDesigns")}
               </DropdownMenuItem>
-              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none whitespace-nowrap">
+              <DropdownMenuItem
+                className="py-2 text-foreground cursor-pointer rounded-none whitespace-nowrap"
+                onClick={() => router.push("/account/addresses")}
+              >
                 {tAccount("SavedAddresses")}
               </DropdownMenuItem>
-              <DropdownMenuItem className="py-2 text-foreground cursor-pointer rounded-none">
+              <DropdownMenuItem
+                className="py-2 text-foreground cursor-pointer rounded-none"
+                onClick={() => router.push("/account/settings")}
+              >
                 {tAccount("Settings")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="py-2 text-red-500 cursor-pointer rounded-none"
-              onClick={async () => {
-                await logout();
-              }}
+              onClick={logout}
             >
               {t("Logout")}
             </DropdownMenuItem>
