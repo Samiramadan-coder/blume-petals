@@ -90,23 +90,14 @@ export default function PhoneLogin() {
       </form>
 
       <Dialog open={openOTP} onOpenChange={setOpenOTP}>
-        <OTPVerificationDialog
-          phone={phone}
-          onClose={() => setOpenOTP(false)}
-        />
+        <OTPVerificationDialog phone={phone} />
       </Dialog>
     </>
   );
 }
 
 // OTP Verification Dialog Component
-function OTPVerificationDialog({
-  phone,
-  onClose,
-}: {
-  phone: string;
-  onClose: () => void;
-}) {
+function OTPVerificationDialog({ phone }: { phone: string }) {
   const t = useTranslations("Login");
   const router = useRouter();
 

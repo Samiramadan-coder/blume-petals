@@ -475,7 +475,8 @@
       "latitudeIsRequired": "خط العرض مطلوب",
       "longitudeIsRequired": "خط الطول مطلوب",
       "SetAsDefaultSuccess": "تم تعيين العنوان كافتراضي بنجاح",
-      "SetAsDefaultError": "فشل تعيين العنوان كافتراضي."
+      "SetAsDefaultError": "فشل تعيين العنوان كافتراضي.",
+      "NoAddresses": "لم يتم العثور على عناوين محفوظة. يرجى إضافة عنوان جديد."
     }
   }
 }

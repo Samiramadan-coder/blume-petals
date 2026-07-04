@@ -37,9 +37,11 @@ import LocationPicker from "../reusable/form/location-picker";
 export default function AddressForm({
   address,
   trigger,
+  buttonClassName,
 }: {
   address?: Address;
   trigger?: React.ReactNode;
+  buttonClassName?: string;
 }) {
   const t = useTranslations("Account.Address");
   const router = useRouter();
@@ -119,7 +121,10 @@ export default function AddressForm({
         ) : (
           <Button
             variant="outline"
-            className="cursor-pointer border border-primary text-primary hover:text-primary font-semibold h-10 w-45"
+            className={cn(
+              "cursor-pointer border border-primary text-primary hover:text-primary font-semibold h-10 w-45",
+              buttonClassName,
+            )}
           >
             <Plus />
             {t("AddNewAddress")}
