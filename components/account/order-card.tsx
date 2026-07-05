@@ -33,7 +33,9 @@ export default function OrderCard() {
                 Golden Hour Preserved Roses
               </p>
               <div className="flex items-center gap-4 mb-2">
-                <p className="font-semibold text-foreground">Order #BP-2847</p>
+                <p className="font-semibold text-foreground text-base">
+                  Order #BP-2847
+                </p>
                 <Badge className="h-8 gap-1 bg-green-100 text-sm text-green-700 [&>svg]:size-4.5!">
                   <CircleCheckBig />
                   Delivered
@@ -42,7 +44,9 @@ export default function OrderCard() {
               <p className="text-foreground/60 text-sm">June 5 2026</p>
             </div>
             <div>
-              <p className="font-semibold text-foreground mb-3">AED 305.00</p>
+              <p className="font-semibold text-foreground text-base mb-2">
+                AED 305.00
+              </p>
               <Button
                 onClick={() => setIsOpen(!isOpen)}
                 className="cursor-pointer"
@@ -63,7 +67,7 @@ export default function OrderCard() {
             <div className="px-8 pt-4">
               <div className="mb-4 space-y-4">
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">
+                  <h4 className="font-semibold text-foreground mb-3 text-base">
                     Order Items
                   </h4>
                   <div className="space-y-2">
@@ -77,7 +81,7 @@ export default function OrderCard() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">
+                  <h4 className="font-semibold text-foreground mb-2 text-base">
                     Delivery Address
                   </h4>
                   <p className="text-foreground/60 text-sm">
@@ -86,7 +90,7 @@ export default function OrderCard() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">
+                  <h4 className="font-semibold text-foreground mb-2 text-base">
                     Payment Method
                   </h4>
                   <p className="text-foreground/60 text-sm">

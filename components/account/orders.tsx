@@ -22,7 +22,7 @@ export default async function Orders() {
         </h1>
       </div>
 
-      <Tabs defaultValue="overview">
+      <Tabs defaultValue="all">
         <TabsList className="mb-6 bg-transparent space-x-2">
           {filters.map((filter) => (
             <TabsTrigger
@@ -35,7 +35,7 @@ export default async function Orders() {
           ))}
         </TabsList>
         <TabsContent value="all">
-          <div className="space-y-6">
+          <div className="space-y-5">
             <OrderCard />
             <OrderCard />
           </div>
