@@ -78,7 +78,7 @@ export default function ProfileForm({ user }: { user: User }) {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6">
         <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
           <p className="text-lg font-semibold text-primary">12</p>
           <p className="text-xs text-foreground/60 mt-1">{t("Orders")}</p>
