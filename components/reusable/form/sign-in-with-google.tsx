@@ -41,7 +41,7 @@ export default function GoogleLoginButton() {
             },
           );
 
-          console.log(response);
+          // console.log(response);
           // toast.success("Logged in successfully");
           // router.push("/account");
           // router.refresh();

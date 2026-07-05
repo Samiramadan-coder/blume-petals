@@ -24,7 +24,6 @@ export default function DeleteAddress({
   addressId: number;
   trigger: React.ReactNode;
 }) {
-  console.log("addressId", addressId);
   const router = useRouter();
   const closeBtn = useRef<HTMLButtonElement>(null);
   const [isLoading, setIsLoading] = useState(false);
