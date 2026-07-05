@@ -337,7 +337,9 @@
     "Apple": "Apple",
     "AlreadyHaveAccount": "Already have an account?",
     "SignIn": "Sign In",
-    "CreateAccountSuccess": "Account created successfully. Please login."
+    "CreateAccountSuccess": "Account created successfully. Please login.",
+    "GoogleTokenFailed": "Failed to login with Google. Please try again.",
+    "GoogleLoginFailed": "Failed to login with Google. Please try again."
   },
   "ForgotPassword": {
     "invalidEmail": "Invalid email address",

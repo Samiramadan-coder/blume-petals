@@ -3,7 +3,6 @@
 import { toast } from "sonner";
 import { useState } from "react";
 import { FaApple } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeOff } from "lucide-react";
 import AuthCard from "../shared/auth-card";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { RegisterForm, registerSchema } from "@/types/auth";
 import FormInput from "@/components/reusable/form/form-input";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
+import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
 
 export default function Register() {
   const t = useTranslations("Register");
@@ -157,12 +157,14 @@ export default function Register() {
       </div>
 
       <div className="flex gap-4">
-        <Button variant="outline" className="flex-1 h-11">
-          <FcGoogle size={20} className="mr-2" />
-          {t("Google")}
-        </Button>
+        <div className="flex-1">
+          <GoogleLoginButton />
+        </div>
 
-        <Button variant="outline" className="flex-1 h-11">
+        <Button
+          variant="outline"
+          className="flex-1 h-10 rounded-xs bg-white cursor-pointer"
+        >
           <FaApple size={20} className="mr-2" />
           {t("Apple")}
         </Button>

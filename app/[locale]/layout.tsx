@@ -7,6 +7,7 @@ import { Inter, Playfair_Display, Tajawal } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { DirectionProvider } from "@/components/ui/direction";
 import { cn } from "@/lib/utils";
+import GoogleAuthProvider from "@/providers/google-auth-provider";
 
 const InterFont = Inter({
   variable: "--font-inter",
@@ -59,14 +60,16 @@ export default async function RootLayout({
         "h-full antialiased",
       )}
     >
-      <NextIntlClientProvider>
-        <DirectionProvider dir={dir}>
-          <body className="min-h-full flex flex-col">
-            {children}
-            <Toaster />
-          </body>
-        </DirectionProvider>
-      </NextIntlClientProvider>
+      <GoogleAuthProvider>
+        <NextIntlClientProvider>
+          <DirectionProvider dir={dir}>
+            <body className="min-h-full flex flex-col">
+              {children}
+              <Toaster />
+            </body>
+          </DirectionProvider>
+        </NextIntlClientProvider>
+      </GoogleAuthProvider>
     </html>
   );
 }

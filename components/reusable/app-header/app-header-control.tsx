@@ -29,7 +29,7 @@ import { deleteToken } from "@/lib/actions";
 import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
+import { Bell, Heart, ShoppingCart, Menu, LogOut } from "lucide-react";
 
 export default function AppHeaderControl({ user }: { user: User | null }) {
   const scrolled = useIsScroll();
@@ -141,6 +141,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
               className="py-2 text-red-500 cursor-pointer rounded-none"
               onClick={logout}
             >
+              <LogOut />
               {t("Logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>

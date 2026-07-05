@@ -11,6 +11,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -47,6 +48,7 @@ export default function AddressForm({
   const router = useRouter();
   const closeBtn = useRef<HTMLButtonElement>(null);
   const addresses: AddressLabel[] = ["Home", "Work", "Other"];
+  const form = useRef<HTMLFormElement>(null);
 
   const {
     register,
@@ -144,10 +146,11 @@ export default function AddressForm({
         </DialogHeader>
 
         <form
+          ref={form}
           onSubmit={(e) => {
             void handleSubmit(onSubmit)(e);
           }}
-          className="space-y-4"
+          className="space-y-6 -mx-4 no-scrollbar max-h-[80vh] overflow-y-auto px-4"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="col-span-1 md:col-span-2">
@@ -300,24 +303,23 @@ export default function AddressForm({
                 control={control}
               />
             </div>
-
-            <div className="col-span-1 md:col-span-2">
-              <Button
-                className="w-full h-11 cursor-pointer"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <Spinner />
-                ) : address ? (
-                  t("SaveAddress")
-                ) : (
-                  t("SaveAddress")
-                )}
-              </Button>
-            </div>
           </div>
         </form>
+        <DialogFooter>
+          <Button
+            className="w-full h-11 cursor-pointer"
+            onClick={() => form.current?.requestSubmit()}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <Spinner />
+            ) : address ? (
+              t("SaveAddress")
+            ) : (
+              t("SaveAddress")
+            )}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
