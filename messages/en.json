@@ -479,7 +479,10 @@
       "NoAddresses": "No saved addresses found. Please add a new address."
     },
     "Orders": {
-      "Title": "My Orders"
+      "Title": "My Orders",
+      "OrderItems": "Order Items",
+      "DeliveryAddress": "Delivery Address",
+      "PaymentMethod": "Payment Method"
     }
   }
 }

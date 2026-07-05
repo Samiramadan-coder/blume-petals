@@ -1,21 +1,21 @@
-"use client";
-
-import { useState } from "react";
-
-import { Card, CardContent } from "../ui/card";
-import { Collapsible, CollapsibleContent } from "../ui/collapsible";
-import { Button } from "../ui/button";
-import { ChevronDownIcon, CircleCheckBig } from "lucide-react";
-import { cn } from "@/lib/utils";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../ui/collapsible";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { Card, CardContent } from "../ui/card";
+import { getTranslations } from "next-intl/server";
+import { ChevronDownIcon, CircleCheckBig } from "lucide-react";
 
-export default function OrderCard() {
-  const [isOpen, setIsOpen] = useState(false);
+export default async function OrderCard() {
+  const t = await getTranslations("Account.Orders");
 
   return (
-    <Collapsible open={isOpen}>
+    <Collapsible>
       <Card className="shadow-sm">
         <CardContent className="px-0">
           <div className="flex gap-4 items-start px-8">
@@ -47,18 +47,11 @@ export default function OrderCard() {
               <p className="font-semibold text-foreground text-base mb-2">
                 AED 305.00
               </p>
-              <Button
-                onClick={() => setIsOpen(!isOpen)}
-                className="cursor-pointer"
-                variant="ghost"
-              >
-                <ChevronDownIcon
-                  className={cn(
-                    "ml-auto transition-transform size-5",
-                    isOpen && "rotate-180",
-                  )}
-                />
-              </Button>
+              <CollapsibleTrigger asChild>
+                <Button className="cursor-pointer" variant="ghost">
+                  <ChevronDownIcon className="transition-transform group-data-[state=open]:rotate-180" />
+                </Button>
+              </CollapsibleTrigger>
             </div>
           </div>
 
@@ -68,7 +61,7 @@ export default function OrderCard() {
               <div className="mb-4 space-y-4">
                 <div>
                   <h4 className="font-semibold text-foreground mb-3 text-base">
-                    Order Items
+                    {t("OrderItems")}
                   </h4>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
@@ -82,7 +75,7 @@ export default function OrderCard() {
 
                 <div>
                   <h4 className="font-semibold text-foreground mb-2 text-base">
-                    Delivery Address
+                    {t("DeliveryAddress")}
                   </h4>
                   <p className="text-foreground/60 text-sm">
                     123 Sheikh Zayed Road, Dubai, UAE
@@ -91,7 +84,7 @@ export default function OrderCard() {
 
                 <div>
                   <h4 className="font-semibold text-foreground mb-2 text-base">
-                    Payment Method
+                    {t("PaymentMethod")}
                   </h4>
                   <p className="text-foreground/60 text-sm">
                     Credit Card (****4242)
