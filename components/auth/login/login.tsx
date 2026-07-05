@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import NormalLoginForm from "./forms/normal-login-form";
 import AuthCard from "../shared/auth-card";
+import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
 
 export default function Login() {
   const t = useTranslations("Login");
@@ -56,12 +57,14 @@ export default function Login() {
       </div>
 
       <div className="flex gap-4">
-        <Button variant="outline" className="flex-1 h-11">
-          <FcGoogle size={20} className="mr-2" />
-          {t("Google")}
-        </Button>
+        <div className="flex-1">
+          <GoogleLoginButton />
+        </div>
 
-        <Button variant="outline" className="flex-1 h-11">
+        <Button
+          variant="outline"
+          className="flex-1 h-10 rounded-xs bg-white cursor-pointer"
+        >
           <FaApple size={20} className="mr-2" />
           {t("Apple")}
         </Button>
