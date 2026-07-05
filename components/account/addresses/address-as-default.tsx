@@ -1,12 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { http } from "@/lib/http";
 import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
-import { Spinner } from "../ui/spinner";
+import { Spinner } from "../../ui/spinner";
 import { Address } from "@/types/account";
 
 export default function AddressAsDefault({ address }: { address: Address }) {

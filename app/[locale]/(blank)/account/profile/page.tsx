@@ -1,5 +1,5 @@
 import { http } from "@/lib/http";
-import ProfileForm from "@/components/account/profile-form";
+import ProfileForm from "@/components/account/profile/profile-form";
 import { UserResponse } from "@/components/reusable/app-header";
 
 export default async function ProfilePage() {

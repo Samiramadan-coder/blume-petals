@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
+import { Badge } from "../../ui/badge";
+import { Button } from "../../ui/button";
 import AddressForm from "./address-form";
 import { Address } from "@/types/account";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../../ui/card";
 import { MapPin, Pencil, Trash2 } from "lucide-react";
 import DeleteAddress from "./delete-address";
 import { getTranslations } from "next-intl/server";

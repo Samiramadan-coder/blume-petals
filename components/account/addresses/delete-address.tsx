@@ -9,13 +9,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "../../ui/dialog";
 import { useRef, useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { http } from "@/lib/http";
-import { Spinner } from "../ui/spinner";
+import { Spinner } from "../../ui/spinner";
 
 export default function DeleteAddress({
   addressId,

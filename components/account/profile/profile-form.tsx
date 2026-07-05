@@ -2,18 +2,18 @@
 
 import Image from "next/image";
 import { http, ValidationError } from "@/lib/http";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { User } from "@/types/shared";
-import { Spinner } from "../ui/spinner";
+import { Spinner } from "../../ui/spinner";
 import { useRef, useState } from "react";
-import { Separator } from "../ui/separator";
+import { Separator } from "../../ui/separator";
 import { Pencil, Upload } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../../ui/card";
 import { toast } from "sonner";
-import FormInput from "../reusable/form/form-input";
+import FormInput from "../../reusable/form/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Account, accountSchema } from "@/types/account";
-import { Field, FieldContent, FieldLabel } from "../ui/field";
+import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
 

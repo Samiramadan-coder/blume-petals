@@ -1,6 +1,6 @@
 import OrderCard from "./order-card";
 import { getTranslations } from "next-intl/server";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 
 const filters = [
   { label: "All", value: "all" },

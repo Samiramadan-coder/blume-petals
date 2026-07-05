@@ -2,12 +2,12 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible";
+} from "../../ui/collapsible";
 import Image from "next/image";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { Card, CardContent } from "../ui/card";
+import { Badge } from "../../ui/badge";
+import { Button } from "../../ui/button";
+import { Separator } from "../../ui/separator";
+import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
 import { ChevronDownIcon, CircleCheckBig } from "lucide-react";
 

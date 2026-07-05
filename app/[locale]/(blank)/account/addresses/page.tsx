@@ -1,4 +1,4 @@
-import Addresses from "@/components/account/addresses";
+import Addresses from "@/components/account/addresses/addresses";
 import { http } from "@/lib/http";
 import { AddressesResponse } from "@/types/account";
 
