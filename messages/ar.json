@@ -484,7 +484,9 @@
       "Title": "طلباتي",
       "OrderItems": "عناصر الطلب",
       "DeliveryAddress": "عنوان التسليم",
-      "PaymentMethod": "طريقة الدفع"
+      "PaymentMethod": "طريقة الدفع",
+      "Reorder": "إعادة الطلب",
+      "RateOrder": "تقييم الطلب"
     }
   }
 }

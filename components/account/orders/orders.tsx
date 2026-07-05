@@ -23,12 +23,12 @@ export default async function Orders() {
       </div>
 
       <Tabs defaultValue="all">
-        <TabsList className="mb-6 bg-transparent space-x-2">
+        <TabsList className="mb-6 bg-transparent flex-wrap h-auto! gap-2">
           {filters.map((filter) => (
             <TabsTrigger
               key={filter.value}
               value={filter.value}
-              className="text-base p-4 rounded-full shadow-none! bg-primary/20! cursor-pointer data-[state=active]:bg-primary!"
+              className="text-base text-foreground h-10 px-5 rounded-full shadow-none! bg-primary/20! cursor-pointer data-[state=active]:bg-primary!"
             >
               {filter.label}
             </TabsTrigger>

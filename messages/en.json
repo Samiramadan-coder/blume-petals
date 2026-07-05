@@ -482,7 +482,9 @@
       "Title": "My Orders",
       "OrderItems": "Order Items",
       "DeliveryAddress": "Delivery Address",
-      "PaymentMethod": "Payment Method"
+      "PaymentMethod": "Payment Method",
+      "Reorder": "Reorder",
+      "RateOrder": "Rate Order"
     }
   }
 }

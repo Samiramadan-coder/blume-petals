@@ -10,6 +10,8 @@ import { Separator } from "../../ui/separator";
 import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
 import { ChevronDownIcon, CircleCheckBig } from "lucide-react";
+import OrderRate from "./order-rate";
+import OrderReorder from "./order-reorder";
 
 export default async function OrderCard() {
   const t = await getTranslations("Account.Orders");
@@ -18,7 +20,7 @@ export default async function OrderCard() {
     <Collapsible>
       <Card className="shadow-sm">
         <CardContent className="px-0">
-          <div className="flex gap-4 items-start px-8">
+          <div className="flex gap-4 items-start px-4 md:px-6">
             <div>
               <Image
                 src="/images/home/bouquet-builder/bouquet-builder.png"
@@ -32,8 +34,8 @@ export default async function OrderCard() {
               <p className="text-foreground/60 text-sm mb-1">
                 Golden Hour Preserved Roses
               </p>
-              <div className="flex items-center gap-4 mb-2">
-                <p className="font-semibold text-foreground text-base">
+              <div className="flex items-center flex-wrap gap-4 mb-2">
+                <p className="font-semibold text-foreground md:text-base">
                   Order #BP-2847
                 </p>
                 <Badge className="h-8 gap-1 bg-green-100 text-sm text-green-700 [&>svg]:size-4.5!">
@@ -44,7 +46,7 @@ export default async function OrderCard() {
               <p className="text-foreground/60 text-sm">June 5 2026</p>
             </div>
             <div>
-              <p className="font-semibold text-foreground text-base mb-2">
+              <p className="font-semibold text-foreground md:text-base mb-2">
                 AED 305.00
               </p>
               <CollapsibleTrigger asChild>
@@ -60,7 +62,7 @@ export default async function OrderCard() {
             <div className="px-8 pt-4">
               <div className="mb-4 space-y-4">
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3 text-base">
+                  <h4 className="font-semibold text-foreground mb-3 md:text-base">
                     {t("OrderItems")}
                   </h4>
                   <div className="space-y-2">
@@ -74,7 +76,7 @@ export default async function OrderCard() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2 text-base">
+                  <h4 className="font-semibold text-foreground mb-2 md:text-base">
                     {t("DeliveryAddress")}
                   </h4>
                   <p className="text-foreground/60 text-sm">
@@ -83,7 +85,7 @@ export default async function OrderCard() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2 text-base">
+                  <h4 className="font-semibold text-foreground mb-2 md:text-base">
                     {t("PaymentMethod")}
                   </h4>
                   <p className="text-foreground/60 text-sm">
@@ -95,18 +97,8 @@ export default async function OrderCard() {
               <Separator className="mb-4" />
 
               <div className="flex gap-4">
-                <Button
-                  className="flex-1 cursor-pointer bg-white h-11 border-2 border-primary text-primary hover:bg-primary hover:text-white"
-                  variant="outline"
-                >
-                  Reorder
-                </Button>
-                <Button
-                  className="flex-1 cursor-pointer bg-white h-11 border-2 border-primary text-primary hover:bg-primary hover:text-white"
-                  variant="outline"
-                >
-                  Rate Order
-                </Button>
+                <OrderReorder />
+                <OrderRate />
               </div>
             </div>
           </CollapsibleContent>
