@@ -9,8 +9,9 @@ import { toast } from "sonner";
 import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { Spinner } from "../ui/spinner";
+import { cn } from "@/lib/utils";
 
-export default function LogoutBtn() {
+export default function LogoutBtn({ className }: { className?: string }) {
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("AppHeader");
   const router = useRouter();
@@ -32,7 +33,10 @@ export default function LogoutBtn() {
 
   return (
     <Button
-      className="w-full h-12 text-red-500 rounded-lg cursor-pointer hover:bg-red-50 hover:text-red-600"
+      className={cn(
+        "w-full h-12 text-red-500 rounded-lg cursor-pointer hover:bg-red-50 hover:text-red-600",
+        className,
+      )}
       variant="ghost"
       onClick={logout}
     >

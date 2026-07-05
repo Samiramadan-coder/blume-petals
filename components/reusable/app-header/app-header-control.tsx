@@ -4,7 +4,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -19,19 +19,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { http } from "@/lib/http";
 import { User } from "@/types/shared";
 import { useTranslations } from "next-intl";
-import { deleteToken } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import SidebarNavLink from "./sidebar-nav-link";
 import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { Bell, Heart, ShoppingCart, Menu, LogOut } from "lucide-react";
+import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import LogoutBtn from "../logout-btn";
 
 const sidebarNavItems = [
   { label: "Home", href: "/" },
@@ -58,18 +56,6 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
   const textColor =
     pathname !== "/" || scrolled ? "text-foreground" : "text-white/90";
 
-  async function logout() {
-    try {
-      await http.post("/api/v1/auth/logout");
-      await deleteToken();
-      toast.success(t("LogoutSuccess"));
-      router.push("/login");
-    } catch (err) {
-      console.error("Logout error:", err);
-      toast.error(t("LogoutError"));
-    }
-  }
-
   return (
     <div className="flex items-center gap-3">
       <Button
@@ -78,8 +64,8 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
         className="relative hover:bg-transparent cursor-pointer"
         aria-label="Heart"
       >
-        <Heart className={cn(`size-5`, textColor)} />
-        <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white/90">
+        <Heart className={cn(`size-5 text-white/92`, textColor)} />
+        <span className="absolute -right-1 -top-1 w-4.5 h-4.5 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-white/92">
           2
         </span>
       </Button>
@@ -90,8 +76,8 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
         className="relative hover:bg-transparent cursor-pointer"
         aria-label="Bell"
       >
-        <Bell className={cn(`size-5`, textColor)} />
-        <span className="absolute -right-1 -top-1 rounded-full bg-primary px-1.5 text-xs text-white">
+        <Bell className={cn(`size-5 text-white/92`, textColor)} />
+        <span className="absolute -right-1 -top-1 w-4.5 h-4.5 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-white/92">
           2
         </span>
       </Button>
@@ -121,7 +107,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
                 {user.name?.charAt(0).toUpperCase() || "U"}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuContent align="end" className="w-45">
               <DropdownMenuGroup>
                 <DropdownMenuItem
                   className="py-2 text-foreground cursor-pointer rounded-none"
@@ -155,13 +141,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="py-2 text-red-500 cursor-pointer rounded-none"
-                onClick={logout}
-              >
-                <LogOut />
-                {t("Logout")}
-              </DropdownMenuItem>
+              <LogoutBtn className="h-10" />
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
@@ -201,32 +181,35 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
         </SheetTrigger>
         <SheetContent showCloseButton={true}>
           <SheetHeader>
-            <SheetTitle className="border-b-2 border-border py-2 -mx-4 px-4 font-heading text-lg font-semibold">
+            <SheetTitle className="border-b border-border py-3 -mx-4 px-4 font-heading text-xl font-semibold">
               Blúme Petals
             </SheetTitle>
-            <SheetDescription className="py-4 flex flex-col gap-4">
-              {sidebarNavItems.map((item) => (
-                <SheetClose asChild key={item.href}>
-                  <SidebarNavLink label={t(item.label)} href={item.href} />
-                </SheetClose>
-              ))}
-
-              {user && (
-                <>
-                  <Separator />
-
-                  {sidebarUserNavItems.map((item) => (
-                    <SheetClose asChild key={item.href}>
-                      <SidebarNavLink
-                        label={tAccount(item.label)}
-                        href={item.href}
-                      />
-                    </SheetClose>
-                  ))}
-                </>
-              )}
-            </SheetDescription>
           </SheetHeader>
+          <div className="flex flex-col gap-4 px-4">
+            {sidebarNavItems.map((item) => (
+              <SheetClose asChild key={item.href}>
+                <SidebarNavLink label={t(item.label)} href={item.href} />
+              </SheetClose>
+            ))}
+
+            {user && (
+              <>
+                <Separator />
+                {sidebarUserNavItems.map((item) => (
+                  <SheetClose asChild key={item.href}>
+                    <SidebarNavLink
+                      label={tAccount(item.label)}
+                      href={item.href}
+                    />
+                  </SheetClose>
+                ))}
+              </>
+            )}
+          </div>
+
+          <SheetFooter className="border-t border-border px-4 py-3">
+            <LogoutBtn className="border border-red-300 rounded-full" />
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>

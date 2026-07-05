@@ -26,7 +26,7 @@ export default function HeaderNavLink({
         after:absolute
         after:inset-s-0
         after:-bottom-1
-        after:h-0.5
+        after:h-[0.2px]
         after:w-full
         after:origin-left
         after:scale-x-0
@@ -37,7 +37,7 @@ export default function HeaderNavLink({
         hover:after:scale-x-100
 
         ${isActive ? "text-primary" : ""} 
-        ${scrolled || pathname !== "/" ? "text-foreground" : "text-white/90"}
+        ${scrolled || pathname !== "/" ? "text-foreground" : "text-white/92"}
       `}
       href={href}
     >

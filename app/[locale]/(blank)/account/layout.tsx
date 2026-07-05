@@ -6,9 +6,9 @@ import SidebarNavItem from "@/components/account/sidebar-nav-item";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import LogoutBtn from "@/components/account/logout-btn";
 import { links } from "@/constants/account";
 import { getTranslations, getLocale } from "next-intl/server";
+import LogoutBtn from "@/components/reusable/logout-btn";
 
 export default async function AccountLayout({
   children,
@@ -21,7 +21,7 @@ export default async function AccountLayout({
 
   return (
     <div className="container max-w-7xl py-8 md:py-16">
-      <div className="grid items-start grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="grid items-start grid-cols-1 md:grid-cols-4 gap-4 lg:gap-8">
         <div className="block md:hidden">
           <BackToHomeButton />
         </div>
