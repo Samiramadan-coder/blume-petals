@@ -477,6 +477,9 @@
       "SetAsDefaultSuccess": "Address set as default successfully",
       "SetAsDefaultError": "Failed to set address as default.",
       "NoAddresses": "No saved addresses found. Please add a new address."
+    },
+    "Orders": {
+      "Title": "My Orders"
     }
   }
 }
