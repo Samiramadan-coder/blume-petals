@@ -9,14 +9,21 @@ import { Link } from "@/i18n/navigation";
 import { links } from "@/constants/account";
 import { getTranslations, getLocale } from "next-intl/server";
 import LogoutBtn from "@/components/reusable/logout-btn";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function AccountLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const t = await getTranslations("Account");
+  const cookieStore = await cookies();
 
+  if (!cookieStore.get("token")) {
+    return redirect("/login");
+  }
+
+  const t = await getTranslations("Account");
   const { data } = await http.get<UserResponse>("/api/v1/auth/me");
 
   return (
