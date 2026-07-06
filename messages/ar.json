@@ -4,9 +4,33 @@
     "Delete": "حذف"
   },
   "Fields": {
-    "Labels": {},
-    "Placeholders": {},
-    "Errors": {}
+    "Labels": {
+      "FullName": "الاسم الكامل",
+      "Email": "البريد الإلكتروني",
+      "Phone": "رقم الهاتف",
+      "Password": "كلمة المرور",
+      "ConfirmPassword": "تأكيد كلمة المرور"
+    },
+    "Placeholders": {
+      "FullName": "أدخل الاسم الكامل",
+      "Email": "أدخل البريد الإلكتروني",
+      "Phone": "أدخل رقم الهاتف",
+      "Password": "أدخل كلمة المرور",
+      "ConfirmPassword": "أدخل تأكيد كلمة المرور"
+    },
+    "Errors": {
+      "FullNameIsRequired": "الاسم الكامل مطلوب",
+      "FullNameIsTooShort": "يجب أن يكون الاسم الكامل على الأقل حرفين",
+      "EmailIsInvalid": "البريد الإلكتروني غير صالح",
+      "PhoneIsInvalid": "رقم الهاتف غير صالح",
+      "PasswordIsRequired": "كلمة المرور مطلوبة",
+      "PasswordIsTooShort": "يجب أن تكون كلمة المرور على الأقل 8 أحرف",
+      "PasswordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+      "PasswordConfirmationIsRequired": "تأكيد كلمة المرور مطلوب",
+      "PasswordConfirmationIsTooShort": "يجب أن يكون تأكيد كلمة المرور على الأقل 8 أحرف",
+      "OTPIsRequired": "رمز التحقق مطلوب",
+      "InvalidOTP": "رمز التحقق غير صالح. يرجى المحاولة مرة أخرى."
+    }
   },
   "AppHeader": {
     "Home": "الرئيسية",
@@ -284,13 +308,6 @@
     }
   },
   "Login": {
-    "invalidEmail": "البريد الإلكتروني غير صالح",
-    "passwordIsRequired": "كلمة المرور مطلوبة",
-    "invalidPassword": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
-    "invalidPhone": "رقم الهاتف غير صالح",
-    "phoneIsRequired": "رقم الهاتف مطلوب",
-    "invalidOTP": "رمز التحقق غير صالح. يرجى المحاولة مرة أخرى.",
-    "otpIsRequired": "رمز التحقق مطلوب",
     "WelcomeBack": "أهلا وسهلا",
     "SignInDescription": "قم بتسجيل الدخول إلى حسابك",
     "EmailTab": "البريد الإلكتروني",
@@ -300,14 +317,8 @@
     "Apple": "أبل",
     "NoAccount": "ليس لديك حساب؟",
     "SignUp": "إنشاء حساب",
-    "EmailLabel": "عنوان البريد الإلكتروني",
-    "EmailPlaceholder": "عنوان البريد الإلكتروني",
-    "PasswordLabel": "كلمة المرور",
-    "ForgotPassword": "هل نسيت كلمة المرور؟",
     "SignInButton": "تسجيل الدخول",
     "SignInSuccess": "تم تسجيل الدخول بنجاح",
-    "PhoneLabel": "الهاتف",
-    "PhonePlaceholder": "50 123 4567",
     "SendOTP": "إرسال رمز التحقق",
     "OTPSentSuccess": "تم إرسال رمز التحقق بنجاح. يرجى التحقق من هاتفك.",
     "OTPSentFailed": "فشل إرسال رمز التحقق",
@@ -316,27 +327,12 @@
     "VerifyOTP": "التحقق",
     "InvalidOTP": "رمز التحقق غير صحيح. يرجى المحاولة مرة أخرى.",
     "SignInError": "فشل تسجيل الدخول. يرجى التحقق من بيانات الاعتماد الخاصة بك والمحاولة مرة أخرى.",
-    "PasswordPlaceholder": "كلمة المرور"
+    "PasswordPlaceholder": "كلمة المرور",
+    "ForgotPassword": "هل نسيت كلمة المرور؟"
   },
   "Register": {
-    "nameIsRequired": "الاسم الكامل مطلوب",
-    "emailIsInvalid": "البريد الإلكتروني غير صالح",
-    "phoneIsRequired": "رقم الهاتف مطلوب",
-    "passwordIsRequired": "كلمة المرور 8 حروف على الأقل",
-    "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
-    "passwordConfirmationIsRequired": "تأكيد كلمة المرور 8 حروف على الأقل",
     "CreateAccountTitle": "إنشاء حساب",
     "JoinMessage": "انضم إلى بلومي بيتالز اليوم",
-    "FullNameLabel": "الاسم الكامل",
-    "FullNamePlaceholder": "الاسم الكامل",
-    "EmailLabel": "البريد الإلكتروني",
-    "EmailPlaceholder": "البريد الإلكتروني",
-    "PhoneLabel": "الهاتف",
-    "PhonePlaceholder": "50 123 4567",
-    "PasswordLabel": "كلمة المرور",
-    "PasswordPlaceholder": "كلمة المرور",
-    "ConfirmPasswordLabel": "تأكيد كلمة المرور",
-    "ConfirmPasswordPlaceholder": "تأكيد كلمة المرور",
     "AgreeText": "بالتسجيل، فإنك توافق على",
     "And": "و",
     "TermsConditions": "الشروط والأحكام",
@@ -353,30 +349,15 @@
     "GoogleLoginFailed": "فشل تسجيل الدخول باستخدام جوجل. يرجى المحاولة مرة أخرى."
   },
   "ForgotPassword": {
-    "invalidEmail": "البريد الإلكتروني غير صالح",
     "Title": "هل نسيت كلمة المرور؟",
     "Description": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة تعيين.",
-    "EmailLabel": "عنوان البريد الإلكتروني",
-    "EmailPlaceholder": "عنوان البريد الإلكتروني",
     "SendResetLink": "إرسال رابط إعادة التعيين",
     "BackToSignIn": "العودة لتسجيل الدخول",
     "ResetLinkSent": "تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني.",
     "SomethingWrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
   },
   "ResetPassword": {
-    "invalidEmail": "البريد الإلكتروني غير صالح",
-    "invalidPassword": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
-    "passwordIsRequired": "كلمة المرور مطلوبة",
-    "invalidPasswordConfirmation": "تأكيد كلمة المرور يجب أن تكون 8 أحرف على الأقل",
-    "passwordConfirmationIsRequired": "تأكيد كلمة المرور مطلوب",
-    "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
     "Title": "إعادة تعيين كلمة المرور",
-    "EmailLabel": "البريد الإلكتروني",
-    "EmailPlaceholder": "أدخل بريدك الإلكتروني",
-    "PasswordLabel": "كلمة المرور",
-    "PasswordPlaceholder": "أدخل كلمة المرور الجديدة",
-    "ConfirmPasswordLabel": "تأكيد كلمة المرور",
-    "ConfirmPasswordPlaceholder": "أعد إدخال كلمة المرور الجديدة",
     "ResetPasswordButton": "إعادة تعيين كلمة المرور",
     "ResetSuccess": "تم إعادة تعيين كلمة المرور بنجاح. يرجى تسجيل الدخول باستخدام كلمة المرور الجديدة.",
     "ResetError": "حدث خطأ أثناء إعادة تعيين كلمة المرور. يرجى المحاولة مرة أخرى."

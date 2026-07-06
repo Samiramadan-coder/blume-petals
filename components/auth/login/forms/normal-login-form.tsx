@@ -14,6 +14,7 @@ import { LoginForm, LoginResponse, loginSchema } from "@/types/auth";
 
 export default function NormalLoginForm() {
   const t = useTranslations("Login");
+  const tFields = useTranslations("Fields");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,7 +24,7 @@ export default function NormalLoginForm() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema(t)),
+    resolver: zodResolver(loginSchema(tFields)),
   });
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
@@ -57,8 +58,8 @@ export default function NormalLoginForm() {
         name="email"
         register={register}
         errors={errors}
-        label={t("EmailLabel")}
-        placeholder={t("EmailPlaceholder")}
+        label={tFields("Labels.Email")}
+        placeholder={tFields("Placeholders.Email")}
         required
       />
 
@@ -66,8 +67,8 @@ export default function NormalLoginForm() {
         name="password"
         register={register}
         errors={errors}
-        label={t("PasswordLabel")}
-        placeholder={t("PasswordPlaceholder")}
+        label={tFields("Labels.Password")}
+        placeholder={tFields("Placeholders.Password")}
         type={showPassword ? "text" : "password"}
         required
         suffix={

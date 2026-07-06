@@ -36,6 +36,7 @@ import { saveToken } from "@/lib/actions";
 
 export default function PhoneLogin() {
   const t = useTranslations("Login");
+  const tFields = useTranslations("Fields");
   const [openOTP, setOpenOTP] = useState(false);
   const [phone, setPhone] = useState("");
 
@@ -45,7 +46,7 @@ export default function PhoneLogin() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<PhoneLoginForm>({
-    resolver: zodResolver(phoneLoginSchema(t)),
+    resolver: zodResolver(phoneLoginSchema(tFields)),
     defaultValues: {
       phone: "",
     },
@@ -83,8 +84,8 @@ export default function PhoneLogin() {
           register={register}
           name="phone"
           errors={errors}
-          label={t("PhoneLabel")}
-          placeholder={t("PhonePlaceholder")}
+          label={tFields("Labels.Phone")}
+          placeholder={tFields("Placeholders.Phone")}
           prefix="AE +971"
           required
         />
@@ -102,6 +103,7 @@ export default function PhoneLogin() {
 // OTP Verification Dialog Component
 function OTPVerificationDialog({ phone }: { phone: string }) {
   const t = useTranslations("Login");
+  const tFields = useTranslations("Fields");
   const router = useRouter();
 
   const {
@@ -110,7 +112,7 @@ function OTPVerificationDialog({ phone }: { phone: string }) {
     control,
     formState: { errors, isSubmitting },
   } = useForm<OTPForm>({
-    resolver: zodResolver(otpSchema(t)),
+    resolver: zodResolver(otpSchema(tFields)),
   });
 
   const onSubmit: SubmitHandler<OTPForm> = async (data) => {

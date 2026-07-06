@@ -52,21 +52,27 @@ export type RegisterForm = z.infer<ReturnType<typeof registerSchema>>;
  */
 export const loginSchema = (t: T) =>
   z.object({
-    email: z.email(t("invalidEmail")),
+    email: z.email(t("Errors.EmailIsInvalid")),
     password: z
       .string()
-      .min(1, t("passwordIsRequired"))
-      .min(8, t("invalidPassword")),
+      .min(1, t("Errors.PasswordIsRequired"))
+      .min(8, t("Errors.PasswordIsTooShort")),
   });
 
 export const phoneLoginSchema = (t: T) =>
   z.object({
-    phone: z.string().min(1, t("phoneIsRequired")).min(10, t("invalidPhone")),
+    phone: z
+      .string()
+      .trim()
+      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
   });
 
 export const otpSchema = (t: T) =>
   z.object({
-    code: z.string().min(1, t("otpIsRequired")).length(6, t("invalidOTP")),
+    code: z
+      .string()
+      .min(1, t("Errors.OTPIsRequired"))
+      .length(6, t("Errors.InvalidOTP")),
   });
 
 export type LoginForm = z.infer<ReturnType<typeof loginSchema>>;
@@ -86,7 +92,7 @@ export type LoginResponse = {
  */
 export const forgotPasswordSchema = (t: T) =>
   z.object({
-    email: z.email(t("invalidEmail")),
+    email: z.email(t("Errors.EmailIsInvalid")),
   });
 
 export type ForgotPasswordForm = z.infer<
@@ -100,27 +106,27 @@ export type ForgotPasswordForm = z.infer<
 export const resetPasswordSchema = (t: T) =>
   z
     .object({
-      email: z.email(t("invalidEmail")),
+      email: z.email(t("Errors.EmailIsInvalid")),
       password: z
         .string()
-        .min(1, t("passwordIsRequired"))
-        .min(8, t("invalidPassword")),
+        .min(1, t("Errors.PasswordIsRequired"))
+        .min(8, t("Errors.PasswordIsTooShort")),
       password_confirmation: z
         .string()
-        .min(1, t("passwordConfirmationIsRequired"))
-        .min(8, t("invalidPasswordConfirmation")),
+        .min(1, t("Errors.PasswordConfirmationIsRequired"))
+        .min(8, t("Errors.PasswordConfirmationIsTooShort")),
     })
     .superRefine((data, ctx) => {
       if (data.password !== data.password_confirmation) {
         ctx.addIssue({
           code: "custom",
-          message: t("passwordsDoNotMatch"),
+          message: t("Errors.PasswordsDoNotMatch"),
           path: ["password"],
         });
 
         ctx.addIssue({
           code: "custom",
-          message: t("passwordsDoNotMatch"),
+          message: t("Errors.PasswordsDoNotMatch"),
           path: ["password_confirmation"],
         });
       }

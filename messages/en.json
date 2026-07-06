@@ -27,7 +27,9 @@
       "PasswordIsTooShort": "Password must be at least 8 characters",
       "PasswordsDoNotMatch": "Passwords do not match",
       "PasswordConfirmationIsRequired": "Confirm Password is required",
-      "PasswordConfirmationIsTooShort": "Confirm Password must be at least 8 characters"
+      "PasswordConfirmationIsTooShort": "Confirm Password must be at least 8 characters",
+      "OTPIsRequired": "OTP is required",
+      "InvalidOTP": "Invalid OTP. Please try again."
     }
   },
   "AppHeader": {
@@ -306,11 +308,6 @@
     }
   },
   "Login": {
-    "invalidEmail": "Invalid email address",
-    "passwordIsRequired": "Password is required",
-    "invalidPassword": "Password must be at least 8 characters",
-    "invalidPhone": "Invalid phone number",
-    "phoneIsRequired": "Phone number is required",
     "invalidOTP": "Invalid OTP. Please try again.",
     "otpIsRequired": "OTP is required",
     "WelcomeBack": "Welcome Back",
@@ -357,30 +354,15 @@
     "GoogleLoginFailed": "Failed to login with Google. Please try again."
   },
   "ForgotPassword": {
-    "invalidEmail": "Invalid email address",
     "Title": "Forgot Password?",
     "Description": "Enter your email and we'll send you a reset link.",
-    "EmailLabel": "Email Address",
-    "EmailPlaceholder": "Email Address",
     "SendResetLink": "Send Reset Link",
     "BackToSignIn": "Back to Sign In",
     "ResetLinkSent": "Reset link sent to your email.",
     "SomethingWrong": "Something went wrong. Please try again."
   },
   "ResetPassword": {
-    "invalidEmail": "Invalid email address",
-    "passwordIsRequired": "Password is required",
-    "passwordConfirmationIsRequired": "Confirm Password is required",
-    "invalidPassword": "Password must be at least 8 characters",
-    "invalidPasswordConfirmation": "Confirm Password must be at least 8 characters",
-    "passwordsDoNotMatch": "Passwords do not match",
     "Title": "Reset Password",
-    "EmailLabel": "Email",
-    "EmailPlaceholder": "Enter your email",
-    "PasswordLabel": "Password",
-    "PasswordPlaceholder": "Enter your new password",
-    "ConfirmPasswordLabel": "Confirm Password",
-    "ConfirmPasswordPlaceholder": "Re-enter your new password",
     "ResetPasswordButton": "Reset Password",
     "ResetSuccess": "Password reset successful. Please log in with your new password.",
     "ResetError": "An error occurred while resetting the password. Please try again."

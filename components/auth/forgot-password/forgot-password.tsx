@@ -15,6 +15,7 @@ import { ForgotPasswordForm, forgotPasswordSchema } from "@/types/auth";
 
 export default function ForgotPassword() {
   const t = useTranslations("ForgotPassword");
+  const tFields = useTranslations("Fields");
   const locale = useLocale();
 
   const {
@@ -23,7 +24,7 @@ export default function ForgotPassword() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<ForgotPasswordForm>({
-    resolver: zodResolver(forgotPasswordSchema(t)),
+    resolver: zodResolver(forgotPasswordSchema(tFields)),
   });
 
   const onSubmit: SubmitHandler<ForgotPasswordForm> = async (data) => {
@@ -62,8 +63,8 @@ export default function ForgotPassword() {
           register={register}
           name="email"
           errors={errors}
-          label={t("EmailLabel")}
-          placeholder={t("EmailPlaceholder")}
+          label={tFields("Labels.Email")}
+          placeholder={tFields("Placeholders.Email")}
           required
         />
 

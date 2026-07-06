@@ -16,6 +16,7 @@ import { ResetPasswordForm, resetPasswordSchema } from "@/types/auth";
 
 export default function ResetPassword() {
   const t = useTranslations("ResetPassword");
+  const tFields = useTranslations("Fields");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -24,7 +25,7 @@ export default function ResetPassword() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<ResetPasswordForm>({
-    resolver: zodResolver(resetPasswordSchema(t)),
+    resolver: zodResolver(resetPasswordSchema(tFields)),
   });
 
   const onSubmit: SubmitHandler<ResetPasswordForm> = async (data) => {
@@ -63,8 +64,8 @@ export default function ResetPassword() {
           register={register}
           name="email"
           errors={errors}
-          label={t("EmailLabel")}
-          placeholder={t("EmailPlaceholder")}
+          label={tFields("Labels.Email")}
+          placeholder={tFields("Placeholders.Email")}
           required
         />
 
@@ -72,8 +73,8 @@ export default function ResetPassword() {
           register={register}
           name="password"
           errors={errors}
-          label={t("PasswordLabel")}
-          placeholder={t("PasswordPlaceholder")}
+          label={tFields("Labels.Password")}
+          placeholder={tFields("Placeholders.Password")}
           required
           type={showPassword ? "text" : "password"}
           suffix={
@@ -93,8 +94,8 @@ export default function ResetPassword() {
           register={register}
           name="password_confirmation"
           errors={errors}
-          label={t("ConfirmPasswordLabel")}
-          placeholder={t("ConfirmPasswordPlaceholder")}
+          label={tFields("Labels.ConfirmPassword")}
+          placeholder={tFields("Placeholders.ConfirmPassword")}
           required
           type={showPassword ? "text" : "password"}
           suffix={
