@@ -4,7 +4,13 @@ import { http, ValidationError } from "@/lib/http";
 import { Address, AddressFormBody } from "@/types/account";
 import { updateTag } from "next/cache";
 
-type SaveAddressResult =
+/**
+ * Save address and return serializable field errors for the client form.
+ */
+export async function saveAddress(
+  address: Address | null,
+  data: AddressFormBody,
+): Promise<
   | {
       success: true;
     }
@@ -12,15 +18,8 @@ type SaveAddressResult =
       success: false;
       errors?: Partial<Record<keyof AddressFormBody, string>>;
       message?: string;
-    };
-
-/**
- * Save address and return serializable field errors for the client form.
- */
-export async function saveAddress(
-  address: Address | null,
-  data: AddressFormBody,
-): Promise<SaveAddressResult> {
+    }
+> {
   try {
     await http[address ? "put" : "post"](
       `/api/v1/addresses${address ? `/${address.id}` : ""}`,
@@ -47,13 +46,11 @@ export async function saveAddress(
 }
 
 /**
- * Delete Address
+ * Delete Address and return success status.
  */
-type DeleteAddressResult = { success: boolean };
-
 export async function deleteAddress(
   addressId: number,
-): Promise<DeleteAddressResult> {
+): Promise<{ success: boolean }> {
   try {
     await http.delete(`/api/v1/addresses/${addressId}`);
     updateTag("addresses-page");
@@ -65,13 +62,11 @@ export async function deleteAddress(
 }
 
 /**
- * Set Address as Default
+ * Set Address as Default and return success status.
  */
-type SetAsDefaultResult = { success: boolean };
-
 export async function setAddressAsDefault(
   address: Address,
-): Promise<SetAsDefaultResult> {
+): Promise<{ success: boolean }> {
   try {
     await http.put(`/api/v1/addresses/${address.id}`, {
       ...address,
