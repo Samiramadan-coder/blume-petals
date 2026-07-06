@@ -499,6 +499,24 @@
       "Title": "My Designs",
       "SavedDesigns": "Saved Designs",
       "CreateNewDesign": "Create New"
+    },
+    "MYSettings": {
+      "Title": "Settings",
+      "Account": "Account",
+      "EditProfile": "Edit Profile",
+      "SavedAddresses": "Saved Addresses",
+      "PaymentMethods": "Payment Methods",
+      "ChangePassword": "Change Password",
+      "Preferences": "Preferences",
+      "Language": "Language",
+      "EmailNotifications": "Email Notifications",
+      "PushAlerts": "Push Alerts",
+      "SMSAlerts": "SMS Alerts",
+      "Support": "Support",
+      "HelpCenter": "Help Center",
+      "ContactUs": "Contact Us",
+      "PrivacyPolicy": "Privacy Policy",
+      "TermsOfService": "Terms of Service"
     }
   }
 }

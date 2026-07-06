@@ -501,6 +501,24 @@
       "Title": "تصاميمي",
       "SavedDesigns": "التصاميم المحفوظة",
       "createNewDesign": "إنشاء تصميم"
+    },
+    "MYSettings": {
+      "Title": "الإعدادات",
+      "Account": "الحساب",
+      "EditProfile": "تعديل الملف الشخصي",
+      "SavedAddresses": "العناوين المحفوظة",
+      "PaymentMethods": "طرق الدفع",
+      "ChangePassword": "تغيير كلمة المرور",
+      "Preferences": "التفضيلات",
+      "Language": "اللغة",
+      "EmailNotifications": "إشعارات البريد الإلكتروني",
+      "PushAlerts": "تنبيهات الدفع",
+      "SMSAlerts": "تنبيهات الرسائل القصيرة",
+      "Support": "الدعم",
+      "HelpCenter": "مركز المساعدة",
+      "ContactUs": "اتصل بنا",
+      "PrivacyPolicy": "سياسة الخصوصية",
+      "TermsOfService": "شروط الخدمة"
     }
   }
 }

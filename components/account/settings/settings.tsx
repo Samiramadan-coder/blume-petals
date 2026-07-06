@@ -11,42 +11,29 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { getTranslations } from "next-intl/server";
+import {
+  accountItems,
+  preferencesItems,
+  supportItems,
+} from "@/constants/account";
 
-const accountItems = [
-  { title: "Edit Profile", href: "/account/profile" },
-  { title: "Saved Addresses", href: "/account/addresses" },
-  { title: "Payment Methods", href: "/account/payment-methods" },
-  { title: "Change Password", href: "/account/change-password" },
-];
+export default async function Settings() {
+  const t = await getTranslations("Account.MYSettings");
 
-const preferencesItems = [
-  { type: "locale", title: "Language" },
-  { type: "email", title: "Email Notifications" },
-  { type: "push", title: "Push Alerts" },
-  { type: "sms", title: "SMS Alerts" },
-];
-
-const supportItems = [
-  { title: "Help Center", href: "/account/help-center" },
-  { title: "Contact Us", href: "/account/contact-support" },
-  { title: "Privacy Policy", href: "/account/privacy-policy" },
-  { title: "Terms of Service", href: "/account/terms-of-service" },
-];
-
-export default function Settings() {
   return (
     <div className="space-y-6">
-      <PageTitle title="Settings" />
+      <PageTitle title={t("Title")} />
 
       <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)] py-6">
         <CardContent className="space-y-4 px-6">
           <div>
             <h2 className="text-lg font-semibold text-foreground mb-4">
-              Account
+              {t("Account")}
             </h2>
 
             <div className="border border-border rounded-md">
-              {accountItems.map((item) => (
+              {accountItems(t).map((item) => (
                 <Item
                   key={item.href}
                   variant="default"
@@ -72,11 +59,11 @@ export default function Settings() {
 
           <div>
             <h2 className="text-lg font-semibold text-foreground mb-4">
-              Preferences
+              {t("Preferences")}
             </h2>
 
             <div className="border border-border rounded-md">
-              {preferencesItems.map((item) => (
+              {preferencesItems(t).map((item) => (
                 <Item
                   key={item.title}
                   variant="default"
@@ -124,11 +111,11 @@ export default function Settings() {
 
           <div>
             <h2 className="text-lg font-semibold text-foreground mb-4">
-              Support
+              {t("Support")}
             </h2>
 
             <div className="border border-border rounded-md">
-              {supportItems.map((item) => (
+              {supportItems(t).map((item) => (
                 <Item
                   key={item.href}
                   variant="default"
