@@ -27,7 +27,7 @@ export default async function AccountLayout({
   const { data } = await http.get<UserResponse>("/api/v1/auth/me");
 
   return (
-    <div className="container max-w-7xl py-8 md:py-16">
+    <div className="container max-w-7xl py-8 md:py-12">
       <div className="grid items-start grid-cols-1 md:grid-cols-4 gap-4 lg:gap-8">
         <div className="block md:hidden">
           <BackToHomeButton />
