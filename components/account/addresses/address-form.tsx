@@ -75,7 +75,6 @@ export default function AddressForm({
   });
 
   const onSubmit = async (data: AddressFormBody) => {
-    console.log("Submitting address form with data:", data);
     const result = await saveAddress(address ?? null, data);
 
     if (result.success) {

@@ -35,7 +35,6 @@ export default function Register() {
     try {
       await http.post("/api/v1/auth/register", {
         ...data,
-        phone: `+971${data.phone}`,
         locale,
       });
       toast.success(t("CreateAccountSuccess"));

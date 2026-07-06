@@ -54,7 +54,7 @@ export default function PhoneLogin() {
   const onSubmit: SubmitHandler<PhoneLoginForm> = async (data) => {
     try {
       await http.post("/api/v1/auth/otp/request", {
-        phone: `+971${data.phone}`,
+        ...data,
         purpose: "login",
       });
 

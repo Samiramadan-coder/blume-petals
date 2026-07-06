@@ -1,22 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import { http, ValidationError } from "@/lib/http";
-import { Button } from "../../ui/button";
-import { User } from "@/types/shared";
-import { Spinner } from "../../ui/spinner";
-import { useRef, useState } from "react";
-import { Separator } from "../../ui/separator";
-import { Pencil, Upload } from "lucide-react";
-import { Card, CardContent } from "../../ui/card";
 import { toast } from "sonner";
-import FormInput from "../../reusable/form/form-input";
+import { User } from "@/types/shared";
+import { Button } from "../../ui/button";
+import { useRef, useState } from "react";
+import { Spinner } from "../../ui/spinner";
+import { useTranslations } from "next-intl";
+import PageTitle from "../shared/page-title";
+import { Pencil, Upload } from "lucide-react";
+import { Separator } from "../../ui/separator";
+import { Card, CardContent } from "../../ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { updateProfile } from "@/lib/account-actions";
+import FormInput from "../../reusable/form/form-input";
 import { Account, accountSchema } from "@/types/account";
 import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
-import { useTranslations } from "next-intl";
-import PageTitle from "../shared/page-title";
 
 export default function ProfileForm({ user }: { user: User }) {
   const t = useTranslations("Account.Profile");
@@ -35,27 +35,31 @@ export default function ProfileForm({ user }: { user: User }) {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      photo_path: user?.photo_path || "",
     },
   });
 
   const onSubmit: SubmitHandler<Account> = async (data) => {
-    try {
-      await http.put("/api/v1/auth/me", data);
+    const result = await updateProfile(data);
+
+    if (result.success) {
       toast.success(t("SaveChanges"));
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        Object.entries(error.errors).forEach(([field, messages]) => {
-          toast.error(messages[0]);
-          setError(field as keyof Account, {
-            type: "server",
-            message: messages[0],
-          });
-        });
-      } else {
-        console.error("Failed to update profile:", error);
-        toast.error("Error updating profile");
-      }
+      setEditMode(false);
+      return;
     }
+
+    if (result.success === false && result.errors) {
+      Object.entries(result.errors).forEach(([field, message]) => {
+        toast.error(message);
+        setError(field as keyof Account, {
+          type: "server",
+          message,
+        });
+      });
+      return;
+    }
+
+    toast.error("Error updating profile");
   };
 
   const name = useWatch({

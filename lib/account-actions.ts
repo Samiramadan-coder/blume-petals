@@ -1,7 +1,7 @@
 "use server";
 
 import { http, ValidationError } from "@/lib/http";
-import { Address, AddressFormBody } from "@/types/account";
+import { Account, Address, AddressFormBody } from "@/types/account";
 import { updateTag } from "next/cache";
 
 /**
@@ -17,7 +17,6 @@ export async function saveAddress(
   | {
       success: false;
       errors?: Partial<Record<keyof AddressFormBody, string>>;
-      message?: string;
     }
 > {
   try {
@@ -41,7 +40,7 @@ export async function saveAddress(
       return { success: false, errors };
     }
 
-    return { success: false, message: "Failed to save address" };
+    return { success: false };
   }
 }
 
@@ -76,6 +75,45 @@ export async function setAddressAsDefault(
     return { success: true };
   } catch (error) {
     console.error("Error setting address as default:", error);
+    return { success: false };
+  }
+}
+
+/**
+ * update Profile and return serializable field errors for the client form.
+ */
+export async function updateProfile(data: Account): Promise<
+  | {
+      success: true;
+    }
+  | {
+      success: false;
+      errors?: Partial<Record<keyof Account, string>>;
+    }
+> {
+  const formData = new FormData();
+
+  for (const key in data) {
+    if (data[key as keyof Account] !== undefined) {
+      formData.append(key, data[key as keyof Account] as string);
+    }
+  }
+
+  try {
+    await http.put("/api/v1/auth/me", formData);
+    updateTag("profile-page");
+    return { success: true };
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      const errors = Object.fromEntries(
+        Object.entries(err.errors).map(([field, messages]) => [
+          field,
+          messages[0] ?? "Invalid value",
+        ]),
+      ) as Partial<Record<keyof Account, string>>;
+      return { success: false, errors };
+    }
+
     return { success: false };
   }
 }
