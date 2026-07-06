@@ -64,7 +64,7 @@ export default function ProfileForm({ user }: { user: User }) {
   });
 
   return (
-    <>
+    <div className="space-y-6">
       <PageTitle title={t("Title")}>
         <Button
           className="cursor-pointer"
@@ -220,6 +220,6 @@ export default function ProfileForm({ user }: { user: User }) {
           </form>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }

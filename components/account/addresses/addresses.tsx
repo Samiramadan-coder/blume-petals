@@ -18,7 +18,7 @@ export default async function Addresses({
   const t = await getTranslations("Account.Address");
 
   return (
-    <>
+    <div className="space-y-6">
       <PageTitle title={t("Title")}>
         <AddressForm />
       </PageTitle>
@@ -108,6 +108,6 @@ export default async function Addresses({
           </CardContent>
         </Card>
       )}
-    </>
+    </div>
   );
 }

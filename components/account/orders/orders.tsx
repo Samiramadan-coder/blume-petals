@@ -16,7 +16,7 @@ export default async function Orders() {
   const t = await getTranslations("Account.Orders");
 
   return (
-    <>
+    <div className="space-y-6">
       <PageTitle title={t("Title")} />
 
       <Tabs defaultValue="all">
@@ -53,6 +53,6 @@ export default async function Orders() {
           <OrderCard />
         </TabsContent>
       </Tabs>
-    </>
+    </div>
   );
 }
