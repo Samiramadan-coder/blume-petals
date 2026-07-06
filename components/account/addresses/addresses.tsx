@@ -8,6 +8,7 @@ import { MapPin, Pencil, Trash2 } from "lucide-react";
 import DeleteAddress from "./delete-address";
 import { getTranslations } from "next-intl/server";
 import AddressAsDefault from "./address-as-default";
+import PageTitle from "../shared/page-title";
 
 export default async function Addresses({
   addresses,
@@ -18,13 +19,9 @@ export default async function Addresses({
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <h1 className="text-xl md:text-3xl font-bold text-foreground font-heading">
-          {t("Title")}
-        </h1>
-
+      <PageTitle title={t("Title")}>
         <AddressForm />
-      </div>
+      </PageTitle>
 
       {addresses.length > 0 ? (
         <div className="space-y-4">

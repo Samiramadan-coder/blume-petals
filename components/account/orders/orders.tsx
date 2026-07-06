@@ -1,6 +1,7 @@
 import OrderCard from "./order-card";
 import { getTranslations } from "next-intl/server";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import PageTitle from "../shared/page-title";
 
 const filters = [
   { label: "All", value: "all" },
@@ -16,11 +17,7 @@ export default async function Orders() {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <h1 className="text-xl md:text-3xl font-bold text-foreground font-heading">
-          {t("Title")}
-        </h1>
-      </div>
+      <PageTitle title={t("Title")} />
 
       <Tabs defaultValue="all">
         <TabsList className="mb-6 bg-transparent flex-wrap h-auto! gap-2">

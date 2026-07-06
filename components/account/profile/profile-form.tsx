@@ -16,6 +16,7 @@ import { Account, accountSchema } from "@/types/account";
 import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import PageTitle from "../shared/page-title";
 
 export default function ProfileForm({ user }: { user: User }) {
   const t = useTranslations("Account.Profile");
@@ -64,11 +65,7 @@ export default function ProfileForm({ user }: { user: User }) {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <h1 className="text-xl md:text-3xl font-bold text-foreground font-heading">
-          {t("Title")}
-        </h1>
-
+      <PageTitle title={t("Title")}>
         <Button
           className="cursor-pointer"
           variant="ghost"
@@ -76,7 +73,7 @@ export default function ProfileForm({ user }: { user: User }) {
         >
           <Pencil className="text-primary size-5" />
         </Button>
-      </div>
+      </PageTitle>
 
       <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6">
         <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">

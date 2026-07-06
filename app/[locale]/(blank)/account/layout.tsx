@@ -2,7 +2,7 @@ import { http } from "@/lib/http";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { UserResponse } from "@/components/reusable/app-header";
-import SidebarNavItem from "@/components/account/sidebar-nav-item";
+import SidebarNavItem from "@/components/account/shared/sidebar-nav-item";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
