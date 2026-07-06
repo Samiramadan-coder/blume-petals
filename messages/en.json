@@ -497,7 +497,8 @@
     },
     "Designs": {
       "Title": "My Designs",
-      "SavedDesigns": "Saved Designs"
+      "SavedDesigns": "Saved Designs",
+      "CreateNewDesign": "Create New"
     }
   }
 }

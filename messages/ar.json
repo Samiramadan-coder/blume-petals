@@ -499,7 +499,8 @@
     },
     "Designs": {
       "Title": "تصاميمي",
-      "SavedDesigns": "التصاميم المحفوظة"
+      "SavedDesigns": "التصاميم المحفوظة",
+      "createNewDesign": "إنشاء تصميم"
     }
   }
 }
