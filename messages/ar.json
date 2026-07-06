@@ -3,6 +3,11 @@
     "Close": "إغلاق",
     "Delete": "حذف"
   },
+  "Fields": {
+    "Labels": {},
+    "Placeholders": {},
+    "Errors": {}
+  },
   "AppHeader": {
     "Home": "الرئيسية",
     "Shop": "المتجر",

@@ -19,16 +19,18 @@ import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
 
 export default function Register() {
   const t = useTranslations("Register");
+  const tFields = useTranslations("Fields");
   const locale = useLocale();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
   } = useForm<RegisterForm>({
-    resolver: zodResolver(registerSchema(t)),
+    resolver: zodResolver(registerSchema(tFields)),
   });
 
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
@@ -69,8 +71,8 @@ export default function Register() {
           register={register}
           name="name"
           errors={errors}
-          label={t("FullNameLabel")}
-          placeholder={t("FullNamePlaceholder")}
+          label={tFields("Labels.FullName")}
+          placeholder={tFields("Placeholders.FullName")}
           required
         />
 
@@ -78,8 +80,8 @@ export default function Register() {
           register={register}
           name="email"
           errors={errors}
-          label={t("EmailLabel")}
-          placeholder={t("EmailPlaceholder")}
+          label={tFields("Labels.Email")}
+          placeholder={tFields("Placeholders.Email")}
           required
         />
 
@@ -87,8 +89,8 @@ export default function Register() {
           register={register}
           name="phone"
           errors={errors}
-          label={t("PhoneLabel")}
-          placeholder={t("PhonePlaceholder")}
+          label={tFields("Labels.Phone")}
+          placeholder={tFields("Placeholders.Phone")}
           required
           prefix="AE +971"
         />
@@ -97,8 +99,8 @@ export default function Register() {
           register={register}
           name="password"
           errors={errors}
-          label={t("PasswordLabel")}
-          placeholder={t("PasswordPlaceholder")}
+          label={tFields("Labels.Password")}
+          placeholder={tFields("Placeholders.Password")}
           required
           type={showPassword ? "text" : "password"}
           suffix={
@@ -118,8 +120,8 @@ export default function Register() {
           register={register}
           name="password_confirmation"
           errors={errors}
-          label={t("ConfirmPasswordLabel")}
-          placeholder={t("ConfirmPasswordPlaceholder")}
+          label={tFields("Labels.ConfirmPassword")}
+          placeholder={tFields("Placeholders.ConfirmPassword")}
           required
           type={showPassword ? "text" : "password"}
           suffix={

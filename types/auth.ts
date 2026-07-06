@@ -10,25 +10,35 @@ type T = (key: string) => string;
 export const registerSchema = (t: T) =>
   z
     .object({
-      name: z.string().min(2, t("nameIsRequired")),
-      email: z.email(t("emailIsInvalid")),
-      phone: z.string().min(10, t("phoneIsRequired")),
-      password: z.string().min(8, t("passwordIsRequired")),
+      name: z
+        .string()
+        .min(1, t("Errors.FullNameIsRequired"))
+        .min(2, t("Errors.FullNameIsTooShort")),
+      email: z.email(t("Errors.EmailIsInvalid")),
+      phone: z
+        .string()
+        .trim()
+        .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+      password: z
+        .string()
+        .min(1, t("Errors.PasswordIsRequired"))
+        .min(8, t("Errors.PasswordIsTooShort")),
       password_confirmation: z
         .string()
-        .min(8, t("passwordConfirmationIsRequired")),
+        .min(1, t("Errors.PasswordConfirmationIsRequired"))
+        .min(8, t("Errors.PasswordConfirmationIsTooShort")),
     })
     .superRefine((data, ctx) => {
       if (data.password !== data.password_confirmation) {
         ctx.addIssue({
           code: "custom",
-          message: t("passwordsDoNotMatch"),
+          message: t("Errors.PasswordsDoNotMatch"),
           path: ["password"],
         });
 
         ctx.addIssue({
           code: "custom",
-          message: t("passwordsDoNotMatch"),
+          message: t("Errors.PasswordsDoNotMatch"),
           path: ["password_confirmation"],
         });
       }

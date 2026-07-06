@@ -3,6 +3,33 @@
     "Close": "Close",
     "Delete": "Delete"
   },
+  "Fields": {
+    "Labels": {
+      "FullName": "Full Name",
+      "Email": "Email",
+      "Phone": "Phone",
+      "Password": "Password",
+      "ConfirmPassword": "Confirm Password"
+    },
+    "Placeholders": {
+      "FullName": "Enter Full Name",
+      "Email": "Enter Email",
+      "Phone": "Enter Phone Number",
+      "Password": "Enter Password",
+      "ConfirmPassword": "Enter Confirm Password"
+    },
+    "Errors": {
+      "FullNameIsRequired": "Full Name is required",
+      "FullNameIsTooShort": "Full Name must be at least 2 characters",
+      "EmailIsInvalid": "Invalid email address",
+      "PhoneIsInvalid": "Invalid phone number",
+      "PasswordIsRequired": "Password is required",
+      "PasswordIsTooShort": "Password must be at least 8 characters",
+      "PasswordsDoNotMatch": "Passwords do not match",
+      "PasswordConfirmationIsRequired": "Confirm Password is required",
+      "PasswordConfirmationIsTooShort": "Confirm Password must be at least 8 characters"
+    }
+  },
   "AppHeader": {
     "Home": "Home",
     "Shop": "Shop",
@@ -313,24 +340,8 @@
     "PasswordPlaceholder": "Password"
   },
   "Register": {
-    "nameIsRequired": "Full Name is required",
-    "emailIsInvalid": "Invalid email address",
-    "phoneIsRequired": "Phone number is required",
-    "passwordIsRequired": "Password must be at least 8 characters",
-    "passwordsDoNotMatch": "Passwords do not match",
-    "passwordConfirmationIsRequired": "Confirm Password must be at least 8 characters",
     "CreateAccountTitle": "Create Account",
     "JoinMessage": "Join Blúme Petals today",
-    "FullNameLabel": "Full Name",
-    "FullNamePlaceholder": "Full Name",
-    "EmailLabel": "Email",
-    "EmailPlaceholder": "Email",
-    "PhoneLabel": "Phone",
-    "PhonePlaceholder": "50 123 4567",
-    "PasswordLabel": "Password",
-    "PasswordPlaceholder": "Password",
-    "ConfirmPasswordLabel": "Confirm Password",
-    "ConfirmPasswordPlaceholder": "Confirm Password",
     "AgreeText": "By registering you agree to our",
     "And": "and",
     "TermsConditions": "Terms & Conditions",
