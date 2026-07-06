@@ -9,5 +9,6 @@ export default async function AddressesPage() {
       tags: ["addresses-page"],
     },
   });
+
   return <Addresses addresses={data.data.items} />;
 }

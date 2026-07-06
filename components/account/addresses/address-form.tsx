@@ -43,6 +43,7 @@ export default function AddressForm({
   trigger?: React.ReactNode;
   buttonClassName?: string;
 }) {
+  console.log(address);
   const t = useTranslations("Account.Address");
   const closeBtn = useRef<HTMLButtonElement>(null);
   const addresses: AddressLabel[] = ["Home", "Work", "Other"];
@@ -74,6 +75,7 @@ export default function AddressForm({
   });
 
   const onSubmit = async (data: AddressFormBody) => {
+    console.log("Submitting address form with data:", data);
     const result = await saveAddress(address ?? null, data);
 
     if (result.success) {
