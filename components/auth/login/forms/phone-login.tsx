@@ -46,12 +46,15 @@ export default function PhoneLogin() {
     formState: { errors, isSubmitting },
   } = useForm<PhoneLoginForm>({
     resolver: zodResolver(phoneLoginSchema(t)),
+    defaultValues: {
+      phone: "",
+    },
   });
 
   const onSubmit: SubmitHandler<PhoneLoginForm> = async (data) => {
     try {
       await http.post("/api/v1/auth/otp/request", {
-        ...data,
+        phone: `+971${data.phone}`,
         purpose: "login",
       });
 

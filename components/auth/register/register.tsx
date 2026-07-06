@@ -33,7 +33,11 @@ export default function Register() {
 
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
     try {
-      await http.post("/api/v1/auth/register", { ...data, locale });
+      await http.post("/api/v1/auth/register", {
+        ...data,
+        phone: `+971${data.phone}`,
+        locale,
+      });
       toast.success(t("CreateAccountSuccess"));
       router.push("/login");
     } catch (err) {
