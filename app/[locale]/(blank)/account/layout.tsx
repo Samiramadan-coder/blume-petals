@@ -33,7 +33,7 @@ export default async function AccountLayout({
           <BackToHomeButton />
         </div>
 
-        <Card className="shadow-sm py-6">
+        <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)] py-6">
           <CardContent className="flex flex-col items-center gap-4 px-6">
             <div className="flex flex-col items-center gap-3">
               <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-xl font-semibold">

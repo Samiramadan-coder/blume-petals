@@ -18,7 +18,7 @@ export default async function OrderCard() {
 
   return (
     <Collapsible>
-      <Card className="shadow-sm">
+      <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
         <CardContent className="px-0">
           <div className="flex gap-4 items-start px-4 md:px-6">
             <div>

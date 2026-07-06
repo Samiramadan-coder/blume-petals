@@ -92,7 +92,7 @@ export default function ProfileForm({ user }: { user: User }) {
         </div>
       </div>
 
-      <Card className="shadow-sm">
+      <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
         <CardContent>
           <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
             <FormInput

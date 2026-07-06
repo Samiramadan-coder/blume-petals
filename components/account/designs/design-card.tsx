@@ -6,7 +6,7 @@ import { Heart, Pencil, ShoppingCart } from "lucide-react";
 
 export default function DesignCard() {
   return (
-    <Card className="overflow-hidden rounded-[20px] bg-white p-0 shadow-sm">
+    <Card className="overflow-hidden p-0 shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
       <div className="relative h-70">
         <Image
           src="/images/home/how-it-works/2.png"

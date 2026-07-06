@@ -38,7 +38,7 @@ export default function Settings() {
     <div className="space-y-6">
       <PageTitle title="Settings" />
 
-      <Card className="shadow-sm bg-white py-6">
+      <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)] py-6">
         <CardContent className="space-y-4 px-6">
           <div>
             <h2 className="text-lg font-semibold text-foreground mb-4">

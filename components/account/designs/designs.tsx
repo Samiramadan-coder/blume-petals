@@ -18,7 +18,7 @@ export default async function Designs() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {[...Array(3)].map((_, index) => (
+        {[...Array(6)].map((_, index) => (
           <DesignCard key={index} />
         ))}
 
