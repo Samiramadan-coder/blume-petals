@@ -1,3 +1,6 @@
+import { Bell, Globe, Mail, MessageSquare } from "lucide-react";
+import { createElement } from "react";
+
 type T = (key: string) => string;
 
 export const links = (t: T) => [
@@ -31,10 +34,26 @@ export const accountItems = (t: T) => [
 ];
 
 export const preferencesItems = (t: T) => [
-  { title: t("Language"), type: "locale" },
-  { title: t("EmailNotifications"), type: "email" },
-  { title: t("PushAlerts"), type: "push" },
-  { title: t("SMSAlerts"), type: "sms" },
+  {
+    title: t("Language"),
+    type: "locale",
+    icon: createElement(Globe, { className: "size-5 text-primary" }),
+  },
+  {
+    title: t("EmailNotifications"),
+    type: "email",
+    icon: createElement(Mail, { className: "size-5 text-primary" }),
+  },
+  {
+    title: t("PushAlerts"),
+    type: "push",
+    icon: createElement(Bell, { className: "size-5 text-primary" }),
+  },
+  {
+    title: t("SMSAlerts"),
+    type: "sms",
+    icon: createElement(MessageSquare, { className: "size-5 text-primary" }),
+  },
 ];
 
 export const supportItems = (t: T) => [

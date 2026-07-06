@@ -2,6 +2,7 @@ import {
   Item,
   ItemActions,
   ItemContent,
+  ItemMedia,
   ItemTitle,
 } from "@/components/ui/item";
 import { Link } from "@/i18n/navigation";
@@ -72,6 +73,8 @@ export default async function Settings() {
                   asChild
                 >
                   <div>
+                    <ItemMedia>{item.icon}</ItemMedia>
+
                     <ItemContent>
                       <ItemTitle className="text-foreground text-sm md:text-base">
                         {item.title}

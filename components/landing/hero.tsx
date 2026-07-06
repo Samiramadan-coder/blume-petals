@@ -39,7 +39,7 @@ export default async function Hero() {
         fill
         priority
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 75vw"
-        className="absolute inset-0 -z-30 object-cover object-center"
+        className="absolute inset-0 -z-30 object-cover object-center animate-hero-zoom"
       />
 
       <div className="absolute inset-0 -z-20 bg-[linear-gradient(to_top,rgba(20,12,0,0.82)_0%,rgba(20,12,0,0.4)_40%,rgba(20,12,0,0.05)_70%,transparent_100%)]" />
