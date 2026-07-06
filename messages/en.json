@@ -494,6 +494,10 @@
       "RatingError": "Failed to submit rating. Please try again.",
       "MaybeLater": "Maybe Later",
       "RatingRequired": "Please select a rating before submitting."
+    },
+    "Designs": {
+      "Title": "My Designs",
+      "SavedDesigns": "Saved Designs"
     }
   }
 }

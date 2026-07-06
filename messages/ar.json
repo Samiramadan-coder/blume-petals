@@ -496,6 +496,10 @@
       "RatingError": "فشل إرسال التقييم. يرجى المحاولة مرة أخرى.",
       "MaybeLater": "ربما لاحقًا",
       "RatingIsRequired": "التقييم مطلوب"
+    },
+    "Designs": {
+      "Title": "تصاميمي",
+      "SavedDesigns": "التصاميم المحفوظة"
     }
   }
 }
