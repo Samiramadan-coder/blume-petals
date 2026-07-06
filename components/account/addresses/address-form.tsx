@@ -24,15 +24,14 @@ import { Badge } from "../../ui/badge";
 import { Plus } from "lucide-react";
 import { Button } from "../../ui/button";
 import { Spinner } from "../../ui/spinner";
-import { useRouter } from "@/i18n/navigation";
-import { http, ValidationError } from "@/lib/http";
+import { useTranslations } from "next-intl";
+import { saveAddress } from "@/lib/account-actions";
 import FormInput from "../../reusable/form/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormSelect from "../../reusable/form/form-select";
 import FormSwitch from "../../reusable/form/form-switch";
 import { Field, FieldContent, FieldLabel } from "../../ui/field";
-import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import LocationPicker from "../../reusable/form/location-picker";
 
 export default function AddressForm({
@@ -45,7 +44,6 @@ export default function AddressForm({
   buttonClassName?: string;
 }) {
   const t = useTranslations("Account.Address");
-  const router = useRouter();
   const closeBtn = useRef<HTMLButtonElement>(null);
   const addresses: AddressLabel[] = ["Home", "Work", "Other"];
   const form = useRef<HTMLFormElement>(null);
@@ -75,30 +73,31 @@ export default function AddressForm({
     },
   });
 
-  const onSubmit: SubmitHandler<AddressFormBody> = async (data) => {
-    try {
-      await http[address ? "put" : "post"](
-        `/api/v1/addresses${address ? `/${address.id}` : ""}`,
-        data,
-      );
+  const onSubmit = async (data: AddressFormBody) => {
+    const result = await saveAddress(address ?? null, data);
+
+    if (result.success) {
       toast.success(
         address ? t("UpdatedSuccessfully") : t("AddedSuccessfully"),
       );
       closeBtn.current?.click();
-      router.refresh();
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        Object.entries(err.errors).forEach(([field, messages]) => {
-          toast.error(messages[0]);
-          setError(field as keyof AddressFormBody, {
-            type: "server",
-            message: messages[0],
-          });
-        });
-      } else {
-        toast.error(t("ErrorUploading"));
-      }
+      return;
     }
+
+    if (result.errors) {
+      Object.entries(result.errors).forEach(([field, message]) => {
+        if (!message) return;
+
+        setError(field as keyof AddressFormBody, {
+          type: "server",
+          message,
+        });
+      });
+
+      return;
+    }
+
+    toast.error(t("ErrorUploading"));
   };
 
   const watchLatitude = useWatch({
