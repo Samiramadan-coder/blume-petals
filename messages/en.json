@@ -1,4 +1,8 @@
 {
+  "Actions": {
+    "Close": "Close",
+    "Delete": "Delete"
+  },
   "AppHeader": {
     "Home": "Home",
     "Shop": "Shop",
@@ -476,7 +480,11 @@
       "longitudeIsRequired": "Longitude is required",
       "SetAsDefaultSuccess": "Address set as default successfully",
       "SetAsDefaultError": "Failed to set address as default.",
-      "NoAddresses": "No saved addresses found. Please add a new address."
+      "NoAddresses": "No saved addresses found. Please add a new address.",
+      "DeleteAddressTitle": "Delete Address",
+      "DeleteAddressConfirmation": "Are you sure you want to delete this address? This action cannot be undone.",
+      "AddressDeletedSuccess": "Address deleted successfully.",
+      "AddressDeletedError": "Failed to delete address. Please try again."
     },
     "Orders": {
       "Title": "My Orders",

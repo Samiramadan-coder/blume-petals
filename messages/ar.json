@@ -1,4 +1,8 @@
 {
+  "Actions": {
+    "Close": "إغلاق",
+    "Delete": "حذف"
+  },
   "AppHeader": {
     "Home": "الرئيسية",
     "Shop": "المتجر",
@@ -478,7 +482,11 @@
       "longitudeIsRequired": "خط الطول مطلوب",
       "SetAsDefaultSuccess": "تم تعيين العنوان كافتراضي بنجاح",
       "SetAsDefaultError": "فشل تعيين العنوان كافتراضي.",
-      "NoAddresses": "لم يتم العثور على عناوين محفوظة. يرجى إضافة عنوان جديد."
+      "NoAddresses": "لم يتم العثور على عناوين محفوظة. يرجى إضافة عنوان جديد.",
+      "DeleteAddressTitle": "حذف العنوان",
+      "DeleteAddressConfirmation": "هل أنت متأكد أنك تريد حذف هذا العنوان؟ لا يمكن التراجع عن هذا الإجراء.",
+      "AddressDeletedSuccess": "تم حذف العنوان بنجاح.",
+      "AddressDeletedError": "فشل حذف العنوان. يرجى المحاولة مرة أخرى."
     },
     "Orders": {
       "Title": "طلباتي",

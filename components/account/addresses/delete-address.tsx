@@ -10,12 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../ui/dialog";
+import { toast } from "sonner";
 import { useRef, useState } from "react";
 import { Button } from "../../ui/button";
-import { useRouter } from "@/i18n/navigation";
-import { toast } from "sonner";
-import { http } from "@/lib/http";
 import { Spinner } from "../../ui/spinner";
+import { useTranslations } from "next-intl";
+import { deleteAddress } from "@/lib/account-actions";
 
 export default function DeleteAddress({
   addressId,
@@ -24,23 +24,24 @@ export default function DeleteAddress({
   addressId: number;
   trigger: React.ReactNode;
 }) {
-  const router = useRouter();
+  const t = useTranslations("Account.Address");
+  const tActions = useTranslations("Actions");
   const closeBtn = useRef<HTMLButtonElement>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleDelete() {
     setIsLoading(true);
-    try {
-      await http.delete(`/api/v1/addresses/${addressId}`);
-      toast.success("Address deleted successfully.");
-      router.refresh();
+
+    const result = await deleteAddress(addressId);
+
+    if (result.success) {
+      toast.success(t("AddressDeletedSuccess"));
       closeBtn.current?.click();
-    } catch (error) {
-      console.error("Error deleting address:", error);
-      toast.error("Failed to delete address. Please try again.");
-    } finally {
-      setIsLoading(false);
+    } else {
+      toast.error(t("AddressDeletedError"));
     }
+
+    setIsLoading(false);
   }
 
   return (
@@ -53,10 +54,11 @@ export default function DeleteAddress({
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-red-700">Delete Address</DialogTitle>
+          <DialogTitle className="text-red-700">
+            {t("DeleteAddressTitle")}
+          </DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this address? This action cannot be
-            undone.
+            {t("DeleteAddressConfirmation")}
           </DialogDescription>
         </DialogHeader>
 
@@ -64,15 +66,15 @@ export default function DeleteAddress({
           <Button
             type="button"
             variant="destructive"
-            className="h-10"
+            className="h-10 cursor-pointer"
             onClick={handleDelete}
             disabled={isLoading}
           >
-            {isLoading ? <Spinner /> : "Delete"}
+            {isLoading ? <Spinner /> : tActions("Delete")}
           </Button>
           <DialogClose asChild>
-            <Button type="button" className="h-10">
-              Close
+            <Button type="button" className="h-10 cursor-pointer">
+              {tActions("Close")}
             </Button>
           </DialogClose>
         </DialogFooter>

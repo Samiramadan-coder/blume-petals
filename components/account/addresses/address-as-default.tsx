@@ -2,33 +2,26 @@
 
 import { useTranslations } from "next-intl";
 import { Button } from "../../ui/button";
-import { http } from "@/lib/http";
 import { toast } from "sonner";
-import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { Spinner } from "../../ui/spinner";
 import { Address } from "@/types/account";
+import { setAddressAsDefault } from "@/lib/account-actions";
 
 export default function AddressAsDefault({ address }: { address: Address }) {
-  const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("Account.Address");
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function setAsDefault() {
     setIsLoading(true);
-    try {
-      await http.put(`/api/v1/addresses/${address.id}`, {
-        ...address,
-        is_default: true,
-      });
+    const result = await setAddressAsDefault(address);
+
+    if (result.success) {
       toast.success(t("SetAsDefaultSuccess"));
-      router.refresh();
-    } catch (error) {
-      console.error("Failed to set address as default:", error);
+    } else {
       toast.error(t("SetAsDefaultError"));
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }
 
   return (

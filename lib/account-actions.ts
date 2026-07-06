@@ -4,9 +4,6 @@ import { http, ValidationError } from "@/lib/http";
 import { Address, AddressFormBody } from "@/types/account";
 import { updateTag } from "next/cache";
 
-/**
- * Save address to the server. If address is provided, it will update the existing address, otherwise it will create a new one.
- */
 type SaveAddressResult =
   | {
       success: true;
@@ -17,6 +14,9 @@ type SaveAddressResult =
       message?: string;
     };
 
+/**
+ * Save address and return serializable field errors for the client form.
+ */
 export async function saveAddress(
   address: Address | null,
   data: AddressFormBody,
@@ -43,5 +43,44 @@ export async function saveAddress(
     }
 
     return { success: false, message: "Failed to save address" };
+  }
+}
+
+/**
+ * Delete Address
+ */
+type DeleteAddressResult = { success: boolean };
+
+export async function deleteAddress(
+  addressId: number,
+): Promise<DeleteAddressResult> {
+  try {
+    await http.delete(`/api/v1/addresses/${addressId}`);
+    updateTag("addresses-page");
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting address:", error);
+    return { success: false };
+  }
+}
+
+/**
+ * Set Address as Default
+ */
+type SetAsDefaultResult = { success: boolean };
+
+export async function setAddressAsDefault(
+  address: Address,
+): Promise<SetAsDefaultResult> {
+  try {
+    await http.put(`/api/v1/addresses/${address.id}`, {
+      ...address,
+      is_default: true,
+    });
+    updateTag("addresses-page");
+    return { success: true };
+  } catch (error) {
+    console.error("Error setting address as default:", error);
+    return { success: false };
   }
 }

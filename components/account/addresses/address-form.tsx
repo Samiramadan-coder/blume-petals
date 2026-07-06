@@ -87,13 +87,11 @@ export default function AddressForm({
     if (result.errors) {
       Object.entries(result.errors).forEach(([field, message]) => {
         if (!message) return;
-
         setError(field as keyof AddressFormBody, {
           type: "server",
           message,
         });
       });
-
       return;
     }
 
