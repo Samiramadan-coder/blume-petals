@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { z } from "zod";
 import { useRef } from "react";
 import Image from "next/image";
 import { Upload } from "lucide-react";
@@ -17,17 +16,10 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { FieldError } from "@/components/ui/field";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RatingFormData, ratingSchema } from "@/types/account";
 import OrderRating from "@/components/account/orders/order-rating";
 import FormTextarea from "@/components/reusable/form/form-textarea";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
-
-const fileSchema = z.instanceof(File);
-
-const ratingSchema = z.object({
-  rating: z.number().min(1, "Please select a rating"),
-  feedback: z.string().optional(),
-  photos: z.array(fileSchema).optional(),
-});
 
 export default function OrderRate() {
   const t = useTranslations("Account.Orders");
@@ -39,8 +31,8 @@ export default function OrderRate() {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: zodResolver(ratingSchema),
+  } = useForm<RatingFormData>({
+    resolver: zodResolver(ratingSchema(t)),
     defaultValues: {
       rating: 0,
       feedback: "",
@@ -48,7 +40,7 @@ export default function OrderRate() {
     },
   });
 
-  const onSubmit: SubmitHandler<{ rating: number }> = (data) => {
+  const onSubmit: SubmitHandler<RatingFormData> = (data) => {
     console.log("Rating submitted:", data.rating);
   };
 
@@ -112,8 +104,8 @@ export default function OrderRate() {
               <FormTextarea
                 name="feedback"
                 register={register}
-                label="Tell us more about your experience (optional)"
-                placeholder="Share your feedback..."
+                label={t("FeedbackLabel")}
+                placeholder={t("FeedbackPlaceholder")}
                 inputClassName="h-30"
               />
 
@@ -126,7 +118,7 @@ export default function OrderRate() {
                   return (
                     <>
                       <p className="font-semibold text-sm mb-2">
-                        Add photos (optional)
+                        {t("AddPhotosLabel")}
                       </p>
                       <Button
                         variant="outline"
@@ -135,7 +127,7 @@ export default function OrderRate() {
                         onClick={() => fileInputRef.current?.click()}
                       >
                         <Upload />
-                        Add Photos
+                        {t("AddPhotosButton")}
                       </Button>
 
                       <div>
@@ -193,11 +185,11 @@ export default function OrderRate() {
             onClick={() => formRef.current?.requestSubmit()}
             className="h-10 cursor-pointer"
           >
-            Submit Review
+            {t("SubmitRating")}
           </Button>
           <DialogClose asChild>
             <Button variant="outline" className="h-10 cursor-pointer">
-              Maybe Later
+              {t("MaybeLater")}
             </Button>
           </DialogClose>
         </DialogFooter>

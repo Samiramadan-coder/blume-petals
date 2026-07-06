@@ -484,7 +484,16 @@
       "DeliveryAddress": "Delivery Address",
       "PaymentMethod": "Payment Method",
       "Reorder": "Reorder",
-      "RateOrder": "Rate Order"
+      "RateOrder": "Rate Order",
+      "FeedbackLabel": "Tell us more about your experience (optional)",
+      "FeedbackPlaceholder": "Share your feedback...",
+      "AddPhotosLabel": "Add Photos (optional)",
+      "AddPhotosButton": "Add Photos",
+      "SubmitRating": "Submit Rating",
+      "RatingSuccess": "Your rating has been submitted successfully. Thank you for your feedback.",
+      "RatingError": "Failed to submit rating. Please try again.",
+      "MaybeLater": "Maybe Later",
+      "RatingRequired": "Please select a rating before submitting."
     }
   }
 }

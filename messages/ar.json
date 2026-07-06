@@ -486,7 +486,16 @@
       "DeliveryAddress": "عنوان التسليم",
       "PaymentMethod": "طريقة الدفع",
       "Reorder": "إعادة الطلب",
-      "RateOrder": "تقييم الطلب"
+      "RateOrder": "تقييم الطلب",
+      "FeedbackLabel": "أخبرنا المزيد عن تجربتك (اختياري)",
+      "FeedbackPlaceholder": "شارك ملاحظاتك...",
+      "AddPhotosLabel": "إضافة صور (اختياري)",
+      "AddPhotosButton": "إضافة صور",
+      "SubmitRating": "إرسال التقييم",
+      "RatingSuccess": "تم إرسال تقييمك بنجاح. شكرا لملاحظاتك",
+      "RatingError": "فشل إرسال التقييم. يرجى المحاولة مرة أخرى.",
+      "MaybeLater": "ربما لاحقًا",
+      "RatingIsRequired": "التقييم مطلوب"
     }
   }
 }
