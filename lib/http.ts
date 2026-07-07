@@ -71,7 +71,7 @@ function createHttp(baseURL: string) {
     return (
       body instanceof FormData ||
       body instanceof URLSearchParams ||
-      body instanceof File ||
+      body instanceof Blob ||
       body instanceof ArrayBuffer ||
       ArrayBuffer.isView(body) ||
       body instanceof ReadableStream ||
