@@ -32,7 +32,7 @@ export default function ResetPassword() {
     const result = await resetPassword(data);
 
     if (result.success) {
-      toast.success(t("ResetSuccess"));
+      toast.success(tFields("Messages.ResetSuccess"));
       router.push("/login");
       return;
     }
@@ -48,7 +48,7 @@ export default function ResetPassword() {
       });
       return;
     }
-    toast.error(t("ResetError"));
+    toast.error(tFields("Errors.ResetError"));
   };
 
   return (

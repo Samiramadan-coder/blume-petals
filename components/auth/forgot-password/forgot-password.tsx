@@ -5,14 +5,13 @@ import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import AuthCard from "../shared/auth-card";
 import { useTranslations } from "next-intl";
-import { http, ValidationError } from "@/lib/http";
+import { forgotPassword } from "@/lib/auth-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthSubmitBtn from "../shared/auth-submit-btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
 import { ArrowLeft, ArrowRight, LockIcon } from "lucide-react";
 import { ForgotPasswordForm, forgotPasswordSchema } from "@/types/auth";
-import { forgotPassword } from "@/lib/auth-actions";
 
 export default function ForgotPassword() {
   const t = useTranslations("ForgotPassword");
@@ -32,7 +31,7 @@ export default function ForgotPassword() {
     const result = await forgotPassword(data);
 
     if (result.success) {
-      toast.success(t("ResetLinkSent"));
+      toast.success(tFields("Messages.ResetLinkSent"));
       return;
     }
 
@@ -48,7 +47,7 @@ export default function ForgotPassword() {
       return;
     }
 
-    toast.error(t("SomethingWrong"));
+    toast.error(tFields("Errors.SomethingWrong"));
   };
 
   return (

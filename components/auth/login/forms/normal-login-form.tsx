@@ -32,7 +32,7 @@ export default function NormalLoginForm() {
 
     if (result.success) {
       await saveToken(result.token);
-      toast.success(t("SignInSuccess"));
+      toast.success(tFields("Messages.SignInSuccess"));
       router.push("/");
       return;
     }
@@ -49,7 +49,7 @@ export default function NormalLoginForm() {
       return;
     }
 
-    toast.error(t("SignInError"));
+    toast.error(tFields("Errors.SignInError"));
   };
 
   return (

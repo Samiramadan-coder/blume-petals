@@ -39,7 +39,7 @@ export default function PhoneLogin() {
 
     if (result.success) {
       setOpenOTP(true);
-      toast.success(t("OTPSentSuccess"));
+      toast.success(tFields("Messages.OTPSentSuccess"));
       return;
     }
 
@@ -55,7 +55,7 @@ export default function PhoneLogin() {
       return;
     }
 
-    toast.error(t("OTPSentFailed"));
+    toast.error(tFields("Errors.OTPSentFailed"));
   };
 
   return (

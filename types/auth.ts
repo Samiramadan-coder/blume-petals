@@ -15,10 +15,6 @@ export const registerSchemawithEmail = (t: T) =>
         .min(1, t("Errors.FullNameIsRequired"))
         .min(2, t("Errors.FullNameIsTooShort")),
       email: z.email(t("Errors.EmailIsInvalid")),
-      // phone: z
-      //   .string()
-      //   .trim()
-      //   .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
       password: z
         .string()
         .min(1, t("Errors.PasswordIsRequired"))
@@ -45,8 +41,25 @@ export const registerSchemawithEmail = (t: T) =>
       }
     });
 
+export const registerSchemawithPhone = (t: T) =>
+  z.object({
+    name: z
+      .string()
+      .min(1, t("Errors.FullNameIsRequired"))
+      .min(2, t("Errors.FullNameIsTooShort")),
+    phone: z
+      .string()
+      .trim()
+      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+    locale: z.string(),
+  });
+
 export type RegisterFormWithEmail = z.infer<
   ReturnType<typeof registerSchemawithEmail>
+>;
+
+export type RegisterFormWithPhone = z.infer<
+  ReturnType<typeof registerSchemawithPhone>
 >;
 
 /**

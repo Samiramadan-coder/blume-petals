@@ -32,7 +32,19 @@
       "PasswordConfirmationIsRequired": "Confirm Password is required",
       "PasswordConfirmationIsTooShort": "Confirm Password must be at least 8 characters",
       "OTPIsRequired": "OTP is required",
-      "InvalidOTP": "Invalid OTP. Please try again."
+      "InvalidOTP": "Invalid OTP. Please try again.",
+      "CreateAccountError": "Failed to create account. Please check your details and try again.",
+      "CreateAccountSuccess": "Account created successfully. Please login.",
+      "SignInError": "Failed to sign in. Please check your credentials and try again.",
+      "OTPSentFailed": "Failed to send OTP. Please try again.",
+      "SomethingWrong": "Something went wrong. Please try again.",
+      "ResetError": "An error occurred while resetting the password. Please try again."
+    },
+    "Messages": {
+      "OTPSentSuccess": "OTP sent successfully. Please check your phone.",
+      "SignInSuccess": "Login successful",
+      "ResetLinkSent": "Reset link sent to your email.",
+      "ResetSuccess": "Password reset successful. Please log in with your new password."
     }
   },
   "AppHeader": {
@@ -327,12 +339,9 @@
     "PasswordLabel": "Password",
     "ForgotPassword": "Forgot Password?",
     "SignInButton": "Sign In",
-    "SignInSuccess": "Login successful",
     "PhoneLabel": "Phone",
     "PhonePlaceholder": "50 123 4567",
     "SendOTP": "Send OTP",
-    "OTPSentSuccess": "OTP sent successfully. Please check your phone.",
-    "OTPSentFailed": "Failed to send OTP",
     "EnterOTP": "Enter OTP",
     "OTPDescription": "We sent a 6-digit code to your phone",
     "VerifyOTP": "Verify OTP",
@@ -352,7 +361,6 @@
     "Apple": "Apple",
     "AlreadyHaveAccount": "Already have an account?",
     "SignIn": "Sign In",
-    "CreateAccountSuccess": "Account created successfully. Please login.",
     "GoogleTokenFailed": "Failed to login with Google. Please try again.",
     "GoogleLoginFailed": "Failed to login with Google. Please try again."
   },
@@ -360,15 +368,11 @@
     "Title": "Forgot Password?",
     "Description": "Enter your email and we'll send you a reset link.",
     "SendResetLink": "Send Reset Link",
-    "BackToSignIn": "Back to Sign In",
-    "ResetLinkSent": "Reset link sent to your email.",
-    "SomethingWrong": "Something went wrong. Please try again."
+    "BackToSignIn": "Back to Sign In"
   },
   "ResetPassword": {
     "Title": "Reset Password",
-    "ResetPasswordButton": "Reset Password",
-    "ResetSuccess": "Password reset successful. Please log in with your new password.",
-    "ResetError": "An error occurred while resetting the password. Please try again."
+    "ResetPasswordButton": "Reset Password"
   },
   "AboutGetStarted": {
     "Eyebrow": "Get Started",

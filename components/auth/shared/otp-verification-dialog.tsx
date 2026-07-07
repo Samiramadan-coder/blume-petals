@@ -50,7 +50,7 @@ export function OTPVerificationDialog({ phone }: { phone: string }) {
       );
 
       await saveToken(response.data.token);
-      toast.success(t("SignInSuccess"));
+      toast.success(tFields("Messages.SignInSuccess"));
       router.push("/");
     } catch (err) {
       if (err instanceof ValidationError) {
@@ -62,7 +62,7 @@ export function OTPVerificationDialog({ phone }: { phone: string }) {
           });
         });
       } else {
-        toast.error(t("InvalidOTP"));
+        toast.error(tFields("Errors.InvalidOTP"));
       }
     }
   };

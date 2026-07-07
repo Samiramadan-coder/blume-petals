@@ -6,6 +6,7 @@ import {
   LoginResponse,
   PhoneLoginForm,
   RegisterFormWithEmail,
+  RegisterFormWithPhone,
   ResetPasswordForm,
 } from "@/types/auth";
 import { http, ValidationError } from "./http";
@@ -20,7 +21,7 @@ type RegisterResult =
       errors?: Partial<Record<keyof RegisterFormWithEmail, string>>;
     };
 
-export async function registerUser(
+export async function registerUserWithEmail(
   data: RegisterFormWithEmail,
 ): Promise<RegisterResult> {
   try {
