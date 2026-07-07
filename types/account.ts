@@ -2,7 +2,7 @@ import z from "zod";
 
 type T = (key: string) => string;
 
-const imageSchema = z.union([z.string(), z.instanceof(Blob)]);
+const imageSchema = z.union([z.string(), z.instanceof(File)]);
 
 /**
  * Account form validation schema using Zod

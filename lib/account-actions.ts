@@ -96,7 +96,7 @@ export async function updateProfile(
   data: Account,
 ): Promise<UpdateProfileResult> {
   const photo = data.photo_url;
-  const isPhotoFile = photo instanceof Blob;
+  const isPhotoFile = photo instanceof File;
 
   if (isPhotoFile) {
     const formData = new FormData();

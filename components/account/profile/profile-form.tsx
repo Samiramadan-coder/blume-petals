@@ -190,11 +190,11 @@ export default function ProfileForm({ user }: { user: User }) {
                 control={control}
                 name="photo_url"
                 render={({ field }) => {
-                  const selectedPhoto = field.value as string | Blob | null;
+                  const selectedPhoto = field.value as string | File | null;
                   const profilePhotoUrl =
                     typeof selectedPhoto === "string"
                       ? selectedPhoto
-                      : selectedPhoto instanceof Blob
+                      : selectedPhoto instanceof File
                         ? URL.createObjectURL(selectedPhoto)
                         : null;
 
