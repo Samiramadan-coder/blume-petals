@@ -61,8 +61,6 @@ export default function Register() {
 
     isPhoneVerified.current = false;
 
-    console.log("Submitting registration data:", data);
-
     const result = await registerUser(data);
 
     if (result.success) {
