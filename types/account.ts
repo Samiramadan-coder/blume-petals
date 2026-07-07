@@ -10,14 +10,33 @@ const imageSchema = z.union([z.string(), z.instanceof(Blob)]);
  */
 export const accountSchema = (t: T) =>
   z.object({
-    name: z.string().min(1, t("nameIsRequired")).min(2, t("nameMinLength")),
-    email: z.email(t("emailIsInvalid")),
-    phone: z.string().min(1, t("phoneIsRequired")).min(10, t("phoneMinLength")),
-    photo_path: imageSchema.optional(),
+    name: z
+      .string()
+      .min(1, t("Errors.FullNameIsRequired"))
+      .min(2, t("Errors.FullNameIsTooShort")),
+    email: z.email(t("Errors.EmailIsInvalid")),
+    phone: z
+      .string()
+      .trim()
+      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+    photo_url: imageSchema.optional(),
     locale: z.string(),
   });
 
+export const otpSchema = (t: T) =>
+  z.object({
+    phone: z
+      .string()
+      .trim()
+      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+    code: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, t("Errors.InvalidOTP")),
+  });
+
 export type Account = z.infer<ReturnType<typeof accountSchema>>;
+export type OTPForm = z.infer<ReturnType<typeof otpSchema>>;
 
 /**
  * Address form validation schema using Zod

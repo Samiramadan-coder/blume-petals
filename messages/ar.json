@@ -1,7 +1,9 @@
 {
   "Actions": {
     "Close": "إغلاق",
-    "Delete": "حذف"
+    "Delete": "حذف",
+    "SaveChanges": "حفظ التغييرات",
+    "Cancel": "إلغاء"
   },
   "Fields": {
     "Labels": {
@@ -9,7 +11,8 @@
       "Email": "البريد الإلكتروني",
       "Phone": "رقم الهاتف",
       "Password": "كلمة المرور",
-      "ConfirmPassword": "تأكيد كلمة المرور"
+      "ConfirmPassword": "تأكيد كلمة المرور",
+      "ProfilePhoto": "صورة الملف الشخصي"
     },
     "Placeholders": {
       "FullName": "أدخل الاسم الكامل",
@@ -400,21 +403,9 @@
       "Orders": "طلبات",
       "Saved": "محفوظ",
       "Design": "تصميم",
-      "FullName": "الاسم الكامل",
-      "FullNamePlaceholder": "أدخل اسمك",
-      "Email": "البريد الإلكتروني",
-      "EmailPlaceholder": "أدخل بريدك الإلكتروني",
-      "Phone": "الهاتف",
-      "PhonePlaceholder": "أدخل رقم هاتفك",
-      "ProfilePhoto": "صورة الملف الشخصي",
       "ChangePhoto": "تغيير الصورة",
-      "SaveChanges": "حفظ التغييرات",
-      "Cancel": "إلغاء",
-      "nameIsRequired": "الاسم مطلوب",
-      "nameMinLength": "يجب أن يكون الاسم 2 أحرف على الأقل",
-      "emailIsInvalid": "عنوان بريد إلكتروني غير صحيح",
-      "phoneIsRequired": "رقم الهاتف مطلوب",
-      "phoneMinLength": "يجب أن يكون رقم الهاتف 10 أرقام على الأقل"
+      "UpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
+      "OTPRequestFailed": "فشل إرسال رمز التحقق. يرجى المحاولة مرة أخرى."
     },
     "Address": {
       "Title": "العناوين المحفوظة",

@@ -9,4 +9,5 @@ export type User = {
   phone: string;
   phone_verified_at: string | null;
   photo_path: string | null;
+  photo_url: string | null;
 };

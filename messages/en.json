@@ -1,7 +1,9 @@
 {
   "Actions": {
     "Close": "Close",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "SaveChanges": "Save Changes",
+    "Cancel": "Cancel"
   },
   "Fields": {
     "Labels": {
@@ -9,7 +11,8 @@
       "Email": "Email",
       "Phone": "Phone",
       "Password": "Password",
-      "ConfirmPassword": "Confirm Password"
+      "ConfirmPassword": "Confirm Password",
+      "ProfilePhoto": "Profile Photo"
     },
     "Placeholders": {
       "FullName": "Enter Full Name",
@@ -405,21 +408,9 @@
       "Orders": "orders",
       "Saved": "Saved",
       "Design": "Design",
-      "FullName": "Full Name",
-      "FullNamePlaceholder": "Enter your name",
-      "Email": "Email",
-      "EmailPlaceholder": "Enter your email",
-      "Phone": "Phone",
-      "PhonePlaceholder": "Enter your phone",
-      "ProfilePhoto": "Profile Photo",
       "ChangePhoto": "Change Photo",
-      "SaveChanges": "Save Changes",
-      "Cancel": "Cancel",
-      "nameIsRequired": "Name is required",
-      "nameMinLength": "Name must be at least 2 characters",
-      "emailIsInvalid": "Invalid email address",
-      "phoneIsRequired": "Phone number is required",
-      "phoneMinLength": "Phone number must be at least 10 characters"
+      "UpdatedSuccessfully": "Profile updated successfully",
+      "OTPRequestFailed": "Failed to send OTP. Please try again."
     },
     "Address": {
       "Title": "Saved Addresses",

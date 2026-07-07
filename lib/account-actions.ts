@@ -1,20 +1,15 @@
 "use server";
 
 import { http, ValidationError } from "@/lib/http";
-import { Account, Address, AddressFormBody } from "@/types/account";
+import { Account, Address, AddressFormBody, OTPForm } from "@/types/account";
 import { updateTag } from "next/cache";
 
 /**
  * Save address and return serializable field errors for the client form.
  */
 type SaveAddressResult =
-  | {
-      success: true;
-    }
-  | {
-      success: false;
-      errors?: Partial<Record<keyof AddressFormBody, string>>;
-    };
+  | { success: true }
+  | { success: false; errors?: Partial<Record<keyof AddressFormBody, string>> };
 
 export async function saveAddress(
   address: Address | null,
@@ -95,24 +90,32 @@ type UpdateProfileResult =
   | {
       success: true;
     }
-  | {
-      success: false;
-      errors?: Partial<Record<keyof Account, string>>;
-    };
+  | { success: false; errors?: Partial<Record<keyof Account, string>> };
 
 export async function updateProfile(
   data: Account,
 ): Promise<UpdateProfileResult> {
-  const formData = new FormData();
+  const photo = data.photo_url;
+  const isPhotoFile = photo instanceof Blob;
 
-  for (const key in data) {
-    if (data[key as keyof Account] !== undefined) {
-      formData.append(key, data[key as keyof Account] as string);
+  if (isPhotoFile) {
+    const formData = new FormData();
+    formData.append(
+      "photo",
+      photo,
+      photo instanceof File ? photo.name : "photo",
+    );
+    try {
+      await http.post("/api/v1/auth/me/photo", formData);
+      updateTag("profile-page");
+    } catch (err) {
+      console.error("Error updating profile photo:", err);
+      return { success: false };
     }
   }
 
   try {
-    await http.patch("/api/v1/auth/me", formData);
+    await http.patch("/api/v1/auth/me", data);
     updateTag("profile-page");
     return { success: true };
   } catch (err) {
@@ -123,6 +126,49 @@ export async function updateProfile(
           messages[0] ?? "Invalid value",
         ]),
       ) as Partial<Record<keyof Account, string>>;
+      return { success: false, errors };
+    }
+
+    return { success: false };
+  }
+}
+
+/**
+ * Get Otp if the user try to change the phone number
+ */
+type GetOtpResult = { success: boolean };
+
+export async function getOTPPhoneChange(phone: string): Promise<GetOtpResult> {
+  try {
+    await http.post("/api/v1/auth/phone/verify-request", { phone });
+    return { success: true };
+  } catch (err) {
+    console.error("Error getting OTP:", err);
+    return { success: false };
+  }
+}
+
+/**
+ * Post Otp if the user try to change the phone number
+ */
+type PostOtpResult =
+  | { success: true }
+  | { success: false; errors?: Partial<Record<keyof OTPForm, string>> };
+
+export async function postOTPPhoneChange(
+  data: OTPForm,
+): Promise<PostOtpResult> {
+  try {
+    await http.post("/api/v1/auth/phone/verify", data);
+    return { success: true };
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      const errors = Object.fromEntries(
+        Object.entries(err.errors).map(([field, messages]) => [
+          field,
+          messages[0] ?? "Invalid value",
+        ]),
+      ) as Partial<Record<keyof OTPForm, string>>;
       return { success: false, errors };
     }
 
