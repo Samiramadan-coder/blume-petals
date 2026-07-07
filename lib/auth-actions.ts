@@ -1,6 +1,11 @@
 "use server";
 
-import { PhoneLoginForm, RegisterForm } from "@/types/auth";
+import {
+  LoginForm,
+  LoginResponse,
+  PhoneLoginForm,
+  RegisterForm,
+} from "@/types/auth";
 import { http, ValidationError } from "./http";
 
 /**
@@ -58,6 +63,46 @@ export async function generateRegisterOtp(
     }
 
     console.error("Error generating OTP:", err);
+    return { success: false };
+  }
+}
+
+/**
+ * login
+ */
+type LoginResult =
+  | { success: true; token: string }
+  | { success: false; errors?: Partial<Record<keyof LoginForm, string>> };
+
+export async function loginUser(data: LoginForm): Promise<LoginResult> {
+  try {
+    const { data: response } = await http.post<LoginResponse>(
+      "/api/v1/auth/login",
+      data,
+    );
+
+    return { success: true, token: response.data.token };
+    // await saveToken(response.data.token);
+    // toast.success(t("SignInSuccess"));
+    // router.push("/");
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      const errors = Object.fromEntries(
+        Object.entries(err.errors).map(([field, messages]) => [
+          field,
+          messages[0] ?? "Invalid value",
+        ]),
+      ) as Partial<Record<keyof LoginForm, string>>;
+      return { success: false, errors };
+      // Object.entries(err.errors).forEach(([field, messages]) => {
+      //   toast.error(messages[0]);
+      //   setError(field as keyof LoginForm, {
+      //     type: "server",
+      //     message: messages[0],
+      //   });
+      // });
+    }
+
     return { success: false };
   }
 }

@@ -3,14 +3,14 @@ import { useState } from "react";
 import { saveToken } from "@/lib/actions";
 import { Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { loginUser } from "@/lib/auth-actions";
 import { Button } from "@/components/ui/button";
-import { http, ValidationError } from "@/lib/http";
 import { Link, useRouter } from "@/i18n/navigation";
+import { LoginForm, loginSchema } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
-import { LoginForm, LoginResponse, loginSchema } from "@/types/auth";
 
 export default function NormalLoginForm() {
   const t = useTranslations("Login");
@@ -28,28 +28,28 @@ export default function NormalLoginForm() {
   });
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
-    try {
-      const { data: response } = await http.post<LoginResponse>(
-        "/api/v1/auth/login",
-        data,
-      );
+    const result = await loginUser(data);
 
-      await saveToken(response.data.token);
+    if (result.success) {
+      await saveToken(result.token);
       toast.success(t("SignInSuccess"));
       router.push("/");
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        Object.entries(err.errors).forEach(([field, messages]) => {
-          toast.error(messages[0]);
-          setError(field as keyof LoginForm, {
-            type: "server",
-            message: messages[0],
-          });
-        });
-      } else {
-        toast.error(t("SignInError"));
-      }
+      return;
     }
+
+    if (result.success === false && result.errors) {
+      Object.entries(result.errors).forEach(([field, message]) => {
+        if (!message) return;
+        toast.error(message);
+        setError(field as keyof LoginForm, {
+          type: "server",
+          message,
+        });
+      });
+      return;
+    }
+
+    toast.error(t("SignInError"));
   };
 
   return (
