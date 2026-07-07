@@ -27,6 +27,7 @@ export const registerSchema = (t: T) =>
         .string()
         .min(1, t("Errors.PasswordConfirmationIsRequired"))
         .min(8, t("Errors.PasswordConfirmationIsTooShort")),
+      locale: z.string(),
     })
     .superRefine((data, ctx) => {
       if (data.password !== data.password_confirmation) {

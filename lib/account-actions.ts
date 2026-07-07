@@ -112,7 +112,7 @@ export async function updateProfile(
   }
 
   try {
-    await http.put("/api/v1/auth/me", formData);
+    await http.patch("/api/v1/auth/me", formData);
     updateTag("profile-page");
     return { success: true };
   } catch (err) {

@@ -6,19 +6,20 @@ import { User } from "@/types/shared";
 import { Button } from "../../ui/button";
 import { useRef, useState } from "react";
 import { Spinner } from "../../ui/spinner";
-import { useTranslations } from "next-intl";
 import PageTitle from "../shared/page-title";
 import { Pencil, Upload } from "lucide-react";
 import { Separator } from "../../ui/separator";
 import { Card, CardContent } from "../../ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateProfile } from "@/lib/account-actions";
+import { useLocale, useTranslations } from "next-intl";
 import FormInput from "../../reusable/form/form-input";
 import { Account, accountSchema } from "@/types/account";
 import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 
 export default function ProfileForm({ user }: { user: User }) {
+  const locale = useLocale();
   const t = useTranslations("Account.Profile");
   const [editMode, setEditMode] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -36,6 +37,7 @@ export default function ProfileForm({ user }: { user: User }) {
       email: user.email,
       phone: user.phone,
       photo_path: user?.photo_path || "",
+      locale: locale,
     },
   });
 

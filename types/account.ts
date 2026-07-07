@@ -14,6 +14,7 @@ export const accountSchema = (t: T) =>
     email: z.email(t("emailIsInvalid")),
     phone: z.string().min(1, t("phoneIsRequired")).min(10, t("phoneMinLength")),
     photo_path: imageSchema.optional(),
+    locale: z.string(),
   });
 
 export type Account = z.infer<ReturnType<typeof accountSchema>>;

@@ -31,14 +31,19 @@ export default function Register() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema(tFields)),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      password_confirmation: "",
+      locale: locale,
+    },
   });
 
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
     try {
-      await http.post("/api/v1/auth/register", {
-        ...data,
-        locale,
-      });
+      await http.post("/api/v1/auth/register", data);
       toast.success(t("CreateAccountSuccess"));
       router.push("/login");
     } catch (err) {
