@@ -76,7 +76,7 @@ export default function PhoneLogin() {
 
       {openOTP && (
         <Dialog open={openOTP} onOpenChange={setOpenOTP}>
-          <OTPVerificationDialog phone={phone} srcForm="login" />
+          <OTPVerificationDialog phone={phone} />
         </Dialog>
       )}
     </>

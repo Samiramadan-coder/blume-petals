@@ -24,15 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginResponse, OTPForm, otpSchema } from "@/types/auth";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-export function OTPVerificationDialog({
-  phone,
-  srcForm,
-  onFinish,
-}: {
-  phone: string;
-  srcForm: "login" | "register";
-  onFinish?: () => void;
-}) {
+export function OTPVerificationDialog({ phone }: { phone: string }) {
   const t = useTranslations("Login");
   const tFields = useTranslations("Fields");
   const router = useRouter();
@@ -57,15 +49,9 @@ export function OTPVerificationDialog({
         },
       );
 
-      if (srcForm === "login") {
-        await saveToken(response.data.token);
-        toast.success(t("SignInSuccess"));
-        router.push("/");
-      }
-
-      if (srcForm === "register" && onFinish) {
-        onFinish();
-      }
+      await saveToken(response.data.token);
+      toast.success(t("SignInSuccess"));
+      router.push("/");
     } catch (err) {
       if (err instanceof ValidationError) {
         Object.entries(err.errors).forEach(([field, messages]) => {

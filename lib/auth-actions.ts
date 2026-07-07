@@ -5,7 +5,7 @@ import {
   LoginForm,
   LoginResponse,
   PhoneLoginForm,
-  RegisterForm,
+  RegisterFormWithEmail,
   ResetPasswordForm,
 } from "@/types/auth";
 import { http, ValidationError } from "./http";
@@ -15,10 +15,13 @@ import { http, ValidationError } from "./http";
  */
 type RegisterResult =
   | { success: true }
-  | { success: false; errors?: Partial<Record<keyof RegisterForm, string>> };
+  | {
+      success: false;
+      errors?: Partial<Record<keyof RegisterFormWithEmail, string>>;
+    };
 
 export async function registerUser(
-  data: RegisterForm,
+  data: RegisterFormWithEmail,
 ): Promise<RegisterResult> {
   try {
     await http.post("/api/v1/auth/register", data);
@@ -30,7 +33,7 @@ export async function registerUser(
           field,
           messages[0] ?? "Invalid value",
         ]),
-      ) as Partial<Record<keyof RegisterForm, string>>;
+      ) as Partial<Record<keyof RegisterFormWithEmail, string>>;
 
       return { success: false, errors };
     }

@@ -7,7 +7,7 @@ type T = (key: string) => string;
  * Register form validation schema using Zod
  * This schema validates the user input for the registration form.
  */
-export const registerSchema = (t: T) =>
+export const registerSchemawithEmail = (t: T) =>
   z
     .object({
       name: z
@@ -15,10 +15,10 @@ export const registerSchema = (t: T) =>
         .min(1, t("Errors.FullNameIsRequired"))
         .min(2, t("Errors.FullNameIsTooShort")),
       email: z.email(t("Errors.EmailIsInvalid")),
-      phone: z
-        .string()
-        .trim()
-        .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+      // phone: z
+      //   .string()
+      //   .trim()
+      //   .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
       password: z
         .string()
         .min(1, t("Errors.PasswordIsRequired"))
@@ -45,7 +45,9 @@ export const registerSchema = (t: T) =>
       }
     });
 
-export type RegisterForm = z.infer<ReturnType<typeof registerSchema>>;
+export type RegisterFormWithEmail = z.infer<
+  ReturnType<typeof registerSchemawithEmail>
+>;
 
 /**
  * Login form validation schema using Zod
