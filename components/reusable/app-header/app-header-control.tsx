@@ -30,6 +30,7 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import LogoutBtn from "../logout-btn";
+import Image from "next/image";
 
 const sidebarNavItems = [
   { label: "Home", href: "/" },
@@ -99,13 +100,26 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
         {user ? (
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-9 rounded-full bg-secondary hover:bg-secondary focus:bg-secondary cursor-pointer"
-              >
-                {user.name?.charAt(0).toUpperCase() || "U"}
-              </Button>
+              {user.photo_url ? (
+                <div className="w-9 h-9 rounded-full overflow-hidden shadow-sm cursor-pointer">
+                  <Image
+                    src={user.photo_url}
+                    height={400}
+                    width={400}
+                    className="h-full w-full object-cover object-center"
+                    alt="Profile Photo"
+                    priority
+                  />
+                </div>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-9 rounded-full bg-secondary hover:bg-secondary focus:bg-secondary cursor-pointer"
+                >
+                  {user.name?.charAt(0).toUpperCase() || "U"}
+                </Button>
+              )}
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-45">
               <DropdownMenuGroup>

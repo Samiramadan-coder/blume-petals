@@ -211,8 +211,9 @@ export default function ProfileForm({ user }: { user: User }) {
                                 src={profilePhotoUrl}
                                 height={400}
                                 width={400}
-                                className="h-35 w-full object-cover"
+                                className="h-full w-full object-cover object-center"
                                 alt="Profile Photo"
+                                priority
                               />
                             </div>
                           ) : (
