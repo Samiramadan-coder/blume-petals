@@ -53,6 +53,7 @@ export async function generateRegisterOtp(
           messages[0] ?? "Invalid value",
         ]),
       ) as Partial<Record<keyof PhoneLoginForm, string>>;
+      console.log("Validation errors:", err);
       return { success: false, errors };
     }
 
