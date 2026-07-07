@@ -7,7 +7,7 @@ import { Eye, EyeOff } from "lucide-react";
 import AuthCard from "../shared/auth-card";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { http, ValidationError } from "@/lib/http";
+import { resetPassword } from "@/lib/auth-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
@@ -29,26 +29,27 @@ export default function ResetPassword() {
   });
 
   const onSubmit: SubmitHandler<ResetPasswordForm> = async (data) => {
-    try {
-      await http.post("/api/v1/auth/password/reset", {
-        ...data,
-        token: "test",
-      });
+    const result = await resetPassword(data);
+
+    if (result.success) {
       toast.success(t("ResetSuccess"));
       router.push("/login");
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        Object.entries(err.errors).forEach(([field, messages]) => {
-          toast.error(messages[0]);
-          setError(field as keyof ResetPasswordForm, {
-            type: "server",
-            message: messages[0],
-          });
-        });
-      } else {
-        toast.error(t("ResetError"));
-      }
+      return;
     }
+
+    if (result.success === false && result.errors) {
+      console.log("Reset password errors:", result.errors);
+      Object.entries(result.errors).forEach(([field, message]) => {
+        if (!message) return;
+        toast.error(message);
+        setError(field as keyof ResetPasswordForm, {
+          type: "server",
+          message,
+        });
+      });
+      return;
+    }
+    toast.error(t("ResetError"));
   };
 
   return (

@@ -1,10 +1,12 @@
 "use server";
 
 import {
+  ForgotPasswordForm,
   LoginForm,
   LoginResponse,
   PhoneLoginForm,
   RegisterForm,
+  ResetPasswordForm,
 } from "@/types/auth";
 import { http, ValidationError } from "./http";
 
@@ -82,9 +84,6 @@ export async function loginUser(data: LoginForm): Promise<LoginResult> {
     );
 
     return { success: true, token: response.data.token };
-    // await saveToken(response.data.token);
-    // toast.success(t("SignInSuccess"));
-    // router.push("/");
   } catch (err) {
     if (err instanceof ValidationError) {
       const errors = Object.fromEntries(
@@ -94,13 +93,70 @@ export async function loginUser(data: LoginForm): Promise<LoginResult> {
         ]),
       ) as Partial<Record<keyof LoginForm, string>>;
       return { success: false, errors };
-      // Object.entries(err.errors).forEach(([field, messages]) => {
-      //   toast.error(messages[0]);
-      //   setError(field as keyof LoginForm, {
-      //     type: "server",
-      //     message: messages[0],
-      //   });
-      // });
+    }
+
+    return { success: false };
+  }
+}
+
+/**
+ * Forgot password
+ */
+type ForgotPasswordResult =
+  | { success: true }
+  | {
+      success: false;
+      errors?: Partial<Record<keyof ForgotPasswordForm, string>>;
+    };
+
+export async function forgotPassword(
+  data: ForgotPasswordForm,
+): Promise<ForgotPasswordResult> {
+  try {
+    await http.post("/api/v1/auth/password/forgot", data);
+    return { success: true };
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      const errors = Object.fromEntries(
+        Object.entries(err.errors).map(([field, messages]) => [
+          field,
+          messages[0] ?? "Invalid value",
+        ]),
+      ) as Partial<Record<keyof ForgotPasswordForm, string>>;
+      return { success: false, errors };
+    }
+    return { success: false };
+  }
+}
+
+/**
+ * Reset password
+ */
+type ResetPasswordResult =
+  | { success: true }
+  | {
+      success: false;
+      errors?: Partial<Record<keyof ResetPasswordForm, string>>;
+    };
+
+export async function resetPassword(
+  data: ResetPasswordForm,
+): Promise<ResetPasswordResult> {
+  try {
+    await http.post("/api/v1/auth/password/reset", {
+      ...data,
+      token: "test",
+    });
+    return { success: true };
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      const errors = Object.fromEntries(
+        Object.entries(err.errors).map(([field, messages]) => [
+          field,
+          messages[0] ?? "Invalid value",
+        ]),
+      ) as Partial<Record<keyof ResetPasswordForm, string>>;
+      return { success: false, errors };
     }
 
     return { success: false };

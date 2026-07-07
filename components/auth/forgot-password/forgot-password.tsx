@@ -12,6 +12,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
 import { ArrowLeft, ArrowRight, LockIcon } from "lucide-react";
 import { ForgotPasswordForm, forgotPasswordSchema } from "@/types/auth";
+import { forgotPassword } from "@/lib/auth-actions";
 
 export default function ForgotPassword() {
   const t = useTranslations("ForgotPassword");
@@ -28,22 +29,26 @@ export default function ForgotPassword() {
   });
 
   const onSubmit: SubmitHandler<ForgotPasswordForm> = async (data) => {
-    try {
-      await http.post("/api/v1/auth/password/forgot", data);
+    const result = await forgotPassword(data);
+
+    if (result.success) {
       toast.success(t("ResetLinkSent"));
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        Object.entries(err.errors).forEach(([field, messages]) => {
-          toast.error(messages[0]);
-          setError(field as keyof ForgotPasswordForm, {
-            type: "server",
-            message: messages[0],
-          });
-        });
-      } else {
-        toast.error(t("SomethingWrong"));
-      }
+      return;
     }
+
+    if (result.success === false && result.errors) {
+      Object.entries(result.errors).forEach(([field, message]) => {
+        if (!message) return;
+        toast.error(message);
+        setError(field as keyof ForgotPasswordForm, {
+          type: "server",
+          message,
+        });
+      });
+      return;
+    }
+
+    toast.error(t("SomethingWrong"));
   };
 
   return (
