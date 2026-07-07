@@ -66,6 +66,7 @@ export const phoneLoginSchema = (t: T) =>
       .string()
       .trim()
       .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+    purpose: z.string().optional(),
   });
 
 export const otpSchema = (t: T) =>

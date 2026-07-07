@@ -25,6 +25,7 @@ export default function PhoneLogin() {
     resolver: zodResolver(phoneLoginSchema(tFields)),
     defaultValues: {
       phone: "",
+      purpose: "login",
     },
   });
 

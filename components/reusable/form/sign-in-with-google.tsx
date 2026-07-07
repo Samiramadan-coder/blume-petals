@@ -3,8 +3,8 @@
 import { toast } from "sonner";
 import { http } from "@/lib/http";
 import { useRouter } from "next/navigation";
-import { GoogleLogin } from "@react-oauth/google";
 import { useTranslations } from "next-intl";
+import { GoogleLogin } from "@react-oauth/google";
 
 type GoogleLoginResponse = {
   token?: string;
@@ -41,7 +41,6 @@ export default function GoogleLoginButton() {
             },
           );
 
-          // console.log(response);
           // toast.success("Logged in successfully");
           // router.push("/account");
           // router.refresh();
