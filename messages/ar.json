@@ -12,14 +12,16 @@
       "Phone": "رقم الهاتف",
       "Password": "كلمة المرور",
       "ConfirmPassword": "تأكيد كلمة المرور",
-      "ProfilePhoto": "صورة الملف الشخصي"
+      "ProfilePhoto": "صورة الملف الشخصي",
+      "OTP": "رمز التحقق"
     },
     "Placeholders": {
       "FullName": "أدخل الاسم الكامل",
       "Email": "أدخل البريد الإلكتروني",
       "Phone": "أدخل رقم الهاتف",
       "Password": "أدخل كلمة المرور",
-      "ConfirmPassword": "أدخل تأكيد كلمة المرور"
+      "ConfirmPassword": "أدخل تأكيد كلمة المرور",
+      "OTP": "أدخل رمز التحقق"
     },
     "Errors": {
       "FullNameIsRequired": "الاسم الكامل مطلوب",

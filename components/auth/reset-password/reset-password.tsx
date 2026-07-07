@@ -71,6 +71,15 @@ export default function ResetPassword() {
 
         <FormInput
           register={register}
+          name="code"
+          errors={errors}
+          label={tFields("Labels.OTP")}
+          placeholder={tFields("Placeholders.OTP")}
+          required
+        />
+
+        <FormInput
+          register={register}
           name="password"
           errors={errors}
           label={tFields("Labels.Password")}

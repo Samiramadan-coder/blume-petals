@@ -12,14 +12,16 @@
       "Phone": "Phone",
       "Password": "Password",
       "ConfirmPassword": "Confirm Password",
-      "ProfilePhoto": "Profile Photo"
+      "ProfilePhoto": "Profile Photo",
+      "OTP": "OTP"
     },
     "Placeholders": {
       "FullName": "Enter Full Name",
       "Email": "Enter Email",
       "Phone": "Enter Phone Number",
       "Password": "Enter Password",
-      "ConfirmPassword": "Enter Confirm Password"
+      "ConfirmPassword": "Enter Confirm Password",
+      "OTP": "Enter OTP"
     },
     "Errors": {
       "FullNameIsRequired": "Full Name is required",

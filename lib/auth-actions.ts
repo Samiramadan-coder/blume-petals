@@ -6,7 +6,6 @@ import {
   LoginResponse,
   PhoneLoginForm,
   RegisterFormWithEmail,
-  RegisterFormWithPhone,
   ResetPasswordForm,
 } from "@/types/auth";
 import { http, ValidationError } from "./http";
@@ -147,10 +146,7 @@ export async function resetPassword(
   data: ResetPasswordForm,
 ): Promise<ResetPasswordResult> {
   try {
-    await http.post("/api/v1/auth/password/reset", {
-      ...data,
-      code: "test",
-    });
+    await http.post("/api/v1/auth/password/reset", data);
     return { success: true };
   } catch (err) {
     console.log("Error resetting password:", err);

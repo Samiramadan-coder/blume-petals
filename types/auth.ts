@@ -124,6 +124,7 @@ export const resetPasswordSchema = (t: T) =>
   z
     .object({
       email: z.email(t("Errors.EmailIsInvalid")),
+      code: z.string().min(1, t("Errors.OTPIsRequired")),
       password: z
         .string()
         .min(1, t("Errors.PasswordIsRequired"))
