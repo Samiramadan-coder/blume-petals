@@ -38,7 +38,6 @@ export default function ResetPassword() {
     }
 
     if (result.success === false && result.errors) {
-      console.log("Reset password errors:", result.errors);
       Object.entries(result.errors).forEach(([field, message]) => {
         if (!message) return;
         toast.error(message);
