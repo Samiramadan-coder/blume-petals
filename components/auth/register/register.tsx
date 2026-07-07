@@ -6,7 +6,7 @@ import { FaApple } from "react-icons/fa";
 import { Eye, EyeOff } from "lucide-react";
 import AuthCard from "../shared/auth-card";
 import { Button } from "@/components/ui/button";
-import { http, ValidationError } from "@/lib/http";
+import { registerUser } from "@/lib/auth-actions";
 import { Link, useRouter } from "@/i18n/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
@@ -42,23 +42,27 @@ export default function Register() {
   });
 
   const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
-    try {
-      await http.post("/api/v1/auth/register", data);
+    const result = await registerUser(data);
+
+    if (result.success) {
       toast.success(t("CreateAccountSuccess"));
       router.push("/login");
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        Object.entries(err.errors).forEach(([field, messages]) => {
-          toast.error(messages[0]);
-          setError(field as keyof RegisterForm, {
-            type: "server",
-            message: messages[0],
-          });
-        });
-      } else {
-        toast.error(t("CreateAccountError"));
-      }
+      return;
     }
+
+    if (result.errors && result.errors) {
+      Object.entries(result.errors).forEach(([field, message]) => {
+        if (!message) return;
+        setError(field as keyof RegisterForm, {
+          type: "server",
+          message,
+        });
+      });
+
+      return;
+    }
+
+    toast.error(t("CreateAccountError"));
   };
 
   return (

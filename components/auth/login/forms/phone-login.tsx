@@ -1,38 +1,14 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
-
-import {
-  LoginResponse,
-  OTPForm,
-  otpSchema,
-  PhoneLoginForm,
-  phoneLoginSchema,
-} from "@/types/auth";
-
 import { toast } from "sonner";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { FieldError } from "@/components/ui/field";
+import { Dialog } from "@/components/ui/dialog";
 import { http, ValidationError } from "@/lib/http";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
-import { saveToken } from "@/lib/actions";
+import { PhoneLoginForm, phoneLoginSchema } from "@/types/auth";
+import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
+import { OTPVerificationDialog } from "../../shared/otp-verification-dialog";
 
 export default function PhoneLogin() {
   const t = useTranslations("Login");
@@ -93,101 +69,11 @@ export default function PhoneLogin() {
         <AuthSubmitBtn isLoading={isSubmitting} label={t("SendOTP")} />
       </form>
 
-      <Dialog open={openOTP} onOpenChange={setOpenOTP}>
-        <OTPVerificationDialog phone={phone} />
-      </Dialog>
+      {openOTP && (
+        <Dialog open={openOTP} onOpenChange={setOpenOTP}>
+          <OTPVerificationDialog phone={phone} />
+        </Dialog>
+      )}
     </>
-  );
-}
-
-// OTP Verification Dialog Component
-function OTPVerificationDialog({ phone }: { phone: string }) {
-  const t = useTranslations("Login");
-  const tFields = useTranslations("Fields");
-  const router = useRouter();
-
-  const {
-    handleSubmit,
-    setError,
-    control,
-    formState: { errors, isSubmitting },
-  } = useForm<OTPForm>({
-    resolver: zodResolver(otpSchema(tFields)),
-  });
-
-  const onSubmit: SubmitHandler<OTPForm> = async (data) => {
-    try {
-      const { data: response } = await http.post<LoginResponse>(
-        "/api/v1/auth/otp/verify",
-        {
-          phone,
-          ...data,
-          purpose: "login",
-        },
-      );
-
-      await saveToken(response.data.token);
-      toast.success(t("SignInSuccess"));
-      router.push("/");
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        Object.entries(err.errors).forEach(([field, messages]) => {
-          toast.error(messages[0]);
-          setError(field as keyof OTPForm, {
-            type: "server",
-            message: messages[0],
-          });
-        });
-      } else {
-        toast.error(t("InvalidOTP"));
-      }
-    }
-  };
-
-  return (
-    <DialogContent className="sm:max-w-sm">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-4"
-      >
-        <DialogHeader>
-          <DialogTitle className="text-center">{t("EnterOTP")}</DialogTitle>
-          <DialogDescription className="text-center text-sm">
-            {t("OTPDescription")}
-          </DialogDescription>
-        </DialogHeader>
-
-        <Controller
-          control={control}
-          name="code"
-          render={({ field }) => (
-            <InputOTP
-              maxLength={6}
-              value={field.value}
-              onChange={field.onChange}
-              pattern={REGEXP_ONLY_DIGITS}
-            >
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-              </InputOTPGroup>
-              <InputOTPSeparator />
-              <InputOTPGroup>
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-              </InputOTPGroup>
-              <InputOTPSeparator />
-              <InputOTPGroup>
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
-          )}
-        />
-
-        <FieldError errors={[errors.code]} />
-        <AuthSubmitBtn isLoading={isSubmitting} label={t("VerifyOTP")} />
-      </form>
-    </DialogContent>
   );
 }
