@@ -1,6 +1,6 @@
 "use server";
 
-import { RegisterForm } from "@/types/auth";
+import { PhoneLoginForm, RegisterForm } from "@/types/auth";
 import { http, ValidationError } from "./http";
 
 /**
@@ -35,15 +35,27 @@ export async function registerUser(
 /**
  * Register Otp
  */
-type GenerateRegisterOtpResult = { success: boolean };
+type GenerateRegisterOtpResult =
+  | { success: true }
+  | { success: false; errors?: Partial<Record<keyof PhoneLoginForm, string>> };
 
 export async function generateRegisterOtp(
-  phone: string,
+  data: PhoneLoginForm,
 ): Promise<GenerateRegisterOtpResult> {
   try {
-    await http.post("api/v1/auth/otp/request", { phone });
+    await http.post("/api/v1/auth/otp/request", data);
     return { success: true };
   } catch (err) {
+    if (err instanceof ValidationError) {
+      const errors = Object.fromEntries(
+        Object.entries(err.errors).map(([field, messages]) => [
+          field,
+          messages[0] ?? "Invalid value",
+        ]),
+      ) as Partial<Record<keyof PhoneLoginForm, string>>;
+      return { success: false, errors };
+    }
+
     console.error("Error generating OTP:", err);
     return { success: false };
   }
