@@ -27,10 +27,10 @@ export default function Register() {
           <p className="text-foreground/60 text-sm mt-2">{t("JoinMessage")}</p>
         </div>
 
-        <div className="mb-8 mx-4 flex border-b border-border">
+        <div className="mb-8 flex border-b border-border">
           <Button
             variant="ghost"
-            className={`flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "email" ? "border-b-4 border-primary" : ""}`}
+            className={`text-base flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "email" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
             onClick={() => setActiveTab("email")}
             type="button"
           >
@@ -38,7 +38,7 @@ export default function Register() {
           </Button>
           <Button
             variant="ghost"
-            className={`flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "phone" ? "border-b-4 border-primary" : ""}`}
+            className={`text-base flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "phone" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
             onClick={() => setActiveTab("phone")}
             type="button"
           >

@@ -28,17 +28,17 @@ export default function Login() {
         </p>
       </div>
 
-      <div className="mb-8 mx-4 flex border-b border-border">
+      <div className="mb-8 flex border-b border-border">
         <Button
           variant="ghost"
-          className={`flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "email" ? "border-b-4 border-primary" : ""}`}
+          className={`text-base flex-1 h-12 rounded-none cursor-pointer border-0 ${activeTab === "email" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
           onClick={() => setActiveTab("email")}
         >
           {tFields("Labels.Email")}
         </Button>
         <Button
           variant="ghost"
-          className={`flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "phone" ? "border-b-4 border-primary" : ""}`}
+          className={`text-base flex-1 h-12 rounded-none cursor-pointer border-0 ${activeTab === "phone" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
           onClick={() => setActiveTab("phone")}
         >
           {tFields("Labels.Phone")}
