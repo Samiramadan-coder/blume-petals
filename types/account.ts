@@ -44,35 +44,41 @@ export type OTPForm = z.infer<ReturnType<typeof otpSchema>>;
  */
 export const addressSchema = (t: T) =>
   z.object({
-    label: z.enum(["Home", "Work", "Other"], t("invalidAddressLabel")),
+    label: z.enum(["Home", "Work", "Other"], t("Errors.InvalidAddressLabel")),
     recipient_name: z
       .string()
-      .min(1, t("recipientNameIsRequired"))
-      .min(2, t("recipientNameMinLength")),
+      .min(1, t("Errors.RecipientNameIsRequired"))
+      .min(2, t("Errors.RecipientNameMinLength")),
     recipient_phone: z
       .string()
-      .min(1, t("recipientPhoneIsRequired"))
-      .min(10, t("recipientPhoneMinLength")),
+      .min(1, t("Errors.RecipientPhoneIsRequired"))
+      .min(10, t("Errors.RecipientPhoneMinLength")),
     street: z
       .string()
-      .min(1, t("streetIsRequired"))
-      .min(2, t("streetMinLength")),
-    area: z.string().min(1, t("areaIsRequired")).min(2, t("areaMinLength")),
-    city: z.string().min(1, t("cityIsRequired")).min(2, t("cityMinLength")),
+      .min(1, t("Errors.StreetIsRequired"))
+      .min(2, t("Errors.StreetMinLength")),
+    area: z
+      .string()
+      .min(1, t("Errors.AreaIsRequired"))
+      .min(2, t("Errors.AreaMinLength")),
+    city: z
+      .string()
+      .min(1, t("Errors.CityIsRequired"))
+      .min(2, t("Errors.CityMinLength")),
     emirate: z
       .string()
-      .min(1, t("emirateIsRequired"))
-      .min(2, t("emirateMinLength")),
+      .min(1, t("Errors.EmirateIsRequired"))
+      .min(2, t("Errors.EmirateMinLength")),
     building: z
       .string()
-      .min(1, t("buildingIsRequired"))
-      .min(2, t("buildingMinLength")),
+      .min(1, t("Errors.BuildingIsRequired"))
+      .min(2, t("Errors.BuildingMinLength")),
     landmark: z
       .string()
-      .min(1, t("landmarkIsRequired"))
-      .min(2, t("landmarkMinLength")),
-    latitude: z.number().min(1, t("latitudeIsRequired")),
-    longitude: z.number().min(1, t("longitudeIsRequired")),
+      .min(1, t("Errors.LandmarkIsRequired"))
+      .min(2, t("Errors.LandmarkMinLength")),
+    latitude: z.number().min(1, t("Errors.LatitudeIsRequired")),
+    longitude: z.number().min(1, t("Errors.LongitudeIsRequired")),
     is_default: z.boolean().optional(),
   });
 
