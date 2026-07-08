@@ -12,9 +12,9 @@ import { OTPVerificationDialog } from "../../shared/otp-verification-dialog";
 import { RegisterFormWithPhone, registerSchemawithPhone } from "@/types/auth";
 
 export default function RegisterWithPhone() {
+  const locale = useLocale();
   const t = useTranslations("Register");
   const tFields = useTranslations("Fields");
-  const locale = useLocale();
   const [openOTP, setOpenOTP] = useState(false);
 
   const {

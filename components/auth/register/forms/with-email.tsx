@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import { useState } from "react";
+import { saveToken } from "@/lib/actions";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useRouter } from "@/i18n/navigation";
@@ -12,10 +13,10 @@ import FormInput from "@/components/reusable/form/form-input";
 import { RegisterFormWithEmail, registerSchemawithEmail } from "@/types/auth";
 
 export default function RegisterWithEmail() {
-  const t = useTranslations("Register");
-  const tFields = useTranslations("Fields");
   const locale = useLocale();
   const router = useRouter();
+  const t = useTranslations("Register");
+  const tFields = useTranslations("Fields");
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -39,7 +40,8 @@ export default function RegisterWithEmail() {
 
     if (result.success) {
       toast.success(tFields("Messages.CreateAccountSuccess"));
-      router.push("/login");
+      await saveToken(result.token);
+      router.push("/");
       return;
     }
 

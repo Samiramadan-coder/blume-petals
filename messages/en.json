@@ -36,13 +36,13 @@
       "OTPIsRequired": "OTP is required",
       "InvalidOTP": "Invalid OTP. Please try again.",
       "CreateAccountError": "Failed to create account. Please check your details and try again.",
-      "CreateAccountSuccess": "Account created successfully. Please login.",
       "SignInError": "Failed to sign in. Please check your credentials and try again.",
       "OTPSentFailed": "Failed to send OTP. Please try again.",
       "SomethingWrong": "Something went wrong. Please try again.",
       "ResetError": "An error occurred while resetting the password. Please try again."
     },
     "Messages": {
+      "CreateAccountSuccess": "Account created successfully. Please login.",
       "OTPSentSuccess": "OTP sent successfully. Please check your phone.",
       "SignInSuccess": "Login successful",
       "ResetLinkSent": "Reset link sent to your email.",

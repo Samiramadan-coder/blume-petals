@@ -74,9 +74,14 @@ export function OTPVerificationDialog({ phone }: { phone: string }) {
         className="flex flex-col items-center gap-4"
       >
         <DialogHeader>
-          <DialogTitle className="text-center">{t("EnterOTP")}</DialogTitle>
-          <DialogDescription className="text-center text-sm">
-            {t("OTPDescription")}
+          <DialogTitle className="text-center mb-2">
+            {t("EnterOTP")}
+          </DialogTitle>
+          <DialogDescription className="text-center text-sm flex flex-col gap-1">
+            <span>{t("OTPDescription")}</span>
+            <span className="text-secondary">
+              +971{phone.slice(0, 2)}****{phone.slice(-2)}
+            </span>
           </DialogDescription>
         </DialogHeader>
 
