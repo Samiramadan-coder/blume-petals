@@ -49,7 +49,7 @@ export default function Login() {
 
       {activeTab === "phone" && <PhoneLogin />}
 
-      <div className="my-6 relative">
+      <div className="my-8 relative">
         <Separator />
         <p className="absolute left-1/2 -top-2 -translate-x-1/2 text-center text-xs text-foreground/60 bg-white px-2">
           {t("OrContinueWith")}
@@ -70,10 +70,10 @@ export default function Login() {
         </Button>
       </div>
 
-      <p className="text-xs text-foreground/60 text-center mt-4">
+      <p className="text-sm text-foreground/60 text-center mt-4">
         {t("NoAccount")}{" "}
         <Link href="/register" className="text-primary">
-          {t("SignUp")}
+          {t("CreateOne")}
         </Link>
       </p>
     </AuthCard>

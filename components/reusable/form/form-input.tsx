@@ -65,7 +65,7 @@ export default function FormInput<T extends FieldValues>({
         <FieldLabel
           htmlFor={name}
           className={cn(
-            "text-sm font-semibold",
+            "text-sm",
             required && "after:ms-1 after:text-destructive after:content-['*']",
           )}
         >
@@ -78,7 +78,7 @@ export default function FormInput<T extends FieldValues>({
           {hasAddon ? (
             <div
               className={cn(
-                "flex h-11 overflow-hidden rounded-md border border-border",
+                "flex h-12 overflow-hidden rounded-md border border-border",
                 "focus-within:ring-ring/50 focus-within:border-ring focus-within:ring-[3px]",
                 error && "border-destructive focus-within:ring-destructive/20",
                 disabled && "cursor-not-allowed opacity-50",
@@ -98,7 +98,7 @@ export default function FormInput<T extends FieldValues>({
                 aria-invalid={!!error}
                 disabled={disabled}
                 className={cn(
-                  "h-full min-w-0 flex-1 rounded-none border-0 bg-transparent shadow-none",
+                  "h-full min-w-0 flex-1 rounded-none border-0 bg-transparent shadow-none placeholder:text-base",
                   "focus-visible:ring-0 focus-visible:ring-offset-0",
                   inputClassName,
                 )}
@@ -118,7 +118,10 @@ export default function FormInput<T extends FieldValues>({
               placeholder={placeholder}
               aria-invalid={!!error}
               disabled={disabled}
-              className={cn("h-11 border-border", inputClassName)}
+              className={cn(
+                "h-12 border-border placeholder:text-base",
+                inputClassName,
+              )}
             />
           )}
 

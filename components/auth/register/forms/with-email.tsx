@@ -101,7 +101,11 @@ export default function RegisterWithEmail() {
             className="w-8 h-8"
             onClick={() => setShowPassword((prev) => !prev)}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? (
+              <EyeOff className="size-5" />
+            ) : (
+              <Eye className="size-5" />
+            )}
           </Button>
         }
       />
@@ -122,18 +126,22 @@ export default function RegisterWithEmail() {
             className="w-8 h-8"
             onClick={() => setShowPassword((prev) => !prev)}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? (
+              <EyeOff className="size-5" />
+            ) : (
+              <Eye className="size-5" />
+            )}
           </Button>
         }
       />
 
       <p className="text-xs text-foreground/60 text-center">
         {t("AgreeText")}{" "}
-        <Link href="" className="text-primary">
+        <Link href="" className="text-primary font-semibold">
           {t("TermsConditions")}
         </Link>{" "}
         {t("And", { defaultValue: "and" })}{" "}
-        <Link href="" className="text-primary">
+        <Link href="" className="text-primary font-semibold">
           {t("PrivacyPolicy")}
         </Link>
       </p>

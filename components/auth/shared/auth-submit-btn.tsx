@@ -12,7 +12,7 @@ export default function AuthSubmitBtn({
     <Button
       variant="ghost"
       type="submit"
-      className="h-11 text-foreground font-semibold bg-primary hover:bg-primary cursor-pointer"
+      className="h-12 text-base text-foreground font-semibold bg-primary hover:bg-primary cursor-pointer"
     >
       {isLoading ? <Spinner /> : label}
     </Button>

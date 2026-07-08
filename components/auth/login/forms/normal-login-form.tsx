@@ -68,7 +68,7 @@ export default function NormalLoginForm() {
         register={register}
         errors={errors}
         label={tFields("Labels.Password")}
-        placeholder={tFields("Placeholders.Password")}
+        placeholder={tFields("Placeholders.LoginPassword")}
         type={showPassword ? "text" : "password"}
         required
         suffix={
@@ -79,13 +79,20 @@ export default function NormalLoginForm() {
             className="h-8 w-8"
             onClick={() => setShowPassword((prev) => !prev)}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? (
+              <EyeOff className="size-5" />
+            ) : (
+              <Eye className="size-5" />
+            )}
           </Button>
         }
       />
 
       <div className="flex justify-end">
-        <Link href="/forgot-password" className="text-sm text-primary">
+        <Link
+          href="/forgot-password"
+          className="text-sm font-semibold text-primary"
+        >
           {t("ForgotPassword")}
         </Link>
       </div>

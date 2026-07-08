@@ -59,7 +59,7 @@ export default function AddressForm({
   } = useForm<AddressFormBody>({
     resolver: zodResolver(addressSchema(t)),
     defaultValues: {
-      label: address?.label || "Work",
+      label: address?.label || "Home",
       recipient_name: address?.recipient_name || "",
       recipient_phone: address?.recipient_phone || "",
       street: address?.street || "",

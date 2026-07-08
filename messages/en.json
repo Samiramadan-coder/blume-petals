@@ -18,10 +18,11 @@
     "Placeholders": {
       "FullName": "Enter Full Name",
       "Email": "Enter Email",
-      "Phone": "Enter Phone Number",
-      "Password": "Enter Password",
+      "Phone": "50 123 4567",
+      "Password": "At least 8 characters",
       "ConfirmPassword": "Enter Confirm Password",
-      "OTP": "Enter OTP"
+      "OTP": "Enter OTP",
+      "LoginPassword": "Enter your password"
     },
     "Errors": {
       "FullNameIsRequired": "Full Name is required",
@@ -346,7 +347,8 @@
     "OTPDescription": "We sent a 6-digit code to your phone",
     "VerifyOTP": "Verify OTP",
     "InvalidOTP": "Invalid OTP. Please try again.",
-    "PasswordPlaceholder": "Password"
+    "PasswordPlaceholder": "Password",
+    "CreateOne": "Create one"
   },
   "Register": {
     "CreateAccountTitle": "Create Account",
