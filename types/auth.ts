@@ -23,6 +23,7 @@ export const registerSchemawithEmail = (t: T) =>
         .string()
         .min(1, t("Errors.PasswordConfirmationIsRequired"))
         .min(8, t("Errors.PasswordConfirmationIsTooShort")),
+      device_name: z.string().optional(),
       locale: z.string(),
     })
     .superRefine((data, ctx) => {
@@ -73,6 +74,7 @@ export const loginSchema = (t: T) =>
       .string()
       .min(1, t("Errors.PasswordIsRequired"))
       .min(8, t("Errors.PasswordIsTooShort")),
+    device_name: z.string().optional(),
   });
 
 export const phoneLoginSchema = (t: T) =>

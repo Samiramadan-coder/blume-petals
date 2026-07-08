@@ -51,8 +51,8 @@ export const addressSchema = (t: T) =>
       .min(2, t("Errors.RecipientNameMinLength")),
     recipient_phone: z
       .string()
-      .min(1, t("Errors.RecipientPhoneIsRequired"))
-      .min(10, t("Errors.RecipientPhoneMinLength")),
+      .trim()
+      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
     street: z
       .string()
       .min(1, t("Errors.StreetIsRequired"))

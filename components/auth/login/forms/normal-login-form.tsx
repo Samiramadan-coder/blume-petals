@@ -25,6 +25,11 @@ export default function NormalLoginForm() {
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema(tFields)),
+    defaultValues: {
+      email: "",
+      password: "",
+      device_name: "web",
+    },
   });
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {

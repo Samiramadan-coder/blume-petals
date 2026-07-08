@@ -32,6 +32,7 @@ export default function RegisterWithEmail() {
       password: "",
       password_confirmation: "",
       locale: locale,
+      device_name: "web",
     },
   });
 
