@@ -1,34 +1,34 @@
 "use client";
 
+import { toast } from "sonner";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
 import { Button } from "../ui/button";
-import { http } from "@/lib/http";
-import { deleteToken } from "@/lib/actions";
-import { useTranslations } from "next-intl";
-import { toast } from "sonner";
-import { useRouter } from "@/i18n/navigation";
-import { useState } from "react";
 import { Spinner } from "../ui/spinner";
-import { cn } from "@/lib/utils";
+import { deleteToken } from "@/lib/actions";
+import { logoutUser } from "@/lib/auth-actions";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function LogoutBtn({ className }: { className?: string }) {
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("AppHeader");
-  const router = useRouter();
+  const locale = useLocale();
 
   async function logout() {
     setIsLoading(true);
-    try {
-      await http.post("/api/v1/auth/logout");
+    const result = await logoutUser();
+
+    if (result.success) {
       await deleteToken();
       toast.success(t("LogoutSuccess"));
-      router.push("/login");
-    } catch (err) {
-      console.error("Logout error:", err);
-      toast.error(t("LogoutError"));
-    } finally {
+      window.location.replace(locale === "en" ? "/login" : `/${locale}/login`);
       setIsLoading(false);
+      return;
     }
+
+    toast.error(t("LogoutError"));
+    setIsLoading(false);
   }
 
   return (

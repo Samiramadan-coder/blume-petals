@@ -165,3 +165,18 @@ export async function resetPassword(
     return { success: false };
   }
 }
+
+/**
+ * Logout user
+ */
+type LogoutResult = { success: boolean };
+
+export async function logoutUser(): Promise<LogoutResult> {
+  try {
+    await http.post("/api/v1/auth/logout");
+    return { success: true };
+  } catch (err) {
+    console.error("Logout error:", err);
+    return { success: false };
+  }
+}
