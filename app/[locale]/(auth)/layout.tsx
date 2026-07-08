@@ -17,7 +17,9 @@ export default async function AuthLayout({
         justify-center 
         items-center 
         bg-[url('/images/auth/collection-of-rose.png')] 
-        bg-cover 
+        bg-cover
+        bg-center
+        attachment-fixed 
         bg-no-repeat
       `}
     >
