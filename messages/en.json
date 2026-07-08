@@ -9,7 +9,7 @@
     "Labels": {
       "FullName": "Full Name",
       "Email": "Email",
-      "Phone": "Phone",
+      "Phone": "Phone Number",
       "Password": "Password",
       "ConfirmPassword": "Confirm Password",
       "ProfilePhoto": "Profile Photo",
@@ -329,8 +329,6 @@
     "otpIsRequired": "OTP is required",
     "WelcomeBack": "Welcome Back",
     "SignInDescription": "Sign in to your account",
-    "EmailTab": "Email",
-    "PhoneTab": "Phone Number",
     "OrContinueWith": "Or continue with",
     "Google": "Google",
     "Apple": "Apple",

@@ -1,32 +1,19 @@
 "use client";
 
-import { toast } from "sonner";
 import { useState } from "react";
 import { FaApple } from "react-icons/fa";
-import { Eye, EyeOff } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import AuthCard from "../shared/auth-card";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { generateRegisterOtp, registerUserWithEmail } from "@/lib/auth-actions";
-import { Link, useRouter } from "@/i18n/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
+import RegisterWithEmail from "./forms/with-email";
+import RegisterWithPhone from "./forms/with-phone";
 import { Separator } from "@/components/ui/separator";
-import { useLocale, useTranslations } from "next-intl";
-import { useForm, SubmitHandler, useWatch } from "react-hook-form";
-import FormInput from "@/components/reusable/form/form-input";
-import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
-import {
-  RegisterFormWithEmail,
-  RegisterFormWithPhone,
-  registerSchemawithEmail,
-  registerSchemawithPhone,
-} from "@/types/auth";
 import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
-import { Dialog } from "@/components/ui/dialog";
-import { OTPVerificationDialog } from "../shared/otp-verification-dialog";
 
 export default function Register() {
   const t = useTranslations("Register");
-  const tLogin = useTranslations("Login");
+  const tFields = useTranslations("Fields");
   const [activeTab, setActiveTab] = useState<"email" | "phone">("email");
 
   return (
@@ -47,7 +34,7 @@ export default function Register() {
             onClick={() => setActiveTab("email")}
             type="button"
           >
-            {tLogin("EmailTab")}
+            {tFields("Labels.Email")}
           </Button>
           <Button
             variant="ghost"
@@ -55,12 +42,11 @@ export default function Register() {
             onClick={() => setActiveTab("phone")}
             type="button"
           >
-            {tLogin("PhoneTab")}
+            {tFields("Labels.Phone")}
           </Button>
         </div>
 
         {activeTab === "email" && <RegisterWithEmail />}
-
         {activeTab === "phone" && <RegisterWithPhone />}
 
         <div className="my-6 relative">
@@ -91,232 +77,6 @@ export default function Register() {
           </Link>
         </p>
       </AuthCard>
-    </>
-  );
-}
-
-function RegisterWithEmail() {
-  const t = useTranslations("Register");
-  const tFields = useTranslations("Fields");
-  const locale = useLocale();
-  const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<RegisterFormWithEmail>({
-    resolver: zodResolver(registerSchemawithEmail(tFields)),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-      locale: locale,
-    },
-  });
-
-  const onSubmit: SubmitHandler<RegisterFormWithEmail> = async (data) => {
-    const result = await registerUserWithEmail(data);
-
-    if (result.success) {
-      toast.success(tFields("Messages.CreateAccountSuccess"));
-      router.push("/login");
-      return;
-    }
-
-    if (result.errors && result.errors) {
-      Object.entries(result.errors).forEach(([field, message]) => {
-        if (!message) return;
-        setError(field as keyof RegisterFormWithEmail, {
-          type: "server",
-          message,
-        });
-      });
-
-      return;
-    }
-
-    toast.error(tFields("Errors.CreateAccountError"));
-  };
-
-  return (
-    <form
-      onSubmit={(e) => {
-        void handleSubmit(onSubmit)(e);
-      }}
-      className="flex flex-col gap-4"
-    >
-      <FormInput
-        register={register}
-        name="name"
-        errors={errors}
-        label={tFields("Labels.FullName")}
-        placeholder={tFields("Placeholders.FullName")}
-        required
-      />
-
-      <FormInput
-        register={register}
-        name="email"
-        errors={errors}
-        label={tFields("Labels.Email")}
-        placeholder={tFields("Placeholders.Email")}
-        required
-      />
-
-      <FormInput
-        register={register}
-        name="password"
-        errors={errors}
-        label={tFields("Labels.Password")}
-        placeholder={tFields("Placeholders.Password")}
-        required
-        type={showPassword ? "text" : "password"}
-        suffix={
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="w-8 h-8"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </Button>
-        }
-      />
-
-      <FormInput
-        register={register}
-        name="password_confirmation"
-        errors={errors}
-        label={tFields("Labels.ConfirmPassword")}
-        placeholder={tFields("Placeholders.ConfirmPassword")}
-        required
-        type={showPassword ? "text" : "password"}
-        suffix={
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="w-8 h-8"
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </Button>
-        }
-      />
-
-      <p className="text-xs text-foreground/60 text-center">
-        {t("AgreeText")}{" "}
-        <Link href="" className="text-primary">
-          {t("TermsConditions")}
-        </Link>{" "}
-        {t("And", { defaultValue: "and" })}{" "}
-        <Link href="" className="text-primary">
-          {t("PrivacyPolicy")}
-        </Link>
-      </p>
-
-      <AuthSubmitBtn
-        isLoading={isSubmitting}
-        label={t("CreateAccountButton")}
-      />
-    </form>
-  );
-}
-
-/**
- * RegisterWithPhone
- */
-function RegisterWithPhone() {
-  const t = useTranslations("Register");
-  const tFields = useTranslations("Fields");
-  const locale = useLocale();
-  const [openOTP, setOpenOTP] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors, isSubmitting },
-  } = useForm<RegisterFormWithPhone>({
-    resolver: zodResolver(registerSchemawithPhone(tFields)),
-    defaultValues: {
-      name: "",
-      phone: "",
-      locale: locale,
-    },
-  });
-
-  const onSubmit: SubmitHandler<RegisterFormWithPhone> = async (data) => {
-    const result = await generateRegisterOtp(data);
-
-    if (result.success) {
-      setOpenOTP(true);
-      toast.success(tFields("Messages.OTPSentSuccess"));
-      return;
-    }
-
-    toast.error(tFields("Errors.CreateAccountError"));
-  };
-
-  const phone = useWatch({
-    control,
-    name: "phone",
-  });
-
-  return (
-    <>
-      <form
-        onSubmit={(e) => {
-          void handleSubmit(onSubmit)(e);
-        }}
-        className="flex flex-col gap-4"
-      >
-        <FormInput
-          register={register}
-          name="name"
-          errors={errors}
-          label={tFields("Labels.FullName")}
-          placeholder={tFields("Placeholders.FullName")}
-          required
-        />
-
-        <FormInput
-          register={register}
-          name="phone"
-          errors={errors}
-          label={tFields("Labels.Phone")}
-          placeholder={tFields("Placeholders.Phone")}
-          required
-          prefix="AE +971"
-        />
-
-        <p className="text-xs text-foreground/60 text-center">
-          {t("AgreeText")}{" "}
-          <Link href="" className="text-primary">
-            {t("TermsConditions")}
-          </Link>{" "}
-          {t("And", { defaultValue: "and" })}{" "}
-          <Link href="" className="text-primary">
-            {t("PrivacyPolicy")}
-          </Link>
-        </p>
-
-        <AuthSubmitBtn
-          isLoading={isSubmitting}
-          label={t("CreateAccountButton")}
-        />
-      </form>
-
-      {openOTP && (
-        <Dialog open={openOTP} onOpenChange={setOpenOTP}>
-          <OTPVerificationDialog phone={phone} />
-        </Dialog>
-      )}
     </>
   );
 }

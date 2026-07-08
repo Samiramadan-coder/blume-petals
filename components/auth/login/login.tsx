@@ -4,7 +4,6 @@ import { useState } from "react";
 import { FaApple } from "react-icons/fa";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { FcGoogle } from "react-icons/fc";
 import PhoneLogin from "./forms/phone-login";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -14,6 +13,7 @@ import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
 
 export default function Login() {
   const t = useTranslations("Login");
+  const tFields = useTranslations("Fields");
   const [activeTab, setActiveTab] = useState<"email" | "phone">("email");
 
   return (
@@ -34,14 +34,14 @@ export default function Login() {
           className={`flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "email" ? "border-b-4 border-primary" : ""}`}
           onClick={() => setActiveTab("email")}
         >
-          {t("EmailTab")}
+          {tFields("Labels.Email")}
         </Button>
         <Button
           variant="ghost"
           className={`flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "phone" ? "border-b-4 border-primary" : ""}`}
           onClick={() => setActiveTab("phone")}
         >
-          {t("PhoneTab")}
+          {tFields("Labels.Phone")}
         </Button>
       </div>
 
