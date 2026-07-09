@@ -5,15 +5,8 @@ import { http } from "@/lib/http";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { GoogleLogin } from "@react-oauth/google";
-
-type GoogleLoginResponse = {
-  token?: string;
-  user?: {
-    id: number;
-    name: string;
-    email: string;
-  };
-};
+import { saveToken } from "@/lib/actions";
+import { LoginResponse } from "@/types/auth";
 
 export default function GoogleLoginButton() {
   const t = useTranslations("Register");
@@ -28,24 +21,23 @@ export default function GoogleLoginButton() {
       onSuccess={async (credentialResponse) => {
         const idToken = credentialResponse.credential;
 
-        console.log("Google login successful. ID Token:", idToken);
-
         if (!idToken) {
           toast.error(t("GoogleTokenFailed"));
           return;
         }
 
         try {
-          const response = await http.post<GoogleLoginResponse>(
+          const { data } = await http.post<LoginResponse>(
             "/api/v1/auth/social/google",
             {
               id_token: idToken,
             },
           );
 
-          // toast.success("Logged in successfully");
-          // router.push("/account");
-          // router.refresh();
+          if (data.data.token) {
+            await saveToken(data.data.token);
+            router.push("/");
+          }
         } catch {
           toast.error(t("GoogleLoginFailed"));
         }
