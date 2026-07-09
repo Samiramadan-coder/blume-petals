@@ -28,6 +28,8 @@ export default function GoogleLoginButton() {
       onSuccess={async (credentialResponse) => {
         const idToken = credentialResponse.credential;
 
+        console.log("Google login successful. ID Token:", idToken);
+
         if (!idToken) {
           toast.error(t("GoogleTokenFailed"));
           return;
