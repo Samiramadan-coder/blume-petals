@@ -1,26 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { toast } from "sonner";
-import { User } from "@/types/shared";
-import { Button } from "../../ui/button";
-import { useRef, useState } from "react";
-import { Spinner } from "../../ui/spinner";
-import PageTitle from "../shared/page-title";
-import { Pencil, Upload } from "lucide-react";
-import { Separator } from "../../ui/separator";
-import { Card, CardContent } from "../../ui/card";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   getOTPPhoneChange,
   postOTPPhoneChange,
   updateProfile,
 } from "@/lib/account-actions";
-import { useLocale, useTranslations } from "next-intl";
-import FormInput from "../../reusable/form/form-input";
-import { Account, accountSchema, OTPForm, otpSchema } from "@/types/account";
-import { Field, FieldContent, FieldError, FieldLabel } from "../../ui/field";
-import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
+
 import {
   Dialog,
   DialogContent,
@@ -28,22 +13,46 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
-import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 
-export default function ProfileForm({ user }: { user: User }) {
+import Image from "next/image";
+import { toast } from "sonner";
+import { Upload } from "lucide-react";
+import { User } from "@/types/shared";
+import { Button } from "../../ui/button";
+import { Link, useRouter } from "@/i18n/navigation";
+import { useRef, useState } from "react";
+import { Spinner } from "../../ui/spinner";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
+import { Separator } from "../../ui/separator";
+import { Card, CardContent } from "../../ui/card";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale, useTranslations } from "next-intl";
+import FormInput from "../../reusable/form/form-input";
+import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
+import { Account, accountSchema, OTPForm, otpSchema } from "@/types/account";
+import { Field, FieldContent, FieldError, FieldLabel } from "../../ui/field";
+import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
+
+export default function ProfileForm({
+  user,
+  isEditMode,
+}: {
+  user: User;
+  isEditMode: boolean;
+}) {
+  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("Account.Profile");
   const tFields = useTranslations("Fields");
   const tActions = useTranslations("Actions");
   const [openOTP, setOpenOTP] = useState(false);
-  const [editMode, setEditMode] = useState(false);
   const [oldPhone, setOldPhone] = useState(user.phone);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -84,7 +93,7 @@ export default function ProfileForm({ user }: { user: User }) {
 
       if (result.success) {
         toast.success(t("UpdatedSuccessfully"));
-        setEditMode(false);
+        router.push("/account/profile");
         return;
       }
 
@@ -115,168 +124,157 @@ export default function ProfileForm({ user }: { user: User }) {
 
   return (
     <>
-      <div className="space-y-6">
-        <PageTitle title={t("Title")}>
-          <Button
-            className="cursor-pointer"
-            variant="ghost"
-            onClick={() => setEditMode(!editMode)}
-          >
-            <Pencil className="text-primary size-5" />
-          </Button>
-        </PageTitle>
-
-        <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6">
-          <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
-            <p className="text-lg font-semibold text-primary">12</p>
-            <p className="text-xs text-foreground/60 mt-1">{t("Orders")}</p>
-          </div>
-
-          <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
-            <p className="text-lg font-semibold text-primary">5</p>
-            <p className="text-xs text-foreground/60 mt-1">{t("Saved")}</p>
-          </div>
-
-          <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
-            <p className="text-lg font-semibold text-primary">3</p>
-            <p className="text-xs text-foreground/60 mt-1">{t("Design")}</p>
-          </div>
+      <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6">
+        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+          <p className="text-lg font-semibold text-primary">12</p>
+          <p className="text-xs text-foreground/60 mt-1">{t("Orders")}</p>
         </div>
 
-        <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)] py-6">
-          <CardContent className="px-6">
-            <form
-              className="space-y-6"
-              onSubmit={handleSubmit(onSubmit)}
-              ref={formRef}
-            >
-              <FormInput
-                name="name"
-                register={register}
-                errors={errors}
-                required
-                placeholder={tFields("Placeholders.FullName")}
-                inputClassName="disabled:bg-primary/30 disabled:opacity-100"
-                label={tFields("Labels.FullName")}
-                disabled={!editMode}
-              />
+        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+          <p className="text-lg font-semibold text-primary">5</p>
+          <p className="text-xs text-foreground/60 mt-1">{t("Saved")}</p>
+        </div>
 
-              <FormInput
-                name="email"
-                register={register}
-                errors={errors}
-                required
-                placeholder={tFields("Placeholders.Email")}
-                inputClassName="disabled:bg-primary/30 disabled:opacity-100"
-                label={tFields("Labels.Email")}
-                disabled={!editMode}
-              />
+        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+          <p className="text-lg font-semibold text-primary">3</p>
+          <p className="text-xs text-foreground/60 mt-1">{t("Design")}</p>
+        </div>
+      </div>
 
-              <FormInput
-                name="phone"
-                register={register}
-                errors={errors}
-                required
-                placeholder={tFields("Placeholders.Phone")}
-                inputClassName="disabled:bg-primary/30 disabled:opacity-100"
-                label={tFields("Labels.Phone")}
-                disabled={!editMode}
-                prefix={editMode ? "AE +971" : undefined}
-              />
+      <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)] py-6">
+        <CardContent className="px-6">
+          <form
+            className="space-y-6"
+            onSubmit={handleSubmit(onSubmit)}
+            ref={formRef}
+          >
+            <FormInput
+              name="name"
+              register={register}
+              errors={errors}
+              required
+              placeholder={tFields("Placeholders.FullName")}
+              inputClassName="disabled:bg-primary/30 disabled:opacity-100"
+              label={tFields("Labels.FullName")}
+              disabled={!isEditMode}
+            />
 
-              <Separator />
+            <FormInput
+              name="email"
+              register={register}
+              errors={errors}
+              required
+              placeholder={tFields("Placeholders.Email")}
+              inputClassName="disabled:bg-primary/30 disabled:opacity-100"
+              label={tFields("Labels.Email")}
+              disabled={!isEditMode}
+            />
 
-              <Controller
-                control={control}
-                name="photo_url"
-                render={({ field }) => {
-                  const selectedPhoto = field.value as string | File | null;
-                  const profilePhotoUrl =
-                    typeof selectedPhoto === "string"
-                      ? selectedPhoto
-                      : selectedPhoto instanceof File
-                        ? URL.createObjectURL(selectedPhoto)
-                        : null;
+            <FormInput
+              name="phone"
+              register={register}
+              errors={errors}
+              required
+              placeholder={tFields("Placeholders.Phone")}
+              inputClassName="disabled:bg-primary/30 disabled:opacity-100"
+              label={tFields("Labels.Phone")}
+              disabled={!isEditMode}
+              prefix={isEditMode ? "AE +971" : undefined}
+            />
 
-                  return (
-                    <Field>
-                      <FieldLabel htmlFor="photo_path">
-                        {tFields("Labels.ProfilePhoto")}
-                      </FieldLabel>
-                      <FieldContent>
-                        <div className="flex items-center gap-4">
-                          {profilePhotoUrl ? (
-                            <div className="w-20 h-20 rounded-full overflow-hidden shadow-sm">
-                              <Image
-                                src={profilePhotoUrl}
-                                height={400}
-                                width={400}
-                                className="h-full w-full object-cover object-center"
-                                alt="Profile Photo"
-                                priority
-                              />
-                            </div>
-                          ) : (
-                            <div className="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center text-xl font-semibold">
-                              {name.slice(0, 2).toUpperCase()}
-                            </div>
-                          )}
+            <Separator />
 
-                          {editMode && (
-                            <Button
-                              variant="outline"
-                              type="button"
-                              className="cursor-pointer h-12 w-38 border-2 border-primary text-primary hover:text-primary"
-                              onClick={() => fileInputRef.current?.click()}
-                            >
-                              <Upload />
-                              {t("ChangePhoto")}
-                            </Button>
-                          )}
-                        </div>
+            <Controller
+              control={control}
+              name="photo_url"
+              render={({ field }) => {
+                const selectedPhoto = field.value as string | File | null;
+                const profilePhotoUrl =
+                  typeof selectedPhoto === "string"
+                    ? selectedPhoto
+                    : selectedPhoto instanceof File
+                      ? URL.createObjectURL(selectedPhoto)
+                      : null;
 
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          ref={fileInputRef}
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (!file) return;
-                            field.onChange(file);
-                            e.target.value = "";
-                          }}
-                        />
-                      </FieldContent>
-                    </Field>
-                  );
-                }}
-              />
+                return (
+                  <Field>
+                    <FieldLabel htmlFor="photo_path">
+                      {tFields("Labels.ProfilePhoto")}
+                    </FieldLabel>
+                    <FieldContent>
+                      <div className="flex items-center gap-4">
+                        {profilePhotoUrl ? (
+                          <div className="w-20 h-20 rounded-full overflow-hidden shadow-sm">
+                            <Image
+                              src={profilePhotoUrl}
+                              height={400}
+                              width={400}
+                              className="h-full w-full object-cover object-center"
+                              alt="Profile Photo"
+                              priority
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center text-xl font-semibold">
+                            {name.slice(0, 2).toUpperCase()}
+                          </div>
+                        )}
 
-              {editMode && (
-                <div className="flex items-center gap-4">
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="h-12 text-white cursor-pointer flex-1"
-                  >
-                    {isSubmitting ? <Spinner /> : tActions("SaveChanges")}
-                  </Button>
+                        {isEditMode && (
+                          <Button
+                            variant="outline"
+                            type="button"
+                            className="cursor-pointer h-12 w-38 border-2 border-primary text-primary hover:text-primary"
+                            onClick={() => fileInputRef.current?.click()}
+                          >
+                            <Upload />
+                            {t("ChangePhoto")}
+                          </Button>
+                        )}
+                      </div>
 
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        ref={fileInputRef}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          field.onChange(file);
+                          e.target.value = "";
+                        }}
+                      />
+                    </FieldContent>
+                  </Field>
+                );
+              }}
+            />
+
+            {isEditMode && (
+              <div className="flex items-center gap-4">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="h-12 text-white cursor-pointer flex-1"
+                >
+                  {isSubmitting ? <Spinner /> : tActions("SaveChanges")}
+                </Button>
+
+                <Link href="/account/profile" className="flex-1">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => setEditMode(false)}
-                    className="h-12 border-2 border-primary text-foreground cursor-pointer flex-1"
+                    className="h-12 border-2 border-primary text-foreground cursor-pointer w-full"
                   >
                     {tActions("Cancel")}
                   </Button>
-                </div>
-              )}
-            </form>
-          </CardContent>
-        </Card>
-      </div>
+                </Link>
+              </div>
+            )}
+          </form>
+        </CardContent>
+      </Card>
 
       {openOTP && (
         <Dialog open={openOTP} onOpenChange={setOpenOTP}>

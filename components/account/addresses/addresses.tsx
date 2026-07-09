@@ -3,12 +3,11 @@ import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import AddressForm from "./address-form";
 import { Address } from "@/types/account";
-import { Card, CardContent } from "../../ui/card";
-import { MapPin, Pencil, Trash2 } from "lucide-react";
 import DeleteAddress from "./delete-address";
+import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddressAsDefault from "./address-as-default";
-import PageTitle from "../shared/page-title";
+import { MapPin, Pencil, Trash2 } from "lucide-react";
 
 export default async function Addresses({
   addresses,
@@ -18,11 +17,7 @@ export default async function Addresses({
   const t = await getTranslations("Account.Address");
 
   return (
-    <div className="space-y-6">
-      <PageTitle title={t("Title")}>
-        <AddressForm />
-      </PageTitle>
-
+    <>
       {addresses.length > 0 ? (
         <div className="space-y-4">
           {addresses.map((address, index) => (
@@ -111,6 +106,6 @@ export default async function Addresses({
           </CardContent>
         </Card>
       )}
-    </div>
+    </>
   );
 }
