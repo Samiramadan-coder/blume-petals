@@ -180,7 +180,7 @@ function createHttp(baseURL: string) {
   };
 }
 
-const http = createHttp(process.env.NEXT_PUBLIC_API_URL ?? "");
+const http = createHttp("https://api.blumepetals.com");
 
 export { http, createHttp, HttpError, ValidationError };
 export type { HttpResponse, RequestConfig };
