@@ -99,7 +99,7 @@ export default function RegisterWithEmail() {
             type="button"
             variant="ghost"
             size="icon"
-            className="w-8 h-8"
+            className="w-8 h-8 cursor-pointer"
             onClick={() => setShowPassword((prev) => !prev)}
           >
             {showPassword ? (
@@ -124,7 +124,7 @@ export default function RegisterWithEmail() {
             type="button"
             variant="ghost"
             size="icon"
-            className="w-8 h-8"
+            className="w-8 h-8 cursor-pointer"
             onClick={() => setShowPassword((prev) => !prev)}
           >
             {showPassword ? (
