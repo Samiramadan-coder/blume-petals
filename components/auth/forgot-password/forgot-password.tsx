@@ -2,7 +2,7 @@
 
 import { toast } from "sonner";
 import { useLocale } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import AuthCard from "../shared/auth-card";
 import { useTranslations } from "next-intl";
 import { forgotPassword } from "@/lib/auth-actions";
@@ -17,6 +17,7 @@ export default function ForgotPassword() {
   const t = useTranslations("ForgotPassword");
   const tFields = useTranslations("Fields");
   const locale = useLocale();
+  const router = useRouter();
 
   const {
     register,
@@ -32,6 +33,7 @@ export default function ForgotPassword() {
 
     if (result.success) {
       toast.success(tFields("Messages.ResetLinkSent"));
+      router.push("/reset-password");
       return;
     }
 

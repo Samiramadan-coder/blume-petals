@@ -398,7 +398,8 @@
   },
   "ResetPassword": {
     "Title": "إعادة تعيين كلمة المرور",
-    "ResetPasswordButton": "إعادة تعيين كلمة المرور"
+    "ResetPasswordButton": "إعادة تعيين كلمة المرور",
+    "OtpSent": "تم إرسال رمز التحقق إلى بريدك الإلكتروني."
   },
   "AboutGetStarted": {
     "Eyebrow": "ابدأ الآن",

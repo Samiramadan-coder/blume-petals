@@ -405,7 +405,8 @@
   },
   "ResetPassword": {
     "Title": "Reset Password",
-    "ResetPasswordButton": "Reset Password"
+    "ResetPasswordButton": "Reset Password",
+    "OtpSent": "OTP has been sent to your email."
   },
   "AboutGetStarted": {
     "Eyebrow": "Get Started",

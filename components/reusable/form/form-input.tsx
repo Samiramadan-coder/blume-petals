@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import {
   Field,
   FieldContent,
+  FieldDescription,
   FieldError,
   FieldLabel,
 } from "@/components/ui/field";
@@ -32,6 +33,7 @@ type FormInputProps<T extends FieldValues> = {
   disabled?: boolean;
   prefix?: ReactNode;
   suffix?: ReactNode;
+  description?: ReactNode;
 };
 
 export default function FormInput<T extends FieldValues>({
@@ -47,6 +49,7 @@ export default function FormInput<T extends FieldValues>({
   disabled = false,
   prefix,
   suffix,
+  description,
 }: FormInputProps<T>) {
   const error = get(errors, name);
 
@@ -126,6 +129,7 @@ export default function FormInput<T extends FieldValues>({
           )}
 
           <FieldError errors={[error]} />
+          {description && <FieldDescription>{description}</FieldDescription>}
         </div>
       </FieldContent>
     </Field>

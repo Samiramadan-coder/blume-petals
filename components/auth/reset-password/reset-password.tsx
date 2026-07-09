@@ -2,10 +2,10 @@
 
 import { toast } from "sonner";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { Eye, EyeOff } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { ArrowLeft, ArrowRight, Eye, EyeOff } from "lucide-react";
 import AuthCard from "../shared/auth-card";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { resetPassword } from "@/lib/auth-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,8 +15,10 @@ import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { ResetPasswordForm, resetPasswordSchema } from "@/types/auth";
 
 export default function ResetPassword() {
+  const locale = useLocale();
   const t = useTranslations("ResetPassword");
   const tFields = useTranslations("Fields");
+  const tForgotPassword = useTranslations("ForgotPassword");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -53,7 +55,7 @@ export default function ResetPassword() {
 
   return (
     <AuthCard>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="text-center">
           <h1 className="text-3xl font-playfair font-bold text-foreground">
             {t("Title")}
@@ -75,6 +77,7 @@ export default function ResetPassword() {
           errors={errors}
           label={tFields("Labels.OTP")}
           placeholder={tFields("Placeholders.OTP")}
+          description={t("OtpSent")}
           required
         />
 
@@ -128,10 +131,23 @@ export default function ResetPassword() {
           }
         />
 
-        <AuthSubmitBtn
-          isLoading={isSubmitting}
-          label={t("ResetPasswordButton")}
-        />
+        <div className="flex flex-col gap-2">
+          <AuthSubmitBtn
+            isLoading={isSubmitting}
+            label={t("ResetPasswordButton")}
+          />
+
+          <div className="flex justify-center mt-4">
+            <Link href="/login" className="text-primary flex items-center">
+              {locale === "ar" ? (
+                <ArrowRight className="ml-2" size={16} />
+              ) : (
+                <ArrowLeft className="mr-2" size={16} />
+              )}
+              {tForgotPassword("BackToSignIn")}
+            </Link>
+          </div>
+        </div>
       </form>
     </AuthCard>
   );
