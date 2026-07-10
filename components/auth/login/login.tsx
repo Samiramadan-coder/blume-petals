@@ -56,14 +56,14 @@ export default function Login() {
         </p>
       </div>
 
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-2 gap-4">
+        <div>
           <GoogleLoginButton />
         </div>
 
         <Button
           variant="outline"
-          className="flex-1 h-10 rounded-xs bg-white cursor-pointer"
+          className="h-10 rounded-xs bg-white cursor-pointer"
         >
           <FaApple size={20} className="mr-2" />
           {t("Apple")}
