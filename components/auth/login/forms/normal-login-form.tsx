@@ -34,14 +34,14 @@ export default function NormalLoginForm() {
   });
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
-    await fetch("/api/v1/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }); // Call the login API endpoint
-    await http.post("/api/v1/auth/login", data); // Call the login API endpoint
+    // await fetch("/api/v1/auth/login", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // }); // Call the login API endpoint
+    // await http.post("/api/v1/auth/login", data); // Call the login API endpoint
     const result = await loginUser(data);
 
     if (result.success) {
