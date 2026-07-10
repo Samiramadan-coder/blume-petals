@@ -1,4 +1,4 @@
-import { getTokenHeaders } from "./actions";
+// import { getTokenHeaders } from "./actions";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -100,10 +100,10 @@ function createHttp(baseURL: string) {
       });
     }
 
-    const tokenHeaders = await getTokenHeaders();
-    Object.entries(tokenHeaders).forEach(([key, value]) => {
-      headers.set(key, value);
-    });
+    // const tokenHeaders = await getTokenHeaders();
+    // Object.entries(tokenHeaders).forEach(([key, value]) => {
+    //   headers.set(key, value);
+    // });
 
     let requestBody: BodyInit | undefined;
 
