@@ -21,7 +21,7 @@ export default function Register() {
       <AuthCard>
         <div className="text-center mb-6">
           <div className="text-4xl font-bold text-foreground mb-4">𝔹</div>
-          <h1 className="text-3xl font-playfair font-bold text-foreground">
+          <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
             {t("CreateAccountTitle")}
           </h1>
           <p className="text-foreground/60 text-sm mt-2">{t("JoinMessage")}</p>

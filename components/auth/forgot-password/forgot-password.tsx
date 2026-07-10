@@ -59,7 +59,7 @@ export default function ForgotPassword() {
           <div className="w-14 h-14 rounded-full bg-border grid place-items-center mx-auto mb-4">
             <LockIcon size={24} className="text-primary" />
           </div>
-          <h1 className="text-3xl font-playfair font-bold text-foreground">
+          <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
             {t("Title")}
           </h1>
           <p className="text-foreground/60 text-sm mt-2">{t("Description")}</p>

@@ -55,9 +55,9 @@ export default function ResetPassword() {
 
   return (
     <AuthCard>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="text-center">
-          <h1 className="text-3xl font-playfair font-bold text-foreground">
+          <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
             {t("Title")}
           </h1>
         </div>

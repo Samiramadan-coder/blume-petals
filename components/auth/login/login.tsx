@@ -18,9 +18,9 @@ export default function Login() {
 
   return (
     <AuthCard>
-      <div className="text-center mb-8">
+      <div className="text-center mb-6 md:mb-8">
         <div className="w-12 h-12 rounded-full bg-linear-to-br from-primary to-secondary mx-auto mb-4"></div>
-        <h1 className="text-3xl font-playfair font-bold text-foreground">
+        <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
           {t("WelcomeBack")}
         </h1>
         <p className="text-foreground/60 text-sm mt-2">
