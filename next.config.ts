@@ -2,11 +2,6 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    serverActions: {
-      allowedOrigins: ["blumepetals.com", "www.blumepetals.com"],
-    },
-  },
   images: {
     remotePatterns: [
       {
