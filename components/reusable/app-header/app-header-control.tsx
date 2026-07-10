@@ -47,6 +47,11 @@ const sidebarUserNavItems = [
   { label: "Settings", href: "/account/settings" },
 ];
 
+const sidebarAuthNavItems = [
+  { label: "SignIn", href: "/login" },
+  { label: "Register", href: "/register" },
+];
+
 export default function AppHeaderControl({ user }: { user: User | null }) {
   const scrolled = useIsScroll();
   const pathname = usePathname();
@@ -206,7 +211,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
               </SheetClose>
             ))}
 
-            {user && (
+            {user ? (
               <>
                 <Separator />
                 {sidebarUserNavItems.map((item) => (
@@ -215,6 +220,15 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
                       label={tAccount(item.label)}
                       href={item.href}
                     />
+                  </SheetClose>
+                ))}
+              </>
+            ) : (
+              <>
+                <Separator />
+                {sidebarAuthNavItems.map((item) => (
+                  <SheetClose asChild key={item.href}>
+                    <SidebarNavLink label={t(item.label)} href={item.href} />
                   </SheetClose>
                 ))}
               </>
