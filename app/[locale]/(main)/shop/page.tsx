@@ -39,7 +39,7 @@ export default function ShopPage() {
             </SheetTrigger>
             <SheetContent showCloseButton={true}>
               <SheetHeader className="mt-6">
-                <SheetDescription className="py-4 flex flex-col gap-3">
+                <SheetDescription asChild className="py-4 flex flex-col gap-3">
                   <Filters />
                 </SheetDescription>
               </SheetHeader>

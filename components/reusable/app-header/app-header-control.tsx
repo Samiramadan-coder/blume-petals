@@ -31,6 +31,7 @@ import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import LogoutBtn from "../logout-btn";
 import Image from "next/image";
+import { useState } from "react";
 
 const sidebarNavItems = [
   { label: "Home", href: "/" },
@@ -53,6 +54,7 @@ const sidebarAuthNavItems = [
 ];
 
 export default function AppHeaderControl({ user }: { user: User | null }) {
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const scrolled = useIsScroll();
   const pathname = usePathname();
   const router = useRouter();
@@ -189,7 +191,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
         )}
       </div>
 
-      <Sheet>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button
             variant="ghost"
@@ -207,7 +209,11 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
           <div className="flex flex-col gap-4 px-4">
             {sidebarNavItems.map((item) => (
               <SheetClose asChild key={item.href}>
-                <SidebarNavLink label={t(item.label)} href={item.href} />
+                <SidebarNavLink
+                  label={t(item.label)}
+                  href={item.href}
+                  onClick={() => setIsSheetOpen(false)}
+                />
               </SheetClose>
             ))}
 
@@ -219,6 +225,7 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
                     <SidebarNavLink
                       label={tAccount(item.label)}
                       href={item.href}
+                      onClick={() => setIsSheetOpen(false)}
                     />
                   </SheetClose>
                 ))}
@@ -228,7 +235,11 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
                 <Separator />
                 {sidebarAuthNavItems.map((item) => (
                   <SheetClose asChild key={item.href}>
-                    <SidebarNavLink label={t(item.label)} href={item.href} />
+                    <SidebarNavLink
+                      label={t(item.label)}
+                      href={item.href}
+                      onClick={() => setIsSheetOpen(false)}
+                    />
                   </SheetClose>
                 ))}
               </>
