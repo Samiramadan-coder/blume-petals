@@ -49,7 +49,7 @@ export default function Login() {
 
       {activeTab === "phone" && <PhoneLogin />}
 
-      <div className="my-8 relative">
+      <div className="my-6 md:my-8 relative">
         <Separator />
         <p className="absolute left-1/2 -top-2 -translate-x-1/2 text-center text-xs text-foreground/60 bg-white px-2">
           {t("OrContinueWith")}

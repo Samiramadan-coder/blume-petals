@@ -15,9 +15,10 @@ export default function GoogleLoginButton() {
   return (
     <GoogleLogin
       theme="outline"
-      width={"40px"}
+      width={"170px"}
       shape="square"
       size="large"
+      text="signin"
       onSuccess={async (credentialResponse) => {
         const idToken = credentialResponse.credential;
 
