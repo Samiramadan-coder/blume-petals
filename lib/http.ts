@@ -180,7 +180,9 @@ function createHttp(baseURL: string) {
   };
 }
 
-const http = createHttp(process.env.NEXT_PUBLIC_API_URL ?? "");
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://api.test.com";
+
+const http = createHttp(apiBaseUrl);
 
 export { http, createHttp, HttpError, ValidationError };
 export type { HttpResponse, RequestConfig };
