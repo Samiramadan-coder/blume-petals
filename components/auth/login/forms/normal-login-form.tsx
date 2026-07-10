@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
+import { http } from "@/lib/http";
 
 export default function NormalLoginForm() {
   const t = useTranslations("Login");
@@ -33,6 +34,7 @@ export default function NormalLoginForm() {
   });
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
+    await http.post("/api/v1/auth/login", data); // Call the login API endpoint
     const result = await loginUser(data);
 
     if (result.success) {
