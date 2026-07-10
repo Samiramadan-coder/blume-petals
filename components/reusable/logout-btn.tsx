@@ -8,12 +8,13 @@ import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import { deleteToken } from "@/lib/actions";
 import { logoutUser } from "@/lib/auth-actions";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 
 export default function LogoutBtn({ className }: { className?: string }) {
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("AppHeader");
-  const locale = useLocale();
+  const router = useRouter();
 
   async function logout() {
     setIsLoading(true);
@@ -22,7 +23,7 @@ export default function LogoutBtn({ className }: { className?: string }) {
     if (result.success) {
       await deleteToken();
       toast.success(t("LogoutSuccess"));
-      window.location.replace(locale === "en" ? "/login" : `/${locale}/login`);
+      router.replace("/login");
       setIsLoading(false);
       return;
     }
