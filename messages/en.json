@@ -133,14 +133,7 @@
   },
   "LandingShopByCategory": {
     "Eyebrow": "Browse our range",
-    "Title": "Shop by Category",
-    "Categories": {
-      "Bouquets": "Bouquets",
-      "Preserved": "Preserved",
-      "Gifting": "Gifting",
-      "CustomBuilder": "Custom Builder",
-      "Seasonal": "Seasonal"
-    }
+    "Title": "Shop by Category"
   },
   "LandingHowItWorks": {
     "Eyebrow": "How it works",

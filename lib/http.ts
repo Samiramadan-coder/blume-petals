@@ -1,4 +1,4 @@
-import { getTokenHeaders } from "./actions";
+import { getServerLanguage, getTokenHeaders } from "./actions";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -101,9 +101,15 @@ function createHttp(baseURL: string) {
     }
 
     const tokenHeaders = await getTokenHeaders();
+    const language = await getServerLanguage();
+
     Object.entries(tokenHeaders).forEach(([key, value]) => {
       headers.set(key, value);
     });
+
+    if (language) {
+      headers.set("Accept-Language", language);
+    }
 
     let requestBody: BodyInit | undefined;
 

@@ -1,8 +1,3 @@
-export type ShopByCategoryItem = {
-  key: "Bouquets" | "Gifting" | "Preserved" | "CustomBuilder" | "Seasonal";
-  image: string;
-};
-
 export type HowItWorksStep = {
   id: number;
   key: "ChooseShape" | "PickFlowers" | "FinishingTouches" | "CraftAndDeliver";
