@@ -24,6 +24,7 @@ type SearchParams = {
   price_max?: string;
   size?: string;
   page?: string;
+  occasion?: string;
 };
 
 /**
@@ -46,7 +47,8 @@ async function ListOfProducts({
       ...(searchParams?.price_max ? { price_max: searchParams.price_max } : {}),
       ...(searchParams?.size ? { size: searchParams.size } : {}),
       ...(searchParams?.page ? { page: searchParams.page } : {}),
-      per_page: 4,
+      ...(searchParams?.occasion ? { occasion: searchParams.occasion } : {}),
+      per_page: 9,
     },
   });
 

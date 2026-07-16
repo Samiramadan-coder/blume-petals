@@ -15,8 +15,8 @@ import { useTranslations } from "next-intl";
 import { sizes } from "@/constants/shop-page";
 import { Card, CardContent } from "../ui/card";
 import { Field, FieldGroup } from "../ui/field";
-import { useQueryParam } from "@/hooks/use-search-params";
 import { useSearchParams } from "next/navigation";
+import { useQueryParam } from "@/hooks/use-search-params";
 
 const occasions = [
   { id: "valentine", label: "Valentine" },
@@ -71,6 +71,7 @@ export default function Filters() {
                     setMin(value);
                     setQueryParams({
                       price_min: value[0].toString(),
+                      price_max: max[0].toString(),
                       page: "1",
                     });
                   }}
@@ -91,6 +92,7 @@ export default function Filters() {
                     if (value[0] < min[0]) {
                       setMax([min[0] + 1]);
                       setQueryParams({
+                        price_min: min[0].toString(),
                         price_max: (min[0] + 1).toString(),
                         page: "1",
                       });
@@ -99,6 +101,7 @@ export default function Filters() {
 
                     setMax(value);
                     setQueryParams({
+                      price_min: min[0].toString(),
                       price_max: value[0].toString(),
                       page: "1",
                     });
