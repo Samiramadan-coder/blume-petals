@@ -25,6 +25,7 @@ type SearchParams = {
   size?: string;
   page?: string;
   occasion?: string;
+  category?: string;
 };
 
 /**
@@ -48,6 +49,7 @@ async function ListOfProducts({
       ...(searchParams?.size ? { size: searchParams.size } : {}),
       ...(searchParams?.page ? { page: searchParams.page } : {}),
       ...(searchParams?.occasion ? { occasion: searchParams.occasion } : {}),
+      ...(searchParams?.category ? { category: searchParams.category } : {}),
       per_page: 9,
     },
   });

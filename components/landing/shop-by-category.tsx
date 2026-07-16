@@ -6,6 +6,7 @@ import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
 import type { CategoriesResponse } from "@/types/landing";
+import { Link } from "@/i18n/navigation";
 
 async function Categories() {
   const { data, ok } = await http.get<CategoriesResponse>("/api/v1/categories");
@@ -23,25 +24,27 @@ async function Categories() {
           transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
           key={item.id}
         >
-          <Card className="group overflow-hidden rounded-2xl border-0 bg-background p-0 shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
-            <CardContent className="p-0">
-              <div className="relative aspect-4/5">
-                <Image
-                  src={item.banner_url}
-                  alt={item.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                />
-              </div>
+          <Link href={`/shop?category=${item.slug}`}>
+            <Card className="group overflow-hidden rounded-2xl border-0 bg-background p-0 shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
+              <CardContent className="p-0">
+                <div className="relative aspect-4/5">
+                  <Image
+                    src={item.banner_url}
+                    alt={item.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                  />
+                </div>
 
-              <div className="flex h-12 items-center justify-center">
-                <h3 className="text-sm font-semibold text-foreground">
-                  {item.name}
-                </h3>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="flex h-12 items-center justify-center">
+                  <h3 className="text-sm font-semibold text-foreground">
+                    {item.name}
+                  </h3>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         </motion.div>
       ))}
     </>
