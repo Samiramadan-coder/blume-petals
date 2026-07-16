@@ -18,6 +18,11 @@ import { getLocale, getTranslations } from "next-intl/server";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 
+/**
+ * ListOfProducts component fetches and displays a list of products from the API.
+ * It shows the total number of products and allows sorting through the ProductSortSelect component.
+ * Each product is displayed using the CardItem component.
+ */
 async function ListOfProducts() {
   const t = await getTranslations("Shop");
 
@@ -48,6 +53,12 @@ async function ListOfProducts() {
   );
 }
 
+/**
+ * ShopPage component serves as the main page for the shop section.
+ * It includes a title, description, filters, and a list of products.
+ * The filters are displayed in a sidebar for larger screens and in a sheet for smaller screens.
+ * The ListOfProducts component is wrapped in Suspense to handle loading states.
+ */
 export default async function ShopPage() {
   const t = await getTranslations("Shop");
   const locale = await getLocale();
