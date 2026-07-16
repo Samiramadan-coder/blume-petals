@@ -84,7 +84,7 @@ export default function PhoneLogin() {
           <OTPDialog
             endPoint="/api/v1/auth/otp/verify"
             subtitle={t("OtpSentToPhone")}
-            extraData={{ phone, device_name: "web" }}
+            extraData={{ phone, device_name: "web", purpose: "login" }}
             resendOTP={() => formRef?.current?.requestSubmit?.()}
             loadingResendOTP={isSubmitting}
           />
