@@ -12,6 +12,7 @@ import { Slider } from "../ui/slider";
 import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
 import { useTranslations } from "next-intl";
+import { sizes } from "@/constants/shop-page";
 import { Card, CardContent } from "../ui/card";
 import { Field, FieldGroup } from "../ui/field";
 
@@ -30,16 +31,9 @@ export default function Filters() {
   const t = useTranslations("Shop");
   const [min, setMin] = useState([0]);
   const [max, setMax] = useState([500]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [isOnStock, setIsOnStock] = useState(0);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
-
-  const sizes = [
-    { id: "small", label: t("Small") },
-    { id: "medium", label: t("Medium") },
-    { id: "large", label: t("Large") },
-    { id: "extra_large", label: t("XLarge") },
-  ];
 
   return (
     <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
@@ -93,7 +87,7 @@ export default function Filters() {
               {t("Size")}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
-              {sizes.map((size) => (
+              {sizes(t).map((size) => (
                 <FieldGroup key={size.id} className="max-w-sm">
                   <Field orientation="horizontal">
                     <Checkbox

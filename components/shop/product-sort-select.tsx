@@ -1,4 +1,3 @@
-import { getTranslations } from "next-intl/server";
 import {
   Select,
   SelectContent,
@@ -7,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { getTranslations } from "next-intl/server";
 
 export default async function ProductSortSelect() {
   const t = await getTranslations("Shop");

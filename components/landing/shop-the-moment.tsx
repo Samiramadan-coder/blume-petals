@@ -10,13 +10,13 @@ import { getTranslations } from "next-intl/server";
 import { categories } from "@/constants/home-page";
 
 async function Occasions() {
-  // const { data, ok } = await http.get("/api/v1/occasions");
+  const { data, ok } = await http.get("/api/v1/occasions");
 
   // console.log("Occasions data:", data);
 
-  // if (!ok) {
-  //   throw new Error("Failed to fetch occasions");
-  // }
+  if (!ok) {
+    throw new Error("Failed to fetch occasions");
+  }
 
   return (
     <>

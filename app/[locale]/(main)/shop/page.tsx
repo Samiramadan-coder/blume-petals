@@ -34,6 +34,8 @@ async function ListOfProducts() {
     throw new Error("Failed to fetch products");
   }
 
+  console.log("Fetched products:", data.data.items);
+
   return (
     <div className="col-span-1 md:col-span-2 lg:col-span-3">
       <div className="flex items-center justify-between gap-6 border-b border-border pb-6">
