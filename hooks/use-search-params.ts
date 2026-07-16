@@ -1,6 +1,5 @@
 "use client";
 
-import { createQueryStringUrl } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function useQueryParam() {
@@ -8,18 +7,43 @@ export function useQueryParam() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  function setQueryParam(key: string, value: string | string[]) {
-    const url = createQueryStringUrl({
-      searchParams: searchParams.toString(),
-      pathname,
-      key,
-      value,
+  function setQueryParams(
+    updates: Record<string, string | string[] | undefined>,
+  ) {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updates).forEach(([key, value]) => {
+      params.delete(key);
+
+      if (!value || (Array.isArray(value) && value.length === 0)) {
+        return;
+      }
+
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          if (item) {
+            params.append(key, item);
+          }
+        });
+
+        return;
+      }
+
+      params.set(key, value);
     });
+
+    const queryString = params.toString();
+    const url = queryString ? `${pathname}?${queryString}` : pathname;
 
     router.push(url);
   }
 
+  function setQueryParam(key: string, value: string | string[]) {
+    setQueryParams({ [key]: value });
+  }
+
   return {
     setQueryParam,
+    setQueryParams,
   };
 }

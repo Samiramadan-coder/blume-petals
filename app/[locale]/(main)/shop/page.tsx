@@ -17,11 +17,13 @@ import CardItem from "@/components/shop/card-item";
 import { getLocale, getTranslations } from "next-intl/server";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
+import PaginationTemplate from "@/components/reusable/pagination-template";
 
 type SearchParams = {
   price_min?: string;
   price_max?: string;
   size?: string;
+  page?: string;
 };
 
 /**
@@ -43,7 +45,8 @@ async function ListOfProducts({
       ...(searchParams?.price_min ? { price_min: searchParams.price_min } : {}),
       ...(searchParams?.price_max ? { price_max: searchParams.price_max } : {}),
       ...(searchParams?.size ? { size: searchParams.size } : {}),
-      per_page: 2,
+      ...(searchParams?.page ? { page: searchParams.page } : {}),
+      per_page: 4,
     },
   });
 
@@ -66,6 +69,11 @@ async function ListOfProducts({
           <CardItem key={index} item={item} />
         ))}
       </div>
+
+      <PaginationTemplate
+        currentPage={data.data.pagination.current_page}
+        totalPages={data.data.pagination.last_page}
+      />
     </div>
   );
 }

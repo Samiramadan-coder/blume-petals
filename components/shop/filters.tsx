@@ -30,7 +30,7 @@ const occasions = [
 ];
 
 export default function Filters() {
-  const { setQueryParam } = useQueryParam();
+  const { setQueryParams } = useQueryParam();
   const searchParams = useSearchParams();
   const t = useTranslations("Shop");
 
@@ -69,7 +69,10 @@ export default function Filters() {
                   value={min}
                   onValueChange={(value) => {
                     setMin(value);
-                    setQueryParam("price_min", value[0].toString());
+                    setQueryParams({
+                      price_min: value[0].toString(),
+                      page: "1",
+                    });
                   }}
                   max={500}
                   step={1}
@@ -85,8 +88,20 @@ export default function Filters() {
                   max={500}
                   value={max}
                   onValueChange={(value) => {
+                    if (value[0] < min[0]) {
+                      setMax([min[0] + 1]);
+                      setQueryParams({
+                        price_max: (min[0] + 1).toString(),
+                        page: "1",
+                      });
+                      return;
+                    }
+
                     setMax(value);
-                    setQueryParam("price_max", value[0].toString());
+                    setQueryParams({
+                      price_max: value[0].toString(),
+                      page: "1",
+                    });
                   }}
                   step={1}
                   className="mx-auto w-full max-w-xs"
@@ -124,7 +139,7 @@ export default function Filters() {
                             );
 
                         setSelectedSizes(nextSizes);
-                        setQueryParam("size", nextSizes);
+                        setQueryParams({ size: nextSizes, page: "1" });
                       }}
                     />
                     <Label htmlFor={size.id} className="text-foreground/70">

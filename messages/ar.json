@@ -1,4 +1,8 @@
 {
+  "Common": {
+    "Next": "التالي",
+    "Previous": "السابق"
+  },
   "Actions": {
     "Close": "إغلاق",
     "Delete": "حذف",
