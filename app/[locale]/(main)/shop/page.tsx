@@ -5,6 +5,7 @@ import {
   SheetTrigger,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { ListFilter } from "lucide-react";
 import { Pagination } from "@/types/shared";
@@ -12,10 +13,11 @@ import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
-import ProductSortSelect from "@/components/shop/product-sort-select";
 import { getTranslations } from "next-intl/server";
+import ProductSortSelect from "@/components/shop/product-sort-select";
+import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 
-export default async function ShopPage() {
+async function ListOfProducts() {
   const t = await getTranslations("Shop");
 
   const { data, ok } = await http.get<{
@@ -26,7 +28,27 @@ export default async function ShopPage() {
     throw new Error("Failed to fetch products");
   }
 
-  console.log("Products data:", data);
+  return (
+    <div className="col-span-1 md:col-span-2 lg:col-span-3">
+      <div className="flex items-center justify-between gap-6 border-b border-border pb-6">
+        <p className="text-sm font-semibold text-foreground/70">
+          {data.data.pagination.total} {t("Products")}
+        </p>
+
+        <ProductSortSelect />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        {data.data.items.map((item, index) => (
+          <CardItem key={index} item={item} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default async function ShopPage() {
+  const t = await getTranslations("Shop");
 
   return (
     <div className="container max-w-7xl">
@@ -60,21 +82,9 @@ export default async function ShopPage() {
             </SheetContent>
           </Sheet>
 
-          <div className="col-span-1 md:col-span-2 lg:col-span-3">
-            <div className="flex items-center justify-between gap-6 border-b border-border pb-6">
-              <p className="text-sm font-semibold text-foreground/70">
-                {data.data.pagination.total} {t("Products")}
-              </p>
-
-              <ProductSortSelect />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-              {data.data.items.map((item, index) => (
-                <CardItem key={index} item={item} />
-              ))}
-            </div>
-          </div>
+          <Suspense fallback={<ListOfProductsSkeleton />}>
+            <ListOfProducts />
+          </Suspense>
         </div>
       </div>
     </div>

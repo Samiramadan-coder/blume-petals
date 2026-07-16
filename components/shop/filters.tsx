@@ -40,7 +40,7 @@ export default function Filters() {
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
 
   return (
-    <Card className="border border-border shadow-sm">
+    <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
       <CardContent>
         {/* Price Range */}
         <Accordion type="single" collapsible defaultValue="price_range">
