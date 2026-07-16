@@ -18,23 +18,38 @@ import { getLocale, getTranslations } from "next-intl/server";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 
+type SearchParams = {
+  price_min?: string;
+  price_max?: string;
+  size?: string;
+};
+
 /**
  * ListOfProducts component fetches and displays a list of products from the API.
  * It shows the total number of products and allows sorting through the ProductSortSelect component.
  * Each product is displayed using the CardItem component.
  */
-async function ListOfProducts() {
+async function ListOfProducts({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const t = await getTranslations("Shop");
 
   const { data, ok } = await http.get<{
     data: { items: Product[]; pagination: Pagination };
-  }>("/api/v1/products");
+  }>("/api/v1/products", {
+    params: {
+      ...(searchParams?.price_min ? { price_min: searchParams.price_min } : {}),
+      ...(searchParams?.price_max ? { price_max: searchParams.price_max } : {}),
+      ...(searchParams?.size ? { size: searchParams.size } : {}),
+      per_page: 2,
+    },
+  });
 
   if (!ok) {
     throw new Error("Failed to fetch products");
   }
-
-  console.log("Fetched products:", data.data.items);
 
   return (
     <div className="col-span-1 md:col-span-2 lg:col-span-3">
@@ -61,7 +76,11 @@ async function ListOfProducts() {
  * The filters are displayed in a sidebar for larger screens and in a sheet for smaller screens.
  * The ListOfProducts component is wrapped in Suspense to handle loading states.
  */
-export default async function ShopPage() {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const t = await getTranslations("Shop");
   const locale = await getLocale();
 
@@ -102,7 +121,7 @@ export default async function ShopPage() {
           </Sheet>
 
           <Suspense fallback={<ListOfProductsSkeleton />}>
-            <ListOfProducts />
+            <ListOfProducts searchParams={await searchParams} />
           </Suspense>
         </div>
       </div>

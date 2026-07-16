@@ -15,6 +15,8 @@ import { useTranslations } from "next-intl";
 import { sizes } from "@/constants/shop-page";
 import { Card, CardContent } from "../ui/card";
 import { Field, FieldGroup } from "../ui/field";
+import { useQueryParam } from "@/hooks/use-search-params";
+import { useSearchParams } from "next/navigation";
 
 const occasions = [
   { id: "valentine", label: "Valentine" },
@@ -28,11 +30,25 @@ const occasions = [
 ];
 
 export default function Filters() {
+  const { setQueryParam } = useQueryParam();
+  const searchParams = useSearchParams();
   const t = useTranslations("Shop");
-  const [min, setMin] = useState([0]);
-  const [max, setMax] = useState([500]);
+
+  const [min, setMin] = useState([
+    searchParams?.get("price_min") ? Number(searchParams.get("price_min")) : 0,
+  ]);
+
+  const [max, setMax] = useState([
+    searchParams?.get("price_max")
+      ? Number(searchParams.get("price_max"))
+      : 500,
+  ]);
+
+  const [selectedSizes, setSelectedSizes] = useState<string[]>(
+    searchParams.getAll("size") || [],
+  );
+
   const [isOnStock, setIsOnStock] = useState(0);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
 
   return (
@@ -51,7 +67,10 @@ export default function Filters() {
                 </p>
                 <Slider
                   value={min}
-                  onValueChange={setMin}
+                  onValueChange={(value) => {
+                    setMin(value);
+                    setQueryParam("price_min", value[0].toString());
+                  }}
                   max={500}
                   step={1}
                   className="mx-auto w-full max-w-xs"
@@ -65,7 +84,10 @@ export default function Filters() {
                 <Slider
                   max={500}
                   value={max}
-                  onValueChange={setMax}
+                  onValueChange={(value) => {
+                    setMax(value);
+                    setQueryParam("price_max", value[0].toString());
+                  }}
                   step={1}
                   className="mx-auto w-full max-w-xs"
                 />
@@ -95,13 +117,14 @@ export default function Filters() {
                       name={size.id}
                       checked={selectedSizes.includes(size.id)}
                       onCheckedChange={(checked) => {
-                        setSelectedSizes((prev) =>
-                          checked
-                            ? [...prev, size.id]
-                            : selectedSizes.filter(
-                                (selectedSize) => selectedSize !== size.id,
-                              ),
-                        );
+                        const nextSizes = checked
+                          ? [...selectedSizes, size.id]
+                          : selectedSizes.filter(
+                              (selectedSize) => selectedSize !== size.id,
+                            );
+
+                        setSelectedSizes(nextSizes);
+                        setQueryParam("size", nextSizes);
                       }}
                     />
                     <Label htmlFor={size.id} className="text-foreground/70">

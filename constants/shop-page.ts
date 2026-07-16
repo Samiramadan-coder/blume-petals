@@ -21,19 +21,19 @@ export const tabs: {
 
 export const sizes = (t: T) => [
   {
-    id: "small",
+    id: "S",
     label: t("Small"),
   },
   {
-    id: "medium",
+    id: "M",
     label: t("Medium"),
   },
   {
-    id: "large",
+    id: "L",
     label: t("Large"),
   },
   {
-    id: "extra_large",
+    id: "XL",
     label: t("XLarge"),
   },
 ];
