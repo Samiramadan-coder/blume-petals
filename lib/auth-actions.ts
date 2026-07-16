@@ -14,7 +14,7 @@ import { http, ValidationError } from "./http";
  * Register a new user and return serializable field errors for the client form.
  */
 type RegisterResult =
-  | { success: true; token: string }
+  | { success: true }
   | {
       success: false;
       errors?: Partial<Record<keyof RegisterFormWithEmail, string>>;
@@ -24,11 +24,9 @@ export async function registerUserWithEmail(
   data: RegisterFormWithEmail,
 ): Promise<RegisterResult> {
   try {
-    const { data: response } = await http.post<LoginResponse>(
-      "/api/v1/auth/register",
-      data,
-    );
-    return { success: true, token: response.data.token };
+    await http.post("/api/v1/auth/register", data);
+
+    return { success: true };
   } catch (err) {
     if (err instanceof ValidationError) {
       const errors = Object.fromEntries(

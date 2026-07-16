@@ -5,7 +5,8 @@
     "ErrorHappened": "An error occurred. Please try again.",
     "CantLoadData": "Unable to load data. Please try again later.",
     "TryAgain": "Try Again",
-    "GoBack": "Go Back"
+    "GoBack": "Go Back",
+    "OtpSentEmail": "OTP has been sent to your email."
   },
   "Actions": {
     "Close": "Close",
@@ -396,7 +397,8 @@
     "AlreadyHaveAccount": "Already have an account?",
     "SignIn": "Sign In",
     "GoogleTokenFailed": "Failed to login with Google. Please try again.",
-    "GoogleLoginFailed": "Failed to login with Google. Please try again."
+    "GoogleLoginFailed": "Failed to login with Google. Please try again.",
+    "OtpSentToEmail": "We Sent an OTP to your email, please check your inbox."
   },
   "ForgotPassword": {
     "Title": "Forgot Password?",
