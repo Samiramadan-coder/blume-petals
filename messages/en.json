@@ -381,7 +381,8 @@
     "VerifyOTP": "Verify OTP",
     "InvalidOTP": "Invalid OTP. Please try again.",
     "PasswordPlaceholder": "Password",
-    "CreateOne": "Create one"
+    "CreateOne": "Create one",
+    "OtpSentToPhone": "We Sent an OTP to your phone, please check your messages."
   },
   "Register": {
     "CreateAccountTitle": "Create Account",
@@ -398,7 +399,8 @@
     "SignIn": "Sign In",
     "GoogleTokenFailed": "Failed to login with Google. Please try again.",
     "GoogleLoginFailed": "Failed to login with Google. Please try again.",
-    "OtpSentToEmail": "We Sent an OTP to your email, please check your inbox."
+    "OtpSentToEmail": "We Sent an OTP to your email, please check your inbox.",
+    "OtpSentToPhone": "We Sent an OTP to your phone, please check your messages."
   },
   "ForgotPassword": {
     "Title": "Forgot Password?",

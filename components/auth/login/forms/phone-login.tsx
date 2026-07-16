@@ -1,19 +1,20 @@
 import { toast } from "sonner";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Dialog } from "@/components/ui/dialog";
+import { OTPDialog } from "../../shared/otp-dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { generateRegisterOtp } from "@/lib/auth-actions";
 import FormInput from "@/components/reusable/form/form-input";
 import { PhoneLoginForm, phoneLoginSchema } from "@/types/auth";
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
-import { OTPVerificationDialog } from "../../shared/otp-verification-dialog";
 
 export default function PhoneLogin() {
   const t = useTranslations("Login");
   const tFields = useTranslations("Fields");
   const [openOTP, setOpenOTP] = useState(false);
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const {
     register,
@@ -60,7 +61,11 @@ export default function PhoneLogin() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <FormInput
           register={register}
           name="phone"
@@ -76,7 +81,13 @@ export default function PhoneLogin() {
 
       {openOTP && (
         <Dialog open={openOTP} onOpenChange={setOpenOTP}>
-          <OTPVerificationDialog phone={phone} />
+          <OTPDialog
+            endPoint="/api/v1/auth/otp/verify"
+            subtitle={t("OtpSentToPhone")}
+            extraData={{ phone, device_name: "web" }}
+            resendOTP={() => formRef?.current?.requestSubmit?.()}
+            loadingResendOTP={isSubmitting}
+          />
         </Dialog>
       )}
     </>
