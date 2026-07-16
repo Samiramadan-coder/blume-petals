@@ -1,24 +1,41 @@
 "use client";
 
-import { useEffect } from "react";
-import { AlertTriangle, Home, RefreshCcw } from "lucide-react";
-import { useRouter } from "next/navigation";
-
+import { useEffect, useRef } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { AlertTriangle, Home, RefreshCcw } from "lucide-react";
 
 type ErrorPageProps = {
-  error: Error & {
-    digest?: string;
-  };
+  error: Error & { digest?: string };
   reset: () => void;
 };
 
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const t = useTranslations("Common");
+  const previousUrlRef = useRef<string | null>(null);
+
+  const currentUrlSignature = `${pathname}?${searchParams.toString()}`;
 
   useEffect(() => {
     console.error(error);
   }, [error]);
+
+  useEffect(() => {
+    if (previousUrlRef.current === null) {
+      previousUrlRef.current = currentUrlSignature;
+
+      return;
+    }
+
+    if (previousUrlRef.current !== currentUrlSignature) {
+      previousUrlRef.current = currentUrlSignature;
+      reset();
+    }
+  }, [currentUrlSignature, reset]);
 
   return (
     <main className="container flex min-h-[70vh] max-w-7xl items-center justify-center px-5 py-16">
@@ -31,12 +48,11 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
         </div>
 
         <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
-          حدث خطأ غير متوقع
+          {t("ErrorHappened")}
         </h1>
 
         <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-muted-foreground sm:text-base">
-          تعذر تحميل الصفحة في الوقت الحالي. يمكنك إعادة المحاولة أو العودة إلى
-          الصفحة الرئيسية.
+          {t("CantLoadData")}
         </p>
 
         {error.digest && (
@@ -52,7 +68,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             className="h-11 rounded-full px-7"
           >
             <RefreshCcw className="me-2 size-4" />
-            إعادة المحاولة
+            {t("TryAgain")}
           </Button>
 
           <Button
@@ -62,7 +78,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             className="h-11 rounded-full px-7"
           >
             <Home className="me-2 size-4" />
-            العودة للرئيسية
+            {t("GoBack")}
           </Button>
         </div>
       </div>

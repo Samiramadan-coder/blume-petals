@@ -1,7 +1,11 @@
 {
   "Common": {
     "Next": "Next",
-    "Previous": "Previous"
+    "Previous": "Previous",
+    "ErrorHappened": "An error occurred. Please try again.",
+    "CantLoadData": "Unable to load data. Please try again later.",
+    "TryAgain": "Try Again",
+    "GoBack": "Go Back"
   },
   "Actions": {
     "Close": "Close",

@@ -14,11 +14,11 @@ import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
+import { OccasionsResponse } from "@/types/landing";
 import { getLocale, getTranslations } from "next-intl/server";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
-import { OccasionsResponse } from "@/types/landing";
 
 type SearchParams = {
   price_min?: string;
@@ -51,7 +51,7 @@ async function ListOfProducts({
       ...(searchParams?.page ? { page: searchParams.page } : {}),
       ...(searchParams?.occasion ? { occasion: searchParams.occasion } : {}),
       ...(searchParams?.category ? { category: searchParams.category } : {}),
-      per_page: 4,
+      per_page: 12,
     },
   });
 
