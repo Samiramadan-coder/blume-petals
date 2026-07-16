@@ -9,25 +9,6 @@ export type BouquetBuilderFeature = {
   icon: string;
 };
 
-export type ShopTheMomentCategory = {
-  image:
-    | "valantine"
-    | "birthday"
-    | "wedding"
-    | "eid"
-    | "anniversary"
-    | "mother";
-  key:
-    | "Valentine"
-    | "Birthday"
-    | "Wedding"
-    | "Eid"
-    | "Anniversary"
-    | "MothersDay";
-  className?: string;
-  href: string;
-};
-
 export type FeaturedCollection = {
   id: string;
   itemKey: "GoldenHour" | "MoonlightBox" | "DawnGift" | "SignatureBuild";

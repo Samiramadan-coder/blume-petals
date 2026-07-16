@@ -1,7 +1,6 @@
 import {
   HowItWorksStep,
   BouquetBuilderFeature,
-  ShopTheMomentCategory,
   FeaturedCollection,
   AddOnItem,
   Review,
@@ -46,41 +45,6 @@ export const features: BouquetBuilderFeature[] = [
   {
     key: "AddMessage",
     icon: "✉",
-  },
-];
-
-export const categories: ShopTheMomentCategory[] = [
-  {
-    image: "valantine",
-    key: "Valentine",
-    className: "md:row-span-2",
-    href: "/shop",
-  },
-  {
-    image: "birthday",
-    key: "Birthday",
-    href: "/shop",
-  },
-  {
-    image: "wedding",
-    key: "Wedding",
-    href: "/shop",
-  },
-  {
-    image: "eid",
-    key: "Eid",
-    className: "md:row-span-2",
-    href: "/shop",
-  },
-  {
-    image: "anniversary",
-    key: "Anniversary",
-    href: "/shop",
-  },
-  {
-    image: "mother",
-    key: "MothersDay",
-    href: "/shop",
   },
 ];
 
