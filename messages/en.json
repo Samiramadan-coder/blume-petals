@@ -507,5 +507,13 @@
       "PrivacyPolicy": "Privacy Policy",
       "TermsOfService": "Terms of Service"
     }
+  },
+  "Shop": {
+    "Title": "Shop Our Collection",
+    "Description": "Discover our premium artificial flowers for every occasion",
+    "Products": "Products",
+    "AED": "AED",
+    "AddToCart": "Add to Cart",
+    "New": "New"
   }
 }

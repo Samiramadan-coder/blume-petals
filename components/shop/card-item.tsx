@@ -4,25 +4,35 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import { Rating } from "../ui/rating";
+import { Product } from "@/types/products";
+import { getTranslations } from "next-intl/server";
 
-export default function CardItem() {
+export default async function CardItem({ item }: { item: Product }) {
+  const t = await getTranslations("Shop");
+
   return (
-    <Card className="group overflow-hidden bg-background p-0">
+    <Card className="group overflow-hidden bg-background p-0 cursor-pointer">
       <CardContent className="p-1">
         <div className="overflow-hidden relative aspect-5/5 rounded-2xl">
           <Image
-            src="/images/home/hero/bouquet-of-rose.png"
-            alt={"-"}
+            src={item.image_url}
+            alt={item.name}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
 
           <div className="absolute top-0 left-0 p-4 w-full z-10 flex items-center justify-between">
-            <Badge className="text-foreground text-xs">New</Badge>
+            <div>
+              {item.is_new && (
+                <Badge className="text-white bg-secondary text-xs h-6">
+                  ✨ {t("New")}
+                </Badge>
+              )}
+            </div>
 
             <Button
-              aria-label={"-"}
+              aria-label={`Add ${item.name} to wishlist`}
               className="rounded-full h-10 w-10 bg-background hover:bg-background"
             >
               <Heart size={16} className="text-foreground" />
@@ -30,22 +40,24 @@ export default function CardItem() {
           </div>
 
           <Button
-            aria-label={"Add to Cart"}
+            aria-label={`Add ${item.name} to cart`}
             className="h-10 bg-primary hover:bg-secondary cursor-pointer absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 z-10 py-2.5 text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
             <ShoppingCart size={16} className="mr-2 inline-block" />
-            Add to Cart
+            {t("AddToCart")}
           </Button>
         </div>
 
         <div className="flex flex-col pt-4">
           <p className="text-sm font-semibold leading-snug mb-1.5 text-foreground">
-            Golden Hour Preserved Roses
+            {item.name}
           </p>
           <div className="mb-2">
-            <Rating rating={4} count={100} />
+            <Rating rating={+item.rating_avg} count={item.rating_count} />
           </div>
-          <p className="text-base font-bold">AED 285</p>
+          <p className="text-base font-bold">
+            {t("AED")} {item.price_from}
+          </p>
         </div>
       </CardContent>
     </Card>

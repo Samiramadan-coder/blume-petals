@@ -11,3 +11,13 @@ export type User = {
   photo_path: string | null;
   photo_url: string | null;
 };
+
+export type Pagination = {
+  current_page: number;
+  from: number;
+  has_more: boolean;
+  last_page: number;
+  per_page: number;
+  to: number;
+  total: number;
+};
