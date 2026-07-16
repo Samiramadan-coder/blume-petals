@@ -17,19 +17,20 @@ import { Card, CardContent } from "../ui/card";
 import { Field, FieldGroup } from "../ui/field";
 import { useSearchParams } from "next/navigation";
 import { useQueryParam } from "@/hooks/use-search-params";
+import { Occasion } from "@/types/landing";
 
-const occasions = [
-  { id: "valentine", label: "Valentine" },
-  { id: "birthday", label: "Birthday" },
-  { id: "wedding", label: "Wedding" },
-  { id: "eid", label: "Eid" },
-  { id: "anniversary", label: "Anniversary" },
-  { id: "mothers-day", label: "Mother' Day" },
-  { id: "graduation", label: "Graduation" },
-  { id: "add-ons", label: "Add-ons" },
-];
+// const occasions = [
+//   { id: "valentine", label: "Valentine" },
+//   { id: "birthday", label: "Birthday" },
+//   { id: "wedding", label: "Wedding" },
+//   { id: "eid", label: "Eid" },
+//   { id: "anniversary", label: "Anniversary" },
+//   { id: "mothers-day", label: "Mother' Day" },
+//   { id: "graduation", label: "Graduation" },
+//   { id: "add-ons", label: "Add-ons" },
+// ];
 
-export default function Filters() {
+export default function Filters({ occasions }: { occasions: Occasion[] }) {
   const { setQueryParams } = useQueryParam();
   const searchParams = useSearchParams();
   const t = useTranslations("Shop");
@@ -49,6 +50,7 @@ export default function Filters() {
   );
 
   const [isOnStock, setIsOnStock] = useState(0);
+
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
 
   return (
@@ -186,25 +188,26 @@ export default function Filters() {
                 <FieldGroup key={occasion.id} className="max-w-sm">
                   <Field orientation="horizontal">
                     <Checkbox
-                      id={occasion.id}
-                      name={occasion.id}
-                      checked={selectedOccasions.includes(occasion.id)}
-                      onCheckedChange={(checked) =>
-                        setSelectedOccasions((prev) =>
-                          checked
-                            ? [...prev, occasion.id]
-                            : selectedOccasions.filter(
-                                (selectedOccasion) =>
-                                  selectedOccasion !== occasion.id,
-                              ),
-                        )
-                      }
+                      id={occasion.slug}
+                      name={occasion.name}
+                      checked={selectedOccasions.includes(occasion.slug)}
+                      onCheckedChange={(checked) => {
+                        const nextOccasions = checked
+                          ? [...selectedOccasions, occasion.slug]
+                          : selectedOccasions.filter(
+                              (selectedOccasion) =>
+                                selectedOccasion !== occasion.slug,
+                            );
+
+                        setSelectedOccasions(nextOccasions);
+                        setQueryParams({ occasion: nextOccasions, page: "1" });
+                      }}
                     />
                     <Label
-                      htmlFor={occasion.id}
+                      htmlFor={occasion.slug}
                       className="text-foreground/70 text-sm"
                     >
-                      {occasion.label}
+                      {occasion.name}
                     </Label>
                   </Field>
                 </FieldGroup>

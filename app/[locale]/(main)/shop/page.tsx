@@ -16,8 +16,9 @@ import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
 import { getLocale, getTranslations } from "next-intl/server";
 import ProductSortSelect from "@/components/shop/product-sort-select";
-import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 import PaginationTemplate from "@/components/reusable/pagination-template";
+import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
+import { OccasionsResponse } from "@/types/landing";
 
 type SearchParams = {
   price_min?: string;
@@ -50,7 +51,7 @@ async function ListOfProducts({
       ...(searchParams?.page ? { page: searchParams.page } : {}),
       ...(searchParams?.occasion ? { occasion: searchParams.occasion } : {}),
       ...(searchParams?.category ? { category: searchParams.category } : {}),
-      per_page: 9,
+      per_page: 4,
     },
   });
 
@@ -93,8 +94,15 @@ export default async function ShopPage({
 }: {
   searchParams: SearchParams;
 }) {
-  const t = await getTranslations("Shop");
   const locale = await getLocale();
+  const t = await getTranslations("Shop");
+
+  // Fetch occasions data for the shop-the-moment section
+  const { data, ok } = await http.get<OccasionsResponse>("/api/v1/occasions");
+
+  if (!ok) {
+    throw new Error("Failed to fetch occasions");
+  }
 
   return (
     <div className="container max-w-7xl">
@@ -111,7 +119,7 @@ export default async function ShopPage({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-14">
           <div className="hidden sm:block sticky top-24">
-            <Filters />
+            <Filters occasions={data.data.items} />
           </div>
 
           <Sheet>
@@ -126,7 +134,7 @@ export default async function ShopPage({
             <SheetContent showCloseButton={true}>
               <SheetHeader className="mt-6">
                 <SheetDescription asChild className="py-4 flex flex-col gap-3">
-                  <Filters />
+                  <Filters occasions={data.data.items} />
                 </SheetDescription>
               </SheetHeader>
             </SheetContent>

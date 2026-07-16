@@ -12,8 +12,6 @@ import { OccasionsResponse } from "@/types/landing";
 async function Occasions() {
   const { data, ok } = await http.get<OccasionsResponse>("/api/v1/occasions");
 
-  console.log("Occasions data:", data);
-
   if (!ok) {
     throw new Error("Failed to fetch occasions");
   }
