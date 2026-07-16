@@ -514,6 +514,22 @@
     "Products": "Products",
     "AED": "AED",
     "AddToCart": "Add to Cart",
-    "New": "New"
+    "New": "New",
+    "PriceRange": "Price Range",
+    "Occasions": "Occasions",
+    "Size": "Size",
+    "InStockOnly": "In Stock Only",
+    "Small": "Small",
+    "Medium": "Medium",
+    "Large": "Large",
+    "XLarge": "X-Large",
+    "Min": "Min",
+    "Max": "Max",
+    "Filters": "Filters",
+    "Featured": "Featured",
+    "Newest": "Newest",
+    "PriceLowToHigh": "Price: Low to High",
+    "PriceHighToLow": "Price: High to Low",
+    "TopRated": "Top Rated"
   }
 }

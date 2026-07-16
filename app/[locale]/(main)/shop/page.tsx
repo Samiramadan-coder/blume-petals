@@ -6,6 +6,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Suspense } from "react";
+import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { ListFilter } from "lucide-react";
 import { Pagination } from "@/types/shared";
@@ -13,7 +14,7 @@ import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 
@@ -49,11 +50,16 @@ async function ListOfProducts() {
 
 export default async function ShopPage() {
   const t = await getTranslations("Shop");
+  const locale = await getLocale();
 
   return (
     <div className="container max-w-7xl">
       <div className="py-20">
-        <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-2">
+        <h1
+          className={cn("text-4xl md:text-5xl font-bold text-foreground mb-2", {
+            "font-heading": locale === "en",
+          })}
+        >
           {t("Title")}
         </h1>
 

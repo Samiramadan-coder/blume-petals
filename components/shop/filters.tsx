@@ -1,25 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { Card, CardContent } from "../ui/card";
-import { Checkbox } from "../ui/checkbox";
-import { Field, FieldGroup } from "../ui/field";
+import { useState } from "react";
 import { Label } from "../ui/label";
-import { Separator } from "../ui/separator";
 import { Slider } from "../ui/slider";
-
-const sizes = [
-  { id: "small", label: "S" },
-  { id: "medium", label: "M" },
-  { id: "large", label: "L" },
-  { id: "extra_large", label: "XL" },
-];
+import { Checkbox } from "../ui/checkbox";
+import { Separator } from "../ui/separator";
+import { useTranslations } from "next-intl";
+import { Card, CardContent } from "../ui/card";
+import { Field, FieldGroup } from "../ui/field";
 
 const occasions = [
   { id: "valentine", label: "Valentine" },
@@ -33,11 +27,19 @@ const occasions = [
 ];
 
 export default function Filters() {
+  const t = useTranslations("Shop");
   const [min, setMin] = useState([0]);
   const [max, setMax] = useState([500]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [isOnStock, setIsOnStock] = useState(0);
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
+
+  const sizes = [
+    { id: "small", label: t("Small") },
+    { id: "medium", label: t("Medium") },
+    { id: "large", label: t("Large") },
+    { id: "extra_large", label: t("XLarge") },
+  ];
 
   return (
     <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
@@ -45,13 +47,13 @@ export default function Filters() {
         {/* Price Range */}
         <Accordion type="single" collapsible defaultValue="price_range">
           <AccordionItem value="price_range">
-            <AccordionTrigger className="hover:text-primary hover:no-underline">
-              Price Range
+            <AccordionTrigger className="hover:text-primary hover:no-underline text-base">
+              {t("PriceRange")}
             </AccordionTrigger>
             <AccordionContent className="p-2 space-y-4">
               <div>
-                <p className="text-foreground/60 text-xs font-semibold">
-                  Min: AED {min[0]}
+                <p className="text-foreground/60 text-sm font-semibold">
+                  {t("Min")}: {t("AED")} {min[0]}
                 </p>
                 <Slider
                   value={min}
@@ -63,8 +65,8 @@ export default function Filters() {
               </div>
 
               <div>
-                <p className="text-foreground/60 text-xs font-semibold">
-                  Max: AED {max[0]}
+                <p className="text-foreground/60 text-sm font-semibold">
+                  {t("Max")}: {t("AED")} {max[0]}
                 </p>
                 <Slider
                   max={500}
@@ -75,8 +77,8 @@ export default function Filters() {
                 />
               </div>
 
-              <p className="text-primary font-semibold">
-                AED {min[0]} - AED {max[0]}
+              <p className="text-primary text-sm font-semibold">
+                {t("AED")} {min[0]} - {t("AED")} {max[0]}
               </p>
             </AccordionContent>
           </AccordionItem>
@@ -87,8 +89,8 @@ export default function Filters() {
         {/* Size */}
         <Accordion type="single" collapsible>
           <AccordionItem value="size">
-            <AccordionTrigger className="hover:text-primary hover:no-underline">
-              Size
+            <AccordionTrigger className="hover:text-primary hover:no-underline text-base">
+              {t("Size")}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
               {sizes.map((size) => (
@@ -108,7 +110,7 @@ export default function Filters() {
                         );
                       }}
                     />
-                    <Label htmlFor={size.id} className="text-foreground/50">
+                    <Label htmlFor={size.id} className="text-foreground/70">
                       {size.label}
                     </Label>
                   </Field>
@@ -130,7 +132,9 @@ export default function Filters() {
               onCheckedChange={(checked) => setIsOnStock(checked ? 1 : 0)}
               checked={Boolean(isOnStock)}
             />
-            <Label htmlFor="in_stock_only">In Stock Only</Label>
+            <Label htmlFor="in_stock_only" className="text-base">
+              {t("InStockOnly")}
+            </Label>
           </Field>
         </FieldGroup>
 
@@ -139,8 +143,8 @@ export default function Filters() {
         {/* Occasions */}
         <Accordion type="single" collapsible>
           <AccordionItem value="occasion">
-            <AccordionTrigger className="hover:text-primary hover:no-underline">
-              Occasion
+            <AccordionTrigger className="hover:text-primary hover:no-underline text-base">
+              {t("Occasions")}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
               {occasions.map((occasion) => (
@@ -161,7 +165,10 @@ export default function Filters() {
                         )
                       }
                     />
-                    <Label htmlFor={occasion.id} className="text-foreground/50">
+                    <Label
+                      htmlFor={occasion.id}
+                      className="text-foreground/70 text-sm"
+                    >
                       {occasion.label}
                     </Label>
                   </Field>
