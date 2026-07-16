@@ -42,7 +42,7 @@ async function Occasions() {
               sizes="(min-width: 768px) 33vw, 100vw"
             />
             <Link
-              href={`/occasions/${item.slug}`}
+              href={`/shop?occasion=${item.slug}`}
               aria-label={item.name}
               className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition duration-200 hover:bg-black/20"
             >

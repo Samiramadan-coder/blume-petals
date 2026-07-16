@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
 import { Checkbox } from "../ui/checkbox";
+import { Occasion } from "@/types/landing";
 import { Separator } from "../ui/separator";
 import { useTranslations } from "next-intl";
 import { sizes } from "@/constants/shop-page";
@@ -17,18 +18,6 @@ import { Card, CardContent } from "../ui/card";
 import { Field, FieldGroup } from "../ui/field";
 import { useSearchParams } from "next/navigation";
 import { useQueryParam } from "@/hooks/use-search-params";
-import { Occasion } from "@/types/landing";
-
-// const occasions = [
-//   { id: "valentine", label: "Valentine" },
-//   { id: "birthday", label: "Birthday" },
-//   { id: "wedding", label: "Wedding" },
-//   { id: "eid", label: "Eid" },
-//   { id: "anniversary", label: "Anniversary" },
-//   { id: "mothers-day", label: "Mother' Day" },
-//   { id: "graduation", label: "Graduation" },
-//   { id: "add-ons", label: "Add-ons" },
-// ];
 
 export default function Filters({ occasions }: { occasions: Occasion[] }) {
   const { setQueryParams } = useQueryParam();
@@ -51,7 +40,9 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
 
   const [isOnStock, setIsOnStock] = useState(0);
 
-  const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
+  const [selectedOccasions, setSelectedOccasions] = useState<string[]>(
+    searchParams.getAll("occasion") || [],
+  );
 
   return (
     <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
