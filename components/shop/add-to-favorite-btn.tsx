@@ -38,10 +38,7 @@ export default function AddToFavoriteBtn({ product }: { product: Product }) {
     <Button
       aria-label={`Add ${product.name} to wishlist`}
       onClick={addToWishlist}
-      className={cn("rounded-full h-10 w-10", {
-        "bg-background hover:bg-background": !product.is_fav,
-        "bg-green-400 hover:bg-green-400 shadow-sm": product.is_fav,
-      })}
+      className="rounded-full h-10 w-10 bg-background hover:bg-background shadow-md"
     >
       {loading ? (
         <Spinner className="size-5 text-primary" />
@@ -49,7 +46,7 @@ export default function AddToFavoriteBtn({ product }: { product: Product }) {
         <Heart
           className={cn(`size-5`, {
             "text-foreground": !product.is_fav,
-            "text-white": product.is_fav,
+            "text-primary fill-primary": product.is_fav,
           })}
         />
       )}
