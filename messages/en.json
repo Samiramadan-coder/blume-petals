@@ -6,7 +6,8 @@
     "CantLoadData": "Unable to load data. Please try again later.",
     "TryAgain": "Try Again",
     "GoBack": "Go Back",
-    "OtpSentEmail": "OTP has been sent to your email."
+    "OtpSentEmail": "OTP has been sent to your email.",
+    "NoDataFound": "No data founded."
   },
   "Actions": {
     "Close": "Close",

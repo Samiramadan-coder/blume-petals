@@ -5,6 +5,7 @@ import type { Product } from "@/types/products";
 import { getTranslations } from "next-intl/server";
 import { Separator } from "@/components/ui/separator";
 import GoBackBtn from "@/components/shop/go-back-btn";
+import NoDataFounded from "@/components/reusable/no-data-founded";
 import WishlistSkeleton from "@/components/shop/wishlist-skeleton";
 import WishlistCardItem from "@/components/shop/wishlist-card-item";
 import PaginationTemplate from "@/components/reusable/pagination-template";
@@ -41,18 +42,24 @@ async function ListOfProducts({
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {data.data.items.map((item, index) => (
-          <WishlistCardItem key={index} item={item} />
-        ))}
-      </div>
+      {data.data.items.length === 0 ? (
+        <NoDataFounded />
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {data.data.items.map((item, index) => (
+              <WishlistCardItem key={index} item={item} />
+            ))}
+          </div>
 
-      <div className="mt-12">
-        <PaginationTemplate
-          currentPage={data.data.pagination.current_page}
-          totalPages={data.data.pagination.last_page}
-        />
-      </div>
+          <div className="mt-12">
+            <PaginationTemplate
+              currentPage={data.data.pagination.current_page}
+              totalPages={data.data.pagination.last_page}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 }
@@ -80,7 +87,7 @@ export default async function WishListPage({
           </h1>
         </div>
 
-        <Separator className="my-8" />
+        <Separator className="my-8 bg-border" />
 
         <div className="container max-w-7xl">
           <Suspense fallback={<WishlistSkeleton />}>

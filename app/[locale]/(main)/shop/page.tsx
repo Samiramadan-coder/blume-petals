@@ -16,6 +16,7 @@ import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
 import { OccasionsResponse } from "@/types/landing";
 import { getLocale, getTranslations } from "next-intl/server";
+import NoDataFounded from "@/components/reusable/no-data-founded";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
@@ -72,18 +73,24 @@ async function ListOfProducts({
         <ProductSortSelect />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-        {data.data.items.map((item, index) => (
-          <CardItem key={index} item={item} />
-        ))}
-      </div>
+      {data.data.items.length === 0 ? (
+        <NoDataFounded />
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+            {data.data.items.map((item, index) => (
+              <CardItem key={index} item={item} />
+            ))}
+          </div>
 
-      <div className="mt-12">
-        <PaginationTemplate
-          currentPage={data.data.pagination.current_page}
-          totalPages={data.data.pagination.last_page}
-        />
-      </div>
+          <div className="mt-12">
+            <PaginationTemplate
+              currentPage={data.data.pagination.current_page}
+              totalPages={data.data.pagination.last_page}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -101,8 +108,6 @@ export default async function ShopPage({
 }) {
   const locale = await getLocale();
   const t = await getTranslations("Shop");
-
-  // console.log(cookieStore.get("token")?.value);
 
   // Fetch occasions data for the shop-the-moment section
   const { data, ok } = await http.get<OccasionsResponse>("/api/v1/occasions");
