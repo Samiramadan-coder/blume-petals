@@ -22,7 +22,7 @@ export default async function CardItem({ item }: { item: Product }) {
         className="absolute inset-0 z-10"
       />
 
-      <CardContent>
+      <CardContent className="px-0">
         <div className="overflow-hidden relative aspect-5/5 rounded-2xl">
           <Image
             src={item.image_url}
@@ -54,10 +54,10 @@ export default async function CardItem({ item }: { item: Product }) {
           <p className="text-base font-semibold leading-snug mb-1.5 text-foreground group-hover:text-primary!">
             {item.name}
           </p>
-          <div className="mb-2">
+          <div className="mb-3">
             <Rating rating={+item.rating_avg} count={item.rating_count} />
           </div>
-          <p className="text-base font-bold">
+          <p className="text-base font-bold text-primary">
             {t("AED")} {item.price_from}
           </p>
         </div>

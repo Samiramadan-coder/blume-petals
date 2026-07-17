@@ -20,7 +20,7 @@ export default function AppHeaderShell({
         z-50 
         transition 
         duration-200 
-        ${scrolled || pathname !== "/" ? "bg-border shadow-[0_4px_30px_rgba(61,46,0,0.18)]" : ""}
+        ${scrolled || pathname !== "/" ? "bg-border shadow-[0_1px_20px_rgba(61,46,0,0.08)]" : ""}
       `}
     >
       {children}
