@@ -16,7 +16,7 @@ export default function AddToFavoriteBtn({
   isLoggedIn,
 }: {
   product: Product;
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
 }) {
   const router = useRouter();
   const t = useTranslations("Shop");
