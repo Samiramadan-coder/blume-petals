@@ -42,7 +42,10 @@ async function ListOfProducts({
   const t = await getTranslations("Shop");
 
   const { data, ok } = await http.get<{
-    data: { items: Product[]; pagination: Pagination };
+    data: {
+      items: Product[];
+      pagination: Pagination;
+    };
   }>("/api/v1/products", {
     params: {
       ...(searchParams?.price_min ? { price_min: searchParams.price_min } : {}),
@@ -54,6 +57,8 @@ async function ListOfProducts({
       per_page: 12,
     },
   });
+
+  console.log("ListOfProducts data:", data);
 
   if (!ok) {
     throw new Error("Failed to fetch products");
@@ -117,7 +122,7 @@ export default async function ShopPage({
 
         <p className="text-lg text-foreground/60">{t("Description")}</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-25">
           <div className="hidden sm:block sticky top-24">
             <Filters occasions={data.data.items} />
           </div>

@@ -11,4 +11,10 @@ export type Product = {
   rating_count: number;
   slug: string;
   status: string;
+  is_fav: boolean;
+  category: {
+    id: number;
+    name: string;
+    slug: string;
+  };
 };
