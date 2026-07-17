@@ -399,6 +399,7 @@
     "SignIn": "Sign In",
     "GoogleTokenFailed": "Failed to login with Google. Please try again.",
     "GoogleLoginFailed": "Failed to login with Google. Please try again.",
+    "AppleLoginFailed": "Failed to login with Apple. Please try again.",
     "OtpSentToEmail": "We Sent an OTP to your email, please check your inbox.",
     "OtpSentToPhone": "We Sent an OTP to your phone, please check your messages."
   },

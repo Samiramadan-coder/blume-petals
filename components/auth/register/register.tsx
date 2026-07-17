@@ -1,20 +1,34 @@
 "use client";
 
-import { useState } from "react";
-import { FaApple } from "react-icons/fa";
+import { toast } from "sonner";
 import { Link } from "@/i18n/navigation";
 import AuthCard from "../shared/auth-card";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import RegisterWithEmail from "./forms/with-email";
 import RegisterWithPhone from "./forms/with-phone";
 import { Separator } from "@/components/ui/separator";
+import AppleLoginButton from "../shared/apple-signin";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
 
 export default function Register() {
   const t = useTranslations("Register");
   const tFields = useTranslations("Fields");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<"email" | "phone">("email");
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+
+    if (!error) return;
+
+    toast.error(tFields("Errors.SignInError"));
+    router.replace(pathname);
+  }, [pathname, router, searchParams, tFields]);
 
   return (
     <>
@@ -61,13 +75,7 @@ export default function Register() {
             <GoogleLoginButton />
           </div>
 
-          <Button
-            variant="outline"
-            className="h-10 rounded-xs bg-white cursor-pointer"
-          >
-            <FaApple size={20} className="mr-2" />
-            {t("Apple")}
-          </Button>
+          <AppleLoginButton />
         </div>
 
         <p className="text-sm text-foreground/60 text-center mt-4">
