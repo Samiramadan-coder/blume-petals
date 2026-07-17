@@ -1,22 +1,33 @@
 "use client";
 
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { http } from "@/lib/http";
 import { Heart } from "lucide-react";
 import { Button } from "../ui/button";
-import { Product } from "@/types/products";
-import { http } from "@/lib/http";
-import { useRouter } from "@/i18n/navigation";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
+import { Product } from "@/types/products";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 
-export default function AddToFavoriteBtn({ product }: { product: Product }) {
+export default function AddToFavoriteBtn({
+  product,
+  isLoggedIn,
+}: {
+  product: Product;
+  isLoggedIn: boolean;
+}) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
   const t = useTranslations("Shop");
+  const [loading, setLoading] = useState(false);
 
   async function addToWishlist() {
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+
     const method = product.is_fav ? "delete" : "post";
 
     try {

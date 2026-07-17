@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { Rating } from "../ui/rating";
 import { Link } from "@/i18n/navigation";
 import { Product } from "@/types/products";
 import { ShoppingCart } from "lucide-react";

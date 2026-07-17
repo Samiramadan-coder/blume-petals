@@ -1,28 +1,20 @@
 import { http } from "@/lib/http";
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent } from "@/components/ui/card";
-import { UserResponse } from "@/components/reusable/app-header";
-import SidebarNavItem from "@/components/account/shared/sidebar-nav-item";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { links } from "@/constants/account";
-import { getTranslations, getLocale } from "next-intl/server";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
 import LogoutBtn from "@/components/reusable/logout-btn";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { getTranslations, getLocale } from "next-intl/server";
+import { UserResponse } from "@/components/reusable/app-header";
+import SidebarNavItem from "@/components/account/shared/sidebar-nav-item";
 
 export default async function AccountLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-
-  if (!cookieStore.get("token")) {
-    return redirect("/login");
-  }
-
   const t = await getTranslations("Account");
   const { data } = await http.get<UserResponse>("/api/v1/auth/me");
 

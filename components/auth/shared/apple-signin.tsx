@@ -18,7 +18,7 @@ export default function AppleLoginButton() {
       }
     >
       <FaApple />
-      Continue with Apple
+      Apple
     </Button>
   );
 }

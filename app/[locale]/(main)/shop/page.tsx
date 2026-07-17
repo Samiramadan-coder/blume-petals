@@ -58,8 +58,6 @@ async function ListOfProducts({
     },
   });
 
-  console.log("ListOfProducts data:", data);
-
   if (!ok) {
     throw new Error("Failed to fetch products");
   }
@@ -103,6 +101,8 @@ export default async function ShopPage({
 }) {
   const locale = await getLocale();
   const t = await getTranslations("Shop");
+
+  // console.log(cookieStore.get("token")?.value);
 
   // Fetch occasions data for the shop-the-moment section
   const { data, ok } = await http.get<OccasionsResponse>("/api/v1/occasions");

@@ -1,16 +1,18 @@
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
 import { Rating } from "../ui/rating";
+import { cookies } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import { Product } from "@/types/products";
-import { ShoppingCart } from "lucide-react";
+import AddToShopCartBtn from "./add-to-shop-cart-btn";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
 
 export default async function CardItem({ item }: { item: Product }) {
+  const cookieStore = await cookies();
   const t = await getTranslations("Shop");
+  const isLoggedIn = Boolean(cookieStore.get("token")?.value);
 
   return (
     <Card className="group relative overflow-hidden bg-background p-0 cursor-pointer">
@@ -39,16 +41,10 @@ export default async function CardItem({ item }: { item: Product }) {
               )}
             </div>
 
-            <AddToFavoriteBtn product={item} />
+            <AddToFavoriteBtn product={item} isLoggedIn={isLoggedIn} />
           </div>
 
-          <Button
-            aria-label={`Add ${item.name} to cart`}
-            className="h-10 text-base bg-primary hover:bg-secondary cursor-pointer absolute z-20 bottom-2 left-1/2 transform -translate-x-1/2 w-1/2 py-2.5 text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <ShoppingCart className="mr-2 inline-block size-5" />
-            {t("AddToCart")}
-          </Button>
+          <AddToShopCartBtn item={item} isLoggedIn={isLoggedIn} />
         </div>
 
         <div className="flex flex-col pt-4 px-1">
