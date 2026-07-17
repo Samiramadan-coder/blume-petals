@@ -1,13 +1,13 @@
 import { Suspense } from "react";
-import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { Pagination } from "@/types/shared";
 import type { Product } from "@/types/products";
-import CardItem from "@/components/shop/card-item";
-import { OccasionsResponse } from "@/types/landing";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
+import { Separator } from "@/components/ui/separator";
+import GoBackBtn from "@/components/shop/go-back-btn";
+import WishlistSkeleton from "@/components/shop/wishlist-skeleton";
+import WishlistCardItem from "@/components/shop/wishlist-card-item";
 import PaginationTemplate from "@/components/reusable/pagination-template";
-import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 
 type SearchParams = {
   page?: string;
@@ -35,17 +35,15 @@ async function ListOfProducts({
     },
   });
 
-  console.log("ListOfProducts data:", data);
-
   if (!ok) {
     throw new Error("Failed to fetch products");
   }
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {data.data.items.map((item, index) => (
-          <CardItem key={index} item={item} />
+          <WishlistCardItem key={index} item={item} />
         ))}
       </div>
 
@@ -60,34 +58,32 @@ async function ListOfProducts({
 }
 
 /**
- * ShopPage component serves as the main page for the shop section.
- * It includes a title, description, filters, and a list of products.
- * The filters are displayed in a sidebar for larger screens and in a sheet for smaller screens.
- * The ListOfProducts component is wrapped in Suspense to handle loading states.
+ * WhishListPage component is the main page for displaying the user's wishlist.
+ * It fetches the list of favorite products and displays them using the ListOfProducts component.
+ * The page also includes a title and description for the wishlist section.
  */
-export default async function ShopPage({
+export default async function WishListPage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const locale = await getLocale();
   const t = await getTranslations("Shop");
 
   return (
-    <div className="container max-w-7xl">
-      <div className="py-20">
-        <h1
-          className={cn("text-4xl md:text-5xl font-bold text-foreground mb-2", {
-            "font-heading": locale === "en",
-          })}
-        >
-          {t("Title")}
-        </h1>
+    <div>
+      <div className="py-10">
+        <div className="container max-w-7xl">
+          <GoBackBtn />
 
-        <p className="text-lg text-foreground/60">{t("Description")}</p>
+          <h1 className="text-4xl mt-4 font-playfair font-bold text-foreground">
+            {t("WishList")}
+          </h1>
+        </div>
 
-        <div className="">
-          <Suspense fallback={<ListOfProductsSkeleton />}>
+        <Separator className="my-8" />
+
+        <div className="container max-w-7xl">
+          <Suspense fallback={<WishlistSkeleton />}>
             <ListOfProducts searchParams={await searchParams} />
           </Suspense>
         </div>

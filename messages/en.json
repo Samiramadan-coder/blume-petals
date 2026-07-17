@@ -546,6 +546,7 @@
     "TopRated": "Top Rated",
     "AddedToWishlist": "Added to Wishlist",
     "RemovedFromWishlist": "Removed from Wishlist",
-    "WishlistError": "An error occurred while updating the wishlist. Please try again."
+    "WishlistError": "An error occurred while updating the wishlist. Please try again.",
+    "WishList": "Wishlist"
   }
 }
