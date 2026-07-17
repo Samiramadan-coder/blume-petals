@@ -65,7 +65,7 @@ export default async function RootLayout({
           <DirectionProvider dir={dir}>
             <body className="min-h-full flex flex-col">
               {children}
-              <Toaster />
+              <Toaster richColors />
             </body>
           </DirectionProvider>
         </NextIntlClientProvider>

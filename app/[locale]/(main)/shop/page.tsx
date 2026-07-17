@@ -74,7 +74,7 @@ async function ListOfProducts({
         <ProductSortSelect />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
         {data.data.items.map((item, index) => (
           <CardItem key={index} item={item} />
         ))}
