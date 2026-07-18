@@ -63,6 +63,8 @@ async function ListOfProducts({
     };
   }>(`/api/v1/products?${buildQueryString(requestParams)}`);
 
+  console.log("data", data);
+
   if (!ok) {
     throw new Error("Failed to fetch products");
   }

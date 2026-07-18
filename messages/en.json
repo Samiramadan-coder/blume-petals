@@ -549,6 +549,10 @@
     "AddedToWishlist": "Added to Wishlist",
     "RemovedFromWishlist": "Removed from Wishlist",
     "WishlistError": "An error occurred while updating the wishlist. Please try again.",
-    "WishList": "Wishlist"
+    "WishList": "Wishlist",
+    "PersonalMessage": "Personal Message (Optional)",
+    "PersonalMessagePlaceholder": "Add a personal message",
+    "AddToWishlist": "Add to Wishlist",
+    "EstimatedDelivery": "Estimated Delivery"
   }
 }

@@ -541,6 +541,9 @@
     "AddedToWishlist": "تمت الإضافة إلى المفضلة",
     "RemovedFromWishlist": "تمت الإزالة من المفضلة",
     "WishlistError": "حدث خطأ أثناء تحديث المفضلة. يرجى المحاولة مرة أخرى.",
-    "WishList": "المفضلة"
+    "WishList": "المفضلة",
+    "PersonalMessage": "رسالة شخصية (اختياري)",
+    "PersonalMessagePlaceholder": "أضف رسالة شخصية...",
+    "AddToWishlist": "أضف إلى المفضلة"
   }
 }
