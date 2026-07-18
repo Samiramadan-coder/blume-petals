@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { Input } from "@/components/ui/input";
 import { Minus, Plus, Van } from "lucide-react";
@@ -13,20 +14,22 @@ import ProductDetails from "@/components/shop/product-details";
 import SimilarProducts from "@/components/shop/similar-products";
 import AddToFavoriteBtn from "@/components/shop/add-to-favorite-btn";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
+import ProductPageSkeleton from "@/components/shop/product-details-skeleton";
 
 const sizes = ["S", "M", "L", "XL"];
 
-export default async function ProductPage({
-  params,
-}: {
-  params: { "product-slug": string; locale: string };
-}) {
-  const pageParams = await params;
+type ParamsType = {
+  "product-slug": string;
+  locale: string;
+};
+
+async function Product({ params }: { params: ParamsType }) {
   const t = await getTranslations("Shop");
 
+  // Fetch product details from the API using the product slug from the URL parameters
   const { data, ok } = await http.get<{
     data: { product: ProductDetailsType };
-  }>(`/api/v1/products/${pageParams["product-slug"]}`);
+  }>(`/api/v1/products/${params["product-slug"]}`);
 
   if (!ok) {
     throw new Error("Failed to fetch product");
@@ -71,7 +74,7 @@ export default async function ProductPage({
         <div className="space-y-6">
           <h1
             className={cn("text-4xl md:text-5xl font-bold text-foreground", {
-              "font-heading": pageParams.locale === "en",
+              "font-heading": params.locale === "en",
             })}
           >
             {data.data.product.name}
@@ -167,5 +170,13 @@ export default async function ProductPage({
         <SimilarProducts />
       </div>
     </main>
+  );
+}
+
+export default async function ProductPage({ params }: { params: ParamsType }) {
+  return (
+    <Suspense fallback={<ProductPageSkeleton />}>
+      <Product params={await params} />
+    </Suspense>
   );
 }
