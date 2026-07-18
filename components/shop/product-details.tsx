@@ -83,7 +83,7 @@ function Description({ description }: { description: string }) {
           {t("Features")}
         </h4>
 
-        <p className="text-red-400 mt-4 underline">
+        <p className="text-red-400 mt-4 underline italic">
           {tCommon("StillUnderDevelopment")}
         </p>
 
@@ -145,7 +145,7 @@ function Reviews() {
   ];
 
   return (
-    <p className="text-red-400 mt-4 p-4 text-center underline">
+    <p className="text-red-400 mt-4 p-4 text-center underline italic">
       {tCommon("StillUnderDevelopment")}
     </p>
   );

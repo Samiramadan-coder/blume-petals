@@ -24,7 +24,7 @@ export default async function SimilarProducts() {
         </Link>
       </div>
 
-      <p className="text-red-400 mt-4 p-4 text-center underline">
+      <p className="text-red-400 mt-4 p-4 text-center underline italic">
         {tCommon("StillUnderDevelopment")}
       </p>
 
