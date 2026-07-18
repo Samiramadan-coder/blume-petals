@@ -48,9 +48,9 @@ async function ListOfProducts({
   const requestParams = {
     ...(searchParams.price_min ? { price_min: searchParams.price_min } : {}),
     ...(searchParams.price_max ? { price_max: searchParams.price_max } : {}),
-    ...(sizes ? { size: sizes } : {}),
+    //...(sizes ? { size: sizes } : {}),
     ...(searchParams.page ? { page: searchParams.page } : {}),
-    ...(occasions ? { occasion: occasions } : {}),
+    // ...(occasions ? { occasion: occasions } : {}),
     ...(searchParams.category ? { category: searchParams.category } : {}),
     ...(searchParams.sort ? { sort: searchParams.sort } : {}),
     per_page: 12,
@@ -62,8 +62,6 @@ async function ListOfProducts({
       pagination: Pagination;
     };
   }>(`/api/v1/products?${buildQueryString(requestParams)}`);
-
-  console.log("data", data);
 
   if (!ok) {
     throw new Error("Failed to fetch products");
