@@ -14,7 +14,7 @@ export default async function WishlistCardItem({ item }: { item: Product }) {
   return (
     <Card className="group relative overflow-hidden p-0! cursor-pointer shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
       <Link
-        href={`/shop/product/${item.id}`}
+        href={`/shop/${item.slug}`}
         aria-label={`View ${item.name} details`}
         className="absolute inset-0 z-10"
       />

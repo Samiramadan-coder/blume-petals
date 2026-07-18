@@ -17,7 +17,7 @@ export default async function CardItem({ item }: { item: Product }) {
   return (
     <Card className="group relative overflow-hidden bg-background p-0 cursor-pointer">
       <Link
-        href={`/shop/product/${item.id}`}
+        href={`/shop/${item.slug}`}
         aria-label={`View ${item.name} details`}
         className="absolute inset-0 z-10"
       />
