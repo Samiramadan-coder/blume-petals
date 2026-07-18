@@ -39,21 +39,32 @@ async function Product({ params }: { params: ParamsType }) {
     (image) => image.is_primary,
   );
 
+  const imagesLength = data.data.product.images.length;
+
   return (
     <main className="container max-w-7xl py-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Images */}
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-4 gap-4">
           <div className="space-y-4">
-            {data.data.product.images.map((image, index) => (
-              <div className="relative" key={index}>
+            {data.data.product.images.slice(0, 4).map((image, index) => (
+              <div
+                className="relative rounded-xl overflow-hidden border-2 border-border"
+                key={index}
+              >
                 <Image
                   src={image.url}
                   alt={data.data.product.name}
                   width={500}
                   height={500}
-                  className="aspect-square w-full object-cover rounded-xl border-2 border-border"
+                  className="aspect-square w-full object-cover"
                 />
+
+                {imagesLength > 4 && index === 3 && (
+                  <div className="absolute inset-0 text-white text-2xl bg-black/40 cursor-pointer grid place-content-center">
+                    + {imagesLength - 4}
+                  </div>
+                )}
               </div>
             ))}
           </div>
