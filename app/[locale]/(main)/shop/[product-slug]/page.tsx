@@ -15,6 +15,7 @@ import SimilarProducts from "@/components/shop/similar-products";
 import AddToFavoriteBtn from "@/components/shop/add-to-favorite-btn";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
 import ProductPageSkeleton from "@/components/shop/product-details-skeleton";
+import { cookies } from "next/headers";
 
 const sizes = ["S", "M", "L", "XL"];
 
@@ -25,6 +26,8 @@ type ParamsType = {
 
 async function Product({ params }: { params: ParamsType }) {
   const t = await getTranslations("Shop");
+  const cookie = await cookies();
+  const token = cookie.get("token")?.value;
 
   // Fetch product details from the API using the product slug from the URL parameters
   const { data, ok } = await http.get<{
@@ -162,14 +165,14 @@ async function Product({ params }: { params: ParamsType }) {
 
             <AddToFavoriteBtn
               product={data.data.product}
-              isLoggedIn={true}
+              isLoggedIn={!!token}
               version="wishlist-page"
             />
 
             <AddToCartBtn
               item={data.data.product}
               version="product-page"
-              isLoggedIn={true}
+              isLoggedIn={!!token}
             />
           </div>
         </div>
