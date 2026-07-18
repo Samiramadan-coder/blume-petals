@@ -1,16 +1,18 @@
 import Image from "next/image";
-import { Heart, Van } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { http } from "@/lib/http";
 import { Input } from "@/components/ui/input";
+import { Minus, Plus, Van } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Rating } from "@/components/ui/rating";
+import { getTranslations } from "next-intl/server";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import AddToCartBtn from "@/components/shop/add-to-cart-btn";
 import ProductDetails from "@/components/shop/product-details";
 import SimilarProducts from "@/components/shop/similar-products";
-import { http } from "@/lib/http";
+import AddToFavoriteBtn from "@/components/shop/add-to-favorite-btn";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
-import { getTranslations } from "next-intl/server";
-import { cn } from "@/lib/utils";
 
 const sizes = ["S", "M", "L", "XL"];
 
@@ -37,9 +39,6 @@ export default async function ProductPage({
     (image) => !image.is_primary,
   );
 
-  // console.log("data", data.data.product);
-  // const productSlug = await params["product-slug"];
-  // console.log("productSlug", pageParams["product-slug"]);
   return (
     <main className="container max-w-7xl py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -98,7 +97,7 @@ export default async function ProductPage({
                     `rounded-full w-14 h-14 boredr border-2 border-border cursor-pointer hover:bg-primary`,
                     {
                       "bg-primary text-white hover:text-white font-semibold":
-                        size === data.data.product.variants[0].size, // Assuming the first variant is the default selected size
+                        size === data.data.product.variants[0].size,
                     },
                   )}
                 >
@@ -132,37 +131,34 @@ export default async function ProductPage({
           <div className="flex flex-wrap gap-3">
             <div className="border-2 border-primary flex-1 rounded-lg flex">
               <Button variant="ghost" className="h-full w-10">
-                -
+                <Minus />
               </Button>
               <Input
-                className="h-full text-center border-0"
+                className="h-full text-center border-0 text-base"
                 type="number"
                 defaultValue={10}
               />
               <Button variant="ghost" className="h-full w-10">
-                +
+                <Plus />
               </Button>
             </div>
 
-            <Button
-              variant="outline"
-              className="flex-1 cursor-pointer border-2 border-primary p-5 text-primary font-semibold hover:text-primary"
-            >
-              <Heart />
-              {t("AddToWishlist")}
-            </Button>
-            <Button
-              variant="ghost"
-              className="flex-1 cursor-pointer text-white border-2 border-secondary p-5 bg-secondary hover:bg-secondary hover:text-white font-semibold"
-            >
-              <Heart />
-              {t("AddToCart")}
-            </Button>
+            <AddToFavoriteBtn
+              product={data.data.product}
+              isLoggedIn={true}
+              version="one"
+            />
+
+            <AddToCartBtn
+              item={data.data.product}
+              version="product-page"
+              isLoggedIn={true}
+            />
           </div>
         </div>
 
         {/* Product Details */}
-        <ProductDetails />
+        <ProductDetails product={data.data.product} />
 
         {/* Similar Products */}
         <SimilarProducts />

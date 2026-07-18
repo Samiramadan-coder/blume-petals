@@ -544,6 +544,18 @@
     "WishList": "المفضلة",
     "PersonalMessage": "رسالة شخصية (اختياري)",
     "PersonalMessagePlaceholder": "أضف رسالة شخصية...",
-    "AddToWishlist": "أضف إلى المفضلة"
+    "AddToWishlist": "أضف إلى المفضلة",
+    "InWishlist": "في المفضلة",
+    "ProductDescription": "وصف المنتج",
+    "Features": "المميزات",
+    "Descriptions": "الوصف",
+    "EstimatedDelivery": "التوصيل المتوقع",
+    "Reviews": "التقييمات",
+    "EstimatedDeliveryTime": "وقت التوصيل المتوقع",
+    "workingDays": "5-7 أيام عمل من تأكيد الطلب",
+    "ShippingMethods": "طرق الشحن",
+    "ShippingMethod1": "التوصيل القياسي: 5-7 أيام عمل",
+    "ShippingMethod2": "التوصيل السريع: 2-3 أيام عمل (تطبق رسوم إضافية)",
+    "ShippingMethod3": "التوصيل في نفس اليوم متاح للمناطق المحددة"
   }
 }

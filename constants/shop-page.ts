@@ -1,20 +1,16 @@
-import { Tab } from "@/types/shop-page";
 import { T } from "./shared";
 
-export const tabs: {
-  label: string;
-  value: Tab;
-}[] = [
+export const tabs = (t: T): { label: string; value: string }[] => [
   {
-    label: "Description",
+    label: t("Descriptions"),
     value: "description",
   },
   {
-    label: "Reviews",
+    label: t("Reviews"),
     value: "reviews",
   },
   {
-    label: "Delivery",
+    label: t("EstimatedDelivery"),
     value: "delivery",
   },
 ];

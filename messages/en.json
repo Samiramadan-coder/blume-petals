@@ -553,6 +553,17 @@
     "PersonalMessage": "Personal Message (Optional)",
     "PersonalMessagePlaceholder": "Add a personal message",
     "AddToWishlist": "Add to Wishlist",
-    "EstimatedDelivery": "Estimated Delivery"
+    "InWishlist": "In Wishlist",
+    "ProductDescription": "Product Description",
+    "Features": "Features",
+    "Descriptions": "Descriptions",
+    "EstimatedDelivery": "Estimated Delivery",
+    "Reviews": "Reviews",
+    "EstimatedDeliveryTime": "Estimated delivery time",
+    "workingDays": "5-7 business days from order confirmation",
+    "ShippingMethods": "Shipping Methods",
+    "ShippingMethod1": "Standard Delivery: 5-7 business days",
+    "ShippingMethod2": "Express Delivery: 2-3 business days (Additional fee applies)",
+    "ShippingMethod3": "Same-day delivery available for selected areas"
   }
 }

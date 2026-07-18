@@ -4,7 +4,7 @@ import { Rating } from "../ui/rating";
 import { cookies } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import { Product } from "@/types/products";
-import AddToShopCartBtn from "./add-to-shop-cart-btn";
+import AddToCartBtn from "./add-to-cart-btn";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
@@ -44,7 +44,7 @@ export default async function CardItem({ item }: { item: Product }) {
             <AddToFavoriteBtn product={item} isLoggedIn={isLoggedIn} />
           </div>
 
-          <AddToShopCartBtn item={item} isLoggedIn={isLoggedIn} />
+          <AddToCartBtn item={item} isLoggedIn={isLoggedIn} />
         </div>
 
         <div className="flex flex-col pt-4 px-1">

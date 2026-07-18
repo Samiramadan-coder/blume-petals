@@ -14,9 +14,11 @@ import { useRouter } from "@/i18n/navigation";
 export default function AddToFavoriteBtn({
   product,
   isLoggedIn,
+  version = "default",
 }: {
   product: Product;
   isLoggedIn?: boolean;
+  version?: "default" | "one";
 }) {
   const router = useRouter();
   const t = useTranslations("Shop");
@@ -45,22 +47,49 @@ export default function AddToFavoriteBtn({
     }
   }
 
-  return (
-    <Button
-      aria-label={`Add ${product.name} to wishlist`}
-      onClick={addToWishlist}
-      className="rounded-full h-10 w-10 bg-background hover:bg-background shadow-md"
-    >
-      {loading ? (
-        <Spinner className="size-5 text-primary" />
-      ) : (
+  if (version === "default") {
+    return (
+      <Button
+        aria-label={`Add ${product.name} to wishlist`}
+        onClick={addToWishlist}
+        className="rounded-full h-10 w-10 bg-background hover:bg-background shadow-md"
+      >
+        {loading ? (
+          <Spinner className="size-5 text-primary" />
+        ) : (
+          <Heart
+            className={cn(`size-5`, {
+              "text-foreground": !product.is_fav,
+              "text-primary fill-primary": product.is_fav,
+            })}
+          />
+        )}
+      </Button>
+    );
+  }
+
+  if (version === "one") {
+    return (
+      <Button
+        variant="outline"
+        aria-label={`Add ${product.name} to wishlist`}
+        onClick={addToWishlist}
+        className={cn(
+          "cursor-pointer text-base border-2 border-primary p-5 text-primary font-semibold",
+          {
+            "hover:bg-primary hover:text-white": !product.is_fav,
+            "bg-primary text-white hover:text-primary hover:bg-white":
+              product.is_fav,
+          },
+        )}
+      >
         <Heart
           className={cn(`size-5`, {
-            "text-foreground": !product.is_fav,
-            "text-primary fill-primary": product.is_fav,
+            "fill-white": product.is_fav,
           })}
         />
-      )}
-    </Button>
-  );
+        {product.is_fav ? t("InWishlist") : t("AddToWishlist")}
+      </Button>
+    );
+  }
 }

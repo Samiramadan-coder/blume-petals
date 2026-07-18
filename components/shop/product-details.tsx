@@ -4,19 +4,25 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { tabs } from "@/constants/shop-page";
-import { Tab } from "@/types/shop-page";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "../ui/card";
 import { Rating } from "../ui/rating";
 import { Progress } from "../ui/progress";
+import { ProductDetails as ProductDetailsType } from "@/types/products";
+import { useTranslations } from "next-intl";
 
-export default function ProductDetails() {
-  const [activeTab, setActiveTab] = useState<Tab>("description");
+export default function ProductDetails({
+  product,
+}: {
+  product: ProductDetailsType;
+}) {
+  const t = useTranslations("Shop");
+  const [activeTab, setActiveTab] = useState("description");
 
   return (
     <div className="md:col-span-2">
       <div className="mb-6 flex border-b border-border">
-        {tabs.map((tab) => (
+        {tabs(t).map((tab) => (
           <Button
             key={tab.value}
             variant="ghost"
@@ -28,6 +34,7 @@ export default function ProductDetails() {
               px-10 
               rounded-none 
               border-0
+              text-base
             `,
               activeTab === tab.value ? "border-b-4 border-primary" : "",
             )}
@@ -39,7 +46,9 @@ export default function ProductDetails() {
       </div>
 
       <div>
-        {activeTab === "description" && <Description />}
+        {activeTab === "description" && (
+          <Description description={product.description} />
+        )}
         {activeTab === "reviews" && <Reviews />}
         {activeTab === "delivery" && <Delivery />}
       </div>
@@ -47,7 +56,9 @@ export default function ProductDetails() {
   );
 }
 
-function Description() {
+function Description({ description }: { description: string }) {
+  const t = useTranslations("Shop");
+
   const features = [
     "Premium artificial silk flowers",
     "Lasts 1-3 years without wilting",
@@ -60,20 +71,16 @@ function Description() {
     <div className="max-w-2xl space-y-7">
       <div className="space-y-5">
         <h3 className="text-base font-semibold text-foreground">
-          Product Description
+          {t("ProductDescription")}
         </h3>
 
-        <p className="leading-7 text-muted-foreground">
-          Our preserved arrangements are meticulously handcrafted using premium
-          artificial silk flowers that maintain their luxurious appearance for
-          1-3 years. Perfect for those seeking a timeless gift that never wilts.
-          Each arrangement is carefully curated with attention to detail and
-          finished with our signature gold accent packaging.
-        </p>
+        <div dangerouslySetInnerHTML={{ __html: description }} />
       </div>
 
       <div className="space-y-4">
-        <h4 className="text-base font-semibold text-foreground">Features</h4>
+        <h4 className="text-base font-semibold text-foreground">
+          {t("Features")}
+        </h4>
 
         <ul className="space-y-3">
           {features.map((feature) => (
@@ -174,27 +181,27 @@ function Reviews() {
 }
 
 function Delivery() {
+  const t = useTranslations("Shop");
+
   const methods = [
-    "Standard Delivery: 5-7 business days",
-    "Express Delivery: 2-3 business days (Additional fee applies)",
-    "Same-day delivery available for selected areas",
+    t("ShippingMethod1"),
+    t("ShippingMethod2"),
+    t("ShippingMethod3"),
   ];
 
   return (
     <div className="max-w-2xl space-y-5">
       <div className="space-y-2">
         <h3 className="text-base font-semibold text-foreground">
-          Estimated Delivery Time
+          {t("EstimatedDeliveryTime")}
         </h3>
 
-        <p className="text-sm text-muted-foreground">
-          5-7 business days from order confirmation
-        </p>
+        <p className="text-sm text-muted-foreground">{t("workingDays")}</p>
       </div>
 
       <div className="space-y-3">
         <h4 className="text-base font-semibold text-foreground">
-          Shipping Methods
+          {t("ShippingMethods")}
         </h4>
 
         <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">

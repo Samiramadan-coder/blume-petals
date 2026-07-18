@@ -1,12 +1,11 @@
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
 import { Link } from "@/i18n/navigation";
 import { Product } from "@/types/products";
-import { ShoppingCart } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
+import AddToCartBtn from "./add-to-cart-btn";
 
 export default async function WishlistCardItem({ item }: { item: Product }) {
   const t = await getTranslations("Shop");
@@ -49,14 +48,7 @@ export default async function WishlistCardItem({ item }: { item: Product }) {
           <p className="text-lg font-bold text-primary">
             {t("AED")} {item.price_from}
           </p>
-          <Button
-            variant="outline"
-            aria-label={`Add ${item.name} to cart`}
-            className="h-10 text-base py-2.5 text-primary font-semibold mt-4 border-2"
-          >
-            <ShoppingCart className="mr-2 inline-block size-5" />
-            {t("AddToCart")}
-          </Button>
+          <AddToCartBtn item={item} version="wishlist-page" isLoggedIn={true} />
         </div>
       </CardContent>
     </Card>
