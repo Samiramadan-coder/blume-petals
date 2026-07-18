@@ -83,11 +83,15 @@ export default function AddToFavoriteBtn({
           },
         )}
       >
-        <Heart
-          className={cn(`size-5`, {
-            "fill-white": product.is_fav,
-          })}
-        />
+        {loading ? (
+          <Spinner className="size-5 text-primary" />
+        ) : (
+          <Heart
+            className={cn(`size-5`, {
+              "fill-white": product.is_fav,
+            })}
+          />
+        )}
         {product.is_fav ? t("InWishlist") : t("AddToWishlist")}
       </Button>
     );

@@ -127,7 +127,7 @@ async function Product({ params }: { params: ParamsType }) {
             </p>
             <Textarea
               placeholder={t("PersonalMessagePlaceholder")}
-              className="h-30"
+              className="h-40"
             />
           </div>
 
@@ -135,10 +135,10 @@ async function Product({ params }: { params: ParamsType }) {
             <CardContent className="flex items-center gap-4 p-0">
               <Van className="size-6 text-secondary" />
               <div>
-                <p className="font-semibold text-foreground">
+                <p className="font-semibold text-base text-foreground">
                   {t("EstimatedDelivery")}
                 </p>
-                <p className="text-sm text-foreground/60 mt-2">
+                <p className="text-sm text-foreground/60 mt-1">
                   {t("ShippingMethod1")}
                 </p>
               </div>
