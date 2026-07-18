@@ -6,7 +6,6 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { Suspense } from "react";
-import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { ListFilter } from "lucide-react";
 import { Pagination } from "@/types/shared";
@@ -18,15 +17,16 @@ import { OccasionsResponse } from "@/types/landing";
 import { getLocale, getTranslations } from "next-intl/server";
 import NoDataFounded from "@/components/reusable/no-data-founded";
 import ProductSortSelect from "@/components/shop/product-sort-select";
+import { buildQueryString, cn, normalizeArrayParam } from "@/lib/utils";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 
 type SearchParams = {
   price_min?: string;
   price_max?: string;
-  size?: string;
+  sizes?: string | string[];
   page?: string;
-  occasion?: string;
+  occasions?: string | string[];
   category?: string;
 };
 
@@ -41,23 +41,25 @@ async function ListOfProducts({
   searchParams: SearchParams;
 }) {
   const t = await getTranslations("Shop");
+  const sizes = normalizeArrayParam(searchParams.sizes);
+  const occasions = normalizeArrayParam(searchParams.occasions);
+
+  const requestParams = {
+    ...(searchParams.price_min ? { price_min: searchParams.price_min } : {}),
+    ...(searchParams.price_max ? { price_max: searchParams.price_max } : {}),
+    ...(sizes ? { sizes } : {}),
+    ...(searchParams.page ? { page: searchParams.page } : {}),
+    ...(occasions ? { occasions } : {}),
+    ...(searchParams.category ? { category: searchParams.category } : {}),
+    per_page: 12,
+  };
 
   const { data, ok } = await http.get<{
     data: {
       items: Product[];
       pagination: Pagination;
     };
-  }>("/api/v1/products", {
-    params: {
-      ...(searchParams?.price_min ? { price_min: searchParams.price_min } : {}),
-      ...(searchParams?.price_max ? { price_max: searchParams.price_max } : {}),
-      ...(searchParams?.size ? { size: searchParams.size } : {}),
-      ...(searchParams?.page ? { page: searchParams.page } : {}),
-      ...(searchParams?.occasion ? { occasion: searchParams.occasion } : {}),
-      ...(searchParams?.category ? { category: searchParams.category } : {}),
-      per_page: 12,
-    },
-  });
+  }>(`/api/v1/products?${buildQueryString(requestParams)}`);
 
   if (!ok) {
     throw new Error("Failed to fetch products");

@@ -35,7 +35,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
   ]);
 
   const [selectedSizes, setSelectedSizes] = useState<string[]>(
-    searchParams.getAll("size") || [],
+    searchParams.getAll("sizes") || [],
   );
 
   const [isOnStock, setIsOnStock] = useState(0);
@@ -62,6 +62,8 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                   value={min}
                   onValueChange={(value) => {
                     setMin(value);
+                  }}
+                  onValueCommit={(value) => {
                     setQueryParams({
                       price_min: value[0].toString(),
                       price_max: max[0].toString(),
@@ -82,6 +84,9 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                   max={500}
                   value={max}
                   onValueChange={(value) => {
+                    setMax(value);
+                  }}
+                  onValueCommit={(value) => {
                     if (value[0] < min[0]) {
                       setMax([min[0] + 1]);
                       setQueryParams({
@@ -91,7 +96,6 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                       });
                       return;
                     }
-
                     setMax(value);
                     setQueryParams({
                       price_min: min[0].toString(),
@@ -135,7 +139,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                             );
 
                         setSelectedSizes(nextSizes);
-                        setQueryParams({ size: nextSizes, page: "1" });
+                        setQueryParams({ sizes: nextSizes, page: "1" });
                       }}
                     />
                     <Label htmlFor={size.id} className="text-foreground/70">
@@ -191,7 +195,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                             );
 
                         setSelectedOccasions(nextOccasions);
-                        setQueryParams({ occasion: nextOccasions, page: "1" });
+                        setQueryParams({ occasions: nextOccasions, page: "1" });
                       }}
                     />
                     <Label

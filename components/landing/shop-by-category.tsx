@@ -27,7 +27,7 @@ async function Categories() {
           <Link href={`/shop?category=${item.slug}`}>
             <Card className="group overflow-hidden rounded-2xl border-0 bg-background p-0 shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
               <CardContent className="p-0">
-                <div className="relative aspect-4/5">
+                <div className="relative aspect-4/5 overflow-hidden">
                   <Image
                     src={item.banner_url}
                     alt={item.name}
