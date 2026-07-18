@@ -21,9 +21,8 @@ export default async function ProductPage({
 }: {
   params: { "product-slug": string; locale: string };
 }) {
-  const t = await getTranslations("Shop");
-
   const pageParams = await params;
+  const t = await getTranslations("Shop");
 
   const { data, ok } = await http.get<{
     data: { product: ProductDetailsType };
@@ -37,17 +36,13 @@ export default async function ProductPage({
     (image) => image.is_primary,
   );
 
-  const secondaryImages = data.data.product.images.filter(
-    (image) => !image.is_primary,
-  );
-
   return (
     <main className="container max-w-7xl py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Images */}
         <div className="grid grid-cols-4 gap-6">
           <div className="space-y-4">
-            {secondaryImages.map((image, index) => (
+            {data.data.product.images.map((image, index) => (
               <div className="relative" key={index}>
                 <Image
                   src={image.url}
@@ -123,8 +118,8 @@ export default async function ProductPage({
           </div>
 
           <Card className="bg-secondary/10 border-l-4 border-secondary rounded-lg p-4">
-            <CardContent className="flex items-center gap-3 p-0">
-              <Van className={cn("size-5")} />
+            <CardContent className="flex items-center gap-4 p-0">
+              <Van className="size-6 text-secondary" />
               <div>
                 <p className="font-semibold text-foreground">
                   {t("EstimatedDelivery")}
