@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
-import { Inter, Playfair_Display, Tajawal } from "next/font/google";
+import { Inter, Playfair_Display, Tajawal, Cairo } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { DirectionProvider } from "@/components/ui/direction";
 import { cn } from "@/lib/utils";
@@ -14,15 +14,21 @@ const InterFont = Inter({
   subsets: ["latin"],
 });
 
-const TajawalFont = Tajawal({
-  variable: "--font-tajawal",
-  subsets: ["arabic"],
-  weight: ["400", "500", "700", "200"],
-});
+// const TajawalFont = Tajawal({
+//   variable: "--font-tajawal",
+//   subsets: ["arabic"],
+//   weight: ["400", "500", "700", "200"],
+// });
 
 const PlayfairDisplayFont = Playfair_Display({
   variable: "--font-playfair-display",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const CairoFont = Cairo({
+  variable: "--font-cairo",
+  subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
 });
 
@@ -55,8 +61,9 @@ export default async function RootLayout({
       dir={dir}
       className={cn(
         InterFont.variable,
-        TajawalFont.variable,
+        // TajawalFont.variable,
         PlayfairDisplayFont.variable,
+        CairoFont.variable,
         "h-full antialiased",
       )}
     >

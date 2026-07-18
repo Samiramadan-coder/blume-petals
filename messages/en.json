@@ -8,7 +8,8 @@
     "GoBack": "Go Back",
     "OtpSentEmail": "OTP has been sent to your email.",
     "NoDataFound": "No data founded.",
-    "ViewAll": "View All"
+    "ViewAll": "View All",
+    "StillUnderDevelopment": "Still under development. Please check back later."
   },
   "Actions": {
     "Close": "Close",

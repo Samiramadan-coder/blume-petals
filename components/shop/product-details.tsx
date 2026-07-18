@@ -58,14 +58,15 @@ export default function ProductDetails({
 
 function Description({ description }: { description: string }) {
   const t = useTranslations("Shop");
+  const tCommon = useTranslations("Common");
 
-  const features = [
-    "Premium artificial silk flowers",
-    "Lasts 1-3 years without wilting",
-    "Handcrafted by professional florists",
-    "Luxury packaging included",
-    "Perfect for gifting or home decoration",
-  ];
+  // const features = [
+  //   "Premium artificial silk flowers",
+  //   "Lasts 1-3 years without wilting",
+  //   "Handcrafted by professional florists",
+  //   "Luxury packaging included",
+  //   "Perfect for gifting or home decoration",
+  // ];
 
   return (
     <div className="max-w-2xl space-y-7">
@@ -82,7 +83,11 @@ function Description({ description }: { description: string }) {
           {t("Features")}
         </h4>
 
-        <ul className="space-y-3">
+        <p className="text-red-400 mt-4 underline">
+          {tCommon("StillUnderDevelopment")}
+        </p>
+
+        {/* <ul className="space-y-3">
           {features.map((feature) => (
             <li
               key={feature}
@@ -92,13 +97,15 @@ function Description({ description }: { description: string }) {
               <span>{feature}</span>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
 }
 
 function Reviews() {
+  const tCommon = useTranslations("Common");
+
   const reviewsDetails: {
     rating: number;
     count: number;
@@ -137,7 +144,11 @@ function Reviews() {
     },
   ];
 
-  return <div>Still under development</div>;
+  return (
+    <p className="text-red-400 mt-4 p-4 text-center underline">
+      {tCommon("StillUnderDevelopment")}
+    </p>
+  );
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

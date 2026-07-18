@@ -1,16 +1,22 @@
-import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 import { Card, CardContent } from "../ui/card";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function SimilarProducts() {
+  const locale = await getLocale();
   const t = await getTranslations("Shop");
   const tCommon = await getTranslations("Common");
 
   return (
     <div className="md:col-span-2">
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <p className="font-heading text-3xl md:text-4xl font-bold text-foreground">
+        <p
+          className={cn(`text-3xl md:text-4xl font-bold text-foreground`, {
+            "font-heading": locale === "en",
+          })}
+        >
           {t("SimilarProducts")}
         </p>
         <Link href="/shop" className="text-primary">
@@ -18,7 +24,11 @@ export default async function SimilarProducts() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
+      <p className="text-red-400 mt-4 p-4 text-center underline">
+        {tCommon("StillUnderDevelopment")}
+      </p>
+
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
         {Array.from({ length: 4 }).map((_, index) => (
           <Card
             className="group border-transparent bg-transparent shadow-none py-0"
@@ -51,7 +61,7 @@ export default async function SimilarProducts() {
             </CardContent>
           </Card>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

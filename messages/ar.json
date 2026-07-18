@@ -8,7 +8,8 @@
     "GoBack": "العودة",
     "OtpSentEmail": "تم إرسال رمز التحقق إلى بريدك الإلكتروني.",
     "NoDataFound": "لم يتم العثور على بيانات.",
-    "ViewAll": "عرض الكل"
+    "ViewAll": "عرض الكل",
+    "StillUnderDevelopment": "لا يزال قيد التطوير. يرجى العودة لاحقًا."
   },
   "Actions": {
     "Close": "إغلاق",

@@ -19,10 +19,12 @@ const sizes = ["S", "M", "L", "XL"];
 export default async function ProductPage({
   params,
 }: {
-  params: { "product-slug": string };
+  params: { "product-slug": string; locale: string };
 }) {
   const t = await getTranslations("Shop");
+
   const pageParams = await params;
+
   const { data, ok } = await http.get<{
     data: { product: ProductDetailsType };
   }>(`/api/v1/products/${pageParams["product-slug"]}`);
@@ -52,7 +54,7 @@ export default async function ProductPage({
                   alt={data.data.product.name}
                   width={500}
                   height={500}
-                  className="aspect-square w-full object-cover rounded-xl"
+                  className="aspect-square w-full object-cover rounded-xl border-2 border-border"
                 />
               </div>
             ))}
@@ -64,7 +66,7 @@ export default async function ProductPage({
                 alt={data.data.product.name}
                 width={500}
                 height={500}
-                className="aspect-square w-full object-cover rounded-xl"
+                className="aspect-square w-full object-cover rounded-xl border-2 border-border"
               />
             )}
           </div>
@@ -72,7 +74,11 @@ export default async function ProductPage({
 
         {/* Product Details */}
         <div className="space-y-6">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
+          <h1
+            className={cn("text-4xl md:text-5xl font-bold text-foreground", {
+              "font-heading": pageParams.locale === "en",
+            })}
+          >
             {data.data.product.name}
           </h1>
           <Rating
@@ -94,9 +100,9 @@ export default async function ProductPage({
                   variant="outline"
                   key={size}
                   className={cn(
-                    `rounded-full w-14 h-14 boredr border-2 border-border cursor-pointer hover:bg-primary`,
+                    `rounded-full w-14 h-14 boredr border-2 border-border cursor-pointer hover:bg-transparent`,
                     {
-                      "bg-primary text-white hover:text-white font-semibold":
+                      "bg-primary font-semibold":
                         size === data.data.product.variants[0].size,
                     },
                   )}
@@ -118,12 +124,12 @@ export default async function ProductPage({
 
           <Card className="bg-secondary/10 border-l-4 border-secondary rounded-lg p-4">
             <CardContent className="flex items-center gap-3 p-0">
-              <Van />
+              <Van className={cn("size-5")} />
               <div>
                 <p className="font-semibold text-foreground">
                   {t("EstimatedDelivery")}
                 </p>
-                <p className="text-sm text-foreground/60">
+                <p className="text-sm text-foreground/60 mt-2">
                   {t("ShippingMethod1")}
                 </p>
               </div>
@@ -138,7 +144,7 @@ export default async function ProductPage({
               <Input
                 className="h-full text-center border-0 text-base"
                 type="number"
-                defaultValue={10}
+                defaultValue={1}
               />
               <Button variant="ghost" className="h-full w-10">
                 <Plus />
