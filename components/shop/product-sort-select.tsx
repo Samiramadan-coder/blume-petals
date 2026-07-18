@@ -1,3 +1,6 @@
+"use client";
+
+import { useQueryParam } from "@/hooks/use-search-params";
 import {
   Select,
   SelectContent,
@@ -6,27 +9,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
-export default async function ProductSortSelect() {
-  const t = await getTranslations("Shop");
+export default function ProductSortSelect() {
+  const t = useTranslations("Shop");
+  const searchParams = useSearchParams();
+  const { setQueryParams } = useQueryParam();
+  const [sort, setSort] = useState<string>(searchParams.get("sort") || "");
 
   return (
-    <Select>
-      <SelectTrigger className="w-full max-w-42 border-border py-5">
+    <Select
+      value={sort}
+      onValueChange={(value) => {
+        setSort(value);
+        setQueryParams({ sort: value, page: "1" });
+      }}
+    >
+      <SelectTrigger className="w-full max-w-48 border-border text-sm font-semibold py-5">
         <SelectValue placeholder={t("Filters")} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="featured">{t("Featured")}</SelectItem>
           <SelectItem value="newest">{t("Newest")}</SelectItem>
-          <SelectItem value="price-low-to-high">
-            {t("PriceLowToHigh")}
-          </SelectItem>
-          <SelectItem value="price-high-to-low">
-            {t("PriceHighToLow")}
-          </SelectItem>
-          <SelectItem value="top-rated">{t("TopRated")}</SelectItem>
+          <SelectItem value="best_selling">{t("BestSelling")}</SelectItem>
+          <SelectItem value="price_asc">{t("PriceLowToHigh")}</SelectItem>
+          <SelectItem value="price_desc">{t("PriceHighToLow")}</SelectItem>
+          <SelectItem value="rating">{t("TopRated")}</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

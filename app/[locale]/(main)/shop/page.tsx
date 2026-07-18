@@ -24,10 +24,11 @@ import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 type SearchParams = {
   price_min?: string;
   price_max?: string;
-  sizes?: string | string[];
+  size?: string | string[];
   page?: string;
-  occasions?: string | string[];
+  occasion?: string | string[];
   category?: string;
+  sort: string;
 };
 
 /**
@@ -41,16 +42,17 @@ async function ListOfProducts({
   searchParams: SearchParams;
 }) {
   const t = await getTranslations("Shop");
-  const sizes = normalizeArrayParam(searchParams.sizes);
-  const occasions = normalizeArrayParam(searchParams.occasions);
+  const sizes = normalizeArrayParam(searchParams.size);
+  const occasions = normalizeArrayParam(searchParams.occasion);
 
   const requestParams = {
     ...(searchParams.price_min ? { price_min: searchParams.price_min } : {}),
     ...(searchParams.price_max ? { price_max: searchParams.price_max } : {}),
-    ...(sizes ? { sizes } : {}),
+    ...(sizes ? { size: sizes } : {}),
     ...(searchParams.page ? { page: searchParams.page } : {}),
-    ...(occasions ? { occasions } : {}),
+    ...(occasions ? { occasion: occasions } : {}),
     ...(searchParams.category ? { category: searchParams.category } : {}),
+    ...(searchParams.sort ? { sort: searchParams.sort } : {}),
     per_page: 12,
   };
 
@@ -131,8 +133,8 @@ export default async function ShopPage({
 
         <p className="text-lg text-foreground/60">{t("Description")}</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-25">
-          <div className="hidden sm:block sticky top-28">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-25">
+          <div className="hidden md:block sticky top-28">
             <Filters occasions={data.data.items} />
           </div>
 
@@ -140,7 +142,7 @@ export default async function ShopPage({
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
-                className="bg-transparent hover:bg-transparent block lg:hidden cursor-pointer"
+                className="bg-transparent hover:bg-transparent block md:hidden cursor-pointer"
               >
                 <ListFilter />
               </Button>

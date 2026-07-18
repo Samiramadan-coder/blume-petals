@@ -35,7 +35,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
   ]);
 
   const [selectedSizes, setSelectedSizes] = useState<string[]>(
-    searchParams.getAll("sizes") || [],
+    searchParams.getAll("size") || [],
   );
 
   const [isOnStock, setIsOnStock] = useState(0);
@@ -139,7 +139,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                             );
 
                         setSelectedSizes(nextSizes);
-                        setQueryParams({ sizes: nextSizes, page: "1" });
+                        setQueryParams({ size: nextSizes, page: "1" });
                       }}
                     />
                     <Label htmlFor={size.id} className="text-foreground/70">
@@ -195,7 +195,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                             );
 
                         setSelectedOccasions(nextOccasions);
-                        setQueryParams({ occasions: nextOccasions, page: "1" });
+                        setQueryParams({ occasion: nextOccasions, page: "1" });
                       }}
                     />
                     <Label
