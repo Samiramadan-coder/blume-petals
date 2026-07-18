@@ -7,7 +7,8 @@
     "TryAgain": "Try Again",
     "GoBack": "Go Back",
     "OtpSentEmail": "OTP has been sent to your email.",
-    "NoDataFound": "No data founded."
+    "NoDataFound": "No data founded.",
+    "ViewAll": "View All"
   },
   "Actions": {
     "Close": "Close",
@@ -564,6 +565,7 @@
     "ShippingMethods": "Shipping Methods",
     "ShippingMethod1": "Standard Delivery: 5-7 business days",
     "ShippingMethod2": "Express Delivery: 2-3 business days (Additional fee applies)",
-    "ShippingMethod3": "Same-day delivery available for selected areas"
+    "ShippingMethod3": "Same-day delivery available for selected areas",
+    "SimilarProducts": "Similar Products"
   }
 }

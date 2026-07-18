@@ -1,16 +1,20 @@
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { Card, CardContent } from "../ui/card";
+import { getTranslations } from "next-intl/server";
 
-export default function SimilarProducts() {
+export default async function SimilarProducts() {
+  const t = await getTranslations("Shop");
+  const tCommon = await getTranslations("Common");
+
   return (
     <div className="md:col-span-2">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <p className="font-heading text-3xl md:text-4xl font-bold text-foreground">
-          Similar Products
+          {t("SimilarProducts")}
         </p>
         <Link href="/shop" className="text-primary">
-          View All
+          {tCommon("ViewAll")}
         </Link>
       </div>
 

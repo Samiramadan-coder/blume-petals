@@ -123,7 +123,9 @@ export default async function ProductPage({
                 <p className="font-semibold text-foreground">
                   {t("EstimatedDelivery")}
                 </p>
-                <p className="text-sm text-foreground/60">5-7 business days</p>
+                <p className="text-sm text-foreground/60">
+                  {t("ShippingMethod1")}
+                </p>
               </div>
             </CardContent>
           </Card>
