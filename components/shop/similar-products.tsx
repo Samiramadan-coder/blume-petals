@@ -13,7 +13,7 @@ export default async function SimilarProducts() {
     <div className="md:col-span-2">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <p
-          className={cn(`text-3xl md:text-4xl font-bold text-foreground`, {
+          className={cn(`text-2xl md:text-4xl font-bold text-foreground`, {
             "font-heading": locale === "en",
           })}
         >
@@ -24,7 +24,7 @@ export default async function SimilarProducts() {
         </Link>
       </div>
 
-      <p className="text-red-400 mt-4 p-4 text-center underline italic">
+      <p className="text-red-400 text-sm mt-4 p-4 text-center underline italic">
         {tCommon("StillUnderDevelopment")}
       </p>
 

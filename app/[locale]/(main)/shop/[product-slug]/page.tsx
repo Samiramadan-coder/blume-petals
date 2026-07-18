@@ -43,7 +43,7 @@ async function Product({ params }: { params: ParamsType }) {
 
   return (
     <main className="container max-w-7xl py-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Images */}
         <div className="grid grid-cols-4 gap-4">
           <div className="space-y-4">
@@ -84,7 +84,7 @@ async function Product({ params }: { params: ParamsType }) {
         {/* Product Details */}
         <div className="space-y-6">
           <h1
-            className={cn("text-4xl md:text-5xl font-bold text-foreground", {
+            className={cn("text-3xl md:text-5xl font-bold text-foreground", {
               "font-heading": params.locale === "en",
             })}
           >
@@ -94,7 +94,7 @@ async function Product({ params }: { params: ParamsType }) {
             rating={+data.data.product.rating_avg}
             count={data.data.product.rating_count}
           />
-          <p className="text-4xl font-bold text-primary">
+          <p className="text-2xl md:text-4xl font-bold text-primary">
             {t("AED")} {data.data.product.price_from}
           </p>
           <div
@@ -131,7 +131,7 @@ async function Product({ params }: { params: ParamsType }) {
             />
           </div>
 
-          <Card className="bg-secondary/10 border-l-4 border-secondary rounded-lg p-4">
+          <Card className="bg-secondary/10 border-l-4 border-secondary rounded-lg p-3">
             <CardContent className="flex items-center gap-4 p-0">
               <Van className="size-6 text-secondary" />
               <div>
@@ -163,7 +163,7 @@ async function Product({ params }: { params: ParamsType }) {
             <AddToFavoriteBtn
               product={data.data.product}
               isLoggedIn={true}
-              version="one"
+              version="wishlist-page"
             />
 
             <AddToCartBtn

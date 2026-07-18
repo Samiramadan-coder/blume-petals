@@ -58,10 +58,10 @@ export default function AddToCartBtn({
         variant="ghost"
         aria-label={`Add ${item.name} to cart`}
         onClick={addToCart}
-        className="text-base cursor-pointer text-white border-2 border-secondary p-5 bg-secondary hover:bg-secondary hover:text-white font-semibold"
+        className="text-base h-12 cursor-pointer text-white border-2 border-secondary p-5 bg-secondary hover:bg-secondary hover:text-white font-semibold"
       >
         <ShoppingCart className="size-5" />
-        {t("AddToCart")}
+        <span className="hidden sm:inline">{t("AddToCart")}</span>
       </Button>
     );
   }

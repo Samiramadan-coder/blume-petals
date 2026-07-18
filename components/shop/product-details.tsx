@@ -1,15 +1,14 @@
 "use client";
 
-import { Button } from "../ui/button";
 import { useState } from "react";
-import { Check } from "lucide-react";
-import { tabs } from "@/constants/shop-page";
 import { cn } from "@/lib/utils";
-import { Card, CardContent } from "../ui/card";
+import { Button } from "../ui/button";
 import { Rating } from "../ui/rating";
 import { Progress } from "../ui/progress";
-import { ProductDetails as ProductDetailsType } from "@/types/products";
 import { useTranslations } from "next-intl";
+import { tabs } from "@/constants/shop-page";
+import { Card, CardContent } from "../ui/card";
+import { ProductDetails as ProductDetailsType } from "@/types/products";
 
 export default function ProductDetails({
   product,
@@ -21,7 +20,7 @@ export default function ProductDetails({
 
   return (
     <div className="md:col-span-2">
-      <div className="mb-6 flex border-b border-border">
+      <div className="mb-6 flex flex-col sm:flex-row gap-2 sm:gap-10 sm:border-b border-border">
         {tabs(t).map((tab) => (
           <Button
             key={tab.value}
@@ -30,13 +29,21 @@ export default function ProductDetails({
               `
               cursor-pointer 
               font-semibold 
-              h-14 
-              px-10 
-              rounded-none 
+              h-12
+              sm:h-16 
+              px-2 
+              rounded-lg
+              sm:rounded-none 
               border-0
               text-base
+              text-muted-foreground
+              hover:bg-transparent
+              bg-primary/10
+              sm:bg-transparent
             `,
-              activeTab === tab.value ? "border-b-4 border-primary" : "",
+              activeTab === tab.value
+                ? "bg-primary text-white sm:text-muted-foreground sm:bg-transparent sm:border-b-4 border-primary"
+                : "",
             )}
             onClick={() => setActiveTab(tab.value)}
           >
@@ -75,7 +82,10 @@ function Description({ description }: { description: string }) {
           {t("ProductDescription")}
         </h3>
 
-        <div dangerouslySetInnerHTML={{ __html: description }} />
+        <div
+          className="text-sm md:text-base leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
       </div>
 
       <div className="space-y-4">
@@ -83,7 +93,7 @@ function Description({ description }: { description: string }) {
           {t("Features")}
         </h4>
 
-        <p className="text-red-400 mt-4 underline italic">
+        <p className="text-red-400 mt-4 text-sm underline italic">
           {tCommon("StillUnderDevelopment")}
         </p>
 
@@ -145,7 +155,7 @@ function Reviews() {
   ];
 
   return (
-    <p className="text-red-400 mt-4 p-4 text-center underline italic">
+    <p className="text-red-400 mt-4 p-4 text-center text-sm underline italic">
       {tCommon("StillUnderDevelopment")}
     </p>
   );

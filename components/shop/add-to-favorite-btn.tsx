@@ -18,7 +18,7 @@ export default function AddToFavoriteBtn({
 }: {
   product: Product;
   isLoggedIn?: boolean;
-  version?: "default" | "one";
+  version?: "default" | "wishlist-page";
 }) {
   const router = useRouter();
   const t = useTranslations("Shop");
@@ -68,14 +68,14 @@ export default function AddToFavoriteBtn({
     );
   }
 
-  if (version === "one") {
+  if (version === "wishlist-page") {
     return (
       <Button
         variant="outline"
         aria-label={`Add ${product.name} to wishlist`}
         onClick={addToWishlist}
         className={cn(
-          "cursor-pointer text-base border-2 border-primary p-5 text-primary font-semibold",
+          "cursor-pointer h-12 text-base border-2 border-primary p-5 text-primary font-semibold",
           {
             "hover:bg-primary hover:text-white": !product.is_fav,
             "bg-primary text-white hover:text-primary hover:bg-white":
@@ -92,7 +92,9 @@ export default function AddToFavoriteBtn({
             })}
           />
         )}
-        {product.is_fav ? t("InWishlist") : t("AddToWishlist")}
+        <span className="hidden sm:inline">
+          {product.is_fav ? t("InWishlist") : t("AddToWishlist")}
+        </span>
       </Button>
     );
   }
