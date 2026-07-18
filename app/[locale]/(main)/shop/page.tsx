@@ -27,6 +27,7 @@ type SearchParams = {
   size?: string | string[];
   page?: string;
   occasion?: string | string[];
+  in_stock_only?: string;
   category?: string;
   sort: string;
 };
@@ -42,15 +43,18 @@ async function ListOfProducts({
   searchParams: SearchParams;
 }) {
   const t = await getTranslations("Shop");
-  const sizes = normalizeArrayParam(searchParams.size);
-  const occasions = normalizeArrayParam(searchParams.occasion);
+  // const sizes = normalizeArrayParam(searchParams.size);
+  // const occasions = normalizeArrayParam(searchParams.occasion);
 
   const requestParams = {
     ...(searchParams.price_min ? { price_min: searchParams.price_min } : {}),
     ...(searchParams.price_max ? { price_max: searchParams.price_max } : {}),
-    //...(sizes ? { size: sizes } : {}),
+    // ...(sizes ? { size: sizes } : {}),
     ...(searchParams.page ? { page: searchParams.page } : {}),
     // ...(occasions ? { occasion: occasions } : {}),
+    ...(searchParams.in_stock_only
+      ? { in_stock_only: searchParams.in_stock_only }
+      : {}),
     ...(searchParams.category ? { category: searchParams.category } : {}),
     ...(searchParams.sort ? { sort: searchParams.sort } : {}),
     per_page: 12,

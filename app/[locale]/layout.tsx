@@ -1,24 +1,19 @@
+import { cn } from "@/lib/utils";
 import "@/assets/css/globals.css";
 import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
-import { Inter, Playfair_Display, Tajawal, Cairo } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { DirectionProvider } from "@/components/ui/direction";
-import { cn } from "@/lib/utils";
+import { Inter, Playfair_Display, Cairo } from "next/font/google";
 import GoogleAuthProvider from "@/providers/google-auth-provider";
 
 const InterFont = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
-
-// const TajawalFont = Tajawal({
-//   variable: "--font-tajawal",
-//   subsets: ["arabic"],
-//   weight: ["400", "500", "700", "200"],
-// });
 
 const PlayfairDisplayFont = Playfair_Display({
   variable: "--font-playfair-display",
@@ -61,7 +56,6 @@ export default async function RootLayout({
       dir={dir}
       className={cn(
         InterFont.variable,
-        // TajawalFont.variable,
         PlayfairDisplayFont.variable,
         CairoFont.variable,
         "h-full antialiased",
@@ -71,8 +65,10 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <DirectionProvider dir={dir}>
             <body className="min-h-full flex flex-col">
-              {children}
-              <Toaster richColors />
+              <NuqsAdapter>
+                {children}
+                <Toaster richColors />
+              </NuqsAdapter>
             </body>
           </DirectionProvider>
         </NextIntlClientProvider>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/use-search-params";
 import {
   Select,
   SelectContent,
@@ -10,21 +9,25 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { parseAsString, useQueryStates } from "nuqs";
 
 export default function ProductSortSelect() {
   const t = useTranslations("Shop");
-  const searchParams = useSearchParams();
-  const { setQueryParams } = useQueryParam();
-  const [sort, setSort] = useState<string>(searchParams.get("sort") || "");
+  const [query, setQuery] = useQueryStates(
+    {
+      sort: parseAsString,
+      page: parseAsString,
+    },
+    { history: "push", scroll: false, shallow: false },
+  );
+
+  const sort = query.sort ?? "";
 
   return (
     <Select
       value={sort}
       onValueChange={(value) => {
-        setSort(value);
-        setQueryParams({ sort: value, page: "1" });
+        void setQuery({ sort: value, page: "1" });
       }}
     >
       <SelectTrigger className="w-full max-w-48 border-border text-sm font-semibold py-5">

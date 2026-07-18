@@ -1,6 +1,5 @@
 "use client";
 
-import { useQueryParam } from "@/hooks/use-search-params";
 import {
   Pagination,
   PaginationContent,
@@ -10,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination";
+import { useQueryState } from "nuqs";
 import { useTranslations } from "next-intl";
 
 function getVisiblePages(currentPage: number, totalPages: number) {
@@ -46,14 +46,17 @@ function getVisiblePages(currentPage: number, totalPages: number) {
 
 export default function PaginationTemplate({
   currentPage,
-  // onPageChange,
   totalPages,
 }: {
   currentPage: number;
   totalPages: number;
-  // onPageChange: (page: number) => void;
 }) {
-  const { setQueryParam } = useQueryParam();
+  const [, setPage] = useQueryState("page", {
+    history: "push",
+    scroll: false,
+    shallow: false,
+  });
+
   const t = useTranslations("Common");
 
   const visiblePages =
@@ -71,7 +74,7 @@ export default function PaginationTemplate({
               event.preventDefault();
 
               if (currentPage > 1) {
-                setQueryParam("page", (currentPage - 1).toString());
+                void setPage((currentPage - 1).toString());
               }
             }}
             className={
@@ -91,7 +94,7 @@ export default function PaginationTemplate({
                 aria-label={`${item}`}
                 onClick={(event) => {
                   event.preventDefault();
-                  setQueryParam("page", item.toString());
+                  void setPage(item.toString());
                 }}
                 className="cursor-pointer"
               >
@@ -114,7 +117,7 @@ export default function PaginationTemplate({
               event.preventDefault();
 
               if (currentPage < totalPages) {
-                setQueryParam("page", (currentPage + 1).toString());
+                void setPage((currentPage + 1).toString());
               }
             }}
             className={
