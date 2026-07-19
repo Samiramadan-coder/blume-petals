@@ -10,7 +10,7 @@ import { tabs } from "@/constants/shop-page";
 import { Card, CardContent } from "../ui/card";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
 
-export default function ProductDetails({
+export default function ProductInfo({
   product,
 }: {
   product: ProductDetailsType;
