@@ -44,7 +44,7 @@ export default async function CardItem({ item }: { item: Product }) {
             <AddToFavoriteBtn product={item} isLoggedIn={isLoggedIn} />
           </div>
 
-          <AddToCartBtn item={item} isLoggedIn={isLoggedIn} />
+          {/* <AddToCartBtn item={item} isLoggedIn={isLoggedIn} /> */}
         </div>
 
         <div className="flex flex-col pt-4 px-1">

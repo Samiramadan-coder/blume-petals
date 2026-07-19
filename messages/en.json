@@ -567,6 +567,9 @@
     "ShippingMethod1": "Standard Delivery: 5-7 business days",
     "ShippingMethod2": "Express Delivery: 2-3 business days (Additional fee applies)",
     "ShippingMethod3": "Same-day delivery available for selected areas",
-    "SimilarProducts": "Similar Products"
+    "SimilarProducts": "Similar Products",
+    "AddToCartSuccess": "Product added to cart successfully.",
+    "AddToCartError": "An error occurred while adding the product to the cart. Please try again.",
+    "RemoveFromCartSuccess": "Product removed from cart successfully."
   }
 }

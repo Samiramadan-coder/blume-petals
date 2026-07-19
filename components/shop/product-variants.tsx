@@ -11,7 +11,7 @@ import { Minus, Plus, Van } from "lucide-react";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
 import { useLocale, useTranslations } from "next-intl";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 export default function ProductVariants({
   token,
@@ -24,7 +24,6 @@ export default function ProductVariants({
   const locale = useLocale();
   const t = useTranslations("Shop");
   const [quantity, setQuantity] = useState(1);
-  const [quantityInput, setQuantityInput] = useState("1");
   const [messageText, setMessageText] = useState("");
   const [activeVariant, setActiveVariant] = useState(
     productDetails.variants[0],
@@ -33,38 +32,10 @@ export default function ProductVariants({
   const updateQuantity = (nextQuantity: number) => {
     if (!Number.isFinite(nextQuantity)) {
       setQuantity(MIN_QUANTITY);
-      setQuantityInput(String(MIN_QUANTITY));
       return;
     }
 
-    const normalizedQuantity = Math.max(Math.floor(nextQuantity), MIN_QUANTITY);
-    setQuantity(normalizedQuantity);
-    setQuantityInput(String(normalizedQuantity));
-  };
-
-  const handleQuantityInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const nextValue = event.target.value;
-
-    if (!/^\d*$/.test(nextValue)) {
-      return;
-    }
-
-    setQuantityInput(nextValue);
-
-    if (nextValue === "") {
-      return;
-    }
-
-    updateQuantity(Number(nextValue));
-  };
-
-  const handleQuantityInputBlur = () => {
-    if (quantityInput === "") {
-      updateQuantity(MIN_QUANTITY);
-      return;
-    }
-
-    updateQuantity(Number(quantityInput));
+    setQuantity(Math.max(Math.floor(nextQuantity), MIN_QUANTITY));
   };
 
   return (
@@ -145,12 +116,10 @@ export default function ProductVariants({
           </Button>
           <Input
             className="h-full text-center border-0 text-base"
-            type="number"
-            value={quantityInput}
-            onChange={handleQuantityInputChange}
-            onBlur={handleQuantityInputBlur}
+            type="text"
+            value={quantity}
+            readOnly
             inputMode="numeric"
-            min={MIN_QUANTITY}
             aria-label="Quantity"
           />
           <Button
@@ -173,6 +142,9 @@ export default function ProductVariants({
           item={productDetails}
           version="product-page"
           isLoggedIn={!!token}
+          variant_id={activeVariant.id}
+          quantity={quantity}
+          message={messageText}
         />
       </div>
     </div>
