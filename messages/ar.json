@@ -562,6 +562,13 @@
     "SimilarProducts": "منتجات مشابهة",
     "AddToCartSuccess": "تمت إضافة المنتج إلى السلة بنجاح.",
     "AddToCartError": "حدث خطأ أثناء إضافة المنتج إلى السلة. يرجى المحاولة مرة أخرى.",
-    "RemoveFromCartSuccess": "تمت إزالة المنتج من السلة بنجاح."
+    "RemoveFromCartSuccess": "تمت إزالة المنتج من السلة بنجاح.",
+    "Subtotal": "المجموع الفرعي",
+    "Shipping": "الشحن",
+    "Total": "المجموع",
+    "ProceedToCheckout": "الدفع",
+    "Apply": "تطبيق",
+    "PromoCodePlaceholder": "أدخل رمز العرض",
+    "RemoveFromCartError": "حدث خطأ أثناء إزالة المنتج من السلة. يرجى المحاولة مرة أخرى."
   }
 }

@@ -570,6 +570,13 @@
     "SimilarProducts": "Similar Products",
     "AddToCartSuccess": "Product added to cart successfully.",
     "AddToCartError": "An error occurred while adding the product to the cart. Please try again.",
-    "RemoveFromCartSuccess": "Product removed from cart successfully."
+    "RemoveFromCartSuccess": "Product removed from cart successfully.",
+    "Subtotal": "Subtotal",
+    "Shipping": "Shipping",
+    "Total": "Total",
+    "ProceedToCheckout": "Proceed to Checkout",
+    "Apply": "Apply",
+    "PromoCodePlaceholder": "Enter promo code",
+    "RemoveFromCartError": "An error occurred while removing the product from the cart. Please try again."
   }
 }

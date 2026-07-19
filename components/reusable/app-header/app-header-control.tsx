@@ -102,17 +102,19 @@ export default function AppHeaderControl({
             </span>
           </Button>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="ShoppingCart"
-            className="hover:bg-transparent cursor-pointer relative"
-          >
-            <ShoppingCart className={cn(`size-5`, textColor)} />
-            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
-              {addedToCartCount}
-            </span>
-          </Button>
+          <Link href="/cart">
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="ShoppingCart"
+              className="hover:bg-transparent cursor-pointer relative"
+            >
+              <ShoppingCart className={cn(`size-5`, textColor)} />
+              <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
+                {addedToCartCount}
+              </span>
+            </Button>
+          </Link>
         </>
       ) : null}
 

@@ -20,6 +20,19 @@ export type Product = {
   };
 };
 
+type Variant = {
+  color_hex: string | null;
+  color_slug: string | null;
+  compare_at_price: string | null;
+  id: number;
+  in_stock: boolean;
+  is_on_sale: boolean;
+  price: string;
+  size: string;
+  sku: string;
+  stock: number;
+};
+
 export type ProductDetails = Product & {
   images: {
     alt: string;
@@ -31,17 +44,26 @@ export type ProductDetails = Product & {
     name: string;
     slug: string;
   }[];
-  variants: {
-    color_hex: string | null;
-    color_slug: string | null;
-    compare_at_price: string | null;
-    id: number;
-    in_stock: boolean;
-    is_on_sale: boolean;
-    price: string;
-    size: string;
-    sku: string;
-    stock: number;
-  }[];
+  variants: Variant[];
   similar: Product[];
+};
+
+export type CartItem = {
+  available: boolean;
+  id: number;
+  line_total: string;
+  message_text: string | null;
+  qty: number;
+  unit_price: string;
+  product: Product;
+  variant: Variant;
+};
+
+export type Summary = {
+  item_count: number;
+  line_count: number;
+  subtotal: string;
+  total: string;
+  vat_rate: string;
+  vat_total: string;
 };
