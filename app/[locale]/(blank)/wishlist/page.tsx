@@ -32,7 +32,7 @@ async function ListOfProducts({
   }>("/api/v1/favorites", {
     params: {
       ...(searchParams?.page ? { page: searchParams.page } : {}),
-      per_page: 6,
+      per_page: 12,
     },
   });
 

@@ -48,12 +48,15 @@ export default async function CardItem({ item }: { item: Product }) {
         </div>
 
         <div className="flex flex-col pt-4 px-1">
-          <Badge className="h-7 px-3 mb-2 text-secondary bg-border font-semibold">
-            {item.category.name}
-          </Badge>
-          <p className="text-base font-semibold leading-snug mb-1.5 text-foreground group-hover:text-primary!">
-            {item.name}
-          </p>
+          {item.category && (
+            <Badge className="h-7 px-3 mb-2 text-secondary bg-border font-semibold">
+              {item.category?.name}
+            </Badge>
+          )}
+          <p
+            dangerouslySetInnerHTML={{ __html: item.name }}
+            className="text-base font-semibold leading-snug mb-1.5 text-foreground group-hover:text-primary!"
+          ></p>
           <div className="mb-3">
             <Rating rating={+item.rating_avg} count={item.rating_count} />
           </div>
