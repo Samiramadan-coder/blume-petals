@@ -48,7 +48,14 @@ export default async function WishlistCardItem({ item }: { item: Product }) {
           <p className="text-lg font-bold text-primary">
             {t("AED")} {item.price_from}
           </p>
-          <AddToCartBtn item={item} version="wishlist-page" isLoggedIn={true} />
+          <AddToCartBtn
+            item={item}
+            version="wishlist-page"
+            isLoggedIn={true}
+            message=""
+            quantity={1}
+            variant_id={0}
+          />
         </div>
       </CardContent>
     </Card>
