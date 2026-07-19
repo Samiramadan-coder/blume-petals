@@ -5,7 +5,6 @@ import { Product } from "@/types/products";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
-import AddToCartBtn from "./add-to-cart-btn";
 
 export default async function WishlistCardItem({ item }: { item: Product }) {
   const t = await getTranslations("Shop");
@@ -48,14 +47,6 @@ export default async function WishlistCardItem({ item }: { item: Product }) {
           <p className="text-lg font-bold text-primary">
             {t("AED")} {item.price_from}
           </p>
-          <AddToCartBtn
-            item={item}
-            version="wishlist-page"
-            isLoggedIn={true}
-            message=""
-            quantity={1}
-            variant_id={0}
-          />
         </div>
       </CardContent>
     </Card>

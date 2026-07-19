@@ -4,18 +4,33 @@ import { Rating } from "../ui/rating";
 import { cookies } from "next/headers";
 import { Link } from "@/i18n/navigation";
 import { Product } from "@/types/products";
-import AddToCartBtn from "./add-to-cart-btn";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
+import { cn } from "@/lib/utils";
 
-export default async function CardItem({ item }: { item: Product }) {
+export default async function CardItem({
+  item,
+  cardClassName,
+  cardContentClassName,
+  imageClassName,
+}: {
+  item: Product;
+  cardClassName?: string;
+  cardContentClassName?: string;
+  imageClassName?: string;
+}) {
   const cookieStore = await cookies();
   const t = await getTranslations("Shop");
   const isLoggedIn = Boolean(cookieStore.get("token")?.value);
 
   return (
-    <Card className="group relative overflow-hidden bg-background p-0 cursor-pointer">
+    <Card
+      className={cn(
+        "group relative overflow-hidden bg-background p-0 cursor-pointer",
+        cardClassName,
+      )}
+    >
       <Link
         href={`/shop/${item.slug}`}
         aria-label={`View ${item.name} details`}
@@ -23,7 +38,12 @@ export default async function CardItem({ item }: { item: Product }) {
       />
 
       <CardContent className="px-0">
-        <div className="overflow-hidden relative aspect-5/5 rounded-2xl">
+        <div
+          className={cn(
+            "overflow-hidden relative aspect-5/5 rounded-2xl",
+            imageClassName,
+          )}
+        >
           <Image
             src={item.image_url}
             alt={item.name}
@@ -43,13 +63,11 @@ export default async function CardItem({ item }: { item: Product }) {
 
             <AddToFavoriteBtn product={item} isLoggedIn={isLoggedIn} />
           </div>
-
-          {/* <AddToCartBtn item={item} isLoggedIn={isLoggedIn} /> */}
         </div>
 
-        <div className="flex flex-col pt-4 px-1">
+        <div className={cn("flex flex-col pt-4 px-1", cardContentClassName)}>
           {item.category && (
-            <Badge className="h-7 px-3 mb-2 text-secondary bg-border font-semibold">
+            <Badge className="h-7 px-3 mb-2 text-muted-foreground bg-border font-semibold">
               {item.category?.name}
             </Badge>
           )}

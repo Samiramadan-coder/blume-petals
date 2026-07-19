@@ -1,7 +1,6 @@
 import {
   HowItWorksStep,
   BouquetBuilderFeature,
-  FeaturedCollection,
   AddOnItem,
   Review,
 } from "@/types/home-page";
@@ -45,37 +44,6 @@ export const features: BouquetBuilderFeature[] = [
   {
     key: "AddMessage",
     icon: "✉",
-  },
-];
-
-export const featuredCollections: FeaturedCollection[] = [
-  {
-    id: "golden-hour",
-    itemKey: "GoldenHour",
-    image: "/images/home/hero/bouquet-of-rose.png",
-    rating: 4.5,
-    reviews: 120,
-  },
-  {
-    id: "moonlight-box",
-    itemKey: "MoonlightBox",
-    image: "/images/home/hero/bouquet-of-rose.png",
-    rating: 4.8,
-    reviews: 89,
-  },
-  {
-    id: "dawn-gift",
-    itemKey: "DawnGift",
-    image: "/images/home/hero/bouquet-of-rose.png",
-    rating: 4.7,
-    reviews: 64,
-  },
-  {
-    id: "signature-build",
-    itemKey: "SignatureBuild",
-    image: "/images/home/hero/bouquet-of-rose.png",
-    rating: 4.9,
-    reviews: 142,
   },
 ];
 

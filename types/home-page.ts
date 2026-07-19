@@ -9,14 +9,6 @@ export type BouquetBuilderFeature = {
   icon: string;
 };
 
-export type FeaturedCollection = {
-  id: string;
-  itemKey: "GoldenHour" | "MoonlightBox" | "DawnGift" | "SignatureBuild";
-  image: string;
-  rating: number;
-  reviews: number;
-};
-
 export type AddOnItem = {
   id: string;
   key:

@@ -65,15 +65,6 @@ export default function ProductInfo({
 
 function Description({ description }: { description: string }) {
   const t = useTranslations("Shop");
-  const tCommon = useTranslations("Common");
-
-  // const features = [
-  //   "Premium artificial silk flowers",
-  //   "Lasts 1-3 years without wilting",
-  //   "Handcrafted by professional florists",
-  //   "Luxury packaging included",
-  //   "Perfect for gifting or home decoration",
-  // ];
 
   return (
     <div className="max-w-2xl space-y-7">
@@ -86,28 +77,6 @@ function Description({ description }: { description: string }) {
           className="text-sm md:text-base leading-relaxed"
           dangerouslySetInnerHTML={{ __html: description }}
         />
-      </div>
-
-      <div className="space-y-4">
-        <h4 className="text-base font-semibold text-foreground">
-          {t("Features")}
-        </h4>
-
-        <p className="text-red-400 mt-4 text-sm underline italic">
-          {tCommon("StillUnderDevelopment")}
-        </p>
-
-        {/* <ul className="space-y-3">
-          {features.map((feature) => (
-            <li
-              key={feature}
-              className="flex items-start gap-2 text-sm text-muted-foreground"
-            >
-              <Check className="mt-0.5 size-4 shrink-0" />
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul> */}
       </div>
     </div>
   );

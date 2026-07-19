@@ -140,7 +140,6 @@ export default function ProductVariants({
 
         <AddToCartBtn
           item={productDetails}
-          version="product-page"
           isLoggedIn={!!token}
           variant_id={activeVariant.id}
           quantity={quantity}
