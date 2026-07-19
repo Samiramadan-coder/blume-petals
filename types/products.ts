@@ -43,4 +43,5 @@ export type ProductDetails = Product & {
     sku: string;
     stock: number;
   }[];
+  similar: Product[];
 };

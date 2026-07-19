@@ -38,6 +38,8 @@ async function Product({ params }: { params: ParamsType }) {
     throw new Error("Failed to fetch product");
   }
 
+  console.log("Product data:", data.data.product); // Log the product data for debugging
+
   const primaryImage = data.data.product.images.find(
     (image) => image.is_primary,
   );
@@ -181,7 +183,7 @@ async function Product({ params }: { params: ParamsType }) {
         <ProductDetails product={data.data.product} />
 
         {/* Similar Products */}
-        <SimilarProducts />
+        <SimilarProducts products={data.data.product.similar} />
       </div>
     </main>
   );
