@@ -84,7 +84,7 @@ export default function AppHeaderControl({
               aria-label="Heart"
             >
               <Heart className={cn(`size-5 text-white/92`, textColor)} />
-              <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-primary px-1.5 text-[12px] text-white/92">
+              <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
                 {wishlistCount}
               </span>
             </Button>
@@ -97,7 +97,7 @@ export default function AppHeaderControl({
             aria-label="Bell"
           >
             <Bell className={cn(`size-5 text-white/92`, textColor)} />
-            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-primary px-1.5 text-[12px] text-white/92">
+            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
               0
             </span>
           </Button>
@@ -109,7 +109,7 @@ export default function AppHeaderControl({
             className="hover:bg-transparent cursor-pointer relative"
           >
             <ShoppingCart className={cn(`size-5`, textColor)} />
-            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-primary px-1.5 text-[12px] text-white/92">
+            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
               {addedToCartCount}
             </span>
           </Button>

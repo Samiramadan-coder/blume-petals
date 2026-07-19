@@ -1,14 +1,13 @@
 "use client";
 
-import { http } from "@/lib/http";
+import { toast } from "sonner";
+import { useState } from "react";
 import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 import { Product } from "@/types/products";
 import { ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
-import { useState } from "react";
-import { Spinner } from "../ui/spinner";
-import { toast } from "sonner";
 import { addToCartAction } from "@/lib/shop-actions";
 
 export default function AddToCartBtn({
