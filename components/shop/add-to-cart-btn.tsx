@@ -9,6 +9,7 @@ import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { Spinner } from "../ui/spinner";
 import { toast } from "sonner";
+import { addToCartAction } from "@/lib/shop-actions";
 
 export default function AddToCartBtn({
   variant_id,
@@ -35,21 +36,17 @@ export default function AddToCartBtn({
       return;
     }
 
-    try {
-      setLoading(true);
-      await http.post(`/api/v1/cart/items`, {
-        variant_id: variant_id,
-        qty: quantity,
-        message_text: message,
-      });
+    setLoading(true);
+    const result = await addToCartAction(variant_id, quantity, message);
 
+    if (result.success) {
       toast.success(t("AddToCartSuccess"));
-    } catch (error) {
-      console.error(error);
-      toast.error(t("AddToCartError"));
-    } finally {
       setLoading(false);
+      return;
     }
+
+    toast.error(t("AddToCartError"));
+    setLoading(false);
   }
 
   if (version === "default") {

@@ -19,19 +19,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import Image from "next/image";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { User } from "@/types/shared";
+import LogoutBtn from "../logout-btn";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import SidebarNavLink from "./sidebar-nav-link";
 import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
+import { Separator } from "@/components/ui/separator";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import LogoutBtn from "../logout-btn";
-import Image from "next/image";
-import { useState } from "react";
 
 const sidebarNavItems = [
   { label: "Home", href: "/" },
@@ -53,7 +53,15 @@ const sidebarAuthNavItems = [
   { label: "Register", href: "/register" },
 ];
 
-export default function AppHeaderControl({ user }: { user: User | null }) {
+export default function AppHeaderControl({
+  user,
+  wishlistCount,
+  addedToCartCount,
+}: {
+  user: User | null;
+  wishlistCount: number;
+  addedToCartCount: number;
+}) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const scrolled = useIsScroll();
   const pathname = usePathname();
@@ -66,38 +74,47 @@ export default function AppHeaderControl({ user }: { user: User | null }) {
 
   return (
     <div className="flex items-center gap-3">
-      <Button
-        variant="ghost"
-        size="icon"
-        className="relative hover:bg-transparent cursor-pointer"
-        aria-label="Heart"
-      >
-        <Heart className={cn(`size-5 text-white/92`, textColor)} />
-        <span className="absolute -right-1 -top-1 w-4.5 h-4.5 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-white/92">
-          2
-        </span>
-      </Button>
+      {user ? (
+        <>
+          <Link href="/wishlist">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative hover:bg-transparent cursor-pointer"
+              aria-label="Heart"
+            >
+              <Heart className={cn(`size-5 text-white/92`, textColor)} />
+              <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-primary px-1.5 text-[12px] text-white/92">
+                {wishlistCount}
+              </span>
+            </Button>
+          </Link>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        className="relative hover:bg-transparent cursor-pointer"
-        aria-label="Bell"
-      >
-        <Bell className={cn(`size-5 text-white/92`, textColor)} />
-        <span className="absolute -right-1 -top-1 w-4.5 h-4.5 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-white/92">
-          2
-        </span>
-      </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative hover:bg-transparent cursor-pointer"
+            aria-label="Bell"
+          >
+            <Bell className={cn(`size-5 text-white/92`, textColor)} />
+            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-primary px-1.5 text-[12px] text-white/92">
+              0
+            </span>
+          </Button>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        aria-label="ShoppingCart"
-        className="hover:bg-transparent cursor-pointer"
-      >
-        <ShoppingCart className={cn(`size-5`, textColor)} />
-      </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="ShoppingCart"
+            className="hover:bg-transparent cursor-pointer relative"
+          >
+            <ShoppingCart className={cn(`size-5`, textColor)} />
+            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-primary px-1.5 text-[12px] text-white/92">
+              {addedToCartCount}
+            </span>
+          </Button>
+        </>
+      ) : null}
 
       <div className="border border-primary/60 rounded-[3px] hidden lg:block">
         <LocaleSwitcher textColor={textColor} />

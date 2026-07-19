@@ -3,13 +3,13 @@
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { http } from "@/lib/http";
 import { Heart } from "lucide-react";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import { Product } from "@/types/products";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import { addToWishlistAction } from "@/lib/shop-actions";
 
 export default function AddToFavoriteBtn({
   product,
@@ -30,21 +30,20 @@ export default function AddToFavoriteBtn({
       return;
     }
 
-    const method = product.is_fav ? "delete" : "post";
+    setLoading(true);
+    const result = await addToWishlistAction(product.is_fav, product.slug);
 
-    try {
-      setLoading(true);
-      await http[method](`/api/v1/products/${product.slug}/favorite`);
+    if (result.success) {
       toast.success(
         product.is_fav ? t("RemovedFromWishlist") : t("AddedToWishlist"),
       );
       router.refresh();
-    } catch (error) {
-      console.error("Error adding to wishlist:", error);
-      toast.error(t("WishlistError"));
-    } finally {
       setLoading(false);
+      return;
     }
+
+    toast.error(t("WishlistError"));
+    setLoading(false);
   }
 
   if (version === "default") {
