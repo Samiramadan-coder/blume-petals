@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { cookies } from "next/headers";
 import ProductInfo from "@/components/shop/product-info";
+import ProductImages from "@/components/shop/product-images";
 import SimilarProducts from "@/components/shop/similar-products";
 import ProductVariants from "@/components/shop/product-variants";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
@@ -26,59 +26,15 @@ async function Product({ params }: { params: ParamsType }) {
     throw new Error("Failed to fetch product");
   }
 
-  const primaryImage = data.data.product.images.find(
-    (image) => image.is_primary,
-  );
-
-  const imagesLength = data.data.product.images.length;
-
   return (
     <main className="container max-w-7xl py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Images */}
-        <div className="grid grid-cols-4 gap-4">
-          <div className="space-y-4">
-            {data.data.product.images.slice(0, 4).map((image, index) => (
-              <div
-                className="relative rounded-xl overflow-hidden border-2 border-border"
-                key={index}
-              >
-                <Image
-                  src={image.url}
-                  alt={data.data.product.name}
-                  width={500}
-                  height={500}
-                  className="aspect-square w-full object-cover"
-                />
+        <ProductImages productImages={data.data.product.images} />
 
-                {imagesLength > 4 && index === 3 && (
-                  <div className="absolute inset-0 text-white text-2xl bg-black/40 cursor-pointer grid place-content-center">
-                    + {imagesLength - 4}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="col-span-3 relative">
-            {primaryImage && (
-              <Image
-                src={primaryImage?.url}
-                alt={data.data.product.name}
-                width={500}
-                height={500}
-                className="aspect-square w-full object-cover rounded-xl border-2 border-border"
-              />
-            )}
-          </div>
-        </div>
-
-        {/* Product Variants */}
         <ProductVariants productDetails={data.data.product} token={token} />
 
-        {/* Product Details */}
         <ProductInfo product={data.data.product} />
 
-        {/* Similar Products */}
         <SimilarProducts products={data.data.product.similar} />
       </div>
     </main>

@@ -84,7 +84,8 @@ export default function ProductVariants({
           {t("PersonalMessage")}
         </p>
         <Textarea
-          className="h-40"
+          className="h-40 border-border"
+          placeholder={t("PersonalMessagePlaceholder")}
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
         />
