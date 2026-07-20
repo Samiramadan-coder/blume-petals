@@ -118,7 +118,7 @@ export default function AppHeaderControl({
         </>
       ) : null}
 
-      <div className="border border-primary/60 rounded-[3px] hidden lg:block">
+      <div className="hidden lg:block">
         <LocaleSwitcher textColor={textColor} />
       </div>
 

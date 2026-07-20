@@ -20,9 +20,8 @@ export default function HeaderNavLink({
         transition-colors 
         duration-200 
         ease-in-out 
-        text-sm 
+        text-base 
         relative
-
         after:absolute
         after:inset-s-0
         after:-bottom-1
@@ -33,9 +32,7 @@ export default function HeaderNavLink({
         after:bg-primary
         after:transition-transform
         after:duration-300
-
         hover:after:scale-x-100
-
         ${isActive ? "text-primary" : ""} 
         ${scrolled || pathname !== "/" ? "text-foreground" : "text-white/92"}
       `}

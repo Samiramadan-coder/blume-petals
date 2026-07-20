@@ -3,6 +3,7 @@
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
+import { Globe } from "lucide-react";
 
 export function LocaleSwitcher({ textColor }: { textColor?: string }) {
   const locale = useLocale();
@@ -17,15 +18,8 @@ export function LocaleSwitcher({ textColor }: { textColor?: string }) {
       onClick={() => router.replace(pathname, { locale: nextLocale })}
       aria-label="switcher"
     >
-      <span className={`inline-block text-xs font-semibold ${textColor}`}>
-        EN
-      </span>
-      <span className={`mx-0.5 ${textColor}`}>|</span>
-      <span
-        className={`inline-block text-sx font-semibold relative bottom-0.5 ${textColor}`}
-      >
-        عربي
-      </span>
+      <Globe className={textColor} />
+      <span className={textColor}>{locale === "ar" ? "EN" : "AR"}</span>
     </Button>
   );
 }
