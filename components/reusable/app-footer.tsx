@@ -164,9 +164,9 @@ export default async function AppFooter() {
               <ul className="space-y-2.5">
                 <li>
                   <FooterNavLink
-                    href=""
+                    href="#"
                     icon={
-                      <div className="bg-white/10 w-7 h-7 flex items-center justify-center rounded-full">
+                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaInstagram className="text-primary" />
                       </div>
                     }
@@ -177,9 +177,9 @@ export default async function AppFooter() {
 
                 <li>
                   <FooterNavLink
-                    href=""
+                    href="#"
                     icon={
-                      <div className="bg-white/10 w-7 h-7 flex items-center justify-center rounded-full">
+                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaWhatsapp className="text-primary" />
                       </div>
                     }
@@ -190,22 +190,22 @@ export default async function AppFooter() {
 
                 <li>
                   <FooterNavLink
-                    href=""
+                    href="#"
                     icon={
-                      <div className="bg-white/10 w-7 h-7 flex items-center justify-center rounded-full">
+                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaEnvelope className="text-primary" />
                       </div>
                     }
                   >
-                    {t("EmailUs")}
+                    <span className="truncate">{t("EmailUs")}</span>
                   </FooterNavLink>
                 </li>
 
                 <li>
                   <FooterNavLink
-                    href=""
+                    href="#"
                     icon={
-                      <div className="bg-white/10 w-7 h-7 flex items-center justify-center rounded-full">
+                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaPhoneAlt className="text-primary" />
                       </div>
                     }

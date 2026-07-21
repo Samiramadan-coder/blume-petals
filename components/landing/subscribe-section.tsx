@@ -35,6 +35,7 @@ const stats = [
 export default function SubscribeSection() {
   const t = useTranslations("LandingSubscribeSection");
   const locale = useLocale();
+  const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
 
   return (
     <section className="bg-border">
@@ -55,7 +56,14 @@ export default function SubscribeSection() {
                   decimals={item.decimals ?? 0}
                   duration={1.5}
                   separator=","
-                  suffix={item.suffix ?? ""}
+                  formattingFn={(value) => {
+                    const digits = new Intl.NumberFormat(numberLocale, {
+                      minimumFractionDigits: item.decimals ?? 0,
+                      maximumFractionDigits: item.decimals ?? 0,
+                    }).format(value);
+
+                    return `${digits}${item.suffix ?? ""}`;
+                  }}
                 />
               </div>
               <p className="mt-4 text-sm text-foreground">

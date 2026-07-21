@@ -21,6 +21,7 @@ export default function FooterNavLink({
         duration-200 
         ease-in-out 
         text-sm 
+        min-w-0
         flex
         items-center 
         gap-3
