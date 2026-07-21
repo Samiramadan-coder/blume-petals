@@ -9,18 +9,6 @@ export type BouquetBuilderFeature = {
   icon: string;
 };
 
-export type AddOnItem = {
-  id: string;
-  key:
-    | "TeddyBear"
-    | "ScentedCandle"
-    | "MacaronBox"
-    | "GreetingCard"
-    | "SilkRibbon"
-    | "ChocolateBox";
-  image: string;
-};
-
 export type Review = {
   name: string;
   image: string;

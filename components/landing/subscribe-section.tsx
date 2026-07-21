@@ -36,7 +36,7 @@ export default function SubscribeSection() {
 
   return (
     <section className="bg-border">
-      <div className="border-y border-foreground/10">
+      <div className="border-b border-white/50">
         <div className="container max-w-7xl grid gap-10 py-16 text-center sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((item) => (
             <div key={item.key}>
@@ -49,7 +49,7 @@ export default function SubscribeSection() {
                   suffix={item.suffix ?? ""}
                 />
               </div>
-              <p className="mt-2 text-sm text-foreground">
+              <p className="mt-4 text-sm text-foreground">
                 {t(`Stats.${item.key}`)}
               </p>
               <div className="mx-auto mt-4 h-px w-10 bg-foreground" />
@@ -86,7 +86,7 @@ export default function SubscribeSection() {
 
           <Button
             type="submit"
-            className="h-12 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
+            className="h-12 w-35 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
           >
             {t("PrimaryCta")}
           </Button>

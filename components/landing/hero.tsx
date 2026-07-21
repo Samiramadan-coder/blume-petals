@@ -2,8 +2,9 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { Link } from "@/i18n/navigation";
 import MainButton from "../ui/main-button";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import * as motion from "motion/react-client";
+import { cn } from "@/lib/utils";
 
 const containerVariants = {
   hidden: {},
@@ -29,6 +30,7 @@ const itemVariants = {
 };
 
 export default async function Hero() {
+  const locale = await getLocale();
   const t = await getTranslations("LandingHero");
 
   return (
@@ -62,7 +64,12 @@ export default async function Hero() {
 
           <motion.h1
             variants={itemVariants}
-            className="mb-5 max-w-xl font-heading text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl"
+            className={cn(
+              "mb-5 max-w-xl text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl",
+              {
+                "font-heading": locale === "en",
+              },
+            )}
           >
             {t("Title")}
           </motion.h1>

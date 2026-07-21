@@ -300,6 +300,13 @@
       "HappyCustomers": "Happy Customers"
     }
   },
+  "LandingDesignedByOurCustomers": {
+    "Eyebrow": "Real Creations",
+    "Title": "Designed by Our Customers",
+    "Description": "Every bouquet below was built using our Custom Bouquet Builder - no two are the same.",
+    "CardCaption": "Built with our Bouquet Builder",
+    "PrimaryCta": "Start Your Own"
+  },
   "AboutHero": {
     "Eyebrow": "About Blúme Petals",
     "Title": "Crafted Luxury. Made to Last.",

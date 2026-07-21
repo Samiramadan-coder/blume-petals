@@ -6,6 +6,7 @@ import LandingSubtitle from "./landing-subtitle";
 import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
 import { reviews } from "@/constants/home-page";
+import { getTranslations } from "next-intl/server";
 
 const rotations = [
   "-rotate-2",
@@ -16,16 +17,16 @@ const rotations = [
 ];
 
 export default async function DesignedByOurCustomers() {
+  const t = await getTranslations("LandingDesignedByOurCustomers");
+
   return (
     <div className="bg-[#faf8f5]">
       <div className="container max-w-7xl">
         <div className="py-20">
           <LandingSubtitle className="text-center">
-            Real Creations
+            {t("Eyebrow")}
           </LandingSubtitle>
-          <LandingTitle className="mb-6 text-center">
-            Designed by Our Customers
-          </LandingTitle>
+          <LandingTitle className="mb-6 text-center">{t("Title")}</LandingTitle>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -33,8 +34,7 @@ export default async function DesignedByOurCustomers() {
             transition={{ duration: 0.35, delay: 0.2 }}
             className="mb-12 text-sm md:text-base mt-4 text-center mx-auto max-w-100"
           >
-            Every bouquet below was built using our Custom Bouquet Builder — no
-            two are the same.
+            {t("Description")}
           </motion.p>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
@@ -70,14 +70,14 @@ export default async function DesignedByOurCustomers() {
                     {review.name}
                   </h3>
 
-                  <p className="text-[11px]">Built with our Bouquet Builder</p>
+                  <p className="text-[11px]">{t("CardCaption")}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
           <div className="text-center mt-8">
-            <MainButton href="/builder" label="Start Your Own" />
+            <MainButton href="/builder" label={t("PrimaryCta")} />
           </div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import {
   HowItWorksStep,
   BouquetBuilderFeature,
-  AddOnItem,
   Review,
 } from "@/types/home-page";
 
@@ -44,39 +43,6 @@ export const features: BouquetBuilderFeature[] = [
   {
     key: "AddMessage",
     icon: "✉",
-  },
-];
-
-export const addOns: AddOnItem[] = [
-  {
-    id: "teddy-bear",
-    key: "TeddyBear",
-    image: "/images/home/hero/bouquet-of-rose.png",
-  },
-  {
-    id: "scented-candle",
-    key: "ScentedCandle",
-    image: "/images/home/hero/bouquet-of-rose.png",
-  },
-  {
-    id: "macaron-box",
-    key: "MacaronBox",
-    image: "/images/home/hero/bouquet-of-rose.png",
-  },
-  {
-    id: "greeting-card",
-    key: "GreetingCard",
-    image: "/images/home/hero/bouquet-of-rose.png",
-  },
-  {
-    id: "silk-ribbon",
-    key: "SilkRibbon",
-    image: "/images/home/hero/bouquet-of-rose.png",
-  },
-  {
-    id: "chocolate-box",
-    key: "ChocolateBox",
-    image: "/images/home/hero/bouquet-of-rose.png",
   },
 ];
 

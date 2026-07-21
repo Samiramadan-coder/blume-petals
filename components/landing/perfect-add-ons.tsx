@@ -1,22 +1,34 @@
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { getTranslations } from "next-intl/server";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
+import { http } from "@/lib/http";
 import { Plus } from "lucide-react";
-import LandingSubtitle from "./landing-subtitle";
+import { Button } from "../ui/button";
+import { Product } from "@/types/products";
 import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
-import { addOns } from "@/constants/home-page";
+import LandingSubtitle from "./landing-subtitle";
+import { getTranslations } from "next-intl/server";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default async function PerfectAddOns() {
   const t = await getTranslations("LandingPerfectAddOns");
+  const tShop = await getTranslations("Shop");
+
+  const { data, ok } = await http.get<{
+    data: {
+      items: Product[];
+    };
+  }>(`/api/v1/products`);
+
+  if (!ok) {
+    throw new Error("Failed to fetch featured collections");
+  }
 
   return (
     <div className="bg-[#faf8f5]">
       <div className="container max-w-7xl">
         <div className="py-20">
           <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+
           <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
 
           <motion.p
@@ -29,7 +41,7 @@ export default async function PerfectAddOns() {
           </motion.p>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
-            {addOns.map((item, index) => (
+            {data.data.items.slice(0, 6).map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 40 }}
@@ -41,30 +53,21 @@ export default async function PerfectAddOns() {
                   <CardContent className="p-0">
                     <div className="overflow-hidden relative aspect-5/5">
                       <Image
-                        src={item.image}
-                        alt={t(`Items.${item.key}.Title`)}
+                        src={item.image_url}
+                        alt={item.name}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 16vw"
                       />
-
-                      <div className="absolute top-0 left-0 p-4 w-full z-10">
-                        <Badge className="text-foreground text-xs">
-                          {t("Badge")}
-                        </Badge>
-                      </div>
                     </div>
 
                     <div className="flex flex-col p-4">
                       <p className="text-sm font-semibold leading-snug mb-1.5 text-foreground">
-                        {t(`Items.${item.key}.Title`)}
-                      </p>
-                      <p className="text-xs leading-snug">
-                        {t(`Items.${item.key}.Description`)}
+                        {item.name.slice(0, 15)}...
                       </p>
                       <div className="flex items-center justify-between mt-3">
                         <p className="text-sm font-bold text-foreground">
-                          {t(`Items.${item.key}.Price`)}
+                          {tShop("AED")} {item.price_from}
                         </p>
                         <Button
                           aria-label={t("AddItemAria")}

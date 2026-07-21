@@ -1,5 +1,5 @@
-import * as motion from "motion/react-client";
 import { cn } from "@/lib/utils";
+import * as motion from "motion/react-client";
 
 export default function LandingSubtitle({
   children,
@@ -14,7 +14,7 @@ export default function LandingSubtitle({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
       className={cn(
-        "text-xs font-semibold uppercase mb-3 text-secondary",
+        "text-sm font-semibold uppercase mb-3 text-secondary",
         className,
       )}
     >
