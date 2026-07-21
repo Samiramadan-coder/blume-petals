@@ -1,14 +1,15 @@
-import { Card, CardContent } from "../ui/card";
 import {
   Clock3,
   PackageCheck,
   SlidersHorizontal,
   type LucideIcon,
 } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import AboutSubtitle from "./about-subtitle";
 import AboutTitle from "./about-title";
+import AboutSubtitle from "./about-subtitle";
 import * as motion from "motion/react-client";
+import { Card, CardContent } from "../ui/card";
+import { getLocale, getTranslations } from "next-intl/server";
+import { cn } from "@/lib/utils";
 
 const promiseCards: Array<{
   key: "Last" | "Customizable" | "Delivery";
@@ -21,6 +22,7 @@ const promiseCards: Array<{
 
 export default async function OurPerform() {
   const t = await getTranslations("AboutOurPromise");
+  const locale = await getLocale();
 
   return (
     <div className="bg-[#faf8f5]">
@@ -42,7 +44,12 @@ export default async function OurPerform() {
                     <div className="grid h-14 w-14 place-items-center rounded-full bg-border">
                       <Icon className="h-6 w-6 text-foreground" />
                     </div>
-                    <h4 className="text-center font-heading text-xl font-bold text-foreground">
+                    <h4
+                      className={cn(
+                        "text-center text-xl font-bold text-foreground",
+                        { "font-heading": locale === "en" },
+                      )}
+                    >
                       {t(`Cards.${key}.Title`)}
                     </h4>
                     <p className="text-center text-sm leading-relaxed text-foreground/60">

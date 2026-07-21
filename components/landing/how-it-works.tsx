@@ -1,14 +1,16 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import MainButton from "../ui/main-button";
 import { steps } from "@/constants/home-page";
 import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
 import LandingTitle from "./landing-title";
+import { cn } from "@/lib/utils";
 
 export default async function HowItWorks() {
   const t = await getTranslations("LandingHowItWorks");
+  const locale = await getLocale();
 
   return (
     <div className="bg-border">
@@ -47,7 +49,11 @@ export default async function HowItWorks() {
                     </div>
 
                     <div className="mt-6">
-                      <h3 className="font-heading font-semibold text-lg text-foreground">
+                      <h3
+                        className={cn("font-semibold text-lg text-foreground", {
+                          "font-heading": locale === "en",
+                        })}
+                      >
                         {t(`Steps.${step.key}.Title`)}
                       </h3>
 

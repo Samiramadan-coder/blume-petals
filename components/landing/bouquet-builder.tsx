@@ -1,13 +1,15 @@
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import MainButton from "../ui/main-button";
 import LandingSubtitle from "./landing-subtitle";
 import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
 import { features } from "@/constants/home-page";
+import { cn } from "@/lib/utils";
 
 export default async function BouquetBuilder() {
   const t = await getTranslations("LandingBouquetBuilder");
+  const locale = await getLocale();
 
   return (
     <div>
@@ -30,7 +32,11 @@ export default async function BouquetBuilder() {
               <p className="text-xs font-semibold uppercase tracking-wider">
                 {t("CardEyebrow")}
               </p>
-              <p className="font-heading font-bold text-2xl">
+              <p
+                className={cn("font-bold text-2xl", {
+                  "font-heading": locale === "en",
+                })}
+              >
                 {t("CardTitle")}
               </p>
             </div>

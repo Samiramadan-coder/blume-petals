@@ -16,7 +16,7 @@ export default function MainButton({
         className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
       >
         {label}
-        <ArrowRight />
+        <ArrowRight className="rtl:rotate-180" />
       </Button>
     </Link>
   );

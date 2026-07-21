@@ -1,8 +1,10 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import * as motion from "motion/react-client";
+import { cn } from "@/lib/utils";
 
 export default async function Hero() {
   const t = await getTranslations("AboutHero");
+  const locale = await getLocale();
 
   return (
     <section className="relative min-h-[80svh]">
@@ -13,7 +15,10 @@ export default async function Hero() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-5 leading-tight text-balance max-w-156 text-center"
+          className={cn(
+            "text-5xl md:text-6xl font-bold text-foreground mb-5 leading-tight text-balance max-w-156 text-center",
+            { "font-heading": locale === "en" },
+          )}
         >
           {t("Title")}
         </motion.h1>

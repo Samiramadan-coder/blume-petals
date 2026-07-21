@@ -24,7 +24,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { User } from "@/types/shared";
 import LogoutBtn from "../logout-btn";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import SidebarNavLink from "./sidebar-nav-link";
 import { LocaleSwitcher } from "../locale-switcher";
@@ -68,6 +68,7 @@ export default function AppHeaderControl({
   const router = useRouter();
   const t = useTranslations("AppHeader");
   const tAccount = useTranslations("Account");
+  const locale = useLocale();
 
   const textColor =
     pathname !== "/" || scrolled ? "text-foreground" : "text-white/90";
@@ -221,7 +222,12 @@ export default function AppHeaderControl({
         </SheetTrigger>
         <SheetContent showCloseButton={true}>
           <SheetHeader>
-            <SheetTitle className="border-b border-border py-3 -mx-4 px-4 font-heading text-xl font-semibold">
+            <SheetTitle
+              className={cn(
+                "border-b border-border py-3 -mx-4 px-4 text-xl font-semibold",
+                { "font-heading": locale === "en" },
+              )}
+            >
               Blúme Petals
             </SheetTitle>
           </SheetHeader>

@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CountUp from "react-countup";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import LandingSubtitle from "./landing-subtitle";
 import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
+import { cn } from "@/lib/utils";
 
 const stats = [
   {
@@ -33,6 +34,7 @@ const stats = [
 
 export default function SubscribeSection() {
   const t = useTranslations("LandingSubscribeSection");
+  const locale = useLocale();
 
   return (
     <section className="bg-border">
@@ -40,7 +42,14 @@ export default function SubscribeSection() {
         <div className="container max-w-7xl grid gap-10 py-16 text-center sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((item) => (
             <div key={item.key}>
-              <div className="font-heading text-4xl font-bold text-foreground lg:text-5xl">
+              <div
+                className={cn(
+                  "text-4xl font-bold text-foreground lg:text-5xl",
+                  {
+                    "font-heading": locale === "en",
+                  },
+                )}
+              >
                 <CountUp
                   end={item.end}
                   decimals={item.decimals ?? 0}
