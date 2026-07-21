@@ -17,7 +17,7 @@ async function Categories() {
 
   return (
     <>
-      {data.data.items.map((item, index) => (
+      {data.data.items.slice(0, 5).map((item, index) => (
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
