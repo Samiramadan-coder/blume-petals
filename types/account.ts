@@ -80,7 +80,24 @@ export type AddressFormBody = z.infer<ReturnType<typeof addressSchema>>;
 
 export type AddressLabel = "Home" | "Work" | "Other";
 
-export type Address = AddressFormBody & { id: number };
+export type Address = {
+  apartment: null;
+  area: string;
+  building: string;
+  city: { id: number; name: string; delivery_fee: string };
+  country: { id: number; name: string };
+  id: number;
+  is_default: boolean;
+  label: "Home" | "Work" | "Other";
+  landmark: string;
+  latitude: string;
+  longitude: string;
+  recipient_name: string;
+  recipient_phone: string;
+  street: string;
+};
+
+// export type Address = AddressFormBody & { id: number };
 
 export type AddressesResponse = {
   data: { items: Address[] };

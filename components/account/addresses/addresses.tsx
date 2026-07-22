@@ -55,7 +55,8 @@ export default async function Addresses({
                     {address.recipient_name}
                   </h3>
                   <p className="text-foreground/60 text-sm mb-2">
-                    {/* {address.street}, {address.emirate}, {address.city} */}
+                    {address.street}, {address.country.name},{" "}
+                    {address.city.name}
                   </p>
                   <p className="text-foreground/60 text-sm mb-3">
                     {address.area}
@@ -63,8 +64,11 @@ export default async function Addresses({
                   <p className="text-foreground/70 text-sm font-medium mb-3">
                     {address.recipient_phone}
                   </p>
+                  <p className="text-red-700 font-semibold">
+                    {address.city.delivery_fee}
+                  </p>
                   {address.is_default && (
-                    <p className="text-green-600 text-xs font-medium">
+                    <p className="text-green-600 text-xs font-medium mt-1">
                       {t("DefaultAddress")}
                     </p>
                   )}

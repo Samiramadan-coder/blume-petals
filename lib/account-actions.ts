@@ -70,9 +70,12 @@ type SetAddressAsDefaultResult = {
 export async function setAddressAsDefault(
   address: Address,
 ): Promise<SetAddressAsDefaultResult> {
+  console.log("Setting address as default:", address);
   try {
     await http.put(`/api/v1/addresses/${address.id}`, {
       ...address,
+      country_id: address.country.id,
+      city_id: address.city.id,
       is_default: true,
     });
     updateTag("addresses-page");

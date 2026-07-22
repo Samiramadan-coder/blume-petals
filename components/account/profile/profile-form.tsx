@@ -341,9 +341,7 @@ function OTPVerificationDialog({
     <DialogContent className="sm:max-w-sm">
       {phone}
       <form
-        onSubmit={handleSubmit(onSubmit, (errors) => {
-          console.log(errors);
-        })}
+        onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center gap-4"
       >
         <DialogHeader>

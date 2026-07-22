@@ -70,8 +70,8 @@ export default function AddressForm({
       recipient_phone: address?.recipient_phone || "",
       street: address?.street || "",
       area: address?.area || "",
-      city_id: address?.city_id || 0,
-      country_id: address?.country_id || 0,
+      city_id: address?.city.id || 0,
+      country_id: address?.country.id || 0,
       building: address?.building || "",
       landmark: address?.landmark || "",
       latitude: address?.latitude ? +address.latitude : 25.2048,
@@ -140,7 +140,6 @@ export default function AddressForm({
     }
 
     (async () => {
-      setValue("city_id", 0);
       await getListOfCities(watchCountryId);
     })();
   }, [setValue, watchCountryId]);

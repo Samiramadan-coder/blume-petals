@@ -26,7 +26,6 @@ export default function BuilderForm() {
     if (!isLastStep) {
       return setCurrentStep((prev) => prev + 1);
     }
-    console.log(data);
   };
 
   return (
