@@ -3,10 +3,13 @@ import { Product } from "@/types/products";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddOnCardAddVariantToCart from "./add-on-card-add-variant-to-cart";
+import { cookies } from "next/headers";
 
 export default async function AddOnCard({ item }: { item: Product }) {
   const tShop = await getTranslations("Shop");
-  const t = await getTranslations("LandingPerfectAddOns");
+  const cookiesStore = await cookies();
+  const token = cookiesStore.get("token")?.value;
+
   return (
     <Card className="h-full group overflow-hidden border border-border rounded-2xl bg-white p-0 shadow-[0_10px_30px_rgba(61,46,0,0.04)] hover:shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
       <CardContent className="p-0">
@@ -27,7 +30,7 @@ export default async function AddOnCard({ item }: { item: Product }) {
           <p className="text-sm font-bold text-foreground mb-3">
             {tShop("AED")} {item.price_from}
           </p>
-          <AddOnCardAddVariantToCart item={item} />
+          <AddOnCardAddVariantToCart item={item} isLoggedIn={!!token} />
         </div>
       </CardContent>
     </Card>

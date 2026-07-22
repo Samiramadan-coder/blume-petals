@@ -13,7 +13,9 @@ export default async function PerfectAddOns() {
     data: {
       items: Product[];
     };
-  }>(`/api/v1/products`);
+  }>(`/api/v1/products?category_type=addon`);
+
+  console.log(data);
 
   if (!ok) {
     throw new Error("Failed to fetch featured collections");

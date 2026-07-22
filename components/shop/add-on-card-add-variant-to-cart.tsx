@@ -2,13 +2,18 @@
 
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
-
 import { Product } from "@/types/products";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import AddToCartBtn from "./add-to-cart-btn";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-export default function AddOnCardAddVariantToCart({ item }: { item: Product }) {
+export default function AddOnCardAddVariantToCart({
+  item,
+  isLoggedIn,
+}: {
+  item: Product;
+  isLoggedIn: boolean;
+}) {
   const [quantity, setQuantity] = useState(1);
 
   const updateQuantity = (nextQuantity: number) => {
@@ -58,10 +63,10 @@ export default function AddOnCardAddVariantToCart({ item }: { item: Product }) {
 
       <AddToCartBtn
         item={item}
-        isLoggedIn
+        isLoggedIn={isLoggedIn}
         message=""
         quantity={quantity}
-        variant_id={1}
+        variant_id={item.variants[0]?.id}
         hideText
         className="size-10 shrink-0 rounded-full bg-primary p-0 text-white shadow-sm transition-transform hover:scale-105 hover:bg-primary/90 active:scale-95"
         iconClassName="size-4!"

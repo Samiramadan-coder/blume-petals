@@ -1,3 +1,16 @@
+type Variant = {
+  color_hex: string | null;
+  color_slug: string | null;
+  compare_at_price: string | null;
+  id: number;
+  in_stock: boolean;
+  is_on_sale: boolean;
+  price: string;
+  size: string;
+  sku: string;
+  stock: number;
+};
+
 export type Product = {
   id: number;
   image_url: string;
@@ -13,24 +26,12 @@ export type Product = {
   slug: string;
   status: string;
   is_fav: boolean;
+  variants: Variant[];
   category: {
     id: number;
     name: string;
     slug: string;
   };
-};
-
-type Variant = {
-  color_hex: string | null;
-  color_slug: string | null;
-  compare_at_price: string | null;
-  id: number;
-  in_stock: boolean;
-  is_on_sale: boolean;
-  price: string;
-  size: string;
-  sku: string;
-  stock: number;
 };
 
 export type ProductDetails = Product & {

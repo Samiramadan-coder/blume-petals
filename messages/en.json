@@ -589,6 +589,7 @@
     "PromoCodePlaceholder": "Enter promo code",
     "RemoveFromCartError": "An error occurred while removing the product from the cart. Please try again.",
     "AddSomethingExtra": "Add Something Extra",
-    "AddSomethingExtraDescription": "Make your gift even more special"
+    "AddSomethingExtraDescription": "Make your gift even more special",
+    "YourCartIsEmpty": "Your cart is empty"
   }
 }

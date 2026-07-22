@@ -17,7 +17,7 @@ export default async function ProductAddOns({ page }: { page: string }) {
       items: Product[];
       pagination: Pagination;
     };
-  }>(`/api/v1/products`, {
+  }>(`/api/v1/products?category_type=addon`, {
     params: {
       per_page: 3,
       page: page || "1",
