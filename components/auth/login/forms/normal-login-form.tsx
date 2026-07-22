@@ -13,9 +13,9 @@ import FormInput from "@/components/reusable/form/form-input";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 
 export default function NormalLoginForm() {
+  const router = useRouter();
   const t = useTranslations("Login");
   const tFields = useTranslations("Fields");
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
   const {

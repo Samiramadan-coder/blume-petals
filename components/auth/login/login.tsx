@@ -14,11 +14,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
 
 export default function Login() {
-  const t = useTranslations("Login");
-  const tFields = useTranslations("Fields");
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations("Login");
   const searchParams = useSearchParams();
+  const tFields = useTranslations("Fields");
   const [activeTab, setActiveTab] = useState<"email" | "phone">("email");
 
   useEffect(() => {
