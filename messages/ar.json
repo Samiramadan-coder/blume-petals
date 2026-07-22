@@ -30,7 +30,7 @@
       "Street": "الشارع/المبنى/الفيلا",
       "Area": "المنطقة/الحي",
       "City": "المدينة",
-      "Emirate": "الإمارة",
+      "Country": "البلد",
       "Building": "اسم المبنى",
       "Landmark": "معلم بارز",
       "IsDefault": "اجعله العنوان الافتراضي"
@@ -74,8 +74,7 @@
       "StreetMinLength": "يجب أن يكون الشارع على الأقل حرفين",
       "AreaIsRequired": "المنطقة مطلوبة",
       "AreaMinLength": "يجب أن تكون المنطقة على الأقل حرفين",
-      "EmirateIsRequired": "الإمارة مطلوبة",
-      "EmirateMinLength": "يجب أن تكون الإمارة على الأقل حرفين",
+      "CountryIsRequired": "البلد مطلوبة",
       "BuildingIsRequired": "المبنى مطلوب",
       "BuildingMinLength": "يجب أن يكون المبنى على الأقل حرفين",
       "LandmarkIsRequired": "معلم بارز مطلوب",

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import AddressForm from "./address-form";
-import { Address } from "@/types/account";
+import { Address, Country } from "@/types/account";
 import DeleteAddress from "./delete-address";
 import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
@@ -11,8 +11,10 @@ import { MapPin, Pencil, Trash2 } from "lucide-react";
 
 export default async function Addresses({
   addresses,
+  countries,
 }: {
   addresses: Address[];
+  countries: Country[];
 }) {
   const t = await getTranslations("Account.Address");
 
@@ -53,7 +55,7 @@ export default async function Addresses({
                     {address.recipient_name}
                   </h3>
                   <p className="text-foreground/60 text-sm mb-2">
-                    {address.street}, {address.emirate}, {address.city}
+                    {/* {address.street}, {address.emirate}, {address.city} */}
                   </p>
                   <p className="text-foreground/60 text-sm mb-3">
                     {address.area}
@@ -70,6 +72,7 @@ export default async function Addresses({
 
                 <div className="flex flex-col items-end gap-1">
                   <AddressForm
+                    countries={countries}
                     address={address}
                     trigger={
                       <Button variant="ghost" className="cursor-pointer">
@@ -102,7 +105,10 @@ export default async function Addresses({
               {t("NoAddresses")}
             </p>
 
-            <AddressForm buttonClassName="bg-primary text-white" />
+            <AddressForm
+              countries={countries}
+              buttonClassName="bg-primary text-white"
+            />
           </CardContent>
         </Card>
       )}

@@ -5,6 +5,8 @@ import {
   AddressFormBody,
   AddressLabel,
   addressSchema,
+  City,
+  Country,
 } from "@/types/account";
 
 import {
@@ -17,37 +19,41 @@ import {
   DialogTrigger,
 } from "../../ui/dialog";
 
-import { useRef } from "react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Badge } from "../../ui/badge";
+import { http } from "@/lib/http";
 import { Plus } from "lucide-react";
+import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { Spinner } from "../../ui/spinner";
 import { useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
 import { saveAddress } from "@/lib/account-actions";
-import FormInput from "../../reusable/form/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import FormInput from "../../reusable/form/form-input";
 import FormSelect from "../../reusable/form/form-select";
 import FormSwitch from "../../reusable/form/form-switch";
-import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import { Controller, useForm, useWatch } from "react-hook-form";
+import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import LocationPicker from "../../reusable/form/location-picker";
 
 export default function AddressForm({
   address,
   trigger,
   buttonClassName,
+  countries,
 }: {
   address?: Address;
   trigger?: React.ReactNode;
   buttonClassName?: string;
+  countries: Country[];
 }) {
   const t = useTranslations("Account.Address");
   const tFields = useTranslations("Fields");
   const closeBtn = useRef<HTMLButtonElement>(null);
   const addresses: AddressLabel[] = ["Home", "Work", "Other"];
   const form = useRef<HTMLFormElement>(null);
+  const [cities, setCities] = useState<City[]>([]);
 
   const {
     register,
@@ -64,8 +70,8 @@ export default function AddressForm({
       recipient_phone: address?.recipient_phone || "",
       street: address?.street || "",
       area: address?.area || "",
-      city: address?.city || "Dubai",
-      emirate: address?.emirate || "Dubai",
+      city_id: address?.city_id || 0,
+      country_id: address?.country_id || 0,
       building: address?.building || "",
       landmark: address?.landmark || "",
       latitude: address?.latitude ? +address.latitude : 25.2048,
@@ -108,6 +114,36 @@ export default function AddressForm({
     control,
     name: "longitude",
   });
+
+  const watchCountryId = useWatch({
+    control,
+    name: "country_id",
+  });
+
+  useEffect(() => {
+    if (!watchCountryId) return;
+
+    async function getListOfCities(countryId: number) {
+      try {
+        const { data, ok } = await http.get<{ data: { items: City[] } }>(
+          `/api/v1/countries/${countryId}/cities`,
+        );
+
+        if (!ok) {
+          throw new Error("Failed to fetch cities");
+        }
+
+        setCities(data.data.items);
+      } catch (error) {
+        console.error("Failed to fetch cities:", error);
+      }
+    }
+
+    (async () => {
+      setValue("city_id", 0);
+      await getListOfCities(watchCountryId);
+    })();
+  }, [setValue, watchCountryId]);
 
   return (
     <Dialog>
@@ -255,9 +291,12 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormSelect
                 control={control}
-                label={tFields("Labels.City")}
-                name="city"
-                options={[{ label: "Dubai", value: "Dubai" }]}
+                label={tFields("Labels.Country")}
+                name="country_id"
+                options={countries.map((country) => ({
+                  label: country.name,
+                  value: country.id,
+                }))}
                 required
               />
             </div>
@@ -265,9 +304,12 @@ export default function AddressForm({
             <div className="md:col-span-1">
               <FormSelect
                 control={control}
-                label={tFields("Labels.Emirate")}
-                name="emirate"
-                options={[{ label: "Dubai", value: "Dubai" }]}
+                label={tFields("Labels.City")}
+                name="city_id"
+                options={cities.map((city) => ({
+                  label: city.name,
+                  value: city.id,
+                }))}
                 required
               />
             </div>

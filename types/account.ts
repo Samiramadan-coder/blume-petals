@@ -61,14 +61,8 @@ export const addressSchema = (t: T) =>
       .string()
       .min(1, t("Errors.AreaIsRequired"))
       .min(2, t("Errors.AreaMinLength")),
-    city: z
-      .string()
-      .min(1, t("Errors.CityIsRequired"))
-      .min(2, t("Errors.CityMinLength")),
-    emirate: z
-      .string()
-      .min(1, t("Errors.EmirateIsRequired"))
-      .min(2, t("Errors.EmirateMinLength")),
+    country_id: z.number().min(1, t("Errors.CountryIsRequired")),
+    city_id: z.number().min(1, t("Errors.CityIsRequired")),
     building: z
       .string()
       .min(1, t("Errors.BuildingIsRequired"))
@@ -103,3 +97,23 @@ export const ratingSchema = (t: T) =>
   });
 
 export type RatingFormData = z.infer<ReturnType<typeof ratingSchema>>;
+
+export type Country = {
+  id: number;
+  name: string;
+  name_translations: {
+    en: string;
+    ar: string;
+  };
+  code: string;
+  sort_order: number;
+};
+
+export type City = {
+  country_id: number;
+  delivery_fee: string;
+  id: number;
+  name: string;
+  name_translations: { en: string; ar: string };
+  sort_order: number;
+};

@@ -30,7 +30,7 @@
       "Street": "Street/Building/Villa",
       "Area": "Area/District",
       "City": "City",
-      "Emirate": "Emirates",
+      "Country": "Country",
       "Building": "Building Name",
       "Landmark": "Landmark",
       "IsDefault": "Set as Default Address"
@@ -74,8 +74,7 @@
       "StreetMinLength": "Street must be at least 2 characters",
       "AreaIsRequired": "Area is required",
       "AreaMinLength": "Area must be at least 2 characters",
-      "EmirateIsRequired": "Emirate is required",
-      "EmirateMinLength": "Emirate must be at least 2 characters",
+      "CountryIsRequired": "Country is required",
       "BuildingIsRequired": "Building is required",
       "BuildingMinLength": "Building must be at least 2 characters",
       "LandmarkIsRequired": "Landmark is required",

@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 
 type SelectOption = {
   label: string;
-  value: string;
+  value: string | number;
 };
 
 type FormSelectProps<T extends FieldValues> = {
@@ -49,6 +49,14 @@ export default function FormSelect<T extends FieldValues>({
   className,
   triggerClassName,
 }: FormSelectProps<T>) {
+  const getOptionValueFromSelect = (selectedValue: string) => {
+    const matchedOption = options.find(
+      (option) => String(option.value) === selectedValue,
+    );
+
+    return matchedOption?.value ?? selectedValue;
+  };
+
   return (
     <Controller
       name={name}
@@ -68,7 +76,12 @@ export default function FormSelect<T extends FieldValues>({
 
           <FieldContent>
             <div className="space-y-1.5">
-              <Select value={field.value ?? ""} onValueChange={field.onChange}>
+              <Select
+                value={field.value == null ? "" : String(field.value)}
+                onValueChange={(value) => {
+                  field.onChange(getOptionValueFromSelect(value));
+                }}
+              >
                 <SelectTrigger
                   id={name}
                   aria-invalid={fieldState.invalid}
@@ -85,7 +98,10 @@ export default function FormSelect<T extends FieldValues>({
                     {groupLabel && <SelectLabel>{groupLabel}</SelectLabel>}
 
                     {options.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
+                      <SelectItem
+                        key={`${typeof option.value}-${option.value}`}
+                        value={String(option.value)}
+                      >
                         {option.label}
                       </SelectItem>
                     ))}
