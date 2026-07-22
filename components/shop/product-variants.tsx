@@ -105,31 +105,38 @@ export default function ProductVariants({
         </CardContent>
       </Card>
 
-      <div className="flex flex-wrap gap-3">
-        <div className="border-2 border-primary flex-1 rounded-lg flex">
+      <div className="flex justify-evenly flex-wrap gap-3">
+        <div className="flex items-center overflow-hidden rounded-md border border-primary/30 bg-background shadow-sm">
           <Button
+            type="button"
             variant="ghost"
-            className="h-full w-10"
+            size="icon"
+            disabled={quantity === 1}
             onClick={() => updateQuantity(quantity - 1)}
             aria-label="Decrease quantity"
+            className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary disabled:opacity-30"
           >
-            <Minus />
+            <Minus className="size-4" />
           </Button>
+
           <Input
-            className="h-full text-center border-0 text-base"
             type="text"
             value={quantity}
             readOnly
             inputMode="numeric"
             aria-label="Quantity"
+            className="h-full w-11 rounded-none border-0 bg-transparent px-0 text-center text-sm font-semibold shadow-none focus-visible:ring-0"
           />
+
           <Button
+            type="button"
             variant="ghost"
-            className="h-full w-10"
+            size="icon"
             onClick={() => updateQuantity(quantity + 1)}
             aria-label="Increase quantity"
+            className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary"
           >
-            <Plus />
+            <Plus className="size-4" />
           </Button>
         </div>
 

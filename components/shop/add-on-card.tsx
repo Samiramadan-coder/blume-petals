@@ -1,9 +1,8 @@
 import Image from "next/image";
-import { Plus } from "lucide-react";
-import { Button } from "../ui/button";
 import { Product } from "@/types/products";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
+import AddOnCardAddVariantToCart from "./add-on-card-add-variant-to-cart";
 
 export default async function AddOnCard({ item }: { item: Product }) {
   const tShop = await getTranslations("Shop");
@@ -25,17 +24,10 @@ export default async function AddOnCard({ item }: { item: Product }) {
           <p className="text-sm font-semibold leading-snug mb-1.5 text-foreground">
             {item.name.slice(0, 15)}...
           </p>
-          <div className="flex items-center justify-between mt-3">
-            <p className="text-sm font-bold text-foreground">
-              {tShop("AED")} {item.price_from}
-            </p>
-            <Button
-              aria-label={t("AddItemAria")}
-              className="w-8 h-8 p-0 rounded-full bg-primary text-white hover:bg-primary/90"
-            >
-              <Plus size={16} />
-            </Button>
-          </div>
+          <p className="text-sm font-bold text-foreground mb-3">
+            {tShop("AED")} {item.price_from}
+          </p>
+          <AddOnCardAddVariantToCart item={item} />
         </div>
       </CardContent>
     </Card>

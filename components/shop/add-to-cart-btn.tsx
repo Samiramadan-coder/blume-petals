@@ -16,12 +16,18 @@ export default function AddToCartBtn({
   message,
   item,
   isLoggedIn,
+  hideText = false,
+  className = "",
+  iconClassName = "",
 }: {
   variant_id: number;
   quantity: number;
   message: string;
   item: Product;
   isLoggedIn: boolean;
+  hideText?: boolean;
+  className?: string;
+  iconClassName?: string;
 }) {
   const router = useRouter();
   const t = useTranslations("Shop");
@@ -51,10 +57,14 @@ export default function AddToCartBtn({
       variant="ghost"
       aria-label={`Add ${item.name} to cart`}
       onClick={addToCart}
-      className="text-base h-12 cursor-pointer text-white border-2 border-secondary p-5 bg-secondary hover:bg-secondary hover:text-white font-semibold"
+      className={`text-base h-12 cursor-pointer text-white p-5 bg-secondary hover:bg-secondary hover:text-white font-semibold ${className}`}
     >
-      {loading ? <Spinner /> : <ShoppingCart className="size-5" />}
-      <span className="hidden sm:inline">{t("AddToCart")}</span>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <ShoppingCart className={`size-5 ${iconClassName}`} />
+      )}
+      {!hideText && <span className="hidden sm:inline">{t("AddToCart")}</span>}
     </Button>
   );
 }
