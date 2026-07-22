@@ -19,7 +19,7 @@ export default async function ProductAddOns({ page }: { page: string }) {
     };
   }>(`/api/v1/products`, {
     params: {
-      per_page: 2,
+      per_page: 3,
       page: page || "1",
     },
   });
@@ -44,7 +44,7 @@ export default async function ProductAddOns({ page }: { page: string }) {
         {t("AddSomethingExtraDescription")}
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
         {data.data.items.slice(0, 6).map((item, index) => (
           <motion.div
             key={item.id}
