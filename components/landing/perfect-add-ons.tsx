@@ -24,7 +24,6 @@ export default async function PerfectAddOns() {
       <div className="container max-w-7xl">
         <div className="py-20">
           <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
-
           <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
 
           <motion.p

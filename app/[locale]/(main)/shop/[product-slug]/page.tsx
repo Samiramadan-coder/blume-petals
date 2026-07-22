@@ -7,13 +7,25 @@ import SimilarProducts from "@/components/shop/similar-products";
 import ProductVariants from "@/components/shop/product-variants";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
 import ProductPageSkeleton from "@/components/shop/product-details-skeleton";
+import ProductAddOns from "@/components/shop/product-add-ons";
 
 type ParamsType = {
   "product-slug": string;
   locale: string;
 };
 
-async function Product({ params }: { params: ParamsType }) {
+type SearchParamsType = {
+  page: string;
+};
+
+async function Product({
+  params,
+  searchParams,
+}: {
+  params: ParamsType;
+  searchParams: SearchParamsType;
+}) {
+  console.log("Product page params:", params);
   const cookie = await cookies();
   const token = cookie.get("token")?.value;
 
@@ -30,21 +42,25 @@ async function Product({ params }: { params: ParamsType }) {
     <main className="container max-w-7xl py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <ProductImages productImages={data.data.product.images} />
-
         <ProductVariants productDetails={data.data.product} token={token} />
-
+        <ProductAddOns page={searchParams.page} />
         <ProductInfo product={data.data.product} />
-
         <SimilarProducts products={data.data.product.similar} />
       </div>
     </main>
   );
 }
 
-export default async function ProductPage({ params }: { params: ParamsType }) {
+export default async function ProductPage({
+  params,
+  searchParams,
+}: {
+  params: ParamsType;
+  searchParams: SearchParamsType;
+}) {
   return (
     <Suspense fallback={<ProductPageSkeleton />}>
-      <Product params={await params} />
+      <Product params={await params} searchParams={await searchParams} />
     </Suspense>
   );
 }

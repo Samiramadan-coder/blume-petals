@@ -577,6 +577,8 @@
     "ProceedToCheckout": "الدفع",
     "Apply": "تطبيق",
     "PromoCodePlaceholder": "أدخل رمز العرض",
-    "RemoveFromCartError": "حدث خطأ أثناء إزالة المنتج من السلة. يرجى المحاولة مرة أخرى."
+    "RemoveFromCartError": "حدث خطأ أثناء إزالة المنتج من السلة. يرجى المحاولة مرة أخرى.",
+    "AddSomethingExtra": "أضف شيئًا إضافيًا",
+    "AddSomethingExtraDescription": "إجعل باقتك أكثر خصوصية مع إضافاتنا المختارة بعناية."
   }
 }
