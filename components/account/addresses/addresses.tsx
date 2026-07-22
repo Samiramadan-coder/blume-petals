@@ -17,6 +17,7 @@ export default async function Addresses({
   countries: Country[];
 }) {
   const t = await getTranslations("Account.Address");
+  const tCommon = await getTranslations("Common");
 
   return (
     <>
@@ -65,7 +66,8 @@ export default async function Addresses({
                     {address.recipient_phone}
                   </p>
                   <p className="text-red-700 font-semibold">
-                    {address.city.delivery_fee}
+                    {t("DeliveryFee")} {address.city.delivery_fee}{" "}
+                    {tCommon("AED")}
                   </p>
                   {address.is_default && (
                     <p className="text-green-600 text-xs font-medium mt-1">

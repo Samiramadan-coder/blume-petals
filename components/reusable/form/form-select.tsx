@@ -7,8 +7,6 @@ import {
   type Path,
 } from "react-hook-form";
 
-import { Field, FieldContent, FieldError, FieldLabel } from "../../ui/field";
-
 import {
   Select,
   SelectContent,
@@ -20,6 +18,7 @@ import {
 } from "../../ui/select";
 
 import { cn } from "@/lib/utils";
+import { Field, FieldContent, FieldError, FieldLabel } from "../../ui/field";
 
 type SelectOption = {
   label: string;
@@ -36,6 +35,7 @@ type FormSelectProps<T extends FieldValues> = {
   groupLabel?: string;
   className?: string;
   triggerClassName?: string;
+  onTrackValueChange?: () => void;
 };
 
 export default function FormSelect<T extends FieldValues>({
@@ -48,6 +48,7 @@ export default function FormSelect<T extends FieldValues>({
   groupLabel,
   className,
   triggerClassName,
+  onTrackValueChange,
 }: FormSelectProps<T>) {
   const getOptionValueFromSelect = (selectedValue: string) => {
     const matchedOption = options.find(
@@ -77,9 +78,14 @@ export default function FormSelect<T extends FieldValues>({
           <FieldContent>
             <div className="space-y-1.5">
               <Select
-                value={field.value == null ? "" : String(field.value)}
+                value={
+                  field.value == null || field.value === "" || field.value === 0
+                    ? undefined
+                    : String(field.value)
+                }
                 onValueChange={(value) => {
                   field.onChange(getOptionValueFromSelect(value));
+                  onTrackValueChange?.();
                 }}
               >
                 <SelectTrigger

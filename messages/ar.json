@@ -9,7 +9,8 @@
     "OtpSentEmail": "تم إرسال رمز التحقق إلى بريدك الإلكتروني.",
     "NoDataFound": "لم يتم العثور على بيانات.",
     "ViewAll": "عرض الكل",
-    "StillUnderDevelopment": "لا يزال قيد التطوير. يرجى العودة لاحقًا."
+    "StillUnderDevelopment": "لا يزال قيد التطوير. يرجى العودة لاحقًا.",
+    "AED": "درهم"
   },
   "Actions": {
     "Close": "إغلاق",
@@ -479,7 +480,8 @@
       "DeleteAddressTitle": "حذف العنوان",
       "DeleteAddressConfirmation": "هل أنت متأكد أنك تريد حذف هذا العنوان؟ لا يمكن التراجع عن هذا الإجراء.",
       "AddressDeletedSuccess": "تم حذف العنوان بنجاح.",
-      "AddressDeletedError": "فشل حذف العنوان. يرجى المحاولة مرة أخرى."
+      "AddressDeletedError": "فشل حذف العنوان. يرجى المحاولة مرة أخرى.",
+      "DeliveryFee": "رسوم التوصيل:"
     },
     "Orders": {
       "Title": "طلباتي",

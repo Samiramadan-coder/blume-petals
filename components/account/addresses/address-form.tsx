@@ -27,13 +27,13 @@ import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { Spinner } from "../../ui/spinner";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
 import { saveAddress } from "@/lib/account-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../../reusable/form/form-input";
 import FormSelect from "../../reusable/form/form-select";
 import FormSwitch from "../../reusable/form/form-switch";
 import { Controller, useForm, useWatch } from "react-hook-form";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import LocationPicker from "../../reusable/form/location-picker";
 
@@ -120,29 +120,29 @@ export default function AddressForm({
     name: "country_id",
   });
 
+  const getListOfCities = useCallback(async () => {
+    try {
+      const { data, ok } = await http.get<{ data: { items: City[] } }>(
+        `/api/v1/countries/${watchCountryId}/cities`,
+      );
+
+      if (!ok) {
+        throw new Error("Failed to fetch cities");
+      }
+
+      setCities(data.data.items);
+    } catch (error) {
+      console.error("Failed to fetch cities:", error);
+    }
+  }, [watchCountryId]);
+
   useEffect(() => {
     if (!watchCountryId) return;
 
-    async function getListOfCities(countryId: number) {
-      try {
-        const { data, ok } = await http.get<{ data: { items: City[] } }>(
-          `/api/v1/countries/${countryId}/cities`,
-        );
-
-        if (!ok) {
-          throw new Error("Failed to fetch cities");
-        }
-
-        setCities(data.data.items);
-      } catch (error) {
-        console.error("Failed to fetch cities:", error);
-      }
-    }
-
     (async () => {
-      await getListOfCities(watchCountryId);
+      await getListOfCities();
     })();
-  }, [setValue, watchCountryId]);
+  }, [getListOfCities, watchCountryId]);
 
   return (
     <Dialog>
@@ -291,6 +291,10 @@ export default function AddressForm({
               <FormSelect
                 control={control}
                 label={tFields("Labels.Country")}
+                onTrackValueChange={() => {
+                  setValue("city_id", 0);
+                }}
+                placeholder={tFields("Placeholders.Country")}
                 name="country_id"
                 options={countries.map((country) => ({
                   label: country.name,
@@ -304,6 +308,7 @@ export default function AddressForm({
               <FormSelect
                 control={control}
                 label={tFields("Labels.City")}
+                placeholder={tFields("Placeholders.City")}
                 name="city_id"
                 options={cities.map((city) => ({
                   label: city.name,

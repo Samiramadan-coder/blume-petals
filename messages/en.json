@@ -9,7 +9,8 @@
     "OtpSentEmail": "OTP has been sent to your email.",
     "NoDataFound": "No data founded.",
     "ViewAll": "View All",
-    "StillUnderDevelopment": "Still under development. Please check back later."
+    "StillUnderDevelopment": "Still under development. Please check back later.",
+    "AED": "AED"
   },
   "Actions": {
     "Close": "Close",
@@ -46,7 +47,9 @@
       "Street": "e.g 123 Sheikh Zayed Road, Dubai",
       "Area": "e.g Downtown Dubai",
       "Building": "e.g Building Name",
-      "Landmark": "e.g Near Mall of the Emirates"
+      "Landmark": "e.g Near Mall of the Emirates",
+      "City": "Select City",
+      "Country": "Select Country"
     },
     "Errors": {
       "FullNameIsRequired": "Full Name is required",
@@ -487,7 +490,8 @@
       "DeleteAddressTitle": "Delete Address",
       "DeleteAddressConfirmation": "Are you sure you want to delete this address? This action cannot be undone.",
       "AddressDeletedSuccess": "Address deleted successfully.",
-      "AddressDeletedError": "Failed to delete address. Please try again."
+      "AddressDeletedError": "Failed to delete address. Please try again.",
+      "DeliveryFee": "Delivery Fee:"
     },
     "Orders": {
       "Title": "My Orders",
