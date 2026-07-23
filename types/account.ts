@@ -1,4 +1,5 @@
 import z from "zod";
+import { Summary } from "./products";
 
 type T = (key: string) => string;
 
@@ -133,4 +134,57 @@ export type City = {
   name: string;
   name_translations: { en: string; ar: string };
   sort_order: number;
+};
+
+export type OrderItem = {
+  address: {
+    apartment: string | null;
+    area: string;
+    building: string;
+    city: string;
+    country: string;
+    delivery_fee: string;
+    landmark: string;
+    latitude: string;
+    longitude: string;
+    recipient_name: string;
+    recipient_phone: string;
+    street: string;
+  };
+  summary: {
+    discount_total: string;
+    grand_total: string;
+    shipping_total: string;
+    subtotal: string;
+    vat_rate: string;
+    vat_total: string;
+  };
+  order_number: number;
+  payment_status: string;
+  placed_at: string;
+  status:
+    | "pending"
+    | "processing"
+    | "shipped"
+    | "delivered"
+    | "pickup"
+    | "cancelled";
+  status_label:
+    | "Pending"
+    | "Processing"
+    | "Shipped"
+    | "Delivered"
+    | "Pickup"
+    | "Cancelled";
+  currency: string;
+  customer_notes: string | null;
+  fulfillment_method: string;
+  id: number;
+  items: {
+    id: number;
+    line_total: string;
+    message_text: string | null;
+    name: string;
+    qty: number;
+  }[];
 };

@@ -2,6 +2,7 @@ import OrderCard from "./order-card";
 import { getTranslations } from "next-intl/server";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import PageTitle from "../shared/page-title";
+import { OrderItem } from "@/types/account";
 
 const filters = [
   { label: "All", value: "all" },
@@ -12,14 +13,18 @@ const filters = [
   { label: "Cancelled", value: "cancelled" },
 ];
 
-export default async function Orders() {
+export default async function Orders({ orders }: { orders: OrderItem[] }) {
   const t = await getTranslations("Account.Orders");
 
   return (
     <div className="space-y-6">
       <PageTitle title={t("Title")} />
 
-      <Tabs defaultValue="all">
+      {orders.map((order) => (
+        <OrderCard key={order.id} order={order} />
+      ))}
+
+      {/* <Tabs defaultValue="all">
         <TabsList className="mb-6 bg-transparent flex-wrap h-auto! gap-2">
           {filters.map((filter) => (
             <TabsTrigger
@@ -52,7 +57,7 @@ export default async function Orders() {
         <TabsContent value="cancelled">
           <OrderCard />
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
     </div>
   );
 }

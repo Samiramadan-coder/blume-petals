@@ -52,10 +52,7 @@ export default function OrderRate() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          className="flex-1 cursor-pointer bg-white h-11 border-2 border-primary text-primary hover:bg-primary hover:text-white"
-          variant="outline"
-        >
+        <Button className="flex-1 uppercase h-11" variant="default">
           {t("RateOrder")}
         </Button>
       </DialogTrigger>
