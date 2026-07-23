@@ -3,6 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
 import PageTitle from "../shared/page-title";
 import { OrderItem } from "@/types/account";
+import { Pagination } from "@/types/shared";
+import PaginationTemplate from "@/components/reusable/pagination-template";
 
 const filters = [
   { label: "All", value: "all" },
@@ -13,7 +15,13 @@ const filters = [
   { label: "Cancelled", value: "cancelled" },
 ];
 
-export default async function Orders({ orders }: { orders: OrderItem[] }) {
+export default async function Orders({
+  orders,
+  pagination,
+}: {
+  orders: OrderItem[];
+  pagination: Pagination;
+}) {
   const t = await getTranslations("Account.Orders");
 
   return (
@@ -23,6 +31,11 @@ export default async function Orders({ orders }: { orders: OrderItem[] }) {
       {orders.map((order) => (
         <OrderCard key={order.id} order={order} />
       ))}
+
+      <PaginationTemplate
+        currentPage={pagination.current_page}
+        totalPages={pagination.last_page}
+      />
 
       {/* <Tabs defaultValue="all">
         <TabsList className="mb-6 bg-transparent flex-wrap h-auto! gap-2">
