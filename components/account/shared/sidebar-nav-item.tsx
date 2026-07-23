@@ -21,7 +21,7 @@ export default function SidebarNavItem({
       asChild
       variant="ghost"
       className={cn(
-        "h-11 w-full border-0 justify-start rounded-xl px-4 text-sm font-medium text-muted-foreground hover:bg-primary/20 hover:text-foreground",
+        "h-11 w-full border-0 justify-start rounded-lg px-4 text-sm font-medium text-muted-foreground hover:bg-primary/20 hover:text-foreground",
         isActive &&
           "bg-primary/20 text-foreground border-s-2 border-primary hover:bg-primary/20 hover:text-foreground",
       )}

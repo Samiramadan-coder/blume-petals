@@ -105,7 +105,7 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
           <div className="flex items-start gap-4 px-4 md:px-6">
             <div className="min-w-0 flex-1">
               {order.items[0]?.name && (
-                <p className="mb-1 truncate text-sm text-foreground/60">
+                <p className="mb-2 truncate text-sm text-foreground/60">
                   {order.items[0].name}
                 </p>
               )}
@@ -114,11 +114,10 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
                 <p className="font-semibold text-foreground md:text-base">
                   {order.order_number}
                 </p>
-
                 <Badge
                   className={cn(
-                    "h-8 gap-1.5 border-0 px-3 text-sm shadow-none",
-                    "[&>svg]:size-4!",
+                    "h-6 gap-1.5 border-0 px-2 text-xs shadow-none",
+                    "[&>svg]:size-3!",
                     statusConfig.className,
                   )}
                 >
@@ -140,7 +139,6 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
               <p className="mt-2 whitespace-nowrap font-semibold text-foreground md:text-base">
                 {order.currency} {order.summary.grand_total}
               </p>
-
               <CollapsibleTrigger asChild>
                 <Button
                   type="button"
@@ -189,26 +187,23 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
                   <h4 className="mb-2 font-semibold text-foreground md:text-base">
                     {t("DeliveryAddress")}
                   </h4>
-
                   <p className="text-sm leading-6 text-foreground/60">
                     {address || "-"}
                   </p>
                 </div>
-
                 <div>
                   <h4 className="mb-2 font-semibold text-foreground md:text-base">
                     {t("PaymentMethod")}
                   </h4>
-
-                  <p className="text-sm text-foreground/60">-</p>
+                  <p className="text-sm text-foreground/60">Not specified</p>
                 </div>
               </div>
 
               <Separator className="mb-4" />
 
               <div className="flex flex-wrap gap-4">
-                <OrderCancel />
-                <OrderRate />
+                {order.status === "pending" && <OrderCancel />}
+                {order.status === "delivered" && <OrderRate />}
               </div>
             </div>
           </CollapsibleContent>

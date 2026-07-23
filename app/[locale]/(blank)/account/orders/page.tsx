@@ -6,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 
 type SearchParams = {
   page?: string;
+  status?: string;
 };
 
 export async function generateMetadata() {
@@ -26,9 +27,14 @@ export default async function OrdersPage({
       pagination: Pagination;
     };
   }>("/api/v1/orders", {
+    next: {
+      revalidate: 60,
+      tags: ["orders"],
+    },
     params: {
-      per_page: 1,
+      per_page: 5,
       page: (await searchParams).page ?? "1",
+      status: (await searchParams).status ?? "all",
     },
   });
 
