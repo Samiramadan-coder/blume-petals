@@ -17,6 +17,8 @@ export default async function CartPage() {
     data: { cart: { items: CartItem[]; summary: Summary } };
   }>("/api/v1/cart");
 
+  console.log("Cart data:", data);
+
   if (!ok) {
     throw new Error("Failed to fetch cart");
   }
