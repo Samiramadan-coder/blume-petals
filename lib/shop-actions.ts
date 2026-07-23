@@ -92,6 +92,7 @@ export async function checkoutOrderAction(
       customer_notes,
     });
     updateTag("cart-count");
+    updateTag("orders");
     return { success: true };
   } catch (error) {
     console.error("Error checking out order:", error);
