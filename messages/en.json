@@ -590,6 +590,17 @@
     "RemoveFromCartError": "An error occurred while removing the product from the cart. Please try again.",
     "AddSomethingExtra": "Add Something Extra",
     "AddSomethingExtraDescription": "Make your gift even more special",
-    "YourCartIsEmpty": "Your cart is empty"
+    "YourCartIsEmpty": "Your cart is empty",
+    "DontHaveAddress": "You don't have any saved addresses. Please add a new address to complete the checkout.",
+    "ShippingAddress": "Shipping Address",
+    "OrderNotes": "Order Notes (Optional)",
+    "OrderNotesPlaceholder": "Add any special instructions or requests for your order",
+    "PaymentDetails": "Payment Details",
+    "ItemsFee": "Items Fee",
+    "DeliveryFee": "Delivery Fee",
+    "TotalAmount": "Total Amount",
+    "ContinueToPayment": "Continue to Payment",
+    "OrderPlacedSuccessfully": "Your order has been placed successfully!",
+    "OrderPlacementFailed": "Failed to place the order. Please try again."
   }
 }

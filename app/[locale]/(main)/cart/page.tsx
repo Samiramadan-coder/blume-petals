@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
+import { Link } from "@/i18n/navigation";
 
 export default async function CartPage() {
   const t = await getTranslations("Shop");
@@ -16,8 +17,6 @@ export default async function CartPage() {
   const { data, ok } = await http.get<{
     data: { cart: { items: CartItem[]; summary: Summary } };
   }>("/api/v1/cart");
-
-  console.log("Cart data:", data);
 
   if (!ok) {
     throw new Error("Failed to fetch cart");
@@ -33,11 +32,11 @@ export default async function CartPage() {
             {t("YourCartIsEmpty")}
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="md:col-span-2 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+            <div className="md:col-span-2 space-y-6">
               {data.data.cart.items.map((item, index) => (
                 <Card
-                  className="w-full rounded-2xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]"
+                  className="w-full rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]"
                   key={index}
                 >
                   <CardContent className="flex items-center gap-4 px-4">
@@ -81,7 +80,7 @@ export default async function CartPage() {
               ))}
             </div>
 
-            <div className="w-full max-w-md space-y-6 bg-[#fcfaf8] p-5">
+            <div className="w-full max-w-md space-y-6 bg-[#fcfaf8]">
               <div className="flex items-center gap-3">
                 <Input
                   placeholder={t("PromoCodePlaceholder")}
@@ -96,7 +95,7 @@ export default async function CartPage() {
                 </Button>
               </div>
 
-              <Card className="rounded-3xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
+              <Card className="rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
                 <CardContent className="space-y-5 p-6">
                   <div className="flex items-center justify-between">
                     <span className="text-zinc-500">{t("Subtotal")}</span>
@@ -107,11 +106,16 @@ export default async function CartPage() {
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">
-                      {t("Shipping")}
-                    </span>
+                    <span className="text-muted-foreground">Vat Rate</span>
                     <span className="font-semibold text-muted-foreground">
-                      -
+                      % {data.data.cart.summary.vat_rate}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Vat Total</span>
+                    <span className="font-semibold text-muted-foreground">
+                      {t("AED")} {data.data.cart.summary.vat_total}
                     </span>
                   </div>
 
@@ -127,9 +131,11 @@ export default async function CartPage() {
                 </CardContent>
               </Card>
 
-              <Button className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-[#bfa664]">
-                {t("ProceedToCheckout")} · {data.data.cart.summary.total}
-              </Button>
+              <Link href="/cart/order" className="w-full">
+                <Button className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-[#bfa664]">
+                  {t("ProceedToCheckout")} · {data.data.cart.summary.total}
+                </Button>
+              </Link>
             </div>
           </div>
         )}

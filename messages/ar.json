@@ -46,7 +46,9 @@
       "Street": "مثال: 123 شارع الشيخ زايد، دبي",
       "Area": "مثال: وسط مدينة دبي",
       "Building": "مثال: اسم المبنى",
-      "Landmark": "مثال: بالقرب من مول الإمارات"
+      "Landmark": "مثال: بالقرب من مول الإمارات",
+      "City": "مثال: دبي",
+      "Country": "مثال: الإمارات العربية المتحدة"
     },
     "Errors": {
       "FullNameIsRequired": "الاسم الكامل مطلوب",
@@ -580,6 +582,17 @@
     "RemoveFromCartError": "حدث خطأ أثناء إزالة المنتج من السلة. يرجى المحاولة مرة أخرى.",
     "AddSomethingExtra": "أضف شيئًا إضافيًا",
     "AddSomethingExtraDescription": "إجعل باقتك أكثر خصوصية مع إضافاتنا المختارة بعناية.",
-    "YourCartIsEmpty": "سلتك فارغة"
+    "YourCartIsEmpty": "سلتك فارغة",
+    "DontHaveAddress": "ليس لديك أي عناوين محفوظة. يرجى إضافة عنوان جديد لإكمال عملية الدفع.",
+    "ShippingAddress": "عنوان الشحن",
+    "OrderNotes": "ملاحظات الطلب (اختياري)",
+    "OrderNotesPlaceholder": "أضف أي تعليمات خاصة أو طلبات لطلبك",
+    "PaymentDetails": "تفاصيل الدفع",
+    "ItemsFee": "رسوم المنتجات",
+    "DeliveryFee": "رسوم التوصيل",
+    "TotalAmount": "المبلغ الإجمالي",
+    "ContinueToPayment": "المتابعة إلى الدفع",
+    "OrderPlacedSuccessfully": "تم تقديم طلبك بنجاح!",
+    "OrderPlacementFailed": "فشل في تقديم الطلب. يرجى المحاولة مرة أخرى."
   }
 }

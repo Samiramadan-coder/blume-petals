@@ -78,3 +78,23 @@ export async function updateCartQuantityAction(
     return { success: false };
   }
 }
+
+// Order Checkout
+type CheckoutOrderResponse = { success: boolean };
+
+export async function checkoutOrderAction(
+  address_id: string,
+  customer_notes: string,
+): Promise<CheckoutOrderResponse> {
+  try {
+    await http.post(`/api/v1/orders`, {
+      address_id,
+      customer_notes,
+    });
+    updateTag("cart-count");
+    return { success: true };
+  } catch (error) {
+    console.error("Error checking out order:", error);
+    return { success: false };
+  }
+}
