@@ -593,6 +593,8 @@
     "TotalAmount": "المبلغ الإجمالي",
     "ContinueToPayment": "المتابعة إلى الدفع",
     "OrderPlacedSuccessfully": "تم تقديم طلبك بنجاح!",
-    "OrderPlacementFailed": "فشل في تقديم الطلب. يرجى المحاولة مرة أخرى."
+    "OrderPlacementFailed": "فشل في تقديم الطلب. يرجى المحاولة مرة أخرى.",
+    "OrderCancelledSuccessfully": "تم إلغاء الطلب بنجاح.",
+    "OrderCancellationFailed": "فشل في إلغاء الطلب. يرجى المحاولة مرة أخرى."
   }
 }

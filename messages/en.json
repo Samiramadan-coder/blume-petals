@@ -601,6 +601,8 @@
     "TotalAmount": "Total Amount",
     "ContinueToPayment": "Continue to Payment",
     "OrderPlacedSuccessfully": "Your order has been placed successfully!",
-    "OrderPlacementFailed": "Failed to place the order. Please try again."
+    "OrderPlacementFailed": "Failed to place the order. Please try again.",
+    "OrderCancelledSuccessfully": "Order cancelled successfully.",
+    "OrderCancellationFailed": "Failed to cancel the order. Please try again."
   }
 }

@@ -199,10 +199,15 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
                 </div>
               </div>
 
-              <Separator className="mb-4" />
+              {order.status === "pending" ||
+                (order.status === "delivered" && (
+                  <Separator className="mb-4" />
+                ))}
 
               <div className="flex flex-wrap gap-4">
-                {order.status === "pending" && <OrderCancel />}
+                {order.status === "pending" && (
+                  <OrderCancel orderId={order.id} />
+                )}
                 {order.status === "delivered" && <OrderRate />}
               </div>
             </div>

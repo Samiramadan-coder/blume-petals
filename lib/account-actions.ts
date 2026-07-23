@@ -177,3 +177,21 @@ export async function postOTPPhoneChange(
     return { success: false };
   }
 }
+
+/**
+ * Cancel Order and return success status.
+ */
+type CancelOrderResult = {
+  success: boolean;
+};
+
+export async function cancelOrder(orderId: number): Promise<CancelOrderResult> {
+  try {
+    await http.post(`/api/v1/orders/${orderId}/cancel`);
+    updateTag("orders");
+    return { success: true };
+  } catch (error) {
+    console.error("Error cancelling order:", error);
+    return { success: false };
+  }
+}
