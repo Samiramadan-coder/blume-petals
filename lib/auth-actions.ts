@@ -149,7 +149,7 @@ export async function resetPassword(
     await http.post("/api/v1/auth/password/reset", data);
     return { success: true };
   } catch (err) {
-    console.log("Error resetting password:", err);
+    console.error("Error resetting password:", err);
     if (err instanceof ValidationError) {
       const errors = Object.fromEntries(
         Object.entries(err.errors).map(([field, messages]) => [

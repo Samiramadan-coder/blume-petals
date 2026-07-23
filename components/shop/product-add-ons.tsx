@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function ProductAddOns({ page }: { page: string }) {
-  console.log("ProductAddOns page:", page);
   const t = await getTranslations("Shop");
   const locale = await getLocale();
 
@@ -23,8 +22,6 @@ export default async function ProductAddOns({ page }: { page: string }) {
       page: page || "1",
     },
   });
-
-  console.log("ProductAddOns data:", data);
 
   if (!ok) {
     throw new Error("Failed to fetch featured collections");

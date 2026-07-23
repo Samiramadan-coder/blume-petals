@@ -13,9 +13,11 @@ export default async function PerfectAddOns() {
     data: {
       items: Product[];
     };
-  }>(`/api/v1/products?category_type=addon`);
-
-  console.log(data);
+  }>(`/api/v1/products?category_type=addon`, {
+    params: {
+      per_page: 6,
+    },
+  });
 
   if (!ok) {
     throw new Error("Failed to fetch featured collections");
@@ -38,7 +40,7 @@ export default async function PerfectAddOns() {
           </motion.p>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
-            {data.data.items.slice(0, 6).map((item, index) => (
+            {data.data.items.map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 40 }}

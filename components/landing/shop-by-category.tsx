@@ -9,7 +9,14 @@ import type { CategoriesResponse } from "@/types/landing";
 import { Link } from "@/i18n/navigation";
 
 async function Categories() {
-  const { data, ok } = await http.get<CategoriesResponse>("/api/v1/categories");
+  const { data, ok } = await http.get<CategoriesResponse>(
+    "/api/v1/categories",
+    {
+      params: {
+        per_page: 5,
+      },
+    },
+  );
 
   if (!ok) {
     throw new Error("Failed to fetch categories");
@@ -17,7 +24,7 @@ async function Categories() {
 
   return (
     <>
-      {data.data.items.slice(0, 5).map((item, index) => (
+      {data.data.items.map((item, index) => (
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

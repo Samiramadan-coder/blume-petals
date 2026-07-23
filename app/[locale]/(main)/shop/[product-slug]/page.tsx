@@ -25,7 +25,6 @@ async function Product({
   params: ParamsType;
   searchParams: SearchParamsType;
 }) {
-  console.log("Product page params:", params);
   const cookie = await cookies();
   const token = cookie.get("token")?.value;
 
