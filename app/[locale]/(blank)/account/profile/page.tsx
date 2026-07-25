@@ -31,7 +31,9 @@ async function ProfileContent({
 
   const { data } = await http.get<UserResponse>("/api/v1/auth/me", {
     cache: "force-cache",
-    next: { tags: ["profile-page"] },
+    next: {
+      tags: ["profile-page"],
+    },
   });
   return <ProfileForm user={data.data.user} isEditMode={editMode} />;
 }

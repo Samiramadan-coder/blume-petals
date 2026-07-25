@@ -88,6 +88,7 @@ export async function loginUser(data: LoginForm): Promise<LoginResult> {
 
     return { success: true, token: response.data.token };
   } catch (err) {
+    console.error("Login error:", err);
     if (err instanceof ValidationError) {
       const errors = Object.fromEntries(
         Object.entries(err.errors).map(([field, messages]) => [

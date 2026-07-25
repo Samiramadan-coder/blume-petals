@@ -1,7 +1,5 @@
+import { T } from "@/constants/shared";
 import z from "zod";
-import { Summary } from "./products";
-
-type T = (key: string) => string;
 
 const imageSchema = z.union([z.string(), z.instanceof(File)]);
 

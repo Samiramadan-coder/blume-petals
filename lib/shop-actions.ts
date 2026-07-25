@@ -99,3 +99,19 @@ export async function checkoutOrderAction(
     return { success: false };
   }
 }
+
+// Validate Coupon Code
+type ValidateCouponCodeResponse = { success: boolean };
+
+export async function validateCouponCodeAction(
+  code: string,
+): Promise<ValidateCouponCodeResponse> {
+  try {
+    const { data } = await http.post(`/api/v1/coupons/validate`, { code });
+    console.log("Coupon validation response:", data);
+    return { success: true };
+  } catch (error) {
+    console.error("Error validating coupon code:", error);
+    return { success: false };
+  }
+}

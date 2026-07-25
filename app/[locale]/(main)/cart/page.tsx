@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { http } from "@/lib/http";
+import { Link } from "@/i18n/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
@@ -9,14 +10,21 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
-import { Link } from "@/i18n/navigation";
+import ValidateCoupon from "@/components/shop/validate-coupon";
 
 export default async function CartPage() {
   const t = await getTranslations("Shop");
 
   const { data, ok } = await http.get<{
-    data: { cart: { items: CartItem[]; summary: Summary } };
+    data: {
+      cart: {
+        items: CartItem[];
+        summary: Summary;
+      };
+    };
   }>("/api/v1/cart");
+
+  console.log("Cart data:", data);
 
   if (!ok) {
     throw new Error("Failed to fetch cart");
@@ -81,7 +89,8 @@ export default async function CartPage() {
             </div>
 
             <div className="w-full max-w-md space-y-6 bg-[#fcfaf8]">
-              <div className="flex items-center gap-3">
+              <ValidateCoupon />
+              {/* <div className="flex items-center gap-3">
                 <Input
                   placeholder={t("PromoCodePlaceholder")}
                   className="h-12 flex-1 rounded-full border-border bg-white px-4 shadow-none placeholder:text-zinc-400 focus-visible:ring-primary"
@@ -93,7 +102,7 @@ export default async function CartPage() {
                 >
                   {t("Apply")}
                 </Button>
-              </div>
+              </div> */}
 
               <Card className="rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
                 <CardContent className="space-y-5 p-6">
@@ -106,14 +115,18 @@ export default async function CartPage() {
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Vat Rate</span>
+                    <span className="text-muted-foreground">
+                      {t("VatRate")}
+                    </span>
                     <span className="font-semibold text-muted-foreground">
                       % {data.data.cart.summary.vat_rate}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Vat Total</span>
+                    <span className="text-muted-foreground">
+                      {t("VatTotal")}
+                    </span>
                     <span className="font-semibold text-muted-foreground">
                       {t("AED")} {data.data.cart.summary.vat_total}
                     </span>

@@ -24,8 +24,10 @@ export default async function AppHeader() {
 
   if (isAuthenticated) {
     const { data: userData } = await http.get<UserResponse>("/api/v1/auth/me", {
-      cache: "force-cache",
-      next: { tags: ["user"] },
+      next: {
+        tags: ["user"],
+        revalidate: 60,
+      },
     });
 
     user = userData.data.user;
@@ -33,8 +35,10 @@ export default async function AppHeader() {
     const { data: wishlistData } = await http.get<{
       data: { pagination: Pagination };
     }>("/api/v1/favorites", {
-      cache: "force-cache",
-      next: { tags: ["wishlist-count"] },
+      next: {
+        tags: ["wishlist-count"],
+        revalidate: 60,
+      },
     });
 
     wishlistCount = wishlistData.data.pagination.total;
@@ -42,8 +46,10 @@ export default async function AppHeader() {
     const { data: cartData } = await http.get<{
       data: { cart: { items: [] } };
     }>("/api/v1/cart", {
-      cache: "force-cache",
-      next: { tags: ["cart-count"] },
+      next: {
+        tags: ["cart-count"],
+        revalidate: 60,
+      },
     });
 
     addedToCartCount = cartData.data.cart.items.length;
