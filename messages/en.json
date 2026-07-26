@@ -605,6 +605,8 @@
     "OrderCancelledSuccessfully": "Order cancelled successfully.",
     "OrderCancellationFailed": "Failed to cancel the order. Please try again.",
     "VatRate": "VAT Rate",
-    "VatTotal": "VAT Total"
+    "VatTotal": "VAT Total",
+    "CouponCodeRequired": "Coupon code is required",
+    "Discount": "Discount"
   }
 }

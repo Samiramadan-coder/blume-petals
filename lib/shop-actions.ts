@@ -1,6 +1,7 @@
 "use server";
 
-import { http } from "./http";
+import { Coupon, CouponFormValues } from "@/types/products";
+import { http, ValidationError } from "./http";
 import { updateTag } from "next/cache";
 
 // Add Or Remove Product to Wishlist
@@ -85,12 +86,15 @@ type CheckoutOrderResponse = { success: boolean };
 export async function checkoutOrderAction(
   address_id: string,
   customer_notes: string,
+  couponCode?: string | null,
 ): Promise<CheckoutOrderResponse> {
   try {
     await http.post(`/api/v1/orders`, {
       address_id,
       customer_notes,
+      ...(couponCode ? { code: couponCode } : {}),
     });
+
     updateTag("cart-count");
     updateTag("orders");
     return { success: true };
@@ -101,17 +105,37 @@ export async function checkoutOrderAction(
 }
 
 // Validate Coupon Code
-type ValidateCouponCodeResponse = { success: boolean };
+type ValidateCouponCodeResponse =
+  | { success: true; coupon: Coupon }
+  | {
+      success: false;
+      errors?: Partial<Record<keyof CouponFormValues, string>>;
+    };
 
 export async function validateCouponCodeAction(
   code: string,
 ): Promise<ValidateCouponCodeResponse> {
   try {
-    const { data } = await http.post(`/api/v1/coupons/validate`, { code });
-    console.log("Coupon validation response:", data);
-    return { success: true };
+    const { data } = await http.post<{
+      data: { coupon: Coupon };
+    }>(`/api/v1/coupons/validate`, { code });
+
+    return {
+      success: true,
+      coupon: data.data.coupon,
+    };
   } catch (error) {
     console.error("Error validating coupon code:", error);
+    if (error instanceof ValidationError) {
+      const errors = Object.fromEntries(
+        Object.entries(error.errors).map(([field, messages]) => [
+          field,
+          messages[0] ?? "Invalid value",
+        ]),
+      ) as Partial<Record<keyof CouponFormValues, string>>;
+      return { success: false, errors };
+    }
+
     return { success: false };
   }
 }

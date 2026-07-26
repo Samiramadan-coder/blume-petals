@@ -24,8 +24,6 @@ export default async function CartPage() {
     };
   }>("/api/v1/cart");
 
-  console.log("Cart data:", data);
-
   if (!ok) {
     throw new Error("Failed to fetch cart");
   }
@@ -89,7 +87,7 @@ export default async function CartPage() {
             </div>
 
             <div className="w-full max-w-md space-y-6 bg-[#fcfaf8]">
-              <ValidateCoupon />
+              <ValidateCoupon summary={data.data.cart.summary} />
               {/* <div className="flex items-center gap-3">
                 <Input
                   placeholder={t("PromoCodePlaceholder")}
@@ -104,7 +102,7 @@ export default async function CartPage() {
                 </Button>
               </div> */}
 
-              <Card className="rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
+              {/* <Card className="rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
                 <CardContent className="space-y-5 p-6">
                   <div className="flex items-center justify-between">
                     <span className="text-zinc-500">{t("Subtotal")}</span>
@@ -142,13 +140,7 @@ export default async function CartPage() {
                     </span>
                   </div>
                 </CardContent>
-              </Card>
-
-              <Link href="/cart/order" className="w-full">
-                <Button className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-[#bfa664]">
-                  {t("ProceedToCheckout")} · {data.data.cart.summary.total}
-                </Button>
-              </Link>
+              </Card> */}
             </div>
           </div>
         )}

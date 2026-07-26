@@ -597,6 +597,8 @@
     "OrderCancelledSuccessfully": "تم إلغاء الطلب بنجاح.",
     "OrderCancellationFailed": "فشل في إلغاء الطلب. يرجى المحاولة مرة أخرى.",
     "VatRate": "نسبة ضريبة القيمة المضافة",
-    "VatTotal": "إجمالي ضريبة القيمة المضافة"
+    "VatTotal": "إجمالي ضريبة القيمة المضافة",
+    "CouponCodeRequired": "رمز القسيمة مطلوب",
+    "Discount": "الخصم"
   }
 }

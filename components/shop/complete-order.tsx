@@ -22,9 +22,11 @@ import { Spinner } from "../ui/spinner";
 export default function CompleteOrder({
   addresses,
   total,
+  couponCode,
 }: {
   addresses: Address[];
   total: number;
+  couponCode: string | null;
 }) {
   const router = useRouter();
   const t = useTranslations("Shop");
@@ -43,7 +45,11 @@ export default function CompleteOrder({
 
   async function handleContinueToPayment() {
     setLoading(true);
-    const result = await checkoutOrderAction(selectedAddress, notes);
+    const result = await checkoutOrderAction(
+      selectedAddress,
+      notes,
+      couponCode,
+    );
     setLoading(false);
 
     if (result.success) {

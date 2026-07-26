@@ -1,23 +1,23 @@
 import { http } from "@/lib/http";
 import { Address, Country } from "@/types/account";
 import { getTranslations } from "next-intl/server";
-import { CartItem, Summary } from "@/types/products";
 import GoBackBtn from "@/components/shop/go-back-btn";
 import CompleteOrder from "@/components/shop/complete-order";
 import AddressForm from "@/components/account/addresses/address-form";
 
-export default async function CartPage() {
-  const t = await getTranslations("Shop");
+type SearchParams = {
+  new_total_fee?: string;
+  coupon_applied?: string;
+  coupon_code?: string;
+};
 
-  // Fetch cart data
-  const { data: cartData, ok } = await http.get<{
-    data: {
-      cart: {
-        items: CartItem[];
-        summary: Summary;
-      };
-    };
-  }>("/api/v1/cart");
+export default async function CartPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const pageSearchParams = await searchParams;
+  const t = await getTranslations("Shop");
 
   // Fetch addresses data
   const { data: addresses, ok: ok2 } = await http.get<{
@@ -28,8 +28,8 @@ export default async function CartPage() {
     data: { items: Country[] };
   }>("/api/v1/countries");
 
-  if (!ok || !ok2 || !ok3) {
-    throw new Error("Failed to fetch cart, addresses, or countries");
+  if (!ok2 || !ok3) {
+    throw new Error("Failed to fetch addresses or countries");
   }
 
   return (
@@ -51,7 +51,8 @@ export default async function CartPage() {
 
               <CompleteOrder
                 addresses={addresses.data.items}
-                total={+cartData.data.cart.summary.total}
+                total={+(pageSearchParams.new_total_fee ?? "0")}
+                couponCode={pageSearchParams.coupon_code ?? null}
               />
             </>
           )}

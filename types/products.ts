@@ -1,3 +1,6 @@
+import { T } from "@/constants/shared";
+import z from "zod";
+
 type Variant = {
   color_hex: string | null;
   color_slug: string | null;
@@ -68,3 +71,19 @@ export type Summary = {
   vat_rate: string;
   vat_total: string;
 };
+
+export type Coupon = {
+  code: string;
+  type: "fixed" | "percentage";
+  value: string;
+  discount: string;
+  subtotal: string;
+  total: string;
+};
+
+export const couponSchema = (t: T) =>
+  z.object({
+    coupon_code: z.string().min(1, t("CouponCodeRequired")),
+  });
+
+export type CouponFormValues = z.infer<ReturnType<typeof couponSchema>>;
