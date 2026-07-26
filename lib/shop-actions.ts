@@ -92,7 +92,7 @@ export async function checkoutOrderAction(
     await http.post(`/api/v1/orders`, {
       address_id,
       customer_notes,
-      ...(couponCode ? { code: couponCode } : {}),
+      ...(couponCode ? { coupon_code: couponCode } : {}),
     });
 
     updateTag("cart-count");
