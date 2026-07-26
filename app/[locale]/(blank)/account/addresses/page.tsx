@@ -17,9 +17,9 @@ export async function generateMetadata() {
 
 async function AddressesContent({ countries }: { countries: Country[] }) {
   const { data } = await http.get<AddressesResponse>("/api/v1/addresses", {
-    cache: "force-cache",
     next: {
       tags: ["addresses-page"],
+      revalidate: 60,
     },
   });
 

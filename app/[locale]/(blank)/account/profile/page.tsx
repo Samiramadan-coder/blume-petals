@@ -30,9 +30,9 @@ async function ProfileContent({
   const editMode = preparedSearchParams.edit === "true";
 
   const { data } = await http.get<UserResponse>("/api/v1/auth/me", {
-    cache: "force-cache",
     next: {
       tags: ["profile-page"],
+      revalidate: 60,
     },
   });
   return <ProfileForm user={data.data.user} isEditMode={editMode} />;
