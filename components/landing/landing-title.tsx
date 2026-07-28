@@ -21,9 +21,7 @@ export default function LandingTitle({
       className={cn(
         "font-bold text-4xl lg:text-5xl text-balance leading-tight text-foreground mb-12",
         className,
-        {
-          "font-heading": locale === "en",
-        },
+        { "font-heading": locale === "en" },
       )}
     >
       {children}

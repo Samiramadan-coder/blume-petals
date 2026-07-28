@@ -26,23 +26,25 @@ async function Categories() {
           key={item.id}
         >
           <Link href={`/shop?category=${item.slug}`}>
-            <Card className="group overflow-hidden rounded-2xl border-0 bg-background p-0 shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
-              <CardContent className="p-0">
-                <div className="relative aspect-4/5 overflow-hidden">
+            <Card className="relative group overflow-hidden rounded-2xl border-0 bg-background p-0 shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
+              <CardContent className="p-0 min-h-81">
+                <div className="absolute z-1 inset-0 overflow-hidden">
                   <Image
                     src={item.banner_url}
                     alt={item.name}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                   />
                 </div>
 
-                <div className="flex h-12 items-center justify-center">
+                <div className="flex h-12 items-center justify-center bg-border/90 absolute z-3 bottom-0 left-0 right-0">
                   <h3 className="text-sm font-semibold text-foreground">
                     {item.name}
                   </h3>
                 </div>
+
+                <div className="absolute z-2 inset-0 group-hover:bg-black/20" />
               </CardContent>
             </Card>
           </Link>

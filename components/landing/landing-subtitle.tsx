@@ -14,7 +14,7 @@ export default function LandingSubtitle({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
       className={cn(
-        "text-sm font-semibold uppercase mb-3 text-secondary",
+        "text-xs font-semibold uppercase mb-3 text-secondary tracking-[0.2rem]",
         className,
       )}
     >

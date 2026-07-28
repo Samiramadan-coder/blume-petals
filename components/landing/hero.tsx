@@ -57,7 +57,7 @@ export default async function Hero() {
         >
           <motion.p
             variants={itemVariants}
-            className="mb-5 text-xs uppercase tracking-wide text-primary"
+            className="mb-5 text-xs uppercase tracking-[0.25rem] text-primary font-semibold"
           >
             {t("Eyebrow")}
           </motion.p>
@@ -66,9 +66,7 @@ export default async function Hero() {
             variants={itemVariants}
             className={cn(
               "mb-5 max-w-xl text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl",
-              {
-                "font-heading": locale === "en",
-              },
+              { "font-heading": locale === "en" },
             )}
           >
             {t("Title")}
@@ -76,7 +74,7 @@ export default async function Hero() {
 
           <motion.p
             variants={itemVariants}
-            className="mb-8 max-w-xl text-base leading-relaxed text-white/80 md:text-lg"
+            className="mb-8 text-base leading-relaxed text-white/82 max-w-105 md:text-lg"
           >
             {t("Description")}
           </motion.p>
@@ -90,7 +88,7 @@ export default async function Hero() {
             <Button
               asChild
               variant="ghost"
-              className="h-12 w-44 cursor-pointer rounded-full text-white underline underline-offset-8 hover:bg-transparent hover:text-white"
+              className="h-12 px-0 cursor-pointer rounded-full text-white underline underline-offset-8 hover:bg-transparent hover:text-white"
             >
               <Link href="/shop">{t("SecondaryCta")}</Link>
             </Button>
