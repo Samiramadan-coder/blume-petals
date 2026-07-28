@@ -4,7 +4,7 @@ export default function NoDataFounded() {
   const tCommon = useTranslations("Common");
 
   return (
-    <p className="p-4 text-secondary text-sm italic underline">
+    <p className="py-4 text-secondary text-sm italic underline">
       {tCommon("NoDataFound")}
     </p>
   );

@@ -1,4 +1,5 @@
 import Orders from "@/components/account/orders/orders";
+import NoDataFounded from "@/components/reusable/no-data-founded";
 import { http } from "@/lib/http";
 import { OrderItem } from "@/types/account";
 import { Pagination } from "@/types/shared";
@@ -43,6 +44,12 @@ export default async function OrdersPage({
   }
 
   return (
-    <Orders orders={data?.data.items} pagination={data?.data.pagination} />
+    <>
+      {data.data.items.length === 0 ? (
+        <NoDataFounded />
+      ) : (
+        <Orders orders={data?.data.items} pagination={data?.data.pagination} />
+      )}
+    </>
   );
 }

@@ -1,16 +1,13 @@
 import Image from "next/image";
 import { http } from "@/lib/http";
-import { Link } from "@/i18n/navigation";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
 import { CartItem, Summary } from "@/types/products";
 import GoBackBtn from "@/components/shop/go-back-btn";
-import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
 import ValidateCoupon from "@/components/shop/validate-coupon";
+import NoDataFounded from "@/components/reusable/no-data-founded";
 
 export default async function CartPage() {
   const t = await getTranslations("Shop");
@@ -34,9 +31,7 @@ export default async function CartPage() {
         <GoBackBtn />
 
         {data.data.cart.items.length === 0 ? (
-          <p className="text-base pb-20 pt-6 text-muted-foreground italic">
-            {t("YourCartIsEmpty")}
-          </p>
+          <NoDataFounded />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
             <div className="md:col-span-2 space-y-6">
@@ -88,59 +83,6 @@ export default async function CartPage() {
 
             <div className="w-full max-w-md space-y-6 bg-[#fcfaf8]">
               <ValidateCoupon summary={data.data.cart.summary} />
-              {/* <div className="flex items-center gap-3">
-                <Input
-                  placeholder={t("PromoCodePlaceholder")}
-                  className="h-12 flex-1 rounded-full border-border bg-white px-4 shadow-none placeholder:text-zinc-400 focus-visible:ring-primary"
-                />
-
-                <Button
-                  type="button"
-                  className="h-12 rounded-full bg-primary px-7 font-semibold text-white hover:bg-[#bfa664]"
-                >
-                  {t("Apply")}
-                </Button>
-              </div> */}
-
-              {/* <Card className="rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
-                <CardContent className="space-y-5 p-6">
-                  <div className="flex items-center justify-between">
-                    <span className="text-zinc-500">{t("Subtotal")}</span>
-
-                    <span className="font-semibold text-muted-foreground">
-                      {t("AED")} {data.data.cart.summary.subtotal}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">
-                      {t("VatRate")}
-                    </span>
-                    <span className="font-semibold text-muted-foreground">
-                      % {data.data.cart.summary.vat_rate}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">
-                      {t("VatTotal")}
-                    </span>
-                    <span className="font-semibold text-muted-foreground">
-                      {t("AED")} {data.data.cart.summary.vat_total}
-                    </span>
-                  </div>
-
-                  <Separator className="bg-border" />
-
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-lg font-semibold">{t("Total")}</span>
-
-                    <span className="text-3xl font-semibold text-primary">
-                      {t("AED")} {data.data.cart.summary.total}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card> */}
             </div>
           </div>
         )}

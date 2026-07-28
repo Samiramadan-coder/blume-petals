@@ -4,7 +4,6 @@ import { Link } from "@/i18n/navigation";
 import { Product } from "@/types/products";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
-import AddToFavoriteBtn from "./add-to-favorite-btn";
 
 export default async function WishlistCardItem({ item }: { item: Product }) {
   const t = await getTranslations("Shop");
@@ -35,8 +34,6 @@ export default async function WishlistCardItem({ item }: { item: Product }) {
                 </Badge>
               )}
             </div>
-
-            <AddToFavoriteBtn product={item} />
           </div>
         </div>
 

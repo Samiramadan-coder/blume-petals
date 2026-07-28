@@ -72,7 +72,7 @@ async function ListOfProducts({
 export default async function WishListPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
   const t = await getTranslations("Shop");
 
