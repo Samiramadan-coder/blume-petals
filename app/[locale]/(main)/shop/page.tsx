@@ -13,7 +13,7 @@ import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
-import { buildQueryString, cn } from "@/lib/utils";
+import { buildQueryString, cn, normalizeArrayParam } from "@/lib/utils";
 import { OccasionsResponse } from "@/types/landing";
 import { getLocale, getTranslations } from "next-intl/server";
 import NoDataFounded from "@/components/reusable/no-data-founded";
@@ -47,8 +47,12 @@ async function ListOfProducts({
   // const occasions = normalizeArrayParam(searchParams.occasion);
 
   const requestParams = {
-    ...(searchParams.price_min ? { price_min: searchParams.price_min } : {}),
-    ...(searchParams.price_max ? { price_max: searchParams.price_max } : {}),
+    ...(searchParams.price_min
+      ? { price_min: searchParams.price_min }
+      : { price_min: "0" }),
+    ...(searchParams.price_max
+      ? { price_max: searchParams.price_max }
+      : { price_max: "500" }),
     // ...(sizes ? { size: sizes } : {}),
     ...(searchParams.page ? { page: searchParams.page } : {}),
     // ...(occasions ? { occasion: occasions } : {}),
@@ -59,6 +63,8 @@ async function ListOfProducts({
     ...(searchParams.sort ? { sort: searchParams.sort } : {}),
     per_page: 12,
   };
+
+  console.log("Request Params:", requestParams);
 
   const { data, ok } = await http.get<{
     data: {
