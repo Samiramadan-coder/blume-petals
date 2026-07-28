@@ -38,8 +38,8 @@ export default function SubscribeSection() {
   const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
 
   return (
-    <section className="bg-border">
-      <div className="border-b border-white/50">
+    <section>
+      <div className="border-y bg-border border-[#d4c9bb]">
         <div className="container max-w-7xl grid gap-10 py-16 text-center sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((item) => (
             <div key={item.key}>
@@ -75,48 +75,50 @@ export default function SubscribeSection() {
         </div>
       </div>
 
-      <div className="container max-w-7xl py-24 text-center">
-        <LandingSubtitle className="mb-6">{t("Eyebrow")}</LandingSubtitle>
-        <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
+      <div className="bg-[#e6dcd2e0] backdrop-blur-xs">
+        <div className="container max-w-7xl py-24 text-center">
+          <LandingSubtitle className="mb-6">{t("Eyebrow")}</LandingSubtitle>
+          <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.2 }}
-          className="mx-auto mt-6 max-w-xl text-lg leading-8 text-foreground"
-        >
-          {t("Description")}
-        </motion.p>
-
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.4 }}
-          className="mx-auto mt-9 flex max-w-md overflow-hidden rounded-full bg-white"
-        >
-          <Input
-            type="email"
-            aria-label={t("EmailAria")}
-            placeholder={t("EmailPlaceholder")}
-            className="h-12 flex-1 border-0 bg-white px-6 text-foreground shadow-none focus-visible:ring-0"
-          />
-
-          <Button
-            type="submit"
-            className="h-12 w-35 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.2 }}
+            className="mx-auto mt-6 max-w-xl text-lg leading-8 text-foreground"
           >
-            {t("PrimaryCta")}
-          </Button>
-        </motion.form>
+            {t("Description")}
+          </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.6 }}
-          className="mt-4 text-xs text-foreground"
-        >
-          {t("Disclaimer")}
-        </motion.p>
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.4 }}
+            className="mx-auto mt-9 flex max-w-md overflow-hidden rounded-full bg-white"
+          >
+            <Input
+              type="email"
+              aria-label={t("EmailAria")}
+              placeholder={t("EmailPlaceholder")}
+              className="h-12 flex-1 border-0 bg-white px-6 text-foreground shadow-none focus-visible:ring-0"
+            />
+
+            <Button
+              type="submit"
+              className="h-12 w-35 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
+            >
+              {t("PrimaryCta")}
+            </Button>
+          </motion.form>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.6 }}
+            className="mt-4 text-xs text-foreground"
+          >
+            {t("Disclaimer")}
+          </motion.p>
+        </div>
       </div>
     </section>
   );
