@@ -72,7 +72,9 @@ export async function removeFromCartAction(
 }
 
 // Update Product Quantity in Cart
-type UpdateCartQuantityResponse = { success: boolean };
+type UpdateCartQuantityResponse =
+  | { success: true }
+  | { success: false; message?: string };
 
 export async function updateCartQuantityAction(
   itemId: number,
@@ -86,6 +88,13 @@ export async function updateCartQuantityAction(
     return { success: true };
   } catch (error) {
     console.error("Error updating cart quantity:", error);
+    if (error instanceof ValidationError) {
+      return {
+        success: false,
+        message:
+          Object.values(error.errors).flat().join(", ") || "Invalid value",
+      };
+    }
     return { success: false };
   }
 }

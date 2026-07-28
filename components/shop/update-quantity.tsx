@@ -5,6 +5,8 @@ import { Minus, Plus } from "lucide-react";
 import { updateCartQuantityAction } from "@/lib/shop-actions";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export default function UpdateQuantity({
   itemId,
@@ -13,14 +15,30 @@ export default function UpdateQuantity({
   itemId: number;
   initialQuantity: number;
 }) {
+  const t = useTranslations("Shop");
   const [loading, setLoading] = useState(false);
 
   async function changeQuantity(operation: "increment" | "decrement") {
     setLoading(true);
-    await updateCartQuantityAction(
+
+    const result = await updateCartQuantityAction(
       itemId,
       operation === "increment" ? initialQuantity + 1 : initialQuantity - 1,
     );
+
+    if (result.success) {
+      toast.success(t("UpdateQuantitySuccess"));
+      setLoading(false);
+      return;
+    }
+
+    if (result.message) {
+      toast.error(result.message);
+      setLoading(false);
+      return;
+    }
+
+    toast.error(t("UpdateQuantityError"));
     setLoading(false);
   }
 

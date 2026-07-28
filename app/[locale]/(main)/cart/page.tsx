@@ -82,7 +82,10 @@ export default async function CartPage() {
             </div>
 
             <div className="w-full max-w-md space-y-6 bg-[#fcfaf8]">
-              <ValidateCoupon summary={data.data.cart.summary} />
+              <ValidateCoupon
+                key={JSON.stringify(data.data.cart.summary)}
+                summary={data.data.cart.summary}
+              />
             </div>
           </div>
         )}
