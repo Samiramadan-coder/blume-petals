@@ -21,7 +21,6 @@ export default function ProductVariants({
   token: string | undefined;
   productDetails: ProductDetailsType;
 }) {
-  console.log("productDetails", productDetails);
   const MIN_QUANTITY = 1;
   const locale = useLocale();
   const t = useTranslations("Shop");

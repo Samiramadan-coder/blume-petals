@@ -48,6 +48,12 @@ export default function AddToCartBtn({
       return;
     }
 
+    if (result.message) {
+      toast.error(result.message);
+      setLoading(false);
+      return;
+    }
+
     toast.error(t("AddToCartError"));
     setLoading(false);
   }

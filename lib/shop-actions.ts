@@ -3,6 +3,7 @@
 import { Coupon, CouponFormValues } from "@/types/products";
 import { http, ValidationError } from "./http";
 import { updateTag } from "next/cache";
+import { toast } from "sonner";
 
 // Add Or Remove Product to Wishlist
 type AddToWishlistResponse = { success: boolean };
@@ -24,7 +25,9 @@ export async function addToWishlistAction(
 }
 
 // Add Product to Cart
-type AddToCartResponse = { success: boolean };
+type AddToCartResponse =
+  | { success: true }
+  | { success: false; message?: string };
 
 export async function addToCartAction(
   variantId: number,
@@ -41,6 +44,13 @@ export async function addToCartAction(
     return { success: true };
   } catch (error) {
     console.error("Error adding to cart:", error);
+    if (error instanceof ValidationError) {
+      return {
+        success: false,
+        message:
+          Object.values(error.errors).flat().join(", ") || "Invalid value",
+      };
+    }
     return { success: false };
   }
 }

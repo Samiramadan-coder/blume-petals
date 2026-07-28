@@ -11,7 +11,7 @@ import DesignedByOurCustomers from "@/components/landing/designed-by-our-custome
 
 export default async function Home() {
   return (
-    <main>
+    <main className="bg-[#f5f2ed]">
       <Hero />
       <ShopByCategory />
       <HowItWorks />
