@@ -25,9 +25,13 @@ export default function AddOnCardAddVariantToCart({
     setQuantity(Math.max(Math.floor(nextQuantity), 1));
   };
 
+  if (!item.variants[0].in_stock) {
+    return null;
+  }
+
   return (
     <div className="flex items-center justify-between gap-3">
-      <div className="flex h-10 items-center overflow-hidden rounded-full border border-primary/30 bg-background shadow-sm">
+      <div className="flex h-10 items-center overflow-hidden rounded-lg border-2 border-primary/30">
         <Button
           type="button"
           variant="ghost"

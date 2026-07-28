@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { Input } from "../ui/input";
 import { Rating } from "../ui/rating";
 import { Button } from "../ui/button";
@@ -11,7 +12,7 @@ import { Minus, Plus, Van } from "lucide-react";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
 import { useLocale, useTranslations } from "next-intl";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
-import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ProductVariants({
   token,
@@ -20,6 +21,7 @@ export default function ProductVariants({
   token: string | undefined;
   productDetails: ProductDetailsType;
 }) {
+  console.log("productDetails", productDetails);
   const MIN_QUANTITY = 1;
   const locale = useLocale();
   const t = useTranslations("Shop");
@@ -47,13 +49,22 @@ export default function ProductVariants({
       >
         {productDetails.name}
       </h1>
-      <Rating
-        rating={+productDetails.rating_avg}
-        count={productDetails.rating_count}
-      />
+      <div className="bg-white inline-block py-2 px-4 rounded-full">
+        <Rating
+          rating={+productDetails.rating_avg}
+          count={productDetails.rating_count}
+        />
+      </div>
+
       <p className="text-2xl md:text-4xl font-bold text-primary">
         {t("AED")} {activeVariant.price}
+        {activeVariant.compare_at_price && (
+          <span className="line-through ml-2 text-muted-foreground/40 font-medium">
+            {t("AED")} {activeVariant.compare_at_price}
+          </span>
+        )}
       </p>
+
       <div
         className="text-foreground/70 leading-relaxed"
         dangerouslySetInnerHTML={{ __html: productDetails.description }}
@@ -65,7 +76,10 @@ export default function ProductVariants({
             <Button
               variant="outline"
               key={variant.size}
-              onClick={() => setActiveVariant(variant)}
+              onClick={() => {
+                setActiveVariant(variant);
+                setQuantity(1);
+              }}
               className={cn(
                 `rounded-full w-14 h-14 border-2 border-border cursor-pointer hover:bg-transparent`,
                 {
@@ -79,81 +93,94 @@ export default function ProductVariants({
           ))}
         </div>
       </div>
-      <div className="space-y-3">
-        <p className="font-semibold text-foreground mb-3">
-          {t("PersonalMessage")}
+
+      {!activeVariant.in_stock ? (
+        <p className="text-red-400 bg-red-100 py-2 rounded-lg text-sm underline text-center font-semibold">
+          {t("OutOfStock")}
         </p>
-        <Textarea
-          className="h-40 border-border"
-          placeholder={t("PersonalMessagePlaceholder")}
-          value={messageText}
-          onChange={(e) => setMessageText(e.target.value)}
-        />
-      </div>
-
-      <Card className="bg-secondary/10 border-l-4 border-secondary rounded-lg p-3">
-        <CardContent className="flex items-center gap-4 p-0">
-          <Van className="size-6 text-secondary" />
-          <div>
-            <p className="font-semibold text-base text-foreground">
-              {t("EstimatedDelivery")}
+      ) : (
+        <>
+          <div className="space-y-3">
+            <p className="font-semibold text-foreground mb-3">
+              {t("PersonalMessage")}
             </p>
-            <p className="text-sm text-foreground/60 mt-1">
-              {t("ShippingMethod1")}
-            </p>
+            <Textarea
+              className="h-40 border-border"
+              placeholder={t("PersonalMessagePlaceholder")}
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+            />
           </div>
-        </CardContent>
-      </Card>
 
-      <div className="flex justify-evenly flex-wrap gap-3">
-        <div className="flex items-center overflow-hidden rounded-md border border-primary/30 bg-background shadow-sm">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            disabled={quantity === 1}
-            onClick={() => updateQuantity(quantity - 1)}
-            aria-label="Decrease quantity"
-            className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary disabled:opacity-30"
-          >
-            <Minus className="size-4" />
-          </Button>
+          <Card className="bg-secondary/10 border-l-4 border-secondary rounded-lg p-3">
+            <CardContent className="flex items-center gap-4 p-0">
+              <Van className="size-6 text-secondary" />
+              <div>
+                <p className="font-semibold text-base text-foreground">
+                  {t("EstimatedDelivery")}
+                </p>
+                <p className="text-sm text-foreground/60 mt-1">
+                  {t("ShippingMethod1")}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-          <Input
-            type="text"
-            value={quantity}
-            readOnly
-            inputMode="numeric"
-            aria-label="Quantity"
-            className="h-full w-11 rounded-none border-0 bg-transparent px-0 text-center text-sm font-semibold shadow-none focus-visible:ring-0"
-          />
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="self-stretch flex items-center overflow-hidden rounded-md border-2 border-primary/30 bg-background">
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                disabled={quantity === 1}
+                onClick={() => updateQuantity(quantity - 1)}
+                aria-label="Decrease quantity"
+                className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary disabled:opacity-30"
+              >
+                <Minus className="size-4" />
+              </Button>
 
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => updateQuantity(quantity + 1)}
-            aria-label="Increase quantity"
-            className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary"
-          >
-            <Plus className="size-4" />
-          </Button>
-        </div>
+              <Input
+                type="text"
+                value={quantity}
+                readOnly
+                inputMode="numeric"
+                aria-label="Quantity"
+                className="h-full w-11 rounded-none border-0 bg-transparent px-0 text-center text-sm font-semibold shadow-none focus-visible:ring-0"
+              />
 
-        <AddToFavoriteBtn
-          product={productDetails}
-          isLoggedIn={!!token}
-          version="wishlist-page"
-        />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => updateQuantity(quantity + 1)}
+                aria-label="Increase quantity"
+                className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary"
+              >
+                <Plus className="size-4" />
+              </Button>
+            </div>
 
-        <AddToCartBtn
-          item={productDetails}
-          isLoggedIn={!!token}
-          variant_id={activeVariant.id}
-          quantity={quantity}
-          message={messageText}
-        />
-      </div>
+            <div className="flex-1">
+              <AddToFavoriteBtn
+                product={productDetails}
+                isLoggedIn={!!token}
+                version="wishlist-page"
+              />
+            </div>
+
+            <div className="flex-1">
+              <AddToCartBtn
+                item={productDetails}
+                isLoggedIn={!!token}
+                variant_id={activeVariant.id}
+                quantity={quantity}
+                message={messageText}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

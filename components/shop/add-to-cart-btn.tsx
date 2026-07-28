@@ -57,7 +57,7 @@ export default function AddToCartBtn({
       variant="ghost"
       aria-label={`Add ${item.name} to cart`}
       onClick={addToCart}
-      className={`text-base h-12 cursor-pointer text-white p-5 bg-secondary hover:bg-secondary hover:text-white font-semibold ${className}`}
+      className={`w-full text-base h-12 cursor-pointer text-white p-5 bg-secondary hover:bg-secondary hover:text-white font-semibold ${className}`}
     >
       {loading ? (
         <Spinner />

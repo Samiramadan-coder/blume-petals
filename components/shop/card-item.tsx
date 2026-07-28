@@ -91,6 +91,11 @@ export default async function CardItem({
           </div>
           <p className={cn("text-base font-bold text-primary", priceClassName)}>
             {t("AED")} {item.price_from}
+            {item.variants[0].compare_at_price && (
+              <span className="line-through ml-2 text-muted-foreground/40 font-medium">
+                {t("AED")} {item.variants[0].compare_at_price}
+              </span>
+            )}
           </p>
         </div>
       </CardContent>

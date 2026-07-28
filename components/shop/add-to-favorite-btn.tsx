@@ -74,7 +74,7 @@ export default function AddToFavoriteBtn({
         aria-label={`Add ${product.name} to wishlist`}
         onClick={addToWishlist}
         className={cn(
-          "cursor-pointer h-12 text-base border-2 border-primary p-5 text-primary font-semibold",
+          "w-full cursor-pointer h-12 text-base border-2 border-primary p-5 text-primary font-semibold",
           {
             "hover:bg-primary hover:text-white": !product.is_fav,
             "bg-primary text-white hover:text-primary hover:bg-white":

@@ -64,8 +64,6 @@ async function ListOfProducts({
     per_page: 12,
   };
 
-  console.log("Request Params:", requestParams);
-
   const { data, ok } = await http.get<{
     data: {
       items: Product[];

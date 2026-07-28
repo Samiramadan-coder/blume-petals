@@ -29,6 +29,11 @@ export default async function AddOnCard({ item }: { item: Product }) {
           </p>
           <p className="text-sm font-bold text-foreground mb-3">
             {tShop("AED")} {item.price_from}
+            {item.variants[0].compare_at_price && (
+              <span className="line-through ml-2 text-muted-foreground/40 font-medium">
+                {tShop("AED")} {item.variants[0].compare_at_price}
+              </span>
+            )}
           </p>
           <AddOnCardAddVariantToCart item={item} isLoggedIn={!!token} />
         </div>

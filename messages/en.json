@@ -607,6 +607,8 @@
     "VatRate": "VAT Rate",
     "VatTotal": "VAT Total",
     "CouponCodeRequired": "Coupon code is required",
-    "Discount": "Discount"
+    "Discount": "Discount",
+    "OutOfStock": "Out of Stock",
+    "MaximumQuantityReached": "Maximum quantity reached for this product. You cannot add more to the cart."
   }
 }
