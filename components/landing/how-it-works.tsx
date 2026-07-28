@@ -20,7 +20,9 @@ export default async function HowItWorks() {
             {t("Eyebrow")}
           </LandingSubtitle>
 
-          <LandingTitle className="text-center">{t("Title")}</LandingTitle>
+          <LandingTitle className="text-center max-w-112.5 mx-auto">
+            {t("Title")}
+          </LandingTitle>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
             {steps.map((step, index) => (
@@ -40,7 +42,7 @@ export default async function HowItWorks() {
                         alt={t(`Steps.${step.key}.Title`)}
                         width={500}
                         height={500}
-                        className="aspect-square w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="aspect-square w-full object-cover"
                       />
 
                       <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#d8c07f] text-sm font-semibold text-[#3d2e00]">
@@ -57,7 +59,7 @@ export default async function HowItWorks() {
                         {t(`Steps.${step.key}.Title`)}
                       </h3>
 
-                      <p className="text-sm leading-relaxed">
+                      <p className="text-sm leading-relaxed text-[#6b5b45]">
                         {t(`Steps.${step.key}.Description`)}
                       </p>
                     </div>

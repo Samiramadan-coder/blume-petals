@@ -44,13 +44,15 @@ export default async function BouquetBuilder() {
 
           <div>
             <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
-            <LandingTitle>{t("Title")}</LandingTitle>
+            <LandingTitle className="mb-0">
+              <p dangerouslySetInnerHTML={{ __html: t("Title") }} />
+            </LandingTitle>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.2 }}
-              className="text-base leading-relaxed mt-5 mb-10 max-w-100"
+              className="text-base leading-relaxed my-5 max-w-100 text-[#6b5b45]"
             >
               {t("Description")}
             </motion.p>
@@ -64,14 +66,14 @@ export default async function BouquetBuilder() {
                   key={feature.key}
                   className="flex items-start gap-4"
                 >
-                  <div className="bg-border w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-base">
+                  <div className="bg-border w-9 h-9 text-secondary rounded-xl flex items-center justify-center shrink-0 text-base">
                     {feature.icon}
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">
                       {t(`Features.${feature.key}.Title`)}
                     </p>
-                    <p className="text-xs leading-relaxed mt-0.5 max-w-60.5">
+                    <p className="text-xs leading-relaxed mt-0.5 max-w-60.5 text-[#6b5b45]">
                       {t(`Features.${feature.key}.Description`)}
                     </p>
                   </div>
