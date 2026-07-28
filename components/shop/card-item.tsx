@@ -14,11 +14,17 @@ export default async function CardItem({
   cardClassName,
   cardContentClassName,
   imageClassName,
+  showCategory = true,
+  titleClassName,
+  priceClassName,
 }: {
   item: Product;
   cardClassName?: string;
   cardContentClassName?: string;
   imageClassName?: string;
+  showCategory?: boolean;
+  titleClassName?: string;
+  priceClassName?: string;
 }) {
   const cookieStore = await cookies();
   const t = await getTranslations("Shop");
@@ -66,19 +72,22 @@ export default async function CardItem({
         </div>
 
         <div className={cn("flex flex-col pt-4 px-1", cardContentClassName)}>
-          {item.category && (
+          {showCategory && item.category && (
             <Badge className="h-7 px-3 mb-2 text-muted-foreground bg-border font-semibold">
               {item.category?.name}
             </Badge>
           )}
           <p
             dangerouslySetInnerHTML={{ __html: item.name }}
-            className="text-base font-semibold leading-snug mb-1.5 text-foreground group-hover:text-primary!"
+            className={cn(
+              "text-base font-semibold leading-snug mb-1.5 text-foreground group-hover:text-primary!",
+              titleClassName,
+            )}
           ></p>
           <div className="mb-3">
             <Rating rating={+item.rating_avg} count={item.rating_count} />
           </div>
-          <p className="text-base font-bold text-primary">
+          <p className={cn("text-base font-bold text-primary", priceClassName)}>
             {t("AED")} {item.price_from}
           </p>
         </div>

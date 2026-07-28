@@ -51,13 +51,13 @@ export default function AddToFavoriteBtn({
       <Button
         aria-label={`Add ${product.name} to wishlist`}
         onClick={addToWishlist}
-        className="rounded-full h-10 w-10 bg-background hover:bg-background shadow-md"
+        className="rounded-full h-8 w-8 bg-background hover:bg-background shadow-md"
       >
         {loading ? (
           <Spinner className="size-5 text-primary" />
         ) : (
           <Heart
-            className={cn(`size-5`, {
+            className={cn(`size-4`, {
               "text-foreground": !product.is_fav,
               "text-primary fill-primary": product.is_fav,
             })}

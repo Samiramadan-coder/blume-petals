@@ -15,6 +15,8 @@ export default async function FeaturedCollections() {
     };
   }>(`/api/v1/products?sort=newest`);
 
+  console.log("Featured Collections Data:", data);
+
   if (!ok) {
     throw new Error("Failed to fetch featured collections");
   }
@@ -25,7 +27,7 @@ export default async function FeaturedCollections() {
         <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
         <LandingTitle>{t("Title")}</LandingTitle>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {data.data.items.slice(0, 4).map((item, index) => (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -35,10 +37,13 @@ export default async function FeaturedCollections() {
               key={item.id}
             >
               <CardItem
+                showCategory={false}
                 item={item}
                 cardClassName="shadow-[0_10px_30px_rgba(61,46,0,0.08)]"
                 cardContentClassName="p-4"
                 imageClassName="rounded-none rounded-t-2xl"
+                titleClassName="text-sm group-hover:text-foreground!"
+                priceClassName="text-foreground"
               />
             </motion.div>
           ))}
