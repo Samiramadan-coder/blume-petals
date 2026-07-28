@@ -10,7 +10,7 @@ type RatingProps = {
 export function Rating({ rating, count, max = 5, size = 16 }: RatingProps) {
   return (
     <div className="flex items-center gap-1">
-      <div className="flex items-center text-primary">
+      <div className="flex items-center text-primary gap-0.5">
         {Array.from({ length: max }).map((_, index) => {
           const filled = rating >= index + 1;
           const half = rating > index && rating < index + 1;

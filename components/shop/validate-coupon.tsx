@@ -37,10 +37,6 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
     const result = await validateCouponCodeAction(data.coupon_code);
 
     if (result.success) {
-      // handle Success
-      // router.push(`/cart?new_total_fee=${result.coupon.total}`);
-      // console.log("Coupon applied successfully:", result.coupon);
-
       setIsCouponApplied(true);
       setCurrentSummary((prev) => ({
         ...prev,

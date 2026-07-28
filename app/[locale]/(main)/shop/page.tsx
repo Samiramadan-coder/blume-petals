@@ -13,11 +13,11 @@ import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
+import { buildQueryString, cn } from "@/lib/utils";
 import { OccasionsResponse } from "@/types/landing";
 import { getLocale, getTranslations } from "next-intl/server";
 import NoDataFounded from "@/components/reusable/no-data-founded";
 import ProductSortSelect from "@/components/shop/product-sort-select";
-import { buildQueryString, cn, normalizeArrayParam } from "@/lib/utils";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
 
@@ -85,9 +85,9 @@ async function ListOfProducts({
         <NoDataFounded />
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6">
             {data.data.items.map((item, index) => (
-              <CardItem key={index} item={item} />
+              <CardItem key={index} item={item} imageClassName="h-[320px]" />
             ))}
           </div>
 
@@ -112,7 +112,7 @@ async function ListOfProducts({
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
   const locale = await getLocale();
   const t = await getTranslations("Shop");
@@ -137,7 +137,7 @@ export default async function ShopPage({
 
         <p className="text-lg text-foreground/60">{t("Description")}</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-25">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 lg:gap-8 mt-25">
           <div className="hidden md:block sticky top-28">
             <Filters occasions={data.data.items} />
           </div>

@@ -33,7 +33,7 @@ export default async function CardItem({
   return (
     <Card
       className={cn(
-        "group relative overflow-hidden bg-background p-0 cursor-pointer",
+        "group relative overflow-hidden bg-background p-0 rounded-lg cursor-pointer",
         cardClassName,
       )}
     >
@@ -46,7 +46,7 @@ export default async function CardItem({
       <CardContent className="px-0">
         <div
           className={cn(
-            "overflow-hidden relative aspect-5/5 rounded-2xl",
+            "overflow-hidden relative aspect-5/5 rounded-lg w-full",
             imageClassName,
           )}
         >
@@ -57,6 +57,8 @@ export default async function CardItem({
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
+
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           <div className="absolute z-20 top-0 left-0 p-4 w-full flex items-center justify-between">
             <div>
@@ -73,7 +75,7 @@ export default async function CardItem({
 
         <div className={cn("flex flex-col pt-4 px-1", cardContentClassName)}>
           {showCategory && item.category && (
-            <Badge className="h-7 px-3 mb-2 text-muted-foreground bg-border font-semibold">
+            <Badge className="h-6 px-2 mb-2 text-secondary bg-border font-semibold text-xs">
               {item.category?.name}
             </Badge>
           )}

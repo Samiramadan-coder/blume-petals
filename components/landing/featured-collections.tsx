@@ -15,8 +15,6 @@ export default async function FeaturedCollections() {
     };
   }>(`/api/v1/products?sort=newest`);
 
-  console.log("Featured Collections Data:", data);
-
   if (!ok) {
     throw new Error("Failed to fetch featured collections");
   }

@@ -100,9 +100,9 @@ export default function AppHeaderControl({
             aria-label="Bell"
           >
             <Bell className={cn(`size-5 text-white/92`, textColor)} />
-            <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
+            {/* <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
               {1}
-            </span>
+            </span> */}
           </Button>
 
           <Link href="/cart">
