@@ -13,7 +13,7 @@ export default async function BouquetBuilder() {
 
   return (
     <div>
-      <div className="container max-w-7xl">
+      <div className="container max-w-7xl overflow-hidden">
         <div className="py-20 grid grid-cols-1 md:grid-cols-2 items-center gap-14">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
