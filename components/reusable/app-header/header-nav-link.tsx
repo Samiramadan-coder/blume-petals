@@ -20,7 +20,8 @@ export default function HeaderNavLink({
         transition-colors 
         duration-200 
         ease-in-out 
-        text-base 
+        text-sm 
+        font-medium
         relative
         after:absolute
         after:inset-s-0

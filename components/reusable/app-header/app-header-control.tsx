@@ -31,7 +31,7 @@ import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
 import { Separator } from "@/components/ui/separator";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { Bell, Heart, ShoppingCart, Menu } from "lucide-react";
+import { Bell, Heart, ShoppingBag, Menu } from "lucide-react";
 
 const sidebarNavItems = [
   { label: "Home", href: "/" },
@@ -85,9 +85,11 @@ export default function AppHeaderControl({
               aria-label="Heart"
             >
               <Heart className={cn(`size-5 text-white/92`, textColor)} />
-              <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
-                {wishlistCount}
-              </span>
+              {wishlistCount > 0 && (
+                <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
+                  {wishlistCount}
+                </span>
+              )}
             </Button>
           </Link>
 
@@ -98,8 +100,8 @@ export default function AppHeaderControl({
             aria-label="Bell"
           >
             <Bell className={cn(`size-5 text-white/92`, textColor)} />
-            <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
-              0
+            <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
+              {1}
             </span>
           </Button>
 
@@ -110,10 +112,12 @@ export default function AppHeaderControl({
               aria-label="ShoppingCart"
               className="hover:bg-transparent cursor-pointer relative"
             >
-              <ShoppingCart className={cn(`size-5`, textColor)} />
-              <span className="absolute -right-1 -top-1 w-5 h-5 grid place-content-center rounded-full bg-red-400 px-1.5 text-[12px] text-white/92">
-                {addedToCartCount}
-              </span>
+              <ShoppingBag className={cn(`size-5`, textColor)} />
+              {addedToCartCount > 0 && (
+                <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-red-400 px-1.5 text-[10px] text-white">
+                  {addedToCartCount}
+                </span>
+              )}
             </Button>
           </Link>
         </>
@@ -271,9 +275,11 @@ export default function AppHeaderControl({
             )}
           </div>
 
-          <SheetFooter className="border-t border-border px-4 py-3">
-            <LogoutBtn className="border border-red-300 rounded-full" />
-          </SheetFooter>
+          {user && (
+            <SheetFooter className="border-t border-border px-4 py-3">
+              <LogoutBtn className="border border-red-300 rounded-full" />
+            </SheetFooter>
+          )}
         </SheetContent>
       </Sheet>
     </div>

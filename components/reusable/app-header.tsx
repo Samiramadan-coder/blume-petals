@@ -1,11 +1,11 @@
 import AppLogo from "./app-logo";
-import HeaderNavLink from "./app-header/header-nav-link";
-import { getTranslations } from "next-intl/server";
-import AppHeaderShell from "./app-header/app-header-shell";
-import AppHeaderControl from "./app-header/app-header-control";
+import { http } from "@/lib/http";
 import { cookies } from "next/headers";
 import { Pagination, User } from "@/types/shared";
-import { http } from "@/lib/http";
+import { getTranslations } from "next-intl/server";
+import HeaderNavLink from "./app-header/header-nav-link";
+import AppHeaderShell from "./app-header/app-header-shell";
+import AppHeaderControl from "./app-header/app-header-control";
 
 export interface UserResponse {
   data: {
@@ -60,7 +60,7 @@ export default async function AppHeader() {
       <div className="container max-w-7xl flex items-center justify-between gap-4 py-4">
         <AppLogo width={90} />
 
-        <nav className=" items-center gap-10 hidden lg:flex">
+        <nav className=" items-center gap-8 hidden lg:flex">
           <HeaderNavLink href="/">{t("Home")}</HeaderNavLink>
           <HeaderNavLink href="/shop">{t("Shop")}</HeaderNavLink>
           <HeaderNavLink href="/builder">{t("Builder")}</HeaderNavLink>
