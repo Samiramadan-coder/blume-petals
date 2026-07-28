@@ -29,12 +29,17 @@ async function ProfileContent({
   const preparedSearchParams = await searchParams;
   const editMode = preparedSearchParams.edit === "true";
 
-  const { data } = await http.get<UserResponse>("/api/v1/auth/me", {
+  const { data, ok } = await http.get<UserResponse>("/api/v1/auth/me", {
     next: {
       tags: ["profile-page"],
       revalidate: 60,
     },
   });
+
+  if (!ok) {
+    throw new Error("Failed to fetch user profile");
+  }
+
   return <ProfileForm user={data.data.user} isEditMode={editMode} />;
 }
 
