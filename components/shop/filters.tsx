@@ -51,12 +51,12 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
   const selectedOccasions = query.occasion;
 
   return (
-    <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
+    <Card className="shadow-sm me-8">
       <CardContent>
         {/* Price Range */}
         <Accordion type="single" collapsible defaultValue="price_range">
           <AccordionItem value="price_range">
-            <AccordionTrigger className="hover:text-primary hover:no-underline text-base">
+            <AccordionTrigger className="hover:text-primary hover:no-underline text-base font-semibold">
               {t("PriceRange")}
             </AccordionTrigger>
             <AccordionContent className="p-2 space-y-4">
@@ -126,7 +126,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
         {/* Size */}
         <Accordion type="single" collapsible>
           <AccordionItem value="size">
-            <AccordionTrigger className="hover:text-primary hover:no-underline text-base">
+            <AccordionTrigger className="hover:text-primary hover:no-underline text-base font-semibold">
               {t("Size")}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
@@ -177,7 +177,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
               }}
               checked={isOnStock}
             />
-            <Label htmlFor="in_stock_only" className="text-base">
+            <Label htmlFor="in_stock_only" className="text-base font-semibold">
               {t("InStockOnly")}
             </Label>
           </Field>
@@ -188,7 +188,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
         {/* Occasions */}
         <Accordion type="single" collapsible>
           <AccordionItem value="occasion">
-            <AccordionTrigger className="hover:text-primary hover:no-underline text-base">
+            <AccordionTrigger className="hover:text-primary hover:no-underline text-base font-semibold">
               {t("Occasions")}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
