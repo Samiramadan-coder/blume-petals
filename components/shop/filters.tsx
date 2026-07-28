@@ -59,9 +59,9 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
             <AccordionTrigger className="hover:text-primary hover:no-underline text-base font-semibold">
               {t("PriceRange")}
             </AccordionTrigger>
-            <AccordionContent className="p-2 space-y-4">
+            <AccordionContent className="p-2 space-y-5">
               <div>
-                <p className="text-foreground/60 text-sm font-semibold">
+                <p className="text-muted-foreground text-xs font-semibold">
                   {t("Min")}: {t("AED")} {min[0]}
                 </p>
                 <Slider
@@ -89,7 +89,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
               </div>
 
               <div>
-                <p className="text-foreground/60 text-sm font-semibold">
+                <p className="text-muted-foreground text-xs font-semibold">
                   {t("Max")}: {t("AED")} {max[0]}
                 </p>
                 <Slider
