@@ -245,8 +245,6 @@ const PickupLocationsPreview = ({
   selectedPickupLocation: string | null;
   setSelectedPickupLocation: (value: string) => void;
 }) => {
-  const t = useTranslations("Shop");
-
   return (
     <div>
       <h3 className="mb-2 text-foreground font-semibold">Pickup Locations</h3>
@@ -266,11 +264,12 @@ const PickupLocationsPreview = ({
                 <FieldTitle>
                   <span className="text-foreground">{location.name}</span>
                 </FieldTitle>
-                <FieldDescription>
+                <FieldDescription className="flex gap-1">
                   <span className="text-foreground">Address: </span>
-                  <span className="underline italic text-muted-foreground font-bold">
-                    {location.address}
-                  </span>
+                  <div
+                    className="underline italic text-muted-foreground font-bold"
+                    dangerouslySetInnerHTML={{ __html: location.address }}
+                  />
                 </FieldDescription>
                 <FieldDescription>
                   <span className="text-foreground">Hours: </span>
@@ -293,12 +292,6 @@ const PickupLocationsPreview = ({
           </FieldLabel>
         ))}
       </RadioGroup>
-
-      {!pickupLocations.length ? (
-        <FieldDescription className="mt-2 text-muted-foreground">
-          {t("OrderPlacementFailed")}
-        </FieldDescription>
-      ) : null}
     </div>
   );
 };
