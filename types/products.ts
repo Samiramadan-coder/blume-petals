@@ -87,3 +87,15 @@ export const couponSchema = (t: T) =>
   });
 
 export type CouponFormValues = z.infer<ReturnType<typeof couponSchema>>;
+
+export type PickupLocation = {
+  address: string;
+  city_id: number;
+  hours: string;
+  id: number;
+  latitude: string;
+  longitude: string;
+  name: string;
+  ready_in: string;
+  sort_order: number;
+};

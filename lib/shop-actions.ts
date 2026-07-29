@@ -1,9 +1,8 @@
 "use server";
 
-import { Coupon, CouponFormValues } from "@/types/products";
-import { http, ValidationError } from "./http";
 import { updateTag } from "next/cache";
-import { toast } from "sonner";
+import { http, ValidationError } from "./http";
+import { Coupon, CouponFormValues } from "@/types/products";
 
 // Add Or Remove Product to Wishlist
 type AddToWishlistResponse = { success: boolean };
@@ -102,17 +101,11 @@ export async function updateCartQuantityAction(
 // Order Checkout
 type CheckoutOrderResponse = { success: boolean };
 
-export async function checkoutOrderAction(
-  address_id: string,
-  customer_notes: string,
-  couponCode?: string | null,
-): Promise<CheckoutOrderResponse> {
+export async function checkoutOrderAction(formData: {
+  [key: string]: string;
+}): Promise<CheckoutOrderResponse> {
   try {
-    await http.post(`/api/v1/orders`, {
-      address_id,
-      customer_notes,
-      ...(couponCode ? { coupon_code: couponCode } : {}),
-    });
+    await http.post(`/api/v1/orders`, formData);
 
     updateTag("cart-count");
     updateTag("orders");
