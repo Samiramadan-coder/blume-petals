@@ -19,8 +19,15 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
   const t = useTranslations("Shop");
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const [currentSummary, setCurrentSummary] = useState<
-    Summary & { discount?: string }
-  >({ ...summary });
+    Summary & {
+      discount: string;
+      old_total: string;
+    }
+  >({
+    ...summary,
+    old_total: summary.total,
+    discount: "",
+  });
 
   const {
     register,
@@ -128,7 +135,7 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
       </Card>
 
       <Link
-        href={`/cart/order?new_total_fee=${currentSummary.total}&coupon_code=${getValues("coupon_code")}&discount=${currentSummary.discount || ""}`}
+        href={`/cart/order?total=${currentSummary.old_total}&coupon_code=${getValues("coupon_code")}&discount=${currentSummary.discount || ""}`}
         className="w-full"
       >
         <Button className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-[#bfa664]">

@@ -5,7 +5,7 @@ import GoBackBtn from "@/components/shop/go-back-btn";
 import CompleteOrder from "@/components/shop/complete-order";
 
 type SearchParams = {
-  new_total_fee?: string;
+  total?: string;
   coupon_applied?: string;
   coupon_code?: string;
   discount?: string;
@@ -42,9 +42,7 @@ export default async function CartPage({
   // Extract coupon code, discount, and total from search params
   const couponCode = pageSearchParams.coupon_code ?? null;
   const discount = pageSearchParams.discount ? +pageSearchParams.discount : 0;
-  const total = pageSearchParams.new_total_fee
-    ? +pageSearchParams.new_total_fee
-    : 0;
+  const total = pageSearchParams.total ? +pageSearchParams.total : 0;
 
   return (
     <main>

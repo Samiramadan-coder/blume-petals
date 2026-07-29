@@ -23,7 +23,7 @@ export default function CompleteOrder({
   addresses: Address[];
   total: number;
   couponCode: string | null;
-  discount?: number;
+  discount: number;
 }) {
   const t = useTranslations("Shop");
   const [notes, setNotes] = useState("");
@@ -52,7 +52,7 @@ export default function CompleteOrder({
 
   // Final total calculation
   // It adds the delivery fee to the total amount to get the final total.
-  const finalTotal = total + deliveryFee;
+  const finalTotal = total - discount + deliveryFee;
 
   // Show Button Or Not
   // The button to continue to payment is shown only if the delivery method is "pickup" and a pickup location is selected,
@@ -77,7 +77,7 @@ export default function CompleteOrder({
             )}
           >
             <div className="text-center">
-              <p className="font-semibold">Delivery</p>
+              <p className="font-semibold">{t("Delivery")}</p>
               {deliveryFee ? (
                 <p className="text-sm text-primary mt-1">
                   {t("AED")} {deliveryFee}
@@ -94,8 +94,8 @@ export default function CompleteOrder({
             )}
           >
             <div className="text-center">
-              <p className="font-semibold">Pickup From Store</p>
-              <p className="text-sm text-primary mt-1">Free</p>
+              <p className="font-semibold">{t("Pickup")}</p>
+              <p className="text-sm text-primary mt-1">{t("Free")}</p>
             </div>
           </div>
         </div>

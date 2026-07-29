@@ -5,8 +5,9 @@ import {
   FieldLabel,
   FieldTitle,
 } from "@/components/ui/field";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useTranslations } from "next-intl";
 import { PickupLocation } from "@/types/products";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function PickupLocationsPreview({
   pickupLocations,
@@ -17,9 +18,13 @@ export default function PickupLocationsPreview({
   selectedPickupLocation: string | null;
   setSelectedPickupLocation: (value: string) => void;
 }) {
+  const t = useTranslations("Shop");
+
   return (
     <div>
-      <h3 className="mb-2 text-foreground font-semibold">Pickup Locations</h3>
+      <h3 className="mb-2 text-foreground font-semibold">
+        {t("PickupLocation")}
+      </h3>
       <RadioGroup
         value={selectedPickupLocation || undefined}
         onValueChange={setSelectedPickupLocation}
@@ -37,20 +42,20 @@ export default function PickupLocationsPreview({
                   <span className="text-foreground">{location.name}</span>
                 </FieldTitle>
                 <FieldDescription className="flex gap-1">
-                  <span className="text-foreground">Address: </span>
-                  <div
+                  <span className="text-foreground">{t("Address")}: </span>
+                  <span
                     className="underline italic text-muted-foreground font-bold"
                     dangerouslySetInnerHTML={{ __html: location.address }}
                   />
                 </FieldDescription>
                 <FieldDescription>
-                  <span className="text-foreground">Hours: </span>
+                  <span className="text-foreground">{t("Hours")}: </span>
                   <span className="underline italic text-muted-foreground font-bold">
                     {location.hours}
                   </span>
                 </FieldDescription>
                 <FieldDescription>
-                  <span className="text-foreground">Ready in: </span>
+                  <span className="text-foreground">{t("ReadyIn")}: </span>
                   <span className="underline italic text-muted-foreground font-bold">
                     {location.ready_in}
                   </span>

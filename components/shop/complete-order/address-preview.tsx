@@ -45,7 +45,7 @@ export default function AddresssPreview({
               <Field orientation="horizontal">
                 <FieldContent>
                   <FieldTitle>
-                    <span className="text-foreground">Address: </span>
+                    <span className="text-foreground">{t("Address")}: </span>
                     <span className="underline italic text-muted-foreground font-bold">
                       {address.city.name}, {address.country.name},{" "}
                       {address.area}, {address.street}, {address.building},{" "}
@@ -53,7 +53,9 @@ export default function AddresssPreview({
                     </span>
                   </FieldTitle>
                   <FieldDescription>
-                    <span className="text-foreground">Delivery Fee: </span>
+                    <span className="text-foreground">
+                      {t("DeliveryFee")}:{" "}
+                    </span>
                     <span className="underline italic text-muted-foreground font-bold">
                       {address.city.delivery_fee} {t("AED")}
                     </span>

@@ -76,7 +76,7 @@ export default function OrderFinalDetails({
           <div className="flex items-center justify-between">
             <span className="text-zinc-500">{t("Subtotal")}</span>
             <span className="font-semibold text-muted-foreground">
-              {t("AED")} {total + (discount || 0)}
+              {t("AED")} {total}
             </span>
           </div>
 
