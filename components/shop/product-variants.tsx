@@ -152,7 +152,14 @@ export default function ProductVariants({
                 type="button"
                 variant="ghost"
                 size="icon"
-                onClick={() => updateQuantity(quantity + 1)}
+                onClick={() => {
+                  if (quantity >= activeVariant.available_stock) {
+                    toast.error(t("MaximumQuantityReached"));
+                    return;
+                  }
+
+                  updateQuantity(quantity + 1);
+                }}
                 aria-label="Increase quantity"
                 className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary"
               >

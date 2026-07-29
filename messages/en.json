@@ -612,7 +612,6 @@
     "MaximumQuantityReached": "Maximum quantity reached for this product. You cannot add more to the cart.",
     "UpdateQuantitySuccess": "Quantity updated successfully.",
     "UpdateQuantityError": "Failed to update quantity. Please try again.",
-
     "Delivery": "Delivery",
     "Pickup": "Pickup From Store",
     "Free": "Free",

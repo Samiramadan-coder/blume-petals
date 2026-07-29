@@ -12,6 +12,7 @@ type Variant = {
   size: string;
   sku: string;
   stock: number;
+  available_stock: number;
 };
 
 export type Product = {

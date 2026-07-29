@@ -30,12 +30,16 @@ async function Product({
 
   // Fetch product details from the API using the product slug from the URL parameters
   const { data, ok } = await http.get<{
-    data: { product: ProductDetailsType };
+    data: {
+      product: ProductDetailsType;
+    };
   }>(`/api/v1/products/${params["product-slug"]}`);
 
   if (!ok) {
     throw new Error("Failed to fetch product");
   }
+
+  console.log("Product data:", data.data.product);
 
   return (
     <main className="container max-w-7xl py-20">

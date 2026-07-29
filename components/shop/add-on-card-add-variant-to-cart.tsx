@@ -6,6 +6,8 @@ import { Product } from "@/types/products";
 import AddToCartBtn from "./add-to-cart-btn";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export default function AddOnCardAddVariantToCart({
   item,
@@ -14,6 +16,7 @@ export default function AddOnCardAddVariantToCart({
   item: Product;
   isLoggedIn: boolean;
 }) {
+  const t = useTranslations("Shop");
   const [quantity, setQuantity] = useState(1);
 
   const updateQuantity = (nextQuantity: number) => {
@@ -57,7 +60,14 @@ export default function AddOnCardAddVariantToCart({
           type="button"
           variant="ghost"
           size="icon"
-          onClick={() => updateQuantity(quantity + 1)}
+          onClick={() => {
+            if (quantity >= item.variants[0].available_stock) {
+              toast.error(t("MaximumQuantityReached"));
+              return;
+            }
+
+            updateQuantity(quantity + 1);
+          }}
           aria-label="Increase quantity"
           className="h-full w-10 shrink-0 rounded-none text-primary hover:bg-primary/10 hover:text-primary"
         >
