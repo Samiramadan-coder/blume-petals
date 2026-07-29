@@ -148,7 +148,7 @@ export type OrderItem = {
     recipient_name: string;
     recipient_phone: string;
     street: string;
-  };
+  } | null;
   summary: {
     discount_total: string;
     grand_total: string;
@@ -178,6 +178,15 @@ export type OrderItem = {
   customer_notes: string | null;
   fulfillment_method: string;
   id: number;
+  pickup: {
+    address: string;
+    city_id: number;
+    hours: string;
+    latitude: string;
+    longitude: string;
+    name: string;
+    ready_in: string;
+  } | null;
   items: {
     id: number;
     line_total: string;

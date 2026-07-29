@@ -67,7 +67,7 @@ const orderStatusConfig: Record<OrderStatus, StatusConfig> = {
   },
 };
 
-function formatAddress(address: OrderItem["address"]) {
+function formatAddress(address: NonNullable<OrderItem["address"]>) {
   return [
     address.building,
     address.street,
@@ -96,7 +96,9 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
 
   const statusConfig = orderStatusConfig[status];
   const StatusIcon = statusConfig.icon;
-  const address = formatAddress(order.address);
+  const address = order.address
+    ? formatAddress(order.address)
+    : order.pickup?.address;
 
   return (
     <Collapsible>
@@ -187,9 +189,10 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
                   <h4 className="mb-2 font-semibold text-foreground md:text-base">
                     {t("DeliveryAddress")}
                   </h4>
-                  <p className="text-sm leading-6 text-foreground/60">
-                    {address || "-"}
-                  </p>
+                  <p
+                    className="text-sm leading-6 text-foreground/60"
+                    dangerouslySetInnerHTML={{ __html: address || "-" }}
+                  ></p>
                 </div>
                 <div>
                   <h4 className="mb-2 font-semibold text-foreground md:text-base">
