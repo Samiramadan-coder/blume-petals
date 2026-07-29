@@ -32,7 +32,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
       price_max: parseAsInteger.withDefault(500),
       size: parseAsNativeArrayOf(parseAsString).withDefault([]),
       occasion: parseAsNativeArrayOf(parseAsString).withDefault([]),
-      in_stock_only: parseAsString,
+      in_stock: parseAsString,
       page: parseAsString,
     },
     {
@@ -47,7 +47,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
   const min = minDraft ?? [query.price_min];
   const max = maxDraft ?? [query.price_max];
   const selectedSizes = query.size;
-  const isOnStock = query.in_stock_only === "1";
+  const isOnStock = query.in_stock === "1";
   const selectedOccasions = query.occasion;
 
   return (
@@ -167,17 +167,17 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
         <FieldGroup className="max-w-sm my-4">
           <Field orientation="horizontal">
             <Checkbox
-              id="in_stock_only"
-              name="in_stock_only"
+              id="in_stock"
+              name="in_stock"
               onCheckedChange={(checked) => {
                 void setQuery({
-                  in_stock_only: checked === true ? "1" : null,
+                  in_stock: checked === true ? "1" : null,
                   page: "1",
                 });
               }}
               checked={isOnStock}
             />
-            <Label htmlFor="in_stock_only" className="text-base font-semibold">
+            <Label htmlFor="in_stock" className="text-base font-semibold">
               {t("InStockOnly")}
             </Label>
           </Field>

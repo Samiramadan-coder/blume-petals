@@ -39,8 +39,6 @@ async function Product({
     throw new Error("Failed to fetch product");
   }
 
-  console.log("Product data:", data.data.product);
-
   return (
     <main className="container max-w-7xl py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
