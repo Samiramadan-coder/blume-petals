@@ -83,7 +83,7 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
         <FieldError errors={[errors.coupon_code]} />
       </form>
 
-      <Card className="rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
+      <Card className="rounded-xl border-0 bg-white shadow-sm">
         <CardContent className="space-y-5 p-6">
           <div className="flex items-center justify-between">
             <span className="text-zinc-500">{t("Subtotal")}</span>

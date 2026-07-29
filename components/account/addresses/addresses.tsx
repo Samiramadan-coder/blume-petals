@@ -24,10 +24,7 @@ export default async function Addresses({
       {addresses.length > 0 ? (
         <div className="space-y-4">
           {addresses.map((address, index) => (
-            <Card
-              key={index}
-              className="shadow-[0_6px_20px_rgba(17,24,39,0.08)]"
-            >
+            <Card key={index} className="shadow-sm">
               <CardContent className="flex items-start gap-6 px-8">
                 <div className="bg-primary/10 p-2 rounded-full">
                   <MapPin className="text-primary" />

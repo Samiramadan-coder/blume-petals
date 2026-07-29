@@ -37,7 +37,7 @@ export default async function CartPage() {
             <div className="md:col-span-2 space-y-6">
               {data.data.cart.items.map((item, index) => (
                 <Card
-                  className="w-full rounded-xl border-0 bg-white shadow-[0_6px_20px_rgba(17,24,39,0.08)]"
+                  className="w-full rounded-xl border-0 bg-white shadow-sm"
                   key={index}
                 >
                   <CardContent className="flex items-center gap-4 px-4">

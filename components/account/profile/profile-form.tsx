@@ -141,7 +141,7 @@ export default function ProfileForm({
         </div>
       </div>
 
-      <Card className="shadow-[0_6px_20px_rgba(17,24,39,0.08)] py-6">
+      <Card className="shadow-sm py-6">
         <CardContent className="px-6">
           <form
             className="space-y-6"
