@@ -87,10 +87,7 @@ async function ListOfProducts({
         <NoDataFounded />
       ) : (
         <>
-          <div
-            key={JSON.stringify(data.data.items)}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6"
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6">
             {data.data.items.map((item, index) => (
               <CardItem key={index} item={item} imageClassName="h-[320px]" />
             ))}
@@ -165,7 +162,10 @@ export default async function ShopPage({
             </SheetContent>
           </Sheet>
 
-          <Suspense fallback={<ListOfProductsSkeleton />}>
+          <Suspense
+            key={JSON.stringify(await searchParams)}
+            fallback={<ListOfProductsSkeleton />}
+          >
             <ListOfProducts searchParams={await searchParams} />
           </Suspense>
         </div>
