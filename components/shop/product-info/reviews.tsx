@@ -41,7 +41,7 @@ export async function Reviews({
   ];
 
   return (
-    <div className="flex gap-20">
+    <div className="flex flex-wrap gap-20">
       <div>
         <p className="font-semibold text-foreground mb-6">Rating Breakdown</p>
         <div className="space-y-4">
