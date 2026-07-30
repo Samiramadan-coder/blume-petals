@@ -11,37 +11,31 @@ export async function Reviews({
   const reviewsDetails: {
     rating: number;
     count: number;
-    size: number;
     percentage: number;
   }[] = [
     {
       rating: 5,
       count: 35,
-      size: 8,
       percentage: 82,
     },
     {
       rating: 4,
       count: 70,
-      size: 10,
       percentage: 50,
     },
     {
       rating: 3,
       count: 60,
-      size: 12,
       percentage: 40,
     },
     {
       rating: 2,
       count: 15,
-      size: 14,
       percentage: 30,
     },
     {
       rating: 1,
       count: 4,
-      size: 16,
       percentage: 15,
     },
   ];
@@ -54,7 +48,7 @@ export async function Reviews({
           {reviewsDetails.map((review) => (
             <div className="flex items-center gap-2" key={review.rating}>
               <div className="min-w-24">
-                <Rating rating={review.rating} size={review.size} />
+                <Rating rating={review.rating} size={14} />
               </div>
               <span className="text-xs">{review.rating}</span>
               <Progress
