@@ -5,49 +5,58 @@ import {
   DialogClose,
   DialogContent,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useRef } from "react";
-import Image from "next/image";
-import { Upload } from "lucide-react";
+import { http } from "@/lib/http";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { FieldError } from "@/components/ui/field";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RatingFormData, ratingSchema } from "@/types/account";
 import OrderRating from "@/components/account/orders/order-rating";
 import FormTextarea from "@/components/reusable/form/form-textarea";
+import { OrderItem, RatingFormData, ratingSchema } from "@/types/account";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
 
-export default function OrderRate() {
+export default function OrderRate({ items }: { items: OrderItem["items"] }) {
   const t = useTranslations("Account.Orders");
   const formRef = useRef<HTMLFormElement>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const closeBtn = useRef<HTMLButtonElement>(null);
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
 
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<RatingFormData>({
     resolver: zodResolver(ratingSchema(t)),
-    defaultValues: {
-      rating: 0,
-      feedback: "",
-      photos: [],
-    },
+    defaultValues: { rating: 0, comment: "" },
   });
 
-  const onSubmit: SubmitHandler<RatingFormData> = (data) => {
-    console.log("Rating submitted:", data.rating);
+  // Watch the rating value to conditionally render the comment field
+  const rating = useWatch({ control, name: "rating" });
+
+  // Handle form submission
+  const onSubmit: SubmitHandler<RatingFormData> = async (data) => {
+    try {
+      await http.post(
+        `/api/v1/products/${items[activeItemIndex].slug}/reviews`,
+        data,
+      );
+      if (activeItemIndex < items.length - 1) {
+        setActiveItemIndex(activeItemIndex + 1);
+        reset({ rating: 0, comment: "" });
+      } else {
+        closeBtn.current?.click();
+        reset({ rating: 0, comment: "" });
+      }
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+    }
   };
-
-  const rating = useWatch({
-    control,
-    name: "rating",
-  });
 
   return (
     <Dialog>
@@ -57,27 +66,10 @@ export default function OrderRate() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle className="flex gap-4">
-            <Image
-              src="/images/home/bouquet-builder/bouquet-builder.png"
-              alt="Product Image"
-              width={60}
-              height={60}
-              className="rounded-md"
-            />
-            <p className="py-1 flex flex-col gap-1">
-              <span className="font-bold text-sm">
-                Golden Hour Preserved Roses
-              </span>
-              <span className="text-muted-foreground text-xs">#BP-2847</span>
-            </p>
-          </DialogTitle>
-        </DialogHeader>
         <form
           ref={formRef}
           className="-mx-4 no-scrollbar max-h-[50vh] overflow-y-auto px-4 space-y-6"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={(e) => void handleSubmit(onSubmit)(e)}
         >
           <Controller
             control={control}
@@ -99,80 +91,11 @@ export default function OrderRate() {
           {rating ? (
             <>
               <FormTextarea
-                name="feedback"
+                name="comment"
                 register={register}
                 label={t("FeedbackLabel")}
                 placeholder={t("FeedbackPlaceholder")}
                 inputClassName="h-30"
-              />
-
-              <Controller
-                control={control}
-                name="photos"
-                render={({ field }) => {
-                  const photos = field.value || [];
-
-                  return (
-                    <>
-                      <p className="font-semibold text-sm mb-2">
-                        {t("AddPhotosLabel")}
-                      </p>
-                      <Button
-                        variant="outline"
-                        type="button"
-                        className="cursor-pointer h-10 w-38 border border-border text-foreground hover:text-foreground"
-                        onClick={() => fileInputRef.current?.click()}
-                      >
-                        <Upload />
-                        {t("AddPhotosButton")}
-                      </Button>
-
-                      <div>
-                        {photos.map((photo, index) => (
-                          <div
-                            key={index}
-                            className="relative inline-block mr-2"
-                          >
-                            <div>
-                              <Image
-                                src={URL.createObjectURL(photo)}
-                                alt={`Photo ${index + 1}`}
-                                width={60}
-                                height={60}
-                                className="rounded-md"
-                              />
-                            </div>
-                            <Button
-                              variant="destructive"
-                              size="icon"
-                              className="absolute cursor-pointer top-0 right-0 -translate-y-1/2 translate-x-1/2 rounded-full p-1"
-                              onClick={() => {
-                                const updatedPhotos = [...photos];
-                                updatedPhotos.splice(index, 1);
-                                field.onChange(updatedPhotos);
-                              }}
-                            >
-                              &times;
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        ref={fileInputRef}
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-                          field.onChange([...(field.value || []), file]);
-                          e.target.value = "";
-                        }}
-                      />
-                    </>
-                  );
-                }}
               />
             </>
           ) : null}
@@ -182,10 +105,14 @@ export default function OrderRate() {
             onClick={() => formRef.current?.requestSubmit()}
             className="h-10 cursor-pointer"
           >
-            {t("SubmitRating")}
+            {isSubmitting ? <Spinner /> : t("SubmitRating")}
           </Button>
           <DialogClose asChild>
-            <Button variant="outline" className="h-10 cursor-pointer">
+            <Button
+              variant="outline"
+              ref={closeBtn}
+              className="h-10 cursor-pointer"
+            >
               {t("MaybeLater")}
             </Button>
           </DialogClose>

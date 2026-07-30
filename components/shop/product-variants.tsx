@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Input } from "../ui/input";
@@ -12,7 +13,6 @@ import { Minus, Plus, Van } from "lucide-react";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
 import { useLocale, useTranslations } from "next-intl";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
-import { toast } from "sonner";
 
 export default function ProductVariants({
   token,

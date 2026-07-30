@@ -96,20 +96,15 @@ export type Address = {
   street: string;
 };
 
-// export type Address = AddressFormBody & { id: number };
-
 export type AddressesResponse = {
   data: { items: Address[] };
 };
 
 // Orders
-const fileSchema = z.instanceof(File);
-
 export const ratingSchema = (t: T) =>
   z.object({
     rating: z.number().min(1, t("RatingRequired")),
-    feedback: z.string().optional(),
-    photos: z.array(fileSchema).optional(),
+    comment: z.string().optional(),
   });
 
 export type RatingFormData = z.infer<ReturnType<typeof ratingSchema>>;
@@ -193,5 +188,7 @@ export type OrderItem = {
     message_text: string | null;
     name: string;
     qty: number;
+    image_url: string;
+    slug: string;
   }[];
 };

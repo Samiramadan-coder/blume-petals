@@ -51,6 +51,13 @@ export type ProductDetails = Product & {
   }[];
   variants: Variant[];
   similar: Product[];
+  reviews: {
+    comment: string;
+    created_at: string;
+    id: number;
+    rating: number;
+    user: string;
+  }[];
 };
 
 export type CartItem = {

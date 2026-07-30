@@ -3,50 +3,49 @@ import { http } from "@/lib/http";
 import { cookies } from "next/headers";
 import ProductInfo from "@/components/shop/product-info";
 import ProductImages from "@/components/shop/product-images";
+import ProductAddOns from "@/components/shop/product-add-ons";
 import SimilarProducts from "@/components/shop/similar-products";
 import ProductVariants from "@/components/shop/product-variants";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
 import ProductPageSkeleton from "@/components/shop/product-details-skeleton";
-import ProductAddOns from "@/components/shop/product-add-ons";
 
-type ParamsType = {
-  "product-slug": string;
-  locale: string;
-};
-
-type SearchParamsType = {
-  page: string;
-};
+type Params = { slug: string };
+type SearchParams = { page: string };
 
 async function Product({
   params,
   searchParams,
 }: {
-  params: ParamsType;
-  searchParams: SearchParamsType;
+  params: Params;
+  searchParams: SearchParams;
 }) {
+  const { slug } = params;
+  const { page } = searchParams;
   const cookie = await cookies();
   const token = cookie.get("token")?.value;
 
-  // Fetch product details from the API using the product slug from the URL parameters
+  // Fetch product details from the API using the slug from the URL parameters
   const { data, ok } = await http.get<{
     data: {
       product: ProductDetailsType;
     };
-  }>(`/api/v1/products/${params["product-slug"]}`);
+  }>(`/api/v1/products/${slug}`);
 
   if (!ok) {
     throw new Error("Failed to fetch product");
   }
 
+  const product = data.data.product;
+  const { images, similar } = product;
+
   return (
     <main className="container max-w-7xl py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <ProductImages productImages={data.data.product.images} />
-        <ProductVariants productDetails={data.data.product} token={token} />
-        <ProductAddOns page={searchParams.page} />
-        <ProductInfo product={data.data.product} />
-        <SimilarProducts products={data.data.product.similar} />
+        <ProductImages productImages={images} />
+        <ProductVariants productDetails={product} token={token} />
+        <ProductAddOns page={page} />
+        <ProductInfo product={product} />
+        <SimilarProducts products={similar} />
       </div>
     </main>
   );
@@ -56,8 +55,8 @@ export default async function ProductPage({
   params,
   searchParams,
 }: {
-  params: ParamsType;
-  searchParams: SearchParamsType;
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
 }) {
   return (
     <Suspense fallback={<ProductPageSkeleton />}>

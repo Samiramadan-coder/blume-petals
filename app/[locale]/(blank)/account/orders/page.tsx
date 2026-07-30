@@ -43,7 +43,7 @@ export default async function OrdersPage({
     throw new Error("Failed to fetch orders");
   }
 
-  console.log("Orders data:", data); // Log the entire response data
+  console.log("Orders data:", data);
 
   return (
     <>

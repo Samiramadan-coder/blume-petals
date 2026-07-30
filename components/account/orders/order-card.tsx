@@ -24,6 +24,7 @@ import { OrderItem } from "@/types/account";
 import { Separator } from "../../ui/separator";
 import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 
 type OrderStatus =
   | "pending"
@@ -105,36 +106,47 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
       <Card className="overflow-hidden shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
         <CardContent className="px-0">
           <div className="flex items-start gap-4 px-4 md:px-6">
-            <div className="min-w-0 flex-1">
-              {order.items[0]?.name && (
-                <p className="mb-2 truncate text-sm text-foreground/60">
-                  {order.items[0].name}
-                </p>
+            <div className="flex-1 flex items-center gap-4">
+              {order.items[0]?.image_url && (
+                <Image
+                  src={order.items[0].image_url}
+                  alt={order.items[0].name}
+                  width={64}
+                  height={64}
+                  className="rounded-lg"
+                />
               )}
+              <div className="min-w-0">
+                {order.items[0]?.name && (
+                  <p className="mb-2 truncate text-sm text-foreground/60">
+                    {order.items[0].name}
+                  </p>
+                )}
 
-              <div className="mb-2 flex flex-wrap items-center gap-3">
-                <p className="font-semibold text-foreground md:text-base">
-                  {order.order_number}
+                <div className="mb-2 flex flex-wrap items-center gap-3">
+                  <p className="font-semibold text-foreground md:text-base">
+                    {order.order_number}
+                  </p>
+                  <Badge
+                    className={cn(
+                      "h-6 gap-1.5 border-0 px-2 text-xs shadow-none",
+                      "[&>svg]:size-3!",
+                      statusConfig.className,
+                    )}
+                  >
+                    <StatusIcon
+                      className={statusConfig.iconClassName}
+                      aria-hidden="true"
+                    />
+
+                    {order.status_label}
+                  </Badge>
+                </div>
+
+                <p className="text-sm text-foreground/60">
+                  {order.placed_at.split("T")[0]}
                 </p>
-                <Badge
-                  className={cn(
-                    "h-6 gap-1.5 border-0 px-2 text-xs shadow-none",
-                    "[&>svg]:size-3!",
-                    statusConfig.className,
-                  )}
-                >
-                  <StatusIcon
-                    className={statusConfig.iconClassName}
-                    aria-hidden="true"
-                  />
-
-                  {order.status_label}
-                </Badge>
               </div>
-
-              <p className="text-sm text-foreground/60">
-                {order.placed_at.split("T")[0]}
-              </p>
             </div>
 
             <div className="flex shrink-0 items-start gap-2">
@@ -211,7 +223,9 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
                 {order.status === "pending" && (
                   <OrderCancel orderId={order.id} />
                 )}
-                {order.status === "delivered" && <OrderRate />}
+                {order.status === "delivered" && (
+                  <OrderRate items={order.items} />
+                )}
               </div>
             </div>
           </CollapsibleContent>
