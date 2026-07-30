@@ -61,7 +61,7 @@ export async function Reviews({
         </div>
       </div>
 
-      <div className="lg:col-span-2 space-y-5">
+      <div className="lg:col-span-2 space-y-5 flex-1">
         {reviews.map((review, index) => (
           <Card className="border border-border p-0" key={index}>
             <CardContent className="p-4">
