@@ -1,16 +1,13 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Rating } from "@/components/ui/rating";
 import { ProductDetails } from "@/types/products";
-import { getTranslations } from "next-intl/server";
+import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from "@/components/ui/card";
 
 export async function Reviews({
   reviews,
 }: {
   reviews: ProductDetails["reviews"];
 }) {
-  const tCommon = await getTranslations("Common");
-
   const reviewsDetails: {
     rating: number;
     count: number;
@@ -50,22 +47,21 @@ export async function Reviews({
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="flex gap-20">
       <div>
         <p className="font-semibold text-foreground mb-6">Rating Breakdown</p>
-
-        <div className="space-y-3">
+        <div className="space-y-4">
           {reviewsDetails.map((review) => (
             <div className="flex items-center gap-2" key={review.rating}>
-              <div className="min-w-20">
+              <div className="min-w-24">
                 <Rating rating={review.rating} size={review.size} />
               </div>
               <span className="text-xs">{review.rating}</span>
               <Progress
-                value={82}
-                className="h-2 w-60 bg-[#e6ddd6] [&>div]:bg-[#cbb682]"
+                value={review.percentage}
+                className="h-2 w-60 bg-[#e6ddd6] [&>div]:bg-primary"
               />
-              <span className="text-xs">{review.count}</span>
+              <span className="text-xs font-semibold">{review.count}</span>
             </div>
           ))}
         </div>
