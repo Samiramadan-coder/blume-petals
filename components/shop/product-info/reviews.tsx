@@ -71,8 +71,8 @@ export async function Reviews({
         {reviews.map((review, index) => (
           <Card className="border border-border p-0" key={index}>
             <CardContent className="p-4">
-              <Rating rating={review.rating} />
-              <p className="text-foreground mb-4 mt-3 leading-relaxed">
+              <Rating rating={review.rating} size={20} />
+              <p className="text-foreground mb-4 mt-3 leading-relaxed text-base">
                 {review.comment}
               </p>
               <div className="flex items-center justify-between">
