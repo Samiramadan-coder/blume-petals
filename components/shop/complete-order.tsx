@@ -7,8 +7,9 @@ import { useTranslations } from "next-intl";
 import { PickupLocation } from "@/types/products";
 import { Address, Country } from "@/types/account";
 import AddresssPreview from "./complete-order/address-preview";
-import PickupLocationsPreview from "./complete-order/pickup-location-preview";
 import OrderFinalDetails from "./complete-order/order-final-details";
+import PickupLocationsPreview from "./complete-order/pickup-location-preview";
+import { Truck, Store } from "lucide-react";
 
 export default function CompleteOrder({
   countries,
@@ -51,7 +52,8 @@ export default function CompleteOrder({
   }, [addresses, deliveryMethod, selectedAddress]);
 
   // Final total calculation
-  // It adds the delivery fee to the total amount to get the final total.
+  // The final total is calculated by subtracting the discount from the total and adding the delivery fee.
+  // This ensures that the user sees the correct amount they need to pay based on their selections.
   const finalTotal = total - discount + deliveryFee;
 
   // Show Button Or Not
@@ -72,10 +74,13 @@ export default function CompleteOrder({
           <div
             onClick={() => setDeliveryMethod("delivery")}
             className={cn(
-              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex items-center justify-center cursor-pointer",
+              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex gap-2 items-center justify-center cursor-pointer",
               deliveryMethod === "delivery" && "border-primary bg-primary/10",
             )}
           >
+            <Truck
+              className={deliveryMethod === "delivery" ? "text-primary" : ""}
+            />
             <div className="text-center">
               <p className="font-semibold">{t("Delivery")}</p>
               {deliveryFee ? (
@@ -89,10 +94,13 @@ export default function CompleteOrder({
           <div
             onClick={() => setDeliveryMethod("pickup")}
             className={cn(
-              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex items-center justify-center cursor-pointer",
+              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex gap-2 items-center justify-center cursor-pointer",
               deliveryMethod === "pickup" && "border-primary bg-primary/10",
             )}
           >
+            <Store
+              className={deliveryMethod === "pickup" ? "text-primary" : ""}
+            />
             <div className="text-center">
               <p className="font-semibold">{t("Pickup")}</p>
               <p className="text-sm text-primary mt-1">{t("Free")}</p>

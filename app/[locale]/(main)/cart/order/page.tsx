@@ -1,8 +1,9 @@
+import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { PickupLocation } from "@/types/products";
 import { Address, Country } from "@/types/account";
-import GoBackBtn from "@/components/shop/go-back-btn";
 import CompleteOrder from "@/components/shop/complete-order";
+import { getLocale, getTranslations } from "next-intl/server";
 
 type SearchParams = {
   total?: string;
@@ -16,6 +17,8 @@ export default async function CartPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
+  const locale = await getLocale();
+  const t = await getTranslations("Shop");
   const pageSearchParams = await searchParams;
 
   // Fetch addresses data
@@ -46,19 +49,23 @@ export default async function CartPage({
 
   return (
     <main>
-      <div className="container max-w-7xl py-20 min-h-[50vh]">
-        <GoBackBtn />
+      <div className="container max-w-7xl py-14 min-h-[50vh]">
+        <h1
+          className={cn("mb-6 font-semibold text-xl md:text-3xl", {
+            "font-heading": locale === "en",
+          })}
+        >
+          {t("HowToReceiveOrder")}
+        </h1>
 
-        <div className="md:col-span-2 space-y-6 mt-6">
-          <CompleteOrder
-            countries={countries.data.items}
-            pickupLocations={pickupLocations.data.items}
-            addresses={addresses.data.items}
-            total={total}
-            couponCode={couponCode}
-            discount={discount}
-          />
-        </div>
+        <CompleteOrder
+          countries={countries.data.items}
+          pickupLocations={pickupLocations.data.items}
+          addresses={addresses.data.items}
+          total={total}
+          couponCode={couponCode}
+          discount={discount}
+        />
       </div>
     </main>
   );

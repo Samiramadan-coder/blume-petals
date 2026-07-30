@@ -602,13 +602,13 @@
     "Discount": "الخصم",
     "OutOfStock": "غير متوفر",
     "MaximumQuantityReached": "تم الوصول إلى الحد الأقصى للكمية لهذا المنتج. لا يمكنك إضافة المزيد إلى السلة.",
-
     "Delivery": "توصيل",
     "Pickup": "استلام من المتجر",
     "Free": "مجاني",
     "Address": "العنوان",
     "PickupLocation": "موقع الاستلام",
     "Hours": "الساعات",
-    "ReadyIn": "جاهز في"
+    "ReadyIn": "جاهز في",
+    "HowToReceiveOrder": "كيف ترغب في استلام طلبك؟"
   }
 }

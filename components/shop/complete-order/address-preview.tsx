@@ -39,7 +39,7 @@ export default function AddresssPreview({
           {addresses.map((address, index) => (
             <FieldLabel
               htmlFor={address.id.toString()}
-              className="bg-white p-4 cursor-pointer"
+              className="bg-white p-4 cursor-pointer shadow-sm"
               key={index}
             >
               <Field orientation="horizontal">
