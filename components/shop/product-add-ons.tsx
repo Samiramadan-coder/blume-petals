@@ -1,31 +1,20 @@
-import { http } from "@/lib/http";
+import { cn } from "@/lib/utils";
 import { Product } from "@/types/products";
-import * as motion from "motion/react-client";
 import AddOnCard from "../shop/add-on-card";
 import { Pagination } from "@/types/shared";
-import PaginationTemplate from "../reusable/pagination-template";
-import { cn } from "@/lib/utils";
+import * as motion from "motion/react-client";
 import { getLocale, getTranslations } from "next-intl/server";
+import PaginationTemplate from "../reusable/pagination-template";
 
-export default async function ProductAddOns({ page }: { page: string }) {
-  const t = await getTranslations("Shop");
+export default async function ProductAddOns({
+  addOns,
+  pagination,
+}: {
+  addOns: Product[];
+  pagination: Pagination;
+}) {
   const locale = await getLocale();
-
-  const { data, ok } = await http.get<{
-    data: {
-      items: Product[];
-      pagination: Pagination;
-    };
-  }>(`/api/v1/products?category_type=addon`, {
-    params: {
-      per_page: 2,
-      page: page || "1",
-    },
-  });
-
-  if (!ok) {
-    throw new Error("Failed to fetch featured collections");
-  }
+  const t = await getTranslations("Shop");
 
   return (
     <div className="md:col-span-2">
@@ -42,7 +31,7 @@ export default async function ProductAddOns({ page }: { page: string }) {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-        {data.data.items.map((item, index) => (
+        {addOns.map((item, index) => (
           <motion.div
             key={item.id}
             initial={{ opacity: 0, y: 40 }}
@@ -56,8 +45,8 @@ export default async function ProductAddOns({ page }: { page: string }) {
       </div>
 
       <PaginationTemplate
-        currentPage={data.data.pagination.current_page}
-        totalPages={data.data.pagination.last_page}
+        currentPage={pagination.current_page}
+        totalPages={pagination.last_page}
       />
     </div>
   );

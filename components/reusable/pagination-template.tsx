@@ -2,11 +2,11 @@
 
 import {
   Pagination,
-  PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
+  PaginationContent,
+  PaginationEllipsis,
   PaginationPrevious,
 } from "../ui/pagination";
 import { useQueryState } from "nuqs";
@@ -47,11 +47,13 @@ function getVisiblePages(currentPage: number, totalPages: number) {
 export default function PaginationTemplate({
   currentPage,
   totalPages,
+  pageLabel = "page",
 }: {
   currentPage: number;
   totalPages: number;
+  pageLabel?: string;
 }) {
-  const [, setPage] = useQueryState("page", {
+  const [, setPage] = useQueryState(pageLabel, {
     history: "push",
     scroll: false,
     shallow: false,

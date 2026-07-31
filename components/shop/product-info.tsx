@@ -6,11 +6,16 @@ import { Delivery } from "./product-info/delivery";
 import { Description } from "./product-info/description";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
+import { Pagination } from "@/types/shared";
 
 export default async function ProductInfo({
   product,
+  reviews,
+  pagination,
 }: {
   product: ProductDetailsType;
+  reviews: ProductDetailsType["reviews"];
+  pagination: Pagination;
 }) {
   const t = await getTranslations("Shop");
 
@@ -37,7 +42,7 @@ export default async function ProductInfo({
           <Description description={product.description} />
         </TabsContent>
         <TabsContent value="reviews">
-          <Reviews reviews={product.reviews} />
+          <Reviews reviews={reviews} pagination={pagination} />
         </TabsContent>
         <TabsContent value="delivery">
           <Delivery />
