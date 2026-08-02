@@ -5,9 +5,10 @@ import { Product } from "@/types/products";
 import AddOnCard from "../shop/add-on-card";
 import { Pagination } from "@/types/shared";
 import * as motion from "motion/react-client";
-import ProductsAddOnsSkeleton from "./skeleton/products-addons-skeleton";
+import NoDataFounded from "../reusable/no-data-founded";
 import { getLocale, getTranslations } from "next-intl/server";
 import PaginationTemplate from "../reusable/pagination-template";
+import ProductsAddOnsSkeleton from "./skeleton/products-addons-skeleton";
 
 async function ProductAddOnsData({
   currentAddOnsPage,
@@ -32,25 +33,31 @@ async function ProductAddOnsData({
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-        {data.data.items.map((item, index) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
-          >
-            <AddOnCard item={item} />
-          </motion.div>
-        ))}
-      </div>
+      {data.data.items.length === 0 ? (
+        <NoDataFounded />
+      ) : (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            {data.data.items.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
+              >
+                <AddOnCard item={item} />
+              </motion.div>
+            ))}
+          </div>
 
-      <PaginationTemplate
-        currentPage={data.data.pagination.current_page}
-        totalPages={data.data.pagination.last_page}
-        pageLabel="addOnsPage"
-      />
+          <PaginationTemplate
+            currentPage={data.data.pagination.current_page}
+            totalPages={data.data.pagination.last_page}
+            pageLabel="addOnsPage"
+          />
+        </>
+      )}
     </>
   );
 }
@@ -80,7 +87,11 @@ export default async function ProductAddOns({
       <Suspense
         key={currentAddOnsPage}
         fallback={
-          <ProductsAddOnsSkeleton className="lg:grid-cols-3" count={3} />
+          <ProductsAddOnsSkeleton
+            className="lg:grid-cols-3"
+            count={3}
+            showPagination
+          />
         }
       >
         <ProductAddOnsData currentAddOnsPage={currentAddOnsPage} />
