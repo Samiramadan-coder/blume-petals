@@ -500,7 +500,10 @@
       "RatingSuccess": "تم إرسال تقييمك بنجاح. شكرا لملاحظاتك",
       "RatingError": "فشل إرسال التقييم. يرجى المحاولة مرة أخرى.",
       "MaybeLater": "ربما لاحقًا",
-      "RatingIsRequired": "التقييم مطلوب"
+      "RatingIsRequired": "التقييم مطلوب",
+      "OrderExperience": "كيف كانت تجربتك مع الطلب؟",
+      "SuccessfullyRated": "لقد قمت بتقييم هذا الطلب بنجاح.",
+      "FailedToRate": "فشل في إرسال تقييمك. يرجى المحاولة مرة أخرى."
     },
     "Designs": {
       "Title": "تصاميمي",

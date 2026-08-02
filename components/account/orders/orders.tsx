@@ -5,15 +5,6 @@ import PageTitle from "../shared/page-title";
 import { getTranslations } from "next-intl/server";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 
-// const filters = [
-//   { label: "All", value: "all" },
-//   { label: "Pending", value: "pending" },
-//   { label: "Processing", value: "processing" },
-//   { label: "Shipped", value: "shipped" },
-//   { label: "Delivered", value: "delivered" },
-//   { label: "Cancelled", value: "cancelled" },
-// ];
-
 export default async function Orders({
   orders,
   pagination,

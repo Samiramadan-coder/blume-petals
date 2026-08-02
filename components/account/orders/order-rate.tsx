@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { http } from "@/lib/http";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -18,43 +18,47 @@ import OrderRating from "@/components/account/orders/order-rating";
 import FormTextarea from "@/components/reusable/form/form-textarea";
 import { OrderItem, RatingFormData, ratingSchema } from "@/types/account";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 
-export default function OrderRate({ items }: { items: OrderItem["items"] }) {
+export default function OrderRate({
+  items,
+  orderId,
+}: {
+  items: OrderItem["items"];
+  orderId: number;
+}) {
   const t = useTranslations("Account.Orders");
   const formRef = useRef<HTMLFormElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
 
   const {
     register,
     control,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<RatingFormData>({
     resolver: zodResolver(ratingSchema(t)),
-    defaultValues: { rating: 0, comment: "" },
+    defaultValues: {
+      reviews: items.map((item) => ({
+        rating: 0,
+        comment: "",
+        product_slug: item.slug,
+      })),
+    },
   });
 
   // Watch the rating value to conditionally render the comment field
-  const rating = useWatch({ control, name: "rating" });
+  const reviews = useWatch({ control, name: "reviews" });
 
   // Handle form submission
   const onSubmit: SubmitHandler<RatingFormData> = async (data) => {
     try {
-      await http.post(
-        `/api/v1/products/${items[activeItemIndex].slug}/reviews`,
-        data,
-      );
-      if (activeItemIndex < items.length - 1) {
-        setActiveItemIndex(activeItemIndex + 1);
-        reset({ rating: 0, comment: "" });
-      } else {
-        closeBtn.current?.click();
-        reset({ rating: 0, comment: "" });
-      }
+      await http.post(`/api/v1/orders/${orderId}/reviews`, data);
+      toast.success(t("SuccessfullyRated"));
+      closeBtn.current?.click();
     } catch (error) {
       console.error("Error submitting rating:", error);
+      toast.error(t("FailedToRate"));
     }
   };
 
@@ -71,34 +75,40 @@ export default function OrderRate({ items }: { items: OrderItem["items"] }) {
           className="-mx-4 no-scrollbar max-h-[50vh] overflow-y-auto px-4 space-y-6"
           onSubmit={(e) => void handleSubmit(onSubmit)(e)}
         >
-          <Controller
-            control={control}
-            name="rating"
-            render={({ field }) => {
-              return (
-                <>
-                  <OrderRating
-                    {...field}
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
-                  <FieldError errors={[errors.rating]} />
-                </>
-              );
-            }}
-          />
+          <h3 className="text-2xl text-center font-medium text-foreground">
+            {t("OrderExperience")}
+          </h3>
 
-          {rating ? (
-            <>
-              <FormTextarea
-                name="comment"
-                register={register}
-                label={t("FeedbackLabel")}
-                placeholder={t("FeedbackPlaceholder")}
-                inputClassName="h-30"
-              />
-            </>
-          ) : null}
+          {reviews.map((_, index) => (
+            <Controller
+              key={index}
+              control={control}
+              name={`reviews.${index}.rating`}
+              render={({ field }) => {
+                return (
+                  <>
+                    <p className="text-sm text-foreground/60 text-center">
+                      {index + 1}- {items[index].name}
+                    </p>
+                    <OrderRating
+                      {...field}
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                    <FieldError errors={[errors.reviews?.[index]?.rating]} />
+                  </>
+                );
+              }}
+            />
+          ))}
+
+          <FormTextarea
+            name="reviews.0.comment"
+            register={register}
+            label={t("FeedbackLabel")}
+            placeholder={t("FeedbackPlaceholder")}
+            inputClassName="h-30"
+          />
         </form>
         <DialogFooter>
           <Button

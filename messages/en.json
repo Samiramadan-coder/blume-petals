@@ -508,7 +508,10 @@
       "RatingSuccess": "Your rating has been submitted successfully. Thank you for your feedback.",
       "RatingError": "Failed to submit rating. Please try again.",
       "MaybeLater": "Maybe Later",
-      "RatingRequired": "Please select a rating before submitting."
+      "RatingRequired": "Please select a rating before submitting.",
+      "OrderExperience": "How was your order experience?",
+      "SuccessfullyRated": "You have successfully rated this order.",
+      "FailedToRate": "Failed to submit your rating. Please try again."
     },
     "Designs": {
       "Title": "My Designs",

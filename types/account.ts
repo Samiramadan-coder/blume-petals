@@ -103,8 +103,13 @@ export type AddressesResponse = {
 // Orders
 export const ratingSchema = (t: T) =>
   z.object({
-    rating: z.number().min(1, t("RatingRequired")),
-    comment: z.string().optional(),
+    reviews: z.array(
+      z.object({
+        product_slug: z.string(),
+        rating: z.number().min(1, t("RatingRequired")),
+        comment: z.string().optional(),
+      }),
+    ),
   });
 
 export type RatingFormData = z.infer<ReturnType<typeof ratingSchema>>;

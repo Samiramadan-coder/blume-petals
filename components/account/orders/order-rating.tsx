@@ -32,10 +32,6 @@ export default function ActiveRating({
 
   return (
     <div className="flex flex-col items-center gap-4 text-center">
-      <h3 className="text-2xl font-medium text-foreground">
-        How was your order?
-      </h3>
-
       <div
         className="flex items-center gap-4"
         onMouseLeave={() => setHoverRating(0)}

@@ -1,9 +1,9 @@
-import Orders from "@/components/account/orders/orders";
-import NoDataFounded from "@/components/reusable/no-data-founded";
 import { http } from "@/lib/http";
 import { OrderItem } from "@/types/account";
 import { Pagination } from "@/types/shared";
 import { getTranslations } from "next-intl/server";
+import Orders from "@/components/account/orders/orders";
+import NoDataFounded from "@/components/reusable/no-data-founded";
 
 type SearchParams = {
   page?: string;
@@ -22,6 +22,8 @@ export default async function OrdersPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
+  const { page, status } = await searchParams;
+
   const { data, ok } = await http.get<{
     data: {
       items: OrderItem[];
@@ -34,16 +36,14 @@ export default async function OrdersPage({
     },
     params: {
       per_page: 5,
-      page: (await searchParams).page ?? "1",
-      status: (await searchParams).status ?? "all",
+      page: page ?? "1",
+      status: status ?? "all",
     },
   });
 
   if (!ok) {
     throw new Error("Failed to fetch orders");
   }
-
-  console.log("Orders data:", data);
 
   return (
     <>

@@ -224,7 +224,7 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
                   <OrderCancel orderId={order.id} />
                 )}
                 {order.status === "delivered" && (
-                  <OrderRate items={order.items} />
+                  <OrderRate items={order.items} orderId={order.id} />
                 )}
               </div>
             </div>
