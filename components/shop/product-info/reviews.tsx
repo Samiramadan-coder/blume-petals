@@ -54,25 +54,27 @@ async function ReviewsData({
         <NoDataFounded />
       ) : (
         <>
-          <div className="flex flex-col md:flex-row gap-20 mb-6">
+          <div className="flex flex-col md:flex-row gap-14 mb-6">
             <div>
               <p className="font-semibold text-foreground mb-6">
                 {t("RatingBreakdown")}
               </p>
-              <div className="space-y-4">
-                {Object.entries(ratingBreakdown).map(([key, value]) => (
-                  <div className="flex items-center gap-2" key={key}>
-                    <div className="min-w-24">
-                      <Rating rating={value} size={14} />
+              <div className="flex flex-col-reverse gap-4">
+                {Object.entries(ratingBreakdown).map(([key, value]) => {
+                  return (
+                    <div className="flex items-center gap-2" key={key}>
+                      <div className="min-w-24">
+                        <Rating rating={+key} size={14} />
+                      </div>
+                      <span className="text-xs">{value}</span>
+                      <Progress
+                        value={(value / data.data.pagination.total) * 100}
+                        className="h-2 w-60 bg-[#e6ddd6] [&>div]:bg-primary"
+                      />
+                      <span className="text-xs font-semibold">{value}</span>
                     </div>
-                    <span className="text-xs">{value}</span>
-                    <Progress
-                      value={(value / data.data.pagination.total) * 100}
-                      className="h-2 w-60 bg-[#e6ddd6] [&>div]:bg-primary"
-                    />
-                    <span className="text-xs font-semibold">{value}</span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
