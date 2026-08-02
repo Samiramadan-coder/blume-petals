@@ -19,7 +19,7 @@ import NoDataFounded from "@/components/reusable/no-data-founded";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import { buildQueryString, cn, normalizeArrayParam } from "@/lib/utils";
 import PaginationTemplate from "@/components/reusable/pagination-template";
-import ListOfProductsSkeleton from "@/components/shop/list-of-product-skeleton";
+import ListOfProductsSkeleton from "@/components/shop/skeleton/list-of-product-skeleton";
 
 type SearchParams = {
   price_min?: string;

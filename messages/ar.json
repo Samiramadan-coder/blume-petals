@@ -609,6 +609,7 @@
     "PickupLocation": "موقع الاستلام",
     "Hours": "الساعات",
     "ReadyIn": "جاهز في",
-    "HowToReceiveOrder": "كيف ترغب في استلام طلبك؟"
+    "HowToReceiveOrder": "كيف ترغب في استلام طلبك؟",
+    "RatingBreakdown": "توزيع التقييمات"
   }
 }

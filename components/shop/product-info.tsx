@@ -1,21 +1,18 @@
 import { Separator } from "../ui/separator";
 import { tabs } from "@/constants/shop-page";
-import { Reviews } from "./product-info/reviews";
+import Reviews from "./product-info/reviews";
 import { getTranslations } from "next-intl/server";
 import { Delivery } from "./product-info/delivery";
 import { Description } from "./product-info/description";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
-import { Pagination } from "@/types/shared";
 
 export default async function ProductInfo({
   product,
-  reviews,
-  pagination,
+  reviewCurrentPage,
 }: {
   product: ProductDetailsType;
-  reviews: ProductDetailsType["reviews"];
-  pagination: Pagination;
+  reviewCurrentPage?: string;
 }) {
   const t = await getTranslations("Shop");
 
@@ -42,7 +39,7 @@ export default async function ProductInfo({
           <Description description={product.description} />
         </TabsContent>
         <TabsContent value="reviews">
-          <Reviews reviews={reviews} pagination={pagination} />
+          <Reviews slug={product.slug} reviewCurrentPage={reviewCurrentPage} />
         </TabsContent>
         <TabsContent value="delivery">
           <Delivery />

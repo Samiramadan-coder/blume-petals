@@ -1,9 +1,13 @@
+import { http } from "@/lib/http";
+import { Pagination } from "@/types/shared";
 import { Rating } from "@/components/ui/rating";
 import { ProductDetails } from "@/types/products";
-import { Card, CardContent } from "@/components/ui/card";
-import { Pagination } from "@/types/shared";
-import PaginationTemplate from "@/components/reusable/pagination-template";
+import { getTranslations } from "next-intl/server";
 import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from "@/components/ui/card";
+import PaginationTemplate from "@/components/reusable/pagination-template";
+import { Suspense } from "react";
+import ProductReviewsSkeleton from "../skeleton/product-reviews-skeleton";
 
 const reviewsDetails: {
   rating: number;
@@ -37,18 +41,38 @@ const reviewsDetails: {
   },
 ];
 
-export async function Reviews({
-  reviews,
-  pagination,
+async function ReviewsData({
+  slug,
+  reviewCurrentPage,
 }: {
-  reviews: ProductDetails["reviews"];
-  pagination: Pagination;
+  slug: string;
+  reviewCurrentPage?: string;
 }) {
+  const t = await getTranslations("Shop");
+
+  const { data, ok } = await http.get<{
+    data: {
+      items: ProductDetails["reviews"];
+      pagination: Pagination;
+    };
+  }>(`/api/v1/products/${slug}/reviews`, {
+    params: {
+      per_page: 1,
+      page: reviewCurrentPage || "1",
+    },
+  });
+
+  if (!ok) {
+    throw new Error("Failed to fetch product reviews");
+  }
+
   return (
     <>
       <div className="flex flex-col md:flex-row gap-20 mb-6">
         <div>
-          <p className="font-semibold text-foreground mb-6">Rating Breakdown</p>
+          <p className="font-semibold text-foreground mb-6">
+            {t("RatingBreakdown")}
+          </p>
           <div className="space-y-4">
             {reviewsDetails.map((review) => (
               <div className="flex items-center gap-2" key={review.rating}>
@@ -67,7 +91,7 @@ export async function Reviews({
         </div>
 
         <div className="lg:col-span-2 space-y-5 flex-1">
-          {reviews.map((review, index) => (
+          {data.data.items.map((review, index) => (
             <Card className="border border-border p-0" key={index}>
               <CardContent className="p-4">
                 <Rating rating={review.rating} size={20} />
@@ -87,10 +111,24 @@ export async function Reviews({
       </div>
 
       <PaginationTemplate
-        currentPage={pagination.current_page}
-        totalPages={pagination.last_page}
+        currentPage={data.data.pagination.current_page}
+        totalPages={data.data.pagination.last_page}
         pageLabel="reviewPage"
       />
     </>
+  );
+}
+
+export default function Reviews({
+  slug,
+  reviewCurrentPage,
+}: {
+  slug: string;
+  reviewCurrentPage?: string;
+}) {
+  return (
+    <Suspense key={reviewCurrentPage} fallback={<ProductReviewsSkeleton />}>
+      <ReviewsData slug={slug} reviewCurrentPage={reviewCurrentPage} />
+    </Suspense>
   );
 }

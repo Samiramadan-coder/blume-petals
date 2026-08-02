@@ -11,7 +11,7 @@ import ProductImages from "@/components/shop/product-images";
 import ProductAddOns from "@/components/shop/product-add-ons";
 import SimilarProducts from "@/components/shop/similar-products";
 import ProductVariants from "@/components/shop/product-variants";
-import ProductPageSkeleton from "@/components/shop/product-details-skeleton";
+import ProductPageSkeleton from "@/components/shop/skeleton/product-details-skeleton";
 
 type Params = { slug: string };
 type SearchParams = { page: string; reviewPage: string };
@@ -50,23 +50,9 @@ async function Product({
     },
   });
 
-  // Fetch product reviews from the API using the slug from the URL parameters
-  // The API response is expected to contain a list of reviews and pagination information
-  const { data: reviewsData, ok: ok3 } = await http.get<{
-    data: {
-      items: ProductDetailsType["reviews"];
-      pagination: Pagination;
-    };
-  }>(`/api/v1/products/${slug}/reviews`, {
-    params: {
-      per_page: 8,
-      page: reviewPage || "1",
-    },
-  });
-
   // If either of the API requests fails,
   // throw an error to indicate that the product or reviews could not be fetched
-  if (!ok1 || !ok3 || !ok2) {
+  if (!ok1 || !ok2) {
     throw new Error("Failed to fetch product or reviews");
   }
 
@@ -82,11 +68,7 @@ async function Product({
           addOns={addOnsData.data.items}
           pagination={addOnsData.data.pagination}
         />
-        <ProductInfo
-          product={product}
-          reviews={reviewsData.data.items}
-          pagination={reviewsData.data.pagination}
-        />
+        <ProductInfo product={product} reviewCurrentPage={reviewPage} />
         <SimilarProducts products={similar} />
       </div>
     </main>
