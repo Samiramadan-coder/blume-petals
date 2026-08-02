@@ -10,14 +10,6 @@ import NoDataFounded from "@/components/reusable/no-data-founded";
 import ProductReviewsSkeleton from "../skeleton/product-reviews-skeleton";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 
-const ratingBreakdown = {
-  "5": 0,
-  "4": 0,
-  "3": 0,
-  "2": 0,
-  "1": 0,
-};
-
 async function ReviewsData({
   slug,
   reviewCurrentPage,
@@ -42,8 +34,6 @@ async function ReviewsData({
     },
   });
 
-  console.log("Reviews data:", data);
-
   if (!ok) {
     throw new Error("Failed to fetch product reviews");
   }
@@ -60,21 +50,23 @@ async function ReviewsData({
                 {t("RatingBreakdown")}
               </p>
               <div className="flex flex-col-reverse gap-4">
-                {Object.entries(ratingBreakdown).map(([key, value]) => {
-                  return (
-                    <div className="flex items-center gap-2" key={key}>
-                      <div className="min-w-24">
-                        <Rating rating={+key} size={14} />
+                {Object.entries(data.data.rating_breakdown).map(
+                  ([key, value]) => {
+                    return (
+                      <div className="flex items-center gap-2" key={key}>
+                        <div className="min-w-24">
+                          <Rating rating={+key} size={14} />
+                        </div>
+                        <span className="text-xs">{value}</span>
+                        <Progress
+                          value={(value / data.data.pagination.total) * 100}
+                          className="h-2 w-60 bg-[#e6ddd6] [&>div]:bg-primary"
+                        />
+                        <span className="text-xs font-semibold">{value}</span>
                       </div>
-                      <span className="text-xs">{value}</span>
-                      <Progress
-                        value={(value / data.data.pagination.total) * 100}
-                        className="h-2 w-60 bg-[#e6ddd6] [&>div]:bg-primary"
-                      />
-                      <span className="text-xs font-semibold">{value}</span>
-                    </div>
-                  );
-                })}
+                    );
+                  },
+                )}
               </div>
             </div>
 
