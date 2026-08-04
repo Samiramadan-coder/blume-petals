@@ -23,6 +23,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { User } from "@/types/shared";
+import { Notification } from "@/types/notifications";
 import LogoutBtn from "../logout-btn";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -31,7 +32,8 @@ import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
 import { Separator } from "@/components/ui/separator";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { Bell, Heart, ShoppingBag, Menu } from "lucide-react";
+import { Heart, ShoppingBag, Menu } from "lucide-react";
+import NotificationsPopover from "./notifications-popover";
 
 const sidebarNavItems = [
   { label: "Home", href: "/" },
@@ -57,10 +59,14 @@ export default function AppHeaderControl({
   user,
   wishlistCount,
   addedToCartCount,
+  countUnreadNotifications,
+  notifications,
 }: {
   user: User | null;
   wishlistCount: number;
   addedToCartCount: number;
+  countUnreadNotifications: number;
+  notifications: Notification[];
 }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const scrolled = useIsScroll();
@@ -93,17 +99,11 @@ export default function AppHeaderControl({
             </Button>
           </Link>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative hover:bg-transparent cursor-pointer"
-            aria-label="Bell"
-          >
-            <Bell className={cn(`size-5 text-white/92`, textColor)} />
-            {/* <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
-              {1}
-            </span> */}
-          </Button>
+          <NotificationsPopover
+            textColor={textColor}
+            countUnreadNotifications={countUnreadNotifications}
+            notifications={notifications}
+          />
 
           <Link href="/cart">
             <Button

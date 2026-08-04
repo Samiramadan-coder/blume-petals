@@ -624,5 +624,17 @@
     "ReadyIn": "Ready in",
     "HowToReceiveOrder": "How would you like to receive your order?",
     "RatingBreakdown": "Rating Breakdown"
+  },
+  "Notifications": {
+    "Title": "Notifications",
+    "MarkAllAsRead": "Mark all as read",
+    "ViewAllNotifications": "View All Notifications",
+    "NoNotifications": "You have no notifications.",
+    "Filters": {
+      "All": "All",
+      "Orders": "Orders",
+      "Promotions": "Promotions",
+      "System": "System"
+    }
   }
 }

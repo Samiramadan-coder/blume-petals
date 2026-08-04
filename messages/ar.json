@@ -614,5 +614,17 @@
     "ReadyIn": "جاهز في",
     "HowToReceiveOrder": "كيف ترغب في استلام طلبك؟",
     "RatingBreakdown": "توزيع التقييمات"
+  },
+  "Notifications": {
+    "Title": "الإشعارات",
+    "MarkAllAsRead": "وضع علامة مقروءة على الكل",
+    "ViewAllNotifications": "عرض جميع الإشعارات",
+    "NoNotifications": "ليس لديك أي إشعارات.",
+    "Filters": {
+      "All": "الكل",
+      "Orders": "الطلبات",
+      "Promotions": "العروض",
+      "System": "النظام"
+    }
   }
 }

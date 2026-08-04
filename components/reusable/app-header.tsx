@@ -2,6 +2,7 @@ import AppLogo from "./app-logo";
 import { http } from "@/lib/http";
 import { cookies } from "next/headers";
 import { Pagination, User } from "@/types/shared";
+import { Notification } from "@/types/notifications";
 import { getTranslations } from "next-intl/server";
 import HeaderNavLink from "./app-header/header-nav-link";
 import AppHeaderShell from "./app-header/app-header-shell";
@@ -21,8 +22,11 @@ export default async function AppHeader() {
   let user: User | null = null;
   let wishlistCount = 0;
   let addedToCartCount = 0;
+  let countUnreadNotifications = 0;
+  let notificationsList: Notification[] = [];
 
   if (isAuthenticated) {
+    // Fetch user data
     const { data: userData } = await http.get<UserResponse>("/api/v1/auth/me", {
       next: {
         tags: ["user"],
@@ -32,6 +36,7 @@ export default async function AppHeader() {
 
     user = userData.data.user;
 
+    // Fetch wishlist count
     const { data: wishlistData } = await http.get<{
       data: { pagination: Pagination };
     }>("/api/v1/favorites", {
@@ -43,6 +48,7 @@ export default async function AppHeader() {
 
     wishlistCount = wishlistData.data.pagination.total;
 
+    // Fetch cart count
     const { data: cartData } = await http.get<{
       data: { cart: { items: [] } };
     }>("/api/v1/cart", {
@@ -53,6 +59,30 @@ export default async function AppHeader() {
     });
 
     addedToCartCount = cartData.data.cart.items.length;
+
+    // Fetch unread notifications count
+    const { data: notificationsData } = await http.get<{
+      data: { unread_count: number };
+    }>("/api/v1/notifications/unread-count", {
+      next: {
+        tags: ["notifications-count"],
+        revalidate: 60,
+      },
+    });
+
+    countUnreadNotifications = notificationsData.data.unread_count;
+
+    // Fetch notifications
+    const { data: notifications } = await http.get<{
+      data: { items: Notification[]; pagination: Pagination };
+    }>("/api/v1/notifications", {
+      next: {
+        tags: ["notifications-list"],
+        revalidate: 60,
+      },
+    });
+
+    notificationsList = notifications.data.items;
   }
 
   return (
@@ -71,6 +101,8 @@ export default async function AppHeader() {
           user={user}
           wishlistCount={wishlistCount}
           addedToCartCount={addedToCartCount}
+          countUnreadNotifications={countUnreadNotifications}
+          notifications={notificationsList}
         />
       </div>
     </AppHeaderShell>
