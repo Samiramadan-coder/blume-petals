@@ -20,6 +20,7 @@ import { tabs } from "@/constants/notifications";
 import { Notification } from "@/types/notifications";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bell, CircleAlert, Gift, Truck } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function NotificationsPopover({
   notifications,
@@ -74,14 +75,15 @@ export default function NotificationsPopover({
         collisionPadding={16}
         className={cn(
           "w-[calc(100vw-32px)] max-w-[384px] overflow-hidden p-0 gap-0",
-          "rounded-2xl border border-[#eee9e2] bg-white",
-          "shadow-[0_10px_35px_rgba(50,44,36,0.16)]",
+          "rounded-2xl border border-none! bg-white",
+          "shadow-none!",
         )}
       >
         {/* Header */}
         <div className="flex h-13 items-center justify-between border-b px-5">
-          <h3 className="text-sm font-semibold text-[#333333]">{t("Title")}</h3>
-
+          <h3 className="text-sm font-semibold text-foreground">
+            {t("Title")}
+          </h3>
           <Button
             onClick={markAllAsRead}
             variant="ghost"
@@ -94,26 +96,23 @@ export default function NotificationsPopover({
 
         {/* Tabs */}
         <div className="flex items-center gap-1 border-b px-4 py-3">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.value;
-
-            return (
-              <button
-                key={tab.value}
-                type="button"
-                onClick={() => setActiveTab(tab.value)}
-                className={cn(
-                  "rounded-xl px-3 py-2 text-xs font-medium",
-                  "transition-colors",
-                  isActive
-                    ? "bg-[#f4f0ea] text-[#4b4842]"
-                    : "text-[#929088] hover:bg-[#faf8f5]",
-                )}
-              >
-                {tab.label}
-              </button>
-            );
-          })}
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full bg-transparent"
+          >
+            <TabsList className="bg-transparent gap-2 h-auto">
+              {tabs.map((tab) => (
+                <TabsTrigger
+                  className="cursor-pointer data-[state=active]:shadow-none! data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
+                  key={tab.value}
+                  value={tab.value}
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
         </div>
 
         {/* Notifications */}

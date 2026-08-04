@@ -19,7 +19,7 @@ export default async function ProductInfo({
   return (
     <div className="md:col-span-2">
       <Tabs defaultValue="description" className="gap-0">
-        <TabsList variant="line" className="h-16! space-x-6 ">
+        <TabsList variant="line" className="h-16! space-x-6">
           {tabs(t).map((tab) => (
             <TabsTrigger
               key={tab.value}
