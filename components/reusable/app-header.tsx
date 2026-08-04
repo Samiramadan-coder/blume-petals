@@ -30,7 +30,6 @@ export default async function AppHeader() {
     const { data: userData } = await http.get<UserResponse>("/api/v1/auth/me", {
       next: {
         tags: ["user"],
-        revalidate: 60,
       },
     });
 
@@ -42,7 +41,6 @@ export default async function AppHeader() {
     }>("/api/v1/favorites", {
       next: {
         tags: ["wishlist-count"],
-        revalidate: 60,
       },
     });
 
@@ -54,7 +52,6 @@ export default async function AppHeader() {
     }>("/api/v1/cart", {
       next: {
         tags: ["cart-count"],
-        revalidate: 60,
       },
     });
 
@@ -66,7 +63,6 @@ export default async function AppHeader() {
     }>("/api/v1/notifications/unread-count", {
       next: {
         tags: ["notifications-count"],
-        revalidate: 60,
       },
     });
 
@@ -78,7 +74,6 @@ export default async function AppHeader() {
     }>("/api/v1/notifications", {
       next: {
         tags: ["notifications-list"],
-        revalidate: 60,
       },
     });
 

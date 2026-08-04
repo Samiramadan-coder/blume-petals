@@ -19,7 +19,6 @@ async function AddressesContent({ countries }: { countries: Country[] }) {
   const { data } = await http.get<AddressesResponse>("/api/v1/addresses", {
     next: {
       tags: ["addresses-page"],
-      revalidate: 60,
     },
   });
 

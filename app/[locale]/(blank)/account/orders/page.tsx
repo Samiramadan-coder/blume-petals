@@ -31,7 +31,6 @@ export default async function OrdersPage({
     };
   }>("/api/v1/orders", {
     next: {
-      revalidate: 60,
       tags: ["orders"],
     },
     params: {

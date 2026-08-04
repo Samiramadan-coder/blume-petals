@@ -32,7 +32,6 @@ async function ProfileContent({
   const { data, ok } = await http.get<UserResponse>("/api/v1/auth/me", {
     next: {
       tags: ["profile-page"],
-      revalidate: 60,
     },
   });
 

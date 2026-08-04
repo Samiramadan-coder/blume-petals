@@ -33,13 +33,12 @@ export default function NotificationsPopover({
   const t = useTranslations("Notifications");
   const [activeTab, setActiveTab] = useState("all");
 
-  // Function to mark all notifications as read
   async function markAllAsRead() {
-    const result = await markAllNotificationsAsRead();
+    await markAllNotificationsAsRead();
   }
 
   async function markRead(notificationId: string) {
-    const result = await markNotificationAsRead(notificationId);
+    await markNotificationAsRead(notificationId);
   }
 
   return (
