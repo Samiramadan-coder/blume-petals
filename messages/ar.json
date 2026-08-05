@@ -620,6 +620,7 @@
     "MarkAllAsRead": "وضع علامة مقروءة على الكل",
     "ViewAllNotifications": "عرض جميع الإشعارات",
     "NoNotifications": "ليس لديك أي إشعارات.",
+    "LoadMore": "تحميل المزيد",
     "Filters": {
       "All": "الكل",
       "Orders": "الطلبات",

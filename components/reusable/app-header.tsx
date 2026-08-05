@@ -6,7 +6,6 @@ import { getTranslations } from "next-intl/server";
 import HeaderNavLink from "./app-header/header-nav-link";
 import AppHeaderShell from "./app-header/app-header-shell";
 import AppHeaderControl from "./app-header/app-header-control";
-// import EnableNotificationsButton from "../extract-token";
 
 export interface UserResponse {
   data: {
@@ -54,17 +53,6 @@ export default async function AppHeader() {
     });
 
     addedToCartCount = cartData.data.cart.items.length;
-
-    // Fetch notifications
-    // const { data: notifications } = await http.get<{
-    //   data: { items: Notification[]; pagination: Pagination };
-    // }>("/api/v1/notifications", {
-    //   next: {
-    //     tags: ["notifications-list"],
-    //   },
-    // });
-
-    // notificationsList = notifications.data.items;
   }
 
   return (
@@ -79,12 +67,10 @@ export default async function AppHeader() {
           <HeaderNavLink href="/about">{t("About")}</HeaderNavLink>
         </nav>
 
-        {/* <EnableNotificationsButton /> */}
-
         <AppHeaderControl
           user={user}
           wishlistCount={wishlistCount}
-          addedToCartCount={addedToCartCount}
+          cartCount={addedToCartCount}
         />
       </div>
     </AppHeaderShell>

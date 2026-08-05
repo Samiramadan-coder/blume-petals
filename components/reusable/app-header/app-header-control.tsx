@@ -19,58 +19,46 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import {
+  sidebarAuthNavItems,
+  sidebarNavItems,
+  sidebarUserNavItems,
+} from "@/constants/navbar";
+
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { User } from "@/types/shared";
 import LogoutBtn from "../logout-btn";
-import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import SidebarNavLink from "./sidebar-nav-link";
 import { LocaleSwitcher } from "../locale-switcher";
 import { useIsScroll } from "@/hooks/use-is-scroll";
 import { Separator } from "@/components/ui/separator";
+import { useLocale, useTranslations } from "next-intl";
+import NotificationsContent from "./notifications-content";
+import { Heart, ShoppingBag, Menu, Bell } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { Heart, ShoppingBag, Menu } from "lucide-react";
-import NotificationsPopover from "./notifications-popover";
-
-const sidebarNavItems = [
-  { label: "Home", href: "/" },
-  { label: "Shop", href: "/shop" },
-  { label: "Builder", href: "/builder" },
-  { label: "About", href: "/about" },
-];
-
-const sidebarUserNavItems = [
-  { label: "MyProfile", href: "/account/profile" },
-  { label: "MyOrders", href: "/account/orders" },
-  { label: "MyDesigns", href: "/account/designs" },
-  { label: "SavedAddresses", href: "/account/addresses" },
-  { label: "Settings", href: "/account/settings" },
-];
-
-const sidebarAuthNavItems = [
-  { label: "SignIn", href: "/login" },
-  { label: "Register", href: "/register" },
-];
+import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import { useNotifications } from "@/providers/notifications-provider";
 
 export default function AppHeaderControl({
   user,
   wishlistCount,
-  addedToCartCount,
+  cartCount,
 }: {
   user: User | null;
   wishlistCount: number;
-  addedToCartCount: number;
+  cartCount: number;
 }) {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const scrolled = useIsScroll();
-  const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations("AppHeader");
-  const tAccount = useTranslations("Account");
   const locale = useLocale();
+  const pathname = usePathname();
+  const scrolled = useIsScroll();
+  const t = useTranslations("AppHeader");
 
+  const tAccount = useTranslations("Account");
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const textColor =
     pathname !== "/" || scrolled ? "text-foreground" : "text-white/90";
 
@@ -78,42 +66,9 @@ export default function AppHeaderControl({
     <div className="flex items-center gap-3">
       {user ? (
         <>
-          <Link href="/wishlist">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative hover:bg-transparent cursor-pointer"
-              aria-label="Heart"
-            >
-              <Heart className={cn(`size-5 text-white/92`, textColor)} />
-              {wishlistCount > 0 && (
-                <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
-                  {wishlistCount}
-                </span>
-              )}
-            </Button>
-          </Link>
-
-          <NotificationsPopover
-            textColor={textColor}
-            // notifications={notifications}
-          />
-
-          <Link href="/cart">
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="ShoppingCart"
-              className="hover:bg-transparent cursor-pointer relative"
-            >
-              <ShoppingBag className={cn(`size-5`, textColor)} />
-              {addedToCartCount > 0 && (
-                <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-red-400 px-1.5 text-[10px] text-white">
-                  {addedToCartCount}
-                </span>
-              )}
-            </Button>
-          </Link>
+          <WishlistButton textColor={textColor} wishlistCount={wishlistCount} />
+          <NotificationsButton textColor={textColor} />
+          <CartButton textColor={textColor} cartCount={cartCount} />
         </>
       ) : null}
 
@@ -277,5 +232,96 @@ export default function AppHeaderControl({
         </SheetContent>
       </Sheet>
     </div>
+  );
+}
+
+// Wishlist button component.
+function WishlistButton({
+  wishlistCount,
+  textColor,
+}: {
+  wishlistCount: number;
+  textColor: string;
+}) {
+  return (
+    <Link href="/wishlist">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="relative hover:bg-transparent cursor-pointer"
+        aria-label="Heart"
+      >
+        <Heart className={cn(`size-5 text-white/92`, textColor)} />
+        {wishlistCount > 0 && (
+          <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
+            {wishlistCount}
+          </span>
+        )}
+      </Button>
+    </Link>
+  );
+}
+
+// Notifications button component.
+function NotificationsButton({ textColor }: { textColor: string }) {
+  const { unreadCount } = useNotifications();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn(
+            "relative cursor-pointer bg-transparent",
+            "hover:bg-transparent",
+            "focus:bg-transparent",
+            "active:bg-transparent",
+            "data-[state=open]:bg-transparent",
+            "data-[state=open]:hover:bg-transparent",
+            "data-[state=open]:text-inherit",
+            "focus-visible:ring-0 focus-visible:ring-offset-0",
+          )}
+          aria-label="Open notifications"
+        >
+          <Bell className={cn("size-5 text-white/92", textColor)} />
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 grid size-4 place-content-center rounded-full bg-primary text-[10px] font-semibold text-foreground">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
+          )}
+        </Button>
+      </PopoverTrigger>
+
+      {open && <NotificationsContent />}
+    </Popover>
+  );
+}
+
+// Cart button component.
+function CartButton({
+  textColor,
+  cartCount,
+}: {
+  textColor: string;
+  cartCount: number;
+}) {
+  return (
+    <Link href="/cart">
+      <Button
+        variant="ghost"
+        size="icon"
+        aria-label="ShoppingCart"
+        className="hover:bg-transparent cursor-pointer relative"
+      >
+        <ShoppingBag className={cn(`size-5`, textColor)} />
+        {cartCount > 0 && (
+          <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-red-400 px-1.5 text-[10px] text-white">
+            {cartCount}
+          </span>
+        )}
+      </Button>
+    </Link>
   );
 }

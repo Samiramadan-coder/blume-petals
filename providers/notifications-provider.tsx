@@ -11,6 +11,7 @@ import {
 import { http } from "@/lib/http";
 import { onMessage } from "firebase/messaging";
 import { getFirebaseMessaging } from "@/lib/firebase";
+import { getFcmToken } from "@/lib/get-fcm-token";
 
 type NotificationsContextValue = {
   unreadCount: number;
@@ -39,6 +40,20 @@ export function NotificationsProvider({
   const refreshUnreadCount = useCallback(async () => {
     if (!isAuthenticated) return 0;
 
+    // Register FCM token for the user if not already registered
+    const token = await getFcmToken();
+
+    if (!token) {
+      console.log("Notification permission was not granted");
+      return 0;
+    }
+
+    await http.post("/api/v1/device-tokens", {
+      token,
+      platform: "web",
+    });
+
+    // Fetch the unread notifications count from the server
     const { data, ok } = await http.get<{
       data: {
         unread_count: number;

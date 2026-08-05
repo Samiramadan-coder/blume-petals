@@ -1,21 +1,20 @@
-export const tabs: {
-  label: string;
-  value: string;
-}[] = [
+import { T } from "./shared";
+
+export const tabs = (t: T) => [
   {
-    label: "All",
+    label: t("Filters.All"),
     value: "all",
   },
   {
-    label: "Orders",
+    label: t("Filters.Orders"),
     value: "orders",
   },
   {
-    label: "Promotions",
+    label: t("Filters.Promotions"),
     value: "promotions",
   },
   {
-    label: "System",
+    label: t("Filters.System"),
     value: "system",
   },
 ];

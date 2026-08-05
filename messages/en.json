@@ -630,6 +630,7 @@
     "MarkAllAsRead": "Mark all as read",
     "ViewAllNotifications": "View All Notifications",
     "NoNotifications": "You have no notifications.",
+    "LoadMore": "Load More",
     "Filters": {
       "All": "All",
       "Orders": "Orders",
