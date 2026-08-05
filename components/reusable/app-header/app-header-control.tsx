@@ -72,9 +72,7 @@ export default function AppHeaderControl({
         </>
       ) : null}
 
-      <div className="hidden lg:block">
-        <LocaleSwitcher textColor={textColor} />
-      </div>
+      <LocaleSwitcher textColor={textColor} />
 
       <div className="hidden lg:block">
         {user ? (

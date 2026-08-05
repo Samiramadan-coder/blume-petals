@@ -38,6 +38,8 @@ async function NotificationsData({
 
   return (
     <>
+      <h1 className="text-2xl font-bold mb-4">{t("Title")}</h1>
+
       {data.data.items.length === 0 ? (
         <div className="min-h-full flex flex-col items-center justify-center px-6 text-center">
           <Bell className="mb-3 size-8 text-muted-foreground" />
