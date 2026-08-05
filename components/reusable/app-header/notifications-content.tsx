@@ -124,12 +124,14 @@ export default function NotificationsContent() {
           </div>
         ) : (
           <>
-            {notifications.map((notification) => (
-              <NotificationItem
-                notification={notification}
-                key={notification.id}
-              />
-            ))}
+            <div className="divide-y divide-border">
+              {notifications.map((notification) => (
+                <NotificationItem
+                  notification={notification}
+                  key={notification.id}
+                />
+              ))}
+            </div>
 
             {hasMore && (
               <div className="flex items-center justify-center py-4">
