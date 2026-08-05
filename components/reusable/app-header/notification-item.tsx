@@ -67,9 +67,10 @@ export default function NotificationItem({
         </div>
 
         <div className="flex items-center justify-between">
-          <p className="mt-1 text-muted-foreground text-[13px]">
-            {notification.body}
-          </p>
+          <p
+            className="mt-1 text-muted-foreground text-[13px]"
+            dangerouslySetInnerHTML={{ __html: notification.body }}
+          ></p>
 
           {showActions && (
             <div className="flex justify-end gap-2">
