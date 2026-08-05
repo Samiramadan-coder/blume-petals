@@ -10,8 +10,8 @@ import {
 } from "react";
 import { http } from "@/lib/http";
 import { onMessage } from "firebase/messaging";
-import { getFirebaseMessaging } from "@/lib/firebase";
 import { getFcmToken } from "@/lib/get-fcm-token";
+import { getFirebaseMessaging } from "@/lib/firebase";
 
 type NotificationsContextValue = {
   unreadCount: number;
@@ -32,6 +32,23 @@ export function NotificationsProvider({
   const [unreadCount, setUnreadCount] = useState(0);
 
   /**
+   * get FCM token and register it with the server if the user is authenticated.
+   * This function is called when the component mounts and whenever the isAuthenticated prop changes.
+   * It ensures that the FCM token is registered with the server for push notifications.
+   */
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    void getFcmToken().then((token) => {
+      if (token) {
+        http.post("/api/v1/device-tokens", {
+          token,
+          platform: "web",
+        });
+      }
+    });
+  }, [isAuthenticated]);
+
+  /**
    * Refresh the unread notifications count from the server and update the state.
    * This function is memoized using useCallback to prevent unnecessary re-renders.
    * It fetches the unread notifications count from the API and updates the state.
@@ -40,20 +57,6 @@ export function NotificationsProvider({
   const refreshUnreadCount = useCallback(async () => {
     if (!isAuthenticated) return 0;
 
-    // Register FCM token for the user if not already registered
-    const token = await getFcmToken();
-
-    if (!token) {
-      console.log("Notification permission was not granted");
-      return 0;
-    }
-
-    await http.post("/api/v1/device-tokens", {
-      token,
-      platform: "web",
-    });
-
-    // Fetch the unread notifications count from the server
     const { data, ok } = await http.get<{
       data: {
         unread_count: number;
@@ -83,27 +86,42 @@ export function NotificationsProvider({
    * It also cleans up the listener when the component unmounts to prevent memory leaks.
    */
   useEffect(() => {
+    if (!isAuthenticated) return;
+
     let unsubscribe: (() => void) | undefined;
 
     async function listenForNotifications() {
-      const messaging = await getFirebaseMessaging();
+      try {
+        const messaging = await getFirebaseMessaging();
 
-      if (!messaging) {
-        return;
+        if (!messaging) {
+          console.log("Firebase Messaging is not available");
+          return;
+        }
+
+        console.log("FCM foreground listener attached");
+
+        unsubscribe = onMessage(messaging, async (payload) => {
+          console.log("New notification received:", payload);
+
+          const count = await refreshUnreadCount();
+          console.log("Updated unread count:", count);
+          setUnreadCount(count + 1);
+        });
+      } catch (error) {
+        console.error("Failed to attach FCM listener:", error);
       }
-
-      unsubscribe = onMessage(messaging, async (payload) => {
-        console.log("New notification:", payload);
-        await refreshUnreadCount();
-      });
     }
 
     void listenForNotifications();
 
     return () => {
-      unsubscribe?.();
+      if (unsubscribe) {
+        console.log("Cleaning up FCM listener");
+        unsubscribe();
+      }
     };
-  }, [refreshUnreadCount]);
+  }, [isAuthenticated, refreshUnreadCount]);
 
   return (
     <NotificationsContext.Provider
