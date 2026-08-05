@@ -41,17 +41,17 @@ export function NotificationsProvider({
     if (!isAuthenticated) return 0;
 
     // Register FCM token for the user if not already registered
-    const token = await getFcmToken();
+    // const token = await getFcmToken();
 
-    if (!token) {
-      console.log("Notification permission was not granted");
-      return 0;
-    }
+    // if (!token) {
+    //   console.log("Notification permission was not granted");
+    //   return 0;
+    // }
 
-    await http.post("/api/v1/device-tokens", {
-      token,
-      platform: "web",
-    });
+    // await http.post("/api/v1/device-tokens", {
+    //   token,
+    //   platform: "web",
+    // });
 
     // Fetch the unread notifications count from the server
     const { data, ok } = await http.get<{
