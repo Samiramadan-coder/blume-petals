@@ -1,11 +1,23 @@
-import NotificationItem from "@/components/reusable/app-header/notification-item";
+import { Suspense } from "react";
 import { http } from "@/lib/http";
-import { Notification } from "@/types/notifications";
-import { Pagination } from "@/types/shared";
 import { Bell } from "lucide-react";
+import { Pagination } from "@/types/shared";
 import { getTranslations } from "next-intl/server";
+import { Notification } from "@/types/notifications";
+import PaginationTemplate from "@/components/reusable/pagination-template";
+import NotificationItem from "@/components/reusable/app-header/notification-item";
+import NotificationsPageSkeleton from "@/components/notifications/notification-page-skeleton";
+import FilterControl from "@/components/notifications/filter-control";
 
-export default async function NotificationsPage() {
+type SearchParams = {
+  page?: string;
+};
+
+async function NotificationsData({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const t = await getTranslations("Notifications");
 
   const { data, ok } = await http.get<{
@@ -15,8 +27,8 @@ export default async function NotificationsPage() {
     };
   }>("/api/v1/notifications", {
     params: {
-      page: 1,
-      per_page: 10,
+      page: searchParams.page ?? 1,
+      per_page: 5,
     },
   });
 
@@ -25,28 +37,56 @@ export default async function NotificationsPage() {
   }
 
   return (
-    <main className="">
-      <div className="container max-w-7xl py-20 min-h-[50vh]">
-        {data.data.items.length === 0 ? (
-          <div className="min-h-full flex flex-col items-center justify-center px-6 text-center">
-            <Bell className="mb-3 size-8 text-muted-foreground" />
-            <p className="text-sm font-medium text-muted-foreground">
-              {t("NoNotifications")}
-            </p>
-          </div>
-        ) : (
-          data.data.items.map((notification) => (
+    <>
+      {data.data.items.length === 0 ? (
+        <div className="min-h-full flex flex-col items-center justify-center px-6 text-center">
+          <Bell className="mb-3 size-8 text-muted-foreground" />
+          <p className="text-sm font-medium text-muted-foreground">
+            {t("NoNotifications")}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <FilterControl />
+
+          {data.data.items.map((notification) => (
             <div
               key={notification.id}
-              className="mb-4 border rounded-md overflow-hidden"
+              className="border rounded-md overflow-hidden"
             >
               <NotificationItem
                 notification={notification}
                 showActions={true}
               />
             </div>
-          ))
-        )}
+          ))}
+
+          <PaginationTemplate
+            currentPage={data.data.pagination.current_page}
+            totalPages={data.data.pagination.last_page}
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
+export default async function NotificationsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const pageSearchParams = await searchParams;
+
+  return (
+    <main>
+      <div className="container max-w-7xl py-20 min-h-[50vh]">
+        <Suspense
+          key={pageSearchParams.page ?? 1}
+          fallback={<NotificationsPageSkeleton />}
+        >
+          <NotificationsData searchParams={pageSearchParams} />
+        </Suspense>
       </div>
     </main>
   );
