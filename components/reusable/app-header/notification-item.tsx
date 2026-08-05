@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, formatSmartDate } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Notification } from "@/types/notifications";
@@ -10,6 +10,7 @@ import {
 } from "@/lib/notifications";
 import { CircleAlert, CircleCheck, Gift, Trash2, Truck } from "lucide-react";
 import { DialogDelete } from "../delete-dialoge";
+import { useLocale } from "next-intl";
 
 export default function NotificationItem({
   notification,
@@ -18,6 +19,7 @@ export default function NotificationItem({
   notification: Notification;
   showActions?: boolean;
 }) {
+  const locale = useLocale();
   const [isRead, setIsRead] = useState(notification.read);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
@@ -54,8 +56,11 @@ export default function NotificationItem({
           </h4>
 
           <div className="flex shrink-0 items-center gap-2">
-            <span className="text-[11px] whitespace-nowrap text-muted-foreground">
-              {notification.created_at.split("T")[0]}{" "}
+            <span className="text-[11px] font-semibold whitespace-nowrap text-muted-foreground">
+              {formatSmartDate(
+                notification.created_at,
+                locale === "en" ? "en-US" : "ar-EG",
+              )}{" "}
             </span>
             {!isRead && <span className="size-2 rounded-full bg-primary" />}
           </div>
