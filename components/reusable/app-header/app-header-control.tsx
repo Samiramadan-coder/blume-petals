@@ -23,7 +23,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { User } from "@/types/shared";
-import { Notification } from "@/types/notifications";
 import LogoutBtn from "../logout-btn";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -59,14 +58,10 @@ export default function AppHeaderControl({
   user,
   wishlistCount,
   addedToCartCount,
-  countUnreadNotifications,
-  notifications,
 }: {
   user: User | null;
   wishlistCount: number;
   addedToCartCount: number;
-  countUnreadNotifications: number;
-  notifications: Notification[];
 }) {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const scrolled = useIsScroll();
@@ -101,8 +96,7 @@ export default function AppHeaderControl({
 
           <NotificationsPopover
             textColor={textColor}
-            countUnreadNotifications={countUnreadNotifications}
-            notifications={notifications}
+            // notifications={notifications}
           />
 
           <Link href="/cart">

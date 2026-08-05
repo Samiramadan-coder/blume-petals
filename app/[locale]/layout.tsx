@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import "@/assets/css/globals.css";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
@@ -9,6 +10,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { DirectionProvider } from "@/components/ui/direction";
 import { Inter, Playfair_Display, Cairo } from "next/font/google";
 import GoogleAuthProvider from "@/providers/google-auth-provider";
+import { NotificationsProvider } from "@/providers/notifications-provider";
 
 const InterFont = Inter({
   variable: "--font-inter",
@@ -42,6 +44,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
+  const cookieStore = await cookies();
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -61,18 +64,20 @@ export default async function RootLayout({
         "h-full antialiased",
       )}
     >
-      <GoogleAuthProvider>
-        <NextIntlClientProvider>
-          <DirectionProvider dir={dir}>
-            <body className="min-h-full flex flex-col">
-              <NuqsAdapter>
-                {children}
-                <Toaster richColors />
-              </NuqsAdapter>
-            </body>
-          </DirectionProvider>
-        </NextIntlClientProvider>
-      </GoogleAuthProvider>
+      <NotificationsProvider isAuthenticated={!!cookieStore.get("token")}>
+        <GoogleAuthProvider>
+          <NextIntlClientProvider>
+            <DirectionProvider dir={dir}>
+              <body className="min-h-full flex flex-col">
+                <NuqsAdapter>
+                  {children}
+                  <Toaster richColors />
+                </NuqsAdapter>
+              </body>
+            </DirectionProvider>
+          </NextIntlClientProvider>
+        </GoogleAuthProvider>
+      </NotificationsProvider>
     </html>
   );
 }

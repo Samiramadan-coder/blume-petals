@@ -2,11 +2,11 @@ import AppLogo from "./app-logo";
 import { http } from "@/lib/http";
 import { cookies } from "next/headers";
 import { Pagination, User } from "@/types/shared";
-import { Notification } from "@/types/notifications";
 import { getTranslations } from "next-intl/server";
 import HeaderNavLink from "./app-header/header-nav-link";
 import AppHeaderShell from "./app-header/app-header-shell";
 import AppHeaderControl from "./app-header/app-header-control";
+// import EnableNotificationsButton from "../extract-token";
 
 export interface UserResponse {
   data: {
@@ -22,8 +22,6 @@ export default async function AppHeader() {
   let user: User | null = null;
   let wishlistCount = 0;
   let addedToCartCount = 0;
-  let countUnreadNotifications = 0;
-  let notificationsList: Notification[] = [];
 
   if (isAuthenticated) {
     // Fetch user data
@@ -57,27 +55,16 @@ export default async function AppHeader() {
 
     addedToCartCount = cartData.data.cart.items.length;
 
-    // Fetch unread notifications count
-    const { data: notificationsData } = await http.get<{
-      data: { unread_count: number };
-    }>("/api/v1/notifications/unread-count", {
-      next: {
-        tags: ["notifications-count"],
-      },
-    });
-
-    countUnreadNotifications = notificationsData.data.unread_count;
-
     // Fetch notifications
-    const { data: notifications } = await http.get<{
-      data: { items: Notification[]; pagination: Pagination };
-    }>("/api/v1/notifications", {
-      next: {
-        tags: ["notifications-list"],
-      },
-    });
+    // const { data: notifications } = await http.get<{
+    //   data: { items: Notification[]; pagination: Pagination };
+    // }>("/api/v1/notifications", {
+    //   next: {
+    //     tags: ["notifications-list"],
+    //   },
+    // });
 
-    notificationsList = notifications.data.items;
+    // notificationsList = notifications.data.items;
   }
 
   return (
@@ -92,12 +79,12 @@ export default async function AppHeader() {
           <HeaderNavLink href="/about">{t("About")}</HeaderNavLink>
         </nav>
 
+        {/* <EnableNotificationsButton /> */}
+
         <AppHeaderControl
           user={user}
           wishlistCount={wishlistCount}
           addedToCartCount={addedToCartCount}
-          countUnreadNotifications={countUnreadNotifications}
-          notifications={notificationsList}
         />
       </div>
     </AppHeaderShell>

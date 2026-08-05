@@ -21,18 +21,17 @@ import { Notification } from "@/types/notifications";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bell, CircleAlert, Gift, Truck } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useNotifications } from "@/providers/notifications-provider";
 
 export default function NotificationsPopover({
-  notifications,
   textColor,
-  countUnreadNotifications,
 }: {
-  notifications: Notification[];
   textColor: string;
-  countUnreadNotifications: number;
 }) {
+  const { unreadCount } = useNotifications();
   const t = useTranslations("Notifications");
   const [activeTab, setActiveTab] = useState("all");
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   async function markAllAsRead() {
     await markAllNotificationsAsRead();
@@ -61,9 +60,9 @@ export default function NotificationsPopover({
           aria-label="Open notifications"
         >
           <Bell className={cn("size-5 text-white/92", textColor)} />
-          {countUnreadNotifications > 0 && (
+          {unreadCount > 0 && (
             <span className="absolute -top-1 -right-1 grid size-4 place-content-center rounded-full bg-primary text-[10px] font-semibold text-foreground">
-              {countUnreadNotifications > 9 ? "9+" : countUnreadNotifications}
+              {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           )}
         </Button>
@@ -87,7 +86,7 @@ export default function NotificationsPopover({
           <Button
             onClick={markAllAsRead}
             variant="ghost"
-            disabled={countUnreadNotifications === 0}
+            disabled={unreadCount === 0}
             className="text-primary text-xs hover:bg-transparent hover:text-primary"
           >
             {t("MarkAllAsRead")}

@@ -13,6 +13,7 @@
     "@react-oauth/google": "^0.13.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "firebase": "^12.17.0",
     "input-otp": "^1.4.2",
     "jose": "^6.2.3",
     "leaflet": "^1.9.4",
