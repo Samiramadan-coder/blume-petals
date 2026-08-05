@@ -1,6 +1,6 @@
 export type Notification = {
   id: string;
-  type: "orders" | "promotions" | "system";
+  type: "order" | "promo" | "system";
   title: string;
   body: string;
   link: string;

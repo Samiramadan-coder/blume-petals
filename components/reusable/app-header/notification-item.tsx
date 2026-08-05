@@ -41,7 +41,7 @@ export default function NotificationItem({
         {notification.type.includes("order") && (
           <Truck className="size-4 text-[#5f6fa8]" />
         )}
-        {notification.type === "promotions" && (
+        {notification.type === "promo" && (
           <Gift className="size-4 text-[#e38da9]" />
         )}
         {notification.type === "system" && (
