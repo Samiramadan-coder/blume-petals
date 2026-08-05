@@ -36,7 +36,7 @@ export default function NotificationsContent() {
     }>("/api/v1/notifications", {
       params: {
         page: targetPage,
-        per_page: 2,
+        per_page: 10,
       },
     });
 

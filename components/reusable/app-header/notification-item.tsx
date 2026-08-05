@@ -1,9 +1,11 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Notification } from "@/types/notifications";
-import { CircleAlert, CircleCheck, Gift, Trash2, Truck } from "lucide-react";
 import { markNotificationAsRead } from "@/lib/notifications";
+import { CircleAlert, CircleCheck, Gift, Trash2, Truck } from "lucide-react";
 
 export default function NotificationItem({
   notification,
@@ -22,14 +24,13 @@ export default function NotificationItem({
   return (
     <div
       key={notification.id}
-      // onClick={() => markRead(notification.id)}
       className={cn(
-        "cursor-pointer flex items-start gap-3 rounded-none px-5 py-4 text-left mb-1",
+        "flex items-start gap-3 rounded-none px-5 py-4 text-left",
         "transition-colors hover:bg-primary/20",
         isRead ? "bg-white" : "bg-primary/20",
       )}
     >
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
         {notification.type.includes("order") && (
           <Truck className="size-4 text-[#5f6fa8]" />
         )}
@@ -55,30 +56,34 @@ export default function NotificationItem({
           </div>
         </div>
 
-        <p className="text-start mt-1 max-w-61.25 text-[13px] leading-5 text-muted-foreground">
-          {notification.body}
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="mt-1 text-muted-foreground text-[13px]">
+            {notification.body}
+          </p>
 
-        {showActions && (
-          <div className="flex justify-end gap-2 mt-3">
-            {!isRead && (
+          {showActions && (
+            <div className="flex justify-end gap-2">
+              {!isRead && (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="hover:bg-transparent"
+                  onClick={() => markRead(notification.id)}
+                >
+                  <CircleCheck className="size-4 text-green-400" />
+                </Button>
+              )}
               <Button
                 size="icon"
                 variant="ghost"
-                onClick={() => markRead(notification.id)}
+                className="hover:bg-transparent"
+                onClick={() => console.log("Delete", notification.id)}
               >
-                <CircleCheck className="size-4 text-green-400" />
+                <Trash2 className="size-4 text-red-400" />
               </Button>
-            )}
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => console.log("Delete", notification.id)}
-            >
-              <Trash2 className="size-4 text-red-400" />
-            </Button>
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
