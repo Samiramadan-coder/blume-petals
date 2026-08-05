@@ -49,11 +49,9 @@ export function DialogDelete({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
-          <DialogClose asChild>
-            <Button type="button" onClick={handleConfirm} variant="destructive">
-              {loading ? <Spinner /> : "Confirm"}
-            </Button>
-          </DialogClose>
+          <Button type="button" onClick={handleConfirm} variant="destructive">
+            {loading ? <Spinner /> : "Confirm"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -26,6 +26,9 @@ async function NotificationsData({
       pagination: Pagination;
     };
   }>("/api/v1/notifications", {
+    next: {
+      tags: ["notifications-list"],
+    },
     params: {
       page: searchParams.page ?? 1,
       per_page: 5,

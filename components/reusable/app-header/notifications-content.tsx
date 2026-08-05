@@ -12,7 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import NotificationItem from "./notification-item";
 import { Notification } from "@/types/notifications";
 import { useCallback, useEffect, useState } from "react";
-import { PopoverContent } from "@/components/ui/popover";
+import { PopoverClose, PopoverContent } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { markAllNotificationsAsRead } from "@/lib/notifications";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -154,16 +154,18 @@ export default function NotificationsContent() {
       </ScrollArea>
 
       {/* Footer */}
-      <Link
-        href="/notifications"
-        className={cn(
-          "flex h-13 items-center justify-center border-t",
-          "text-xs font-semibold text-primary",
-          "transition-colors hover:bg-primary/20",
-        )}
-      >
-        {t("ViewAllNotifications")}
-      </Link>
+      <PopoverClose asChild>
+        <Link
+          href="/notifications"
+          className={cn(
+            "flex h-13 items-center justify-center border-t",
+            "text-xs font-semibold text-primary",
+            "transition-colors hover:bg-primary/20",
+          )}
+        >
+          {t("ViewAllNotifications")}
+        </Link>
+      </PopoverClose>
     </PopoverContent>
   );
 }

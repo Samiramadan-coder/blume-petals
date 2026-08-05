@@ -4,8 +4,12 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Notification } from "@/types/notifications";
-import { markNotificationAsRead } from "@/lib/notifications";
+import {
+  deleteNotification,
+  markNotificationAsRead,
+} from "@/lib/notifications";
 import { CircleAlert, CircleCheck, Gift, Trash2, Truck } from "lucide-react";
+import { DialogDelete } from "../delete-dialoge";
 
 export default function NotificationItem({
   notification,
@@ -15,6 +19,7 @@ export default function NotificationItem({
   showActions?: boolean;
 }) {
   const [isRead, setIsRead] = useState(notification.read);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   async function markRead(notificationId: string) {
     setIsRead(true);
@@ -73,14 +78,23 @@ export default function NotificationItem({
                   <CircleCheck className="size-4 text-green-400" />
                 </Button>
               )}
-              <Button
-                size="icon"
-                variant="ghost"
-                className="hover:bg-transparent"
-                onClick={() => console.log("Delete", notification.id)}
-              >
-                <Trash2 className="size-4 text-red-400" />
-              </Button>
+              <DialogDelete
+                loading={loadingDelete}
+                onConfirm={async () => {
+                  setLoadingDelete(true);
+                  await deleteNotification(notification.id);
+                  setLoadingDelete(false);
+                }}
+                trigger={
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="hover:bg-transparent"
+                  >
+                    <Trash2 className="size-4 text-red-400" />
+                  </Button>
+                }
+              />
             </div>
           )}
         </div>
