@@ -104,7 +104,8 @@
     "Register": "Register",
     "LogoutError": "Logout failed. Please try again.",
     "LogoutSuccess": "Successfully logged out.",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Contact": "Contact Us"
   },
   "AppFooter": {
     "DesignYourDream": "Design your dream bouquet — crafted for every moment that matters.",
@@ -636,6 +637,31 @@
       "Orders": "Orders",
       "Promotions": "Promotions",
       "System": "System"
+    }
+  },
+  "Contact": {
+    "Title": "Contact Us",
+    "ContactDescription": "We'd love to hear from you! Please fill out the form below and we'll get back to you as soon as possible.",
+    "SendMessage": "Send Message",
+    "SendedSuccessfully": "Your message has been sent successfully. We will get back to you shortly.",
+    "SendError": "Failed to send your message. Please try again.",
+    "Fields": {
+      "Email": {
+        "Label": "Email",
+        "Placeholder": "Enter your email",
+        "Invalid": "Please enter a valid email address"
+      },
+      "Phone": {
+        "Label": "Phone Number",
+        "Placeholder": "Enter your phone number",
+        "Invalid": "Please enter a valid phone number"
+      },
+      "Message": {
+        "Label": "Message",
+        "Placeholder": "Enter your message",
+        "Required": "Message is required",
+        "MinLength": "Message must be at least 10 characters"
+      }
     }
   }
 }
