@@ -16,7 +16,7 @@ export default function OrdersStatusFilter() {
   );
 
   return (
-    <div className="mb-4 flex flex-wrap items-center gap-2">
+    <div className="mb-6 flex flex-wrap items-center gap-2">
       {orderStatuses(t).map((status) => (
         <Button
           variant="ghost"

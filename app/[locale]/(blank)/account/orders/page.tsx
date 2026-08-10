@@ -6,6 +6,8 @@ import Orders from "@/components/account/orders/orders";
 import NoDataFounded from "@/components/reusable/no-data-founded";
 import { Suspense } from "react";
 import { OrdersSkeleton } from "@/components/account/orders/orders-skeleton";
+import PageTitle from "@/components/account/shared/page-title";
+import OrdersStatusFilter from "@/components/account/orders/orders-status-filter";
 
 type SearchParams = {
   page?: string;
@@ -58,12 +60,20 @@ export default async function OrdersPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
+  const t = await getTranslations("Account.Orders");
+
   return (
-    <Suspense
-      key={JSON.stringify(await searchParams)}
-      fallback={<OrdersSkeleton />}
-    >
-      <OrdersList searchParams={await searchParams} />
-    </Suspense>
+    <div className="space-y-6">
+      <PageTitle title={t("Title")} />
+
+      <OrdersStatusFilter />
+
+      <Suspense
+        key={JSON.stringify(await searchParams)}
+        fallback={<OrdersSkeleton />}
+      >
+        <OrdersList searchParams={await searchParams} />
+      </Suspense>
+    </div>
   );
 }
