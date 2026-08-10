@@ -1,15 +1,26 @@
 "use server";
 
 import { http, ValidationError } from "@/lib/http";
-import { Account, Address, AddressFormBody, OTPForm } from "@/types/account";
+import {
+  Account,
+  Address,
+  AddressFormBody,
+  OTPForm,
+  RatingFormData,
+} from "@/types/account";
 import { updateTag } from "next/cache";
 
 /**
  * Save address and return serializable field errors for the client form.
  */
 type SaveAddressResult =
-  | { success: true }
-  | { success: false; errors?: Partial<Record<keyof AddressFormBody, string>> };
+  | {
+      success: true;
+    }
+  | {
+      success: false;
+      errors?: Partial<Record<keyof AddressFormBody, string>>;
+    };
 
 export async function saveAddress(
   address: Address | null,
@@ -92,7 +103,10 @@ type UpdateProfileResult =
   | {
       success: true;
     }
-  | { success: false; errors?: Partial<Record<keyof Account, string>> };
+  | {
+      success: false;
+      errors?: Partial<Record<keyof Account, string>>;
+    };
 
 export async function updateProfile(
   data: Account,
@@ -192,6 +206,27 @@ export async function cancelOrder(orderId: number): Promise<CancelOrderResult> {
     return { success: true };
   } catch (error) {
     console.error("Error cancelling order:", error);
+    return { success: false };
+  }
+}
+
+/**
+ * Rate Order
+ */
+type RateOrderResult = {
+  success: boolean;
+};
+
+export async function rateOrder(
+  orderId: number,
+  data: RatingFormData,
+): Promise<RateOrderResult> {
+  try {
+    await http.post(`/api/v1/orders/${orderId}/reviews`, data);
+    updateTag("orders");
+    return { success: true };
+  } catch (error) {
+    console.error("Error rating order:", error);
     return { success: false };
   }
 }

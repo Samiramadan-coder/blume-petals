@@ -15,6 +15,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import OrderRate from "./order-rate";
 import { Badge } from "../../ui/badge";
@@ -24,7 +25,6 @@ import { OrderItem } from "@/types/account";
 import { Separator } from "../../ui/separator";
 import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
 
 type OrderStatus =
   | "pending"
@@ -214,16 +214,17 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
                 </div>
               </div>
 
-              {order.status === "pending" ||
-                (order.status === "delivered" && (
-                  <Separator className="mb-4" />
-                ))}
+              {(order.status === "pending" ||
+                (order.status === "delivered" && !order.items[0].reviewed)) && (
+                <Separator className="mb-4" />
+              )}
 
               <div className="flex flex-wrap gap-4">
                 {order.status === "pending" && (
                   <OrderCancel orderId={order.id} />
                 )}
-                {order.status === "delivered" && (
+
+                {order.status === "delivered" && !order.items[0].reviewed && (
                   <OrderRate items={order.items} orderId={order.id} />
                 )}
               </div>

@@ -195,5 +195,6 @@ export type OrderItem = {
     qty: number;
     image_url: string;
     slug: string;
+    reviewed: boolean;
   }[];
 };

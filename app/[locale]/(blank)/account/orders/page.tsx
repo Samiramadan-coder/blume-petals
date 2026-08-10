@@ -4,6 +4,8 @@ import { Pagination } from "@/types/shared";
 import { getTranslations } from "next-intl/server";
 import Orders from "@/components/account/orders/orders";
 import NoDataFounded from "@/components/reusable/no-data-founded";
+import { Suspense } from "react";
+import { OrdersSkeleton } from "@/components/account/orders/orders-skeleton";
 
 type SearchParams = {
   page?: string;
@@ -17,12 +19,8 @@ export async function generateMetadata() {
   };
 }
 
-export default async function OrdersPage({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
-  const { page, status } = await searchParams;
+async function OrdersList({ searchParams }: { searchParams: SearchParams }) {
+  const { page, status } = searchParams;
 
   const { data, ok } = await http.get<{
     data: {
@@ -52,5 +50,20 @@ export default async function OrdersPage({
         <Orders orders={data?.data.items} pagination={data?.data.pagination} />
       )}
     </>
+  );
+}
+
+export default async function OrdersPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  return (
+    <Suspense
+      key={JSON.stringify(await searchParams)}
+      fallback={<OrdersSkeleton />}
+    >
+      <OrdersList searchParams={await searchParams} />
+    </Suspense>
   );
 }
