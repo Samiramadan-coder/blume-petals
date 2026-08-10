@@ -504,7 +504,13 @@
       "RatingIsRequired": "التقييم مطلوب",
       "OrderExperience": "كيف كانت تجربتك مع الطلب؟",
       "SuccessfullyRated": "لقد قمت بتقييم هذا الطلب بنجاح.",
-      "FailedToRate": "فشل في إرسال تقييمك. يرجى المحاولة مرة أخرى."
+      "FailedToRate": "فشل في إرسال تقييمك. يرجى المحاولة مرة أخرى.",
+      "All": "الكل",
+      "Pending": "قيد الانتظار",
+      "Processing": "قيد المعالجة",
+      "Shipped": "تم الشحن",
+      "Delivered": "تم التسليم",
+      "Cancelled": "تم الإلغاء"
     },
     "Designs": {
       "Title": "تصاميمي",

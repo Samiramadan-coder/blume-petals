@@ -57,8 +57,47 @@ export const preferencesItems = (t: T) => [
 ];
 
 export const supportItems = (t: T) => [
-  { title: t("HelpCenter"), href: "/account/help-center" },
-  { title: t("ContactUs"), href: "/account/contact-support" },
-  { title: t("PrivacyPolicy"), href: "/account/privacy-policy" },
-  { title: t("TermsOfService"), href: "/account/terms-of-service" },
+  {
+    title: t("HelpCenter"),
+    href: "/account/help-center",
+  },
+  {
+    title: t("ContactUs"),
+    href: "/account/contact-support",
+  },
+  {
+    title: t("PrivacyPolicy"),
+    href: "/account/privacy-policy",
+  },
+  {
+    title: t("TermsOfService"),
+    href: "/account/terms-of-service",
+  },
+];
+
+export const orderStatuses = (t: T) => [
+  {
+    value: "all",
+    label: t("All"),
+  },
+  {
+    value: "pending",
+    label: t("Pending"),
+  },
+  {
+    value: "processing",
+    label: t("Processing"),
+  },
+  {
+    value: "shipped",
+    label: t("Shipped"),
+  },
+  {
+    value: "delivered",
+    label: t("Delivered"),
+  },
+  {
+    value: "cancelled",
+    label: t("Cancelled"),
+  },
 ];
