@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { http } from "@/lib/http";
+import { Badge } from "@/components/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { CartItem, Summary } from "@/types/products";
 import GoBackBtn from "@/components/shop/go-back-btn";
@@ -8,7 +9,6 @@ import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
 import ValidateCoupon from "@/components/shop/validate-coupon";
 import NoDataFounded from "@/components/reusable/no-data-founded";
-import { Badge } from "@/components/ui/badge";
 
 export default async function CartPage() {
   const t = await getTranslations("Shop");

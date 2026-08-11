@@ -1,19 +1,19 @@
 "use client";
 
+import { toast } from "sonner";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { Link } from "@/i18n/navigation";
+import { FieldError } from "../ui/field";
 import { useTranslations } from "next-intl";
 import { Separator } from "../ui/separator";
 import { Card, CardContent } from "../ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { validateCouponCodeAction } from "@/lib/shop-actions";
 import { CouponFormValues, couponSchema, Summary } from "@/types/products";
-import { FieldError } from "../ui/field";
-import { toast } from "sonner";
-import { Link } from "@/i18n/navigation";
 
 export default function ValidateCoupon({ summary }: { summary: Summary }) {
   const t = useTranslations("Shop");

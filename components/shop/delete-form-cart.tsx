@@ -5,19 +5,18 @@ import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { removeFromCartAction } from "@/lib/shop-actions";
 import { useState } from "react";
-import { Spinner } from "../ui/spinner";
+import { DialogDelete } from "../reusable/delete-dialoge";
 
 export default function DeleteFromCart({ itemId }: { itemId: number }) {
-  const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   return (
-    <Button
-      size="icon"
-      variant="ghost"
-      onClick={async () => {
-        setLoading(true);
+    <DialogDelete
+      loading={loadingDelete}
+      onConfirm={async () => {
+        setLoadingDelete(true);
         const result = await removeFromCartAction(itemId);
-        setLoading(false);
+        setLoadingDelete(false);
 
         if (result.success) {
           toast.success("RemoveFromCartSuccess");
@@ -26,12 +25,11 @@ export default function DeleteFromCart({ itemId }: { itemId: number }) {
 
         toast.error("RemoveFromCartError");
       }}
-    >
-      {loading ? (
-        <Spinner className="text-primary" />
-      ) : (
-        <Trash2 className="text-red-400" />
-      )}
-    </Button>
+      trigger={
+        <Button size="icon" variant="ghost" className="hover:bg-transparent">
+          <Trash2 className="size-4 text-red-400" />
+        </Button>
+      }
+    />
   );
 }
