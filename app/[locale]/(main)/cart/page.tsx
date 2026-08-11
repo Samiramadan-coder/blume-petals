@@ -34,7 +34,7 @@ export default async function CartPage() {
         <div className="flex gap-8">
           <GoBackBtn />
           <h3 className="text-2xl font-bold flex items-center gap-2">
-            <span>My Cart:</span>
+            <span>{t("MyCart")}:</span>
             <Badge className="w-8 h-8 text-base">
               {data.data.cart.items.length}
             </Badge>
