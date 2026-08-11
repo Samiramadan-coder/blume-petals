@@ -68,7 +68,7 @@ export default function CompleteOrder({
           <div
             onClick={() => setDeliveryMethod("delivery")}
             className={cn(
-              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex gap-2 items-center justify-center cursor-pointer",
+              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex flex-col md:flex-row gap-2 items-center justify-center cursor-pointer",
               deliveryMethod === "delivery" && "border-primary bg-primary/10",
             )}
           >
@@ -88,7 +88,7 @@ export default function CompleteOrder({
           <div
             onClick={() => setDeliveryMethod("pickup")}
             className={cn(
-              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex gap-2 items-center justify-center cursor-pointer",
+              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex flex-col md:flex-row gap-2 items-center justify-center cursor-pointer",
               deliveryMethod === "pickup" && "border-primary bg-primary/10",
             )}
           >

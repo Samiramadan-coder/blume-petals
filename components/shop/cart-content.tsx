@@ -49,10 +49,10 @@ export default function CartContent() {
                     <div className="flex min-w-0 flex-1 flex-col self-stretch">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className="text-lg font-semibold text-foreground">
+                          <h3 className="text-sm md:text-lg font-semibold text-foreground">
                             {item.product.name}
                           </h3>
-                          <p className="mt-1 text-sm text-muted-foreground">
+                          <p className="mt-1 text-xs md:text-sm text-muted-foreground">
                             {t("Size")}: {item.variant.size}
                           </p>
                         </div>
@@ -60,7 +60,7 @@ export default function CartContent() {
                       </div>
 
                       <div className="mt-auto flex items-end justify-between gap-4">
-                        <p className="text-lg font-semibold text-primary">
+                        <p className="text-sm md:text-lg font-semibold text-primary">
                           {t("AED")} {item.variant.price}
                         </p>
                         <UpdateQuantity
