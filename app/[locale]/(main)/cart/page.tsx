@@ -8,6 +8,7 @@ import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
 import ValidateCoupon from "@/components/shop/validate-coupon";
 import NoDataFounded from "@/components/reusable/no-data-founded";
+import { Badge } from "@/components/ui/badge";
 
 export default async function CartPage() {
   const t = await getTranslations("Shop");
@@ -25,10 +26,20 @@ export default async function CartPage() {
     throw new Error("Failed to fetch cart");
   }
 
+  console.log("Cart data:", data);
+
   return (
     <main>
       <div className="container max-w-7xl py-20 min-h-[50vh]">
-        <GoBackBtn />
+        <div className="flex gap-8">
+          <GoBackBtn />
+          <h3 className="text-2xl font-bold flex items-center gap-2">
+            <span>My Cart:</span>
+            <Badge className="w-8 h-8 text-base">
+              {data.data.cart.items.length}
+            </Badge>
+          </h3>
+        </div>
 
         {data.data.cart.items.length === 0 ? (
           <NoDataFounded />
@@ -37,7 +48,7 @@ export default async function CartPage() {
             <div className="md:col-span-2 space-y-6">
               {data.data.cart.items.map((item, index) => (
                 <Card
-                  className="w-full rounded-xl border-0 bg-white shadow-sm"
+                  className="w-full rounded-xl border-0 bg-white"
                   key={index}
                 >
                   <CardContent className="flex items-center gap-4 px-4">
@@ -56,20 +67,17 @@ export default async function CartPage() {
                           <h3 className="text-lg font-semibold text-foreground">
                             {item.product.name}
                           </h3>
-
                           <p className="mt-1 text-sm text-muted-foreground">
                             {t("Size")}: {item.variant.size}
                           </p>
                         </div>
-
                         <DeleteFromCart itemId={item.id} />
                       </div>
 
                       <div className="mt-auto flex items-end justify-between gap-4">
-                        <p className="text-lg font-semibold text-[#cbb682]">
+                        <p className="text-lg font-semibold text-primary">
                           {t("AED")} {item.variant.price}
                         </p>
-
                         <UpdateQuantity
                           initialQuantity={item.qty}
                           itemId={item.id}

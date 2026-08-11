@@ -75,13 +75,13 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
             <Input
               {...register("coupon_code")}
               placeholder={t("PromoCodePlaceholder")}
-              className="h-12 rounded-full border-border bg-white px-4 shadow-none placeholder:text-zinc-400 focus-visible:ring-primary"
+              className="h-12 rounded-full border-border bg-white px-4 shadow-none placeholder:text-muted-foreground"
             />
           </div>
 
           <Button
             type="submit"
-            className="h-12 rounded-full bg-primary px-7 font-semibold text-white hover:bg-[#bfa664]"
+            className="h-12 text-base rounded-full bg-primary px-7 font-semibold text-white hover:bg-primary hover:scale-105"
           >
             {isSubmitting ? <Spinner /> : t("Apply")}
           </Button>
@@ -90,29 +90,28 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
         <FieldError errors={[errors.coupon_code]} />
       </form>
 
-      <Card className="rounded-xl border-0 bg-white shadow-sm">
+      <Card className="rounded-xl border-0 bg-white">
         <CardContent className="space-y-5 p-6">
-          <div className="flex items-center justify-between">
-            <span className="text-zinc-500">{t("Subtotal")}</span>
-
-            <span className="font-semibold text-muted-foreground">
+          <div className="flex items-center justify-between text-base">
+            <span className="text-muted-foreground">{t("Subtotal")}</span>
+            <span className="font-semibold text-foreground">
               {t("AED")} {currentSummary.subtotal}
             </span>
           </div>
 
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <span className="text-muted-foreground">{t("VatRate")}</span>
             <span className="font-semibold text-muted-foreground">
               % {currentSummary.vat_rate}
             </span>
-          </div>
+          </div> */}
 
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <span className="text-muted-foreground">{t("VatTotal")}</span>
             <span className="font-semibold text-muted-foreground">
               {t("AED")} {currentSummary.vat_total}
             </span>
-          </div>
+          </div> */}
 
           {isCouponApplied && (
             <div className="flex bg-red-400 text-white p-2 rounded-md items-center text-base italic justify-between font-semibold">
@@ -138,7 +137,7 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
         href={`/cart/order?total=${currentSummary.old_total}&coupon_code=${getValues("coupon_code")}&discount=${currentSummary.discount || ""}`}
         className="w-full"
       >
-        <Button className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-[#bfa664]">
+        <Button className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-primary hover:scale-105">
           {t("ProceedToCheckout")} · {currentSummary.total}
         </Button>
       </Link>
