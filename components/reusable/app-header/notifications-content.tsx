@@ -27,21 +27,25 @@ export default function NotificationsContent() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const getNotifications = useCallback(async (targetPage: number) => {
-    const { data } = await http.get<{
-      data: {
-        items: Notification[];
-        pagination: Pagination;
-      };
-    }>("/api/v1/notifications", {
-      params: {
-        page: targetPage,
-        per_page: 10,
-      },
-    });
+  const getNotifications = useCallback(
+    async (targetPage: number) => {
+      const { data } = await http.get<{
+        data: {
+          items: Notification[];
+          pagination: Pagination;
+        };
+      }>("/api/v1/notifications", {
+        params: {
+          page: targetPage,
+          per_page: 10,
+          type: activeTab === "all" ? "" : activeTab,
+        },
+      });
 
-    return data.data;
-  }, []);
+      return data.data;
+    },
+    [activeTab],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -96,7 +100,12 @@ export default function NotificationsContent() {
       <div className="flex items-center gap-1 border-b px-4 py-3">
         <Tabs
           value={activeTab}
-          onValueChange={setActiveTab}
+          onValueChange={(tab) => {
+            setActiveTab(tab);
+            setNotifications([]);
+            setPage(1);
+            setLoading(true);
+          }}
           className="w-full bg-transparent"
         >
           <TabsList className="bg-transparent gap-2 h-auto">
