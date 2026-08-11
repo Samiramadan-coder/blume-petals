@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Spinner } from "@/components/ui/spinner";
-import { useRouter } from "@/i18n/navigation";
-import { checkoutOrderAction } from "@/lib/shop-actions";
-import { ArrowRight } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
 import { toast } from "sonner";
+import { useState } from "react";
+import { ArrowRight, MoveRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent } from "@/components/ui/card";
+import { checkoutOrderAction } from "@/lib/shop-actions";
 
 export default function OrderFinalDetails({
   total,
@@ -73,26 +73,28 @@ export default function OrderFinalDetails({
     <div className="space-y-6">
       <Card className="rounded-xl border-0 bg-white shadow-sm">
         <CardContent className="space-y-5 p-6">
-          <div className="flex items-center justify-between">
-            <span className="text-zinc-500">{t("Subtotal")}</span>
-            <span className="font-semibold text-muted-foreground">
+          <h3 className="text-lg font-semibold">Order Summary</h3>
+
+          <div className="flex items-center text-base justify-between">
+            <span className="text-muted-foreground">{t("Subtotal")}</span>
+            <span className="font-semibold text-foreground">
               {t("AED")} {total}
             </span>
           </div>
 
           {discount ? (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center text-base justify-between">
               <span className="text-muted-foreground">{t("Discount")}</span>
-              <span className="font-semibold text-muted-foreground">
+              <span className="font-semibold text-foreground">
                 - {t("AED")} {discount || 0}
               </span>
             </div>
           ) : null}
 
           {deliveryMethod === "delivery" ? (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center text-base justify-between">
               <span className="text-muted-foreground">{t("DeliveryFee")}</span>
-              <span className="font-semibold text-muted-foreground">
+              <span className="font-semibold text-foreground">
                 {t("AED")} {deliveryFee}
               </span>
             </div>
@@ -105,18 +107,17 @@ export default function OrderFinalDetails({
               {t("AED")} {finalTotal}
             </span>
           </div>
+
+          <Button
+            disabled={!showButton || loading}
+            onClick={handleContinueToPayment}
+            className="h-14 w-full border-2 px-6 text-base bg-primary text-white"
+          >
+            {t("ContinueToPayment")} ({finalTotal} {t("AED")})
+            {loading ? <Spinner /> : <MoveRight className="rtl:rotate-180" />}
+          </Button>
         </CardContent>
       </Card>
-
-      {showButton ? (
-        <Button
-          onClick={handleContinueToPayment}
-          className="h-14 w-full border-2 px-6 text-base bg-primary text-white"
-        >
-          {t("ContinueToPayment")} ({finalTotal} {t("AED")})
-          {loading ? <Spinner /> : <ArrowRight className="rtl:rotate-180" />}
-        </Button>
-      ) : null}
     </div>
   );
 }

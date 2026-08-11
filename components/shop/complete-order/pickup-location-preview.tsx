@@ -33,7 +33,7 @@ export default function PickupLocationsPreview({
         {pickupLocations.map((location) => (
           <FieldLabel
             htmlFor={location.id.toString()}
-            className="bg-white p-4 cursor-pointer shadow-sm"
+            className="bg-white p-4 cursor-pointer"
             key={location.id}
           >
             <Field orientation="horizontal">

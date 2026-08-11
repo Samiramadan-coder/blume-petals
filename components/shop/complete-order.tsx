@@ -68,8 +68,8 @@ export default function CompleteOrder({
   }, [deliveryMethod, selectedAddress, selectedPickupLocation]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-      <div className="md:col-span-2">
+    <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-10">
+      <div>
         <div className="flex items-center gap-4">
           <div
             onClick={() => setDeliveryMethod("delivery")}
