@@ -55,17 +55,20 @@ export function NotificationsProvider({
    * If the API call fails, it simply returns without updating the state.
    */
   const refreshUnreadCount = useCallback(async () => {
-    if (!isAuthenticated) return 0;
+    if (!isAuthenticated) {
+      setUnreadCount(0);
+      return 0;
+    }
 
     const { data, ok } = await http.get<{
-      data: {
-        unread_count: number;
-      };
+      data: { unread_count: number };
     }>("/api/v1/notifications/unread-count");
 
     if (!ok) return 0;
 
-    return data.data.unread_count;
+    const count = data.data.unread_count;
+    setUnreadCount(count);
+    return count;
   }, [isAuthenticated]);
 
   /**
@@ -74,10 +77,20 @@ export function NotificationsProvider({
    * The effect runs only once when the component mounts, as indicated by the empty dependency array.
    */
   useEffect(() => {
-    void refreshUnreadCount().then((count) => {
-      setUnreadCount(count);
-    });
-  }, [refreshUnreadCount]);
+    if (!isAuthenticated) return;
+
+    async function fetchInitialCount() {
+      const { data, ok } = await http.get<{
+        data: { unread_count: number };
+      }>("/api/v1/notifications/unread-count");
+
+      if (ok) {
+        setUnreadCount(data.data.unread_count);
+      }
+    }
+
+    void fetchInitialCount();
+  }, [isAuthenticated]);
 
   /**
    * Effect hook to listen for incoming notifications using Firebase Messaging.
@@ -101,8 +114,7 @@ export function NotificationsProvider({
         unsubscribe = onMessage(messaging, async (payload) => {
           console.log("New notification received:", payload);
 
-          const count = await refreshUnreadCount();
-          setUnreadCount(count);
+          await refreshUnreadCount();
         });
       } catch (error) {
         console.error("Failed to attach FCM listener:", error);

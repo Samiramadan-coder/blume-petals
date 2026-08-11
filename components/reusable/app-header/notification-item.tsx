@@ -1,16 +1,17 @@
 "use client";
 
-import { cn, formatSmartDate } from "@/lib/utils";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Notification } from "@/types/notifications";
 import {
   deleteNotification,
   markNotificationAsRead,
 } from "@/lib/notifications";
-import { CircleCheck, Trash2 } from "lucide-react";
-import { DialogDelete } from "../delete-dialoge";
+import { useState } from "react";
 import { useLocale } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { DialogDelete } from "../delete-dialoge";
+import { cn, formatSmartDate } from "@/lib/utils";
+import { CircleCheck, Trash2 } from "lucide-react";
+import { Notification } from "@/types/notifications";
+import { useNotifications } from "@/providers/notifications-provider";
 
 export default function NotificationItem({
   notification,
@@ -22,12 +23,14 @@ export default function NotificationItem({
   isPopup?: boolean;
 }) {
   const locale = useLocale();
+  const { refreshUnreadCount } = useNotifications();
   const [isRead, setIsRead] = useState(notification.read);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
   async function markRead(notificationId: string) {
     setIsRead(true);
     await markNotificationAsRead(notificationId);
+    await refreshUnreadCount();
   }
 
   return (
@@ -94,6 +97,7 @@ export default function NotificationItem({
                 onConfirm={async () => {
                   setLoadingDelete(true);
                   await deleteNotification(notification.id);
+                  await refreshUnreadCount();
                   setLoadingDelete(false);
                 }}
                 trigger={
