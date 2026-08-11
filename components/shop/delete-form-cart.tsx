@@ -1,10 +1,10 @@
 "use client";
 
 import { toast } from "sonner";
+import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { removeFromCartAction } from "@/lib/shop-actions";
-import { useState } from "react";
 import { DialogDelete } from "../reusable/delete-dialoge";
 
 export default function DeleteFromCart({ itemId }: { itemId: number }) {
