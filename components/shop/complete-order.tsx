@@ -4,28 +4,22 @@ import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { useTranslations } from "next-intl";
-import { PickupLocation } from "@/types/products";
-import { Address, Country } from "@/types/account";
+import { Truck, Store } from "lucide-react";
+import { useCart } from "@/providers/cart-provider";
 import AddresssPreview from "./complete-order/address-preview";
 import OrderFinalDetails from "./complete-order/order-final-details";
 import PickupLocationsPreview from "./complete-order/pickup-location-preview";
-import { Truck, Store } from "lucide-react";
 
 export default function CompleteOrder({
-  countries,
-  pickupLocations,
-  addresses,
   total,
   couponCode,
   discount,
 }: {
-  countries: Country[];
-  pickupLocations: PickupLocation[];
-  addresses: Address[];
   total: number;
   couponCode: string | null;
   discount: number;
 }) {
+  const { addresses, pickupLocations, countries } = useCart();
   const t = useTranslations("Shop");
   const [notes, setNotes] = useState("");
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">(

@@ -1,10 +1,11 @@
 import { toast } from "sonner";
 import { useState } from "react";
-import { ArrowRight, MoveRight } from "lucide-react";
+import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useCart } from "@/providers/cart-provider";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { checkoutOrderAction } from "@/lib/shop-actions";
@@ -32,6 +33,7 @@ export default function OrderFinalDetails({
   pickupLocationId: string | null;
   note: string;
 }) {
+  const { items } = useCart();
   const router = useRouter();
   const t = useTranslations("Shop");
   const [loading, setLoading] = useState(false);
@@ -62,7 +64,7 @@ export default function OrderFinalDetails({
 
     if (result.success) {
       toast.success(t("OrderPlacedSuccessfully"));
-      router.push("/");
+      // router.push("/");
       return;
     }
 
@@ -74,6 +76,24 @@ export default function OrderFinalDetails({
       <Card className="rounded-xl border-0 bg-white shadow-sm">
         <CardContent className="space-y-5 p-6">
           <h3 className="text-lg font-semibold">Order Summary</h3>
+
+          <div>
+            {items.map((item, index) => (
+              <p
+                key={index}
+                className="flex items-center justify-between text-muted-foreground"
+              >
+                <span>
+                  {item.product.name} x{item.qty}
+                </span>
+                <span>
+                  {t("AED")} {item.unit_price}
+                </span>
+              </p>
+            ))}
+          </div>
+
+          <Separator className="bg-border" />
 
           <div className="flex items-center text-base justify-between">
             <span className="text-muted-foreground">{t("Subtotal")}</span>

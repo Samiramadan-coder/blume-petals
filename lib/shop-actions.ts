@@ -63,6 +63,7 @@ export async function removeFromCartAction(
   try {
     await http.delete(`/api/v1/cart/items/${itemId}`);
     updateTag("cart-count");
+    updateTag("cart");
     return { success: true };
   } catch (error) {
     console.error("Error removing from cart:", error);
@@ -84,6 +85,7 @@ export async function updateCartQuantityAction(
       qty: quantity,
     });
     updateTag("cart-count");
+    updateTag("cart");
     return { success: true };
   } catch (error) {
     console.error("Error updating cart quantity:", error);
@@ -105,8 +107,8 @@ export async function checkoutOrderAction(formData: {
   [key: string]: string;
 }): Promise<CheckoutOrderResponse> {
   try {
-    await http.post(`/api/v1/orders`, formData);
-
+    const { data } = await http.post(`/api/v1/orders`, formData);
+    console.log(data);
     updateTag("cart-count");
     updateTag("orders");
     return { success: true };

@@ -106,7 +106,7 @@ export function NotificationsProvider({
 
           const count = await refreshUnreadCount();
           console.log("Updated unread count:", count);
-          setUnreadCount(count + 1);
+          setUnreadCount(count);
         });
       } catch (error) {
         console.error("Failed to attach FCM listener:", error);
