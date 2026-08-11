@@ -8,7 +8,7 @@ import {
   deleteNotification,
   markNotificationAsRead,
 } from "@/lib/notifications";
-import { CircleAlert, CircleCheck, Gift, Trash2, Truck } from "lucide-react";
+import { CircleCheck, Trash2 } from "lucide-react";
 import { DialogDelete } from "../delete-dialoge";
 import { useLocale } from "next-intl";
 
@@ -38,15 +38,9 @@ export default function NotificationItem({
       )}
     >
       <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
-        {notification.type.includes("order") && (
-          <Truck className="size-4 text-[#5f6fa8]" />
-        )}
-        {notification.type === "promo" && (
-          <Gift className="size-4 text-[#e38da9]" />
-        )}
-        {notification.type === "system" && (
-          <CircleAlert className="size-4 text-[#b096c6]" />
-        )}
+        {notification.type.includes("order") && "🚚"}
+        {notification.type === "promo" && "🎁"}
+        {notification.type === "system" && "⭐"}
       </div>
 
       <div className="min-w-0 flex-1">
