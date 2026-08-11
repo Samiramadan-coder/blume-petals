@@ -21,10 +21,12 @@ import OrderRate from "./order-rate";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import OrderCancel from "./order-cancel";
+import { Link } from "@/i18n/navigation";
 import { OrderItem } from "@/types/account";
 import { Separator } from "../../ui/separator";
 import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
+import OrderItemTrigger from "./order-item-trigger";
 
 type OrderStatus =
   | "pending"
@@ -87,7 +89,13 @@ function formatAddress(address: NonNullable<OrderItem["address"]>) {
     .join(", ");
 }
 
-export default async function OrderCard({ order }: { order: OrderItem }) {
+export default async function OrderCard({
+  order,
+  defaultOpen = false,
+}: {
+  order: OrderItem;
+  defaultOpen?: boolean;
+}) {
   const t = await getTranslations("Account.Orders");
 
   const status =
@@ -102,136 +110,127 @@ export default async function OrderCard({ order }: { order: OrderItem }) {
     : order.pickup?.address;
 
   return (
-    <Collapsible>
-      <Card className="overflow-hidden shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
-        <CardContent className="px-0">
-          <div className="flex items-start gap-4 px-4 md:px-6">
-            <div className="flex-1 flex items-center gap-4">
-              {order.items[0]?.image_url && (
-                <Image
-                  src={order.items[0].image_url}
-                  alt={order.items[0].name}
-                  width={64}
-                  height={64}
-                  className="rounded-lg"
-                />
-              )}
-              <div className="min-w-0">
-                {order.items[0]?.name && (
-                  <p className="mb-2 truncate text-sm text-foreground/60">
-                    {order.items[0].name}
-                  </p>
+    <Link href={`/account/orders/${order.id}`} className="block">
+      <Collapsible defaultOpen={defaultOpen}>
+        <Card className="overflow-hidden shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
+          <CardContent className="px-0">
+            <div className="flex items-start gap-4 px-4 md:px-6">
+              <div className="flex-1 flex items-center gap-4">
+                {order.items[0]?.image_url && (
+                  <Image
+                    src={order.items[0].image_url}
+                    alt={order.items[0].name}
+                    width={64}
+                    height={64}
+                    className="rounded-lg"
+                  />
                 )}
+                <div className="min-w-0">
+                  {order.items[0]?.name && (
+                    <p className="mb-2 truncate text-sm text-foreground/60">
+                      {order.items[0].name}
+                    </p>
+                  )}
 
-                <div className="mb-2 flex flex-wrap items-center gap-3">
-                  <p className="font-semibold text-foreground md:text-base">
-                    {order.order_number}
+                  <div className="mb-2 flex flex-wrap items-center gap-3">
+                    <p className="font-semibold text-foreground md:text-base">
+                      {order.order_number}
+                    </p>
+                    <Badge
+                      className={cn(
+                        "h-6 gap-1.5 border-0 px-2 text-xs shadow-none",
+                        "[&>svg]:size-3!",
+                        statusConfig.className,
+                      )}
+                    >
+                      <StatusIcon
+                        className={statusConfig.iconClassName}
+                        aria-hidden="true"
+                      />
+
+                      {order.status_label}
+                    </Badge>
+                  </div>
+
+                  <p className="text-sm text-foreground/60">
+                    {order.placed_at.split("T")[0]}
                   </p>
-                  <Badge
-                    className={cn(
-                      "h-6 gap-1.5 border-0 px-2 text-xs shadow-none",
-                      "[&>svg]:size-3!",
-                      statusConfig.className,
-                    )}
-                  >
-                    <StatusIcon
-                      className={statusConfig.iconClassName}
-                      aria-hidden="true"
-                    />
-
-                    {order.status_label}
-                  </Badge>
                 </div>
+              </div>
 
-                <p className="text-sm text-foreground/60">
-                  {order.placed_at.split("T")[0]}
+              <div className="flex shrink-0 items-start gap-2">
+                <p className="mt-2 whitespace-nowrap font-semibold text-foreground md:text-base">
+                  {order.currency} {order.summary.grand_total}
                 </p>
+                <OrderItemTrigger />
               </div>
             </div>
 
-            <div className="flex shrink-0 items-start gap-2">
-              <p className="mt-2 whitespace-nowrap font-semibold text-foreground md:text-base">
-                {order.currency} {order.summary.grand_total}
-              </p>
-              <CollapsibleTrigger asChild>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className={cn(
-                    "size-10 cursor-pointer rounded-full",
-                    "[&[data-state=open]>svg]:rotate-180",
-                  )}
-                >
-                  <ChevronDownIcon className="size-5 transition-transform duration-300" />
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-          </div>
+            <CollapsibleContent className="mt-4">
+              <Separator />
 
-          <CollapsibleContent className="mt-4">
-            <Separator />
+              <div className="px-4 pt-4 md:px-8">
+                <div className="mb-4 space-y-5">
+                  <div>
+                    <h4 className="mb-3 font-semibold text-foreground md:text-base">
+                      {t("OrderItems")}
+                    </h4>
 
-            <div className="px-4 pt-4 md:px-8">
-              <div className="mb-4 space-y-5">
-                <div>
-                  <h4 className="mb-3 font-semibold text-foreground md:text-base">
-                    {t("OrderItems")}
-                  </h4>
+                    <div className="space-y-2">
+                      {order.items.map((item) => (
+                        <div
+                          key={item.id}
+                          className="flex items-start justify-between gap-4 text-sm"
+                        >
+                          <span className="min-w-0 text-foreground">
+                            {item.name} ×{item.qty}
+                          </span>
 
-                  <div className="space-y-2">
-                    {order.items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex items-start justify-between gap-4 text-sm"
-                      >
-                        <span className="min-w-0 text-foreground">
-                          {item.name} ×{item.qty}
-                        </span>
+                          <span className="shrink-0 text-foreground/60">
+                            {order.currency} {item.line_total}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
-                        <span className="shrink-0 text-foreground/60">
-                          {order.currency} {item.line_total}
-                        </span>
-                      </div>
-                    ))}
+                  <div>
+                    <h4 className="mb-2 font-semibold text-foreground md:text-base">
+                      {t("DeliveryAddress")}
+                    </h4>
+                    <p
+                      className="text-sm leading-6 text-foreground/60"
+                      dangerouslySetInnerHTML={{ __html: address || "-" }}
+                    ></p>
+                  </div>
+                  <div>
+                    <h4 className="mb-2 font-semibold text-foreground md:text-base">
+                      {t("PaymentMethod")}
+                    </h4>
+                    <p className="text-sm text-foreground/60">Not specified</p>
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="mb-2 font-semibold text-foreground md:text-base">
-                    {t("DeliveryAddress")}
-                  </h4>
-                  <p
-                    className="text-sm leading-6 text-foreground/60"
-                    dangerouslySetInnerHTML={{ __html: address || "-" }}
-                  ></p>
-                </div>
-                <div>
-                  <h4 className="mb-2 font-semibold text-foreground md:text-base">
-                    {t("PaymentMethod")}
-                  </h4>
-                  <p className="text-sm text-foreground/60">Not specified</p>
-                </div>
-              </div>
-
-              {(order.status === "pending" ||
-                (order.status === "delivered" && !order.items[0].reviewed)) && (
-                <Separator className="mb-4" />
-              )}
-
-              <div className="flex flex-wrap gap-4">
-                {order.status === "pending" && (
-                  <OrderCancel orderId={order.id} />
+                {(order.status === "pending" ||
+                  (order.status === "delivered" &&
+                    !order.items[0].reviewed)) && (
+                  <Separator className="mb-4" />
                 )}
 
-                {order.status === "delivered" && !order.items[0].reviewed && (
-                  <OrderRate items={order.items} orderId={order.id} />
-                )}
+                <div className="flex flex-wrap gap-4">
+                  {order.status === "pending" && (
+                    <OrderCancel orderId={order.id} />
+                  )}
+
+                  {order.status === "delivered" && !order.items[0].reviewed && (
+                    <OrderRate items={order.items} orderId={order.id} />
+                  )}
+                </div>
               </div>
-            </div>
-          </CollapsibleContent>
-        </CardContent>
-      </Card>
-    </Collapsible>
+            </CollapsibleContent>
+          </CardContent>
+        </Card>
+      </Collapsible>
+    </Link>
   );
 }

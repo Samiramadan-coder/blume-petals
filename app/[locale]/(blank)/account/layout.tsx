@@ -1,12 +1,10 @@
 import { http } from "@/lib/http";
-import { Link } from "@/i18n/navigation";
 import { links } from "@/constants/account";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Separator } from "@/components/ui/separator";
-import { Card, CardContent } from "@/components/ui/card";
+import GoBackBtn from "@/components/shop/go-back-btn";
 import LogoutBtn from "@/components/reusable/logout-btn";
-import { getTranslations, getLocale } from "next-intl/server";
+import { Card, CardContent } from "@/components/ui/card";
 import { UserResponse } from "@/components/reusable/app-header";
 import SidebarNavItem from "@/components/account/shared/sidebar-nav-item";
 
@@ -22,7 +20,7 @@ export default async function AccountLayout({
     <div className="container max-w-7xl py-8 md:py-12">
       <div className="grid items-start grid-cols-1 md:grid-cols-4 gap-4 lg:gap-8">
         <div className="block md:hidden">
-          <BackToHomeButton />
+          <GoBackBtn />
         </div>
 
         <Card className="shadow-sm py-6 md:sticky md:top-6">
@@ -58,28 +56,11 @@ export default async function AccountLayout({
 
         <div className="md:col-span-3">
           <div className="hidden md:block mb-6">
-            <BackToHomeButton />
+            <GoBackBtn />
           </div>
           {children}
         </div>
       </div>
     </div>
-  );
-}
-
-async function BackToHomeButton() {
-  const t = await getTranslations("Account");
-  const locale = await getLocale();
-
-  return (
-    <Link href="/">
-      <Button
-        variant="ghost"
-        className="cursor-pointer text-primary hover:text-primary hover:bg-primary/20 h-10"
-      >
-        {locale === "ar" ? <ArrowRight /> : <ArrowLeft />}
-        {t("BackToHome")}
-      </Button>
-    </Link>
   );
 }
