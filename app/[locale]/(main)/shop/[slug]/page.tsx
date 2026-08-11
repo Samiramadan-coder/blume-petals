@@ -34,8 +34,6 @@ async function Product({
     throw new Error("Failed to fetch product");
   }
 
-  console.log("Product data:", data); // Log the entire response for debugging
-
   const product = data.data.product;
   const { images, similar } = product;
 

@@ -3,6 +3,7 @@
 import { updateTag } from "next/cache";
 import { http, ValidationError } from "./http";
 import { Coupon, CouponFormValues } from "@/types/products";
+import { OrderItem } from "@/types/account";
 
 // Add Or Remove Product to Wishlist
 type AddToWishlistResponse = { success: boolean };
@@ -101,19 +102,45 @@ export async function updateCartQuantityAction(
 }
 
 // Order Checkout
-type CheckoutOrderResponse = { success: boolean };
+type CheckoutOrderResponse =
+  | { success: false }
+  | { success: true; orderId: number };
 
 export async function checkoutOrderAction(formData: {
   [key: string]: string;
 }): Promise<CheckoutOrderResponse> {
   try {
-    const { data } = await http.post(`/api/v1/orders`, formData);
-    console.log(data);
+    const { data } = await http.post<{ data: { order: OrderItem } }>(
+      `/api/v1/orders`,
+      formData,
+    );
+
     updateTag("cart-count");
     updateTag("orders");
-    return { success: true };
+    return { success: true, orderId: data.data.order.id };
   } catch (error) {
     console.error("Error checking out order:", error);
+    return { success: false };
+  }
+}
+
+// Complete Payment
+type CompletePaymentResponse =
+  | { success: false }
+  | { success: true; paymentUrl: string };
+
+export async function completePaymentAction(
+  orderId: number,
+): Promise<CompletePaymentResponse> {
+  try {
+    const { data } = await http.post<{
+      data: { payment_url: string };
+    }>(`/api/v1/orders/${orderId}/pay`);
+
+    updateTag("orders");
+    return { success: true, paymentUrl: data.data.payment_url };
+  } catch (error) {
+    console.error("Error completing payment:", error);
     return { success: false };
   }
 }

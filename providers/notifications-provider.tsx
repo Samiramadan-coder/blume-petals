@@ -95,17 +95,13 @@ export function NotificationsProvider({
         const messaging = await getFirebaseMessaging();
 
         if (!messaging) {
-          console.log("Firebase Messaging is not available");
           return;
         }
-
-        console.log("FCM foreground listener attached");
 
         unsubscribe = onMessage(messaging, async (payload) => {
           console.log("New notification received:", payload);
 
           const count = await refreshUnreadCount();
-          console.log("Updated unread count:", count);
           setUnreadCount(count);
         });
       } catch (error) {
@@ -117,7 +113,6 @@ export function NotificationsProvider({
 
     return () => {
       if (unsubscribe) {
-        console.log("Cleaning up FCM listener");
         unsubscribe();
       }
     };

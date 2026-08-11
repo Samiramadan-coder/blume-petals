@@ -251,8 +251,8 @@ function WishlistButton({
       >
         <Heart className={cn(`size-5 text-white/92`, textColor)} />
         {wishlistCount > 0 && (
-          <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
-            {wishlistCount}
+          <span className="absolute -right-1 -top-1 size-4 grid place-content-center rounded-full bg-primary px-1.5 text-[10px] text-foreground font-semibold">
+            {wishlistCount > 9 ? "9+" : wishlistCount}
           </span>
         )}
       </Button>
@@ -315,8 +315,8 @@ function CartButton({
       >
         <ShoppingBag className={cn(`size-5`, textColor)} />
         {cartCount > 0 && (
-          <span className="absolute -right-1 -top-1 w-4 h-4 grid place-content-center rounded-full bg-red-400 px-1.5 text-[10px] text-white">
-            {cartCount}
+          <span className="absolute -right-1 -top-1 size-4 grid place-content-center rounded-full bg-red-400 px-1.5 text-[10px] text-white">
+            {cartCount > 9 ? "9+" : cartCount}
           </span>
         )}
       </Button>

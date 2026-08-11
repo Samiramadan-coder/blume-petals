@@ -2,13 +2,12 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useCart } from "@/providers/cart-provider";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
-import { checkoutOrderAction } from "@/lib/shop-actions";
+import { checkoutOrderAction, completePaymentAction } from "@/lib/shop-actions";
 
 export default function OrderFinalDetails({
   total,
@@ -34,7 +33,6 @@ export default function OrderFinalDetails({
   note: string;
 }) {
   const { items } = useCart();
-  const router = useRouter();
   const t = useTranslations("Shop");
   const [loading, setLoading] = useState(false);
 
@@ -63,8 +61,18 @@ export default function OrderFinalDetails({
     setLoading(false);
 
     if (result.success) {
-      toast.success(t("OrderPlacedSuccessfully"));
-      // router.push("/");
+      const paymentResult = await completePaymentAction(result.orderId);
+
+      if (paymentResult.success) {
+        window.location.href = paymentResult.paymentUrl;
+        return;
+      }
+
+      if (!paymentResult.success) {
+        toast.error(t("PaymentFailed"));
+        return;
+      }
+
       return;
     }
 
