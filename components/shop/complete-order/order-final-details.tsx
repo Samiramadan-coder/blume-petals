@@ -83,7 +83,7 @@ export default function OrderFinalDetails({
     <div className="space-y-6">
       <Card className="rounded-xl border-0 bg-white shadow-sm">
         <CardContent className="space-y-5 p-6">
-          <h3 className="text-lg font-semibold">Order Summary</h3>
+          <h3 className="text-lg font-semibold">{t("OrderSummary")}</h3>
 
           <div>
             {items.map((item, index) => (

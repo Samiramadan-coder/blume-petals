@@ -631,7 +631,8 @@
     "ReadyIn": "Ready in",
     "HowToReceiveOrder": "How would you like to receive your order?",
     "RatingBreakdown": "Rating Breakdown",
-    "MyCart": "My Cart"
+    "MyCart": "My Cart",
+    "OrderSummary": "Order Summary"
   },
   "Notifications": {
     "Title": "Notifications",

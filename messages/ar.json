@@ -621,7 +621,8 @@
     "ReadyIn": "جاهز في",
     "HowToReceiveOrder": "كيف ترغب في استلام طلبك؟",
     "RatingBreakdown": "توزيع التقييمات",
-    "MyCart": "سلتي"
+    "MyCart": "سلتي",
+    "OrderSummary": "ملخص الطلب"
   },
   "Notifications": {
     "Title": "الإشعارات",

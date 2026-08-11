@@ -57,7 +57,7 @@ export default async function AppHeader() {
 
   return (
     <AppHeaderShell>
-      <div className="container max-w-7xl flex items-center justify-between gap-4 py-4">
+      <div className="container max-w-7xl flex items-center justify-between gap-4 py-3">
         <AppLogo width={90} />
 
         <nav className=" items-center gap-8 hidden lg:flex">

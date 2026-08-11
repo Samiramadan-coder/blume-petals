@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/providers/cart-provider";
 import GoBackBtn from "@/components/shop/go-back-btn";
@@ -10,9 +10,11 @@ import ValidateCoupon from "@/components/shop/validate-coupon";
 import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
 import NoDataFounded from "@/components/reusable/no-data-founded";
+import { cn } from "@/lib/utils";
 
 export default function CartContent() {
   const t = useTranslations("Shop");
+  const locale = useLocale();
   const { items, summary } = useCart();
 
   return (
@@ -21,7 +23,11 @@ export default function CartContent() {
         <div className="flex gap-8">
           <GoBackBtn />
           <h3 className="text-2xl font-bold flex items-center gap-2">
-            <span>{t("MyCart")}:</span>
+            <span
+              className={cn(locale === "en" ? "font-heading" : "font-cairo")}
+            >
+              {t("MyCart")}:
+            </span>
             <Badge className="w-8 h-8 text-base">{items.length}</Badge>
           </h3>
         </div>
