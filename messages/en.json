@@ -639,6 +639,7 @@
     "ViewAllNotifications": "View All Notifications",
     "NoNotifications": "You have no notifications.",
     "LoadMore": "Load More",
+    "Unread": "Unread Count",
     "Filters": {
       "All": "All",
       "Orders": "Orders",

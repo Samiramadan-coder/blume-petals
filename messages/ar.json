@@ -629,6 +629,7 @@
     "ViewAllNotifications": "عرض جميع الإشعارات",
     "NoNotifications": "ليس لديك أي إشعارات.",
     "LoadMore": "تحميل المزيد",
+    "Unread": "عدد غير المقروءة",
     "Filters": {
       "All": "الكل",
       "Orders": "الطلبات",

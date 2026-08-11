@@ -7,11 +7,11 @@ export const tabs = (t: T) => [
   },
   {
     label: t("Filters.Orders"),
-    value: "orders",
+    value: "order",
   },
   {
     label: t("Filters.Promotions"),
-    value: "promotions",
+    value: "promo",
   },
   {
     label: t("Filters.System"),

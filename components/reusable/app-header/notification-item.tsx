@@ -15,9 +15,11 @@ import { useLocale } from "next-intl";
 export default function NotificationItem({
   notification,
   showActions = false,
+  isPopup = true,
 }: {
   notification: Notification;
   showActions?: boolean;
+  isPopup?: boolean;
 }) {
   const locale = useLocale();
   const [isRead, setIsRead] = useState(notification.read);
@@ -34,7 +36,7 @@ export default function NotificationItem({
       className={cn(
         "flex items-start gap-3 rounded-none px-5 py-4 text-left",
         "transition-colors hover:bg-primary/20",
-        isRead ? "bg-white" : "bg-primary/20",
+        isRead ? "bg-white" : "bg-primary/10",
       )}
     >
       <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
@@ -45,7 +47,12 @@ export default function NotificationItem({
 
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-3">
-          <h4 className="text-sm font-semibold text-foreground">
+          <h4
+            className={cn("text-sm font-semibold text-foreground", {
+              "text-sm": isPopup,
+              "text-base": !isPopup,
+            })}
+          >
             {notification.title}
           </h4>
 
@@ -62,9 +69,13 @@ export default function NotificationItem({
 
         <div className="flex items-center justify-between">
           <p
-            className="mt-1 text-muted-foreground text-[13px]"
-            dangerouslySetInnerHTML={{ __html: notification.body }}
-          ></p>
+            className={cn("mt-1 text-muted-foreground", {
+              "text-xs": isPopup,
+              "text-sm": !isPopup,
+            })}
+          >
+            {notification.body}
+          </p>
 
           {showActions && (
             <div className="flex justify-end gap-2">
@@ -75,7 +86,7 @@ export default function NotificationItem({
                   className="hover:bg-transparent"
                   onClick={() => markRead(notification.id)}
                 >
-                  <CircleCheck className="size-4 text-green-400" />
+                  <CircleCheck className="size-5 text-primary" />
                 </Button>
               )}
               <DialogDelete

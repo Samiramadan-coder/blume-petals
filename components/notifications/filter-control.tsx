@@ -10,7 +10,7 @@ export default function FilterControl() {
   const t = useTranslations("Notifications");
 
   const [queryParam, setQueryParam] = useQueryState(
-    "status",
+    "type",
     parseAsString
       .withDefault("all")
       .withOptions({ history: "push", shallow: false }),
