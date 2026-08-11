@@ -26,8 +26,6 @@ export default async function CartPage() {
     throw new Error("Failed to fetch cart");
   }
 
-  console.log("Cart data:", data);
-
   return (
     <main>
       <div className="container max-w-7xl py-20 min-h-[50vh]">
