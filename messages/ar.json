@@ -511,7 +511,9 @@
       "Processing": "قيد المعالجة",
       "Shipped": "تم الشحن",
       "Delivered": "تم التسليم",
-      "Cancelled": "تم الإلغاء"
+      "Cancelled": "تم الإلغاء",
+      "PaymentCompletedSuccessfully": "تم إتمام الدفع بنجاح.",
+      "PaymentFailed": "فشل الدفع. يرجى المحاولة مرة أخرى."
     },
     "Designs": {
       "Title": "تصاميمي",

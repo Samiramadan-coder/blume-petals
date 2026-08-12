@@ -145,6 +145,21 @@ export async function completePaymentAction(
   }
 }
 
+// Verify Payment
+type VerifyPaymentResponse = { success: boolean };
+
+export async function verifyPaymentAction(
+  orderId: string,
+): Promise<VerifyPaymentResponse> {
+  try {
+    await http.post(`/api/v1/orders/${orderId}/payment/verify`);
+    return { success: true };
+  } catch (error) {
+    console.error("Error verifying payment:", error);
+    return { success: false };
+  }
+}
+
 // Validate Coupon Code
 type ValidateCouponCodeResponse =
   | { success: true; coupon: Coupon }

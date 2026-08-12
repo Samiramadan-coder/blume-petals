@@ -518,7 +518,9 @@
       "Processing": "Processing",
       "Shipped": "Shipped",
       "Delivered": "Delivered",
-      "Cancelled": "Cancelled"
+      "Cancelled": "Cancelled",
+      "PaymentCompletedSuccessfully": "Payment completed successfully.",
+      "PaymentFailed": "Payment failed. Please try again."
     },
     "Designs": {
       "Title": "My Designs",
