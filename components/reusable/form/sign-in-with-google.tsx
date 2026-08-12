@@ -1,51 +1,36 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { http } from "@/lib/http";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { GoogleLogin } from "@react-oauth/google";
 import { saveToken } from "@/lib/actions";
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { LoginResponse } from "@/types/auth";
+import { useEffect, useRef } from "react";
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    google: any;
+  }
+}
 
 export default function GoogleLoginButton() {
   const t = useTranslations("Register");
+  const locale = useLocale();
   const router = useRouter();
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const [buttonWidth, setButtonWidth] = useState(200);
 
   useEffect(() => {
-    const container = containerRef.current;
+    const renderGoogleButton = () => {
+      if (!window.google || !containerRef.current) return;
 
-    if (!container) return;
+      containerRef.current.innerHTML = "";
 
-    const updateWidth = () => {
-      const width = Math.floor(container.getBoundingClientRect().width);
-
-      setButtonWidth(Math.min(width, 400));
-    };
-
-    updateWidth();
-
-    const observer = new ResizeObserver(updateWidth);
-
-    observer.observe(container);
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={containerRef} className="w-full">
-      <GoogleLogin
-        key={buttonWidth}
-        width={buttonWidth.toString()}
-        theme="outline"
-        shape="rectangular"
-        size="large"
-        text="signin"
-        onSuccess={async (credentialResponse) => {
+      window.google.accounts.id.initialize({
+        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+        callback: async (credentialResponse: { credential?: string }) => {
           const idToken = credentialResponse.credential;
 
           if (!idToken) {
@@ -68,11 +53,45 @@ export default function GoogleLoginButton() {
           } catch {
             toast.error(t("GoogleLoginFailed"));
           }
-        }}
-        onError={() => {
-          toast.error(t("GoogleLoginFailed"));
-        }}
-      />
-    </div>
-  );
+        },
+      });
+
+      window.google.accounts.id.renderButton(containerRef.current, {
+        theme: "outline",
+        size: "large",
+        shape: "rectangular",
+        text: "signin",
+        locale: locale === "ar" ? "ar" : "en",
+        width: containerRef.current.offsetWidth,
+      });
+    };
+
+    const oldScript = document.querySelector(
+      'script[src*="accounts.google.com/gsi/client"]',
+    );
+
+    if (oldScript) {
+      oldScript.remove();
+    }
+
+    delete window.google;
+
+    const script = document.createElement("script");
+
+    script.src = `https://accounts.google.com/gsi/client?hl=${
+      locale === "ar" ? "ar" : "en"
+    }`;
+
+    script.async = true;
+    script.defer = true;
+    script.onload = renderGoogleButton;
+
+    document.head.appendChild(script);
+
+    return () => {
+      script.remove();
+    };
+  }, [locale, router, t]);
+
+  return <div ref={containerRef} className="w-full" />;
 }
