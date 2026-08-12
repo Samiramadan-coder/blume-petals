@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { ListFilter } from "lucide-react";
 import { Pagination } from "@/types/shared";
+import * as motion from "motion/react-client";
 import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types/products";
@@ -89,7 +90,17 @@ async function ListOfProducts({
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-6">
             {data.data.items.map((item, index) => (
-              <CardItem key={index} item={item} imageClassName="h-[320px]" />
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.05,
+                }}
+              >
+                <CardItem item={item} imageClassName="h-[320px]" />
+              </motion.div>
             ))}
           </div>
 

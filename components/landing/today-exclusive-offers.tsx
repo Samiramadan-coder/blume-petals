@@ -33,11 +33,11 @@ export default async function TodayExclusiveOffers() {
               {t("Description")}
             </motion.p>
 
-            <MainButton href="/builder" label={t("PrimaryCta")} />
+            <MainButton href="/shop" label={t("PrimaryCta")} />
           </div>
 
           <Countdown
-            targetDate="2026-06-25T23:59:59"
+            targetDate="2026-08-14T23:59:59"
             labels={{
               eyebrow: t("Countdown.Eyebrow"),
               hours: t("Countdown.Hours"),
