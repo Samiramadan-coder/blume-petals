@@ -633,7 +633,8 @@
     "RatingBreakdown": "Rating Breakdown",
     "MyCart": "My Cart",
     "OrderSummary": "Order Summary",
-    "Bestseller": "Bestseller"
+    "Bestseller": "Bestseller",
+    "AddAddressToProceed": "Please add an address to proceed with your order."
   },
   "Notifications": {
     "Title": "Notifications",
