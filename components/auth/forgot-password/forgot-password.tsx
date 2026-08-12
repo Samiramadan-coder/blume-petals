@@ -2,15 +2,16 @@
 
 import { toast } from "sonner";
 import { useLocale } from "next-intl";
-import { Link, useRouter } from "@/i18n/navigation";
 import AuthCard from "../shared/auth-card";
 import { useTranslations } from "next-intl";
 import { forgotPassword } from "@/lib/auth-actions";
+import { Link, useRouter } from "@/i18n/navigation";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import AppLogo from "@/components/reusable/app-logo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthSubmitBtn from "../shared/auth-submit-btn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
-import { ArrowLeft, ArrowRight, LockIcon } from "lucide-react";
 import { ForgotPasswordForm, forgotPasswordSchema } from "@/types/auth";
 
 export default function ForgotPassword() {
@@ -56,8 +57,8 @@ export default function ForgotPassword() {
     <AuthCard>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="text-center">
-          <div className="w-14 h-14 rounded-full bg-border grid place-items-center mx-auto mb-4">
-            <LockIcon size={24} className="text-primary" />
+          <div className="flex justify-center mb-4">
+            <AppLogo width={110} />
           </div>
           <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
             {t("Title")}

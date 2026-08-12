@@ -13,6 +13,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { ResetPasswordForm, resetPasswordSchema } from "@/types/auth";
+import AppLogo from "@/components/reusable/app-logo";
 
 export default function ResetPassword() {
   const locale = useLocale();
@@ -57,6 +58,9 @@ export default function ResetPassword() {
     <AuthCard>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="text-center">
+          <div className="flex justify-center mb-4">
+            <AppLogo width={110} />
+          </div>
           <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
             {t("Title")}
           </h1>

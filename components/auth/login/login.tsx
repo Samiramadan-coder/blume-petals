@@ -12,6 +12,7 @@ import AppleLoginButton from "../shared/apple-signin";
 import NormalLoginForm from "./forms/normal-login-form";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import GoogleLoginButton from "@/components/reusable/form/sign-in-with-google";
+import AppLogo from "@/components/reusable/app-logo";
 
 export default function Login() {
   const router = useRouter();
@@ -33,7 +34,9 @@ export default function Login() {
   return (
     <AuthCard>
       <div className="text-center mb-6 md:mb-8">
-        <div className="w-12 h-12 rounded-full bg-linear-to-br from-primary to-secondary mx-auto mb-4"></div>
+        <div className="flex justify-center mb-4">
+          <AppLogo width={110} />
+        </div>
         <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
           {t("WelcomeBack")}
         </h1>

@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import RegisterWithEmail from "./forms/with-email";
 import RegisterWithPhone from "./forms/with-phone";
+import AppLogo from "@/components/reusable/app-logo";
 import { Separator } from "@/components/ui/separator";
 import AppleLoginButton from "../shared/apple-signin";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -34,7 +35,9 @@ export default function Register() {
     <>
       <AuthCard>
         <div className="text-center mb-6">
-          <div className="text-4xl font-bold text-foreground mb-4">𝔹</div>
+          <div className="flex justify-center mb-4">
+            <AppLogo width={110} />
+          </div>
           <h1 className="text-2xl md:text-3xl font-playfair font-bold text-foreground">
             {t("CreateAccountTitle")}
           </h1>
