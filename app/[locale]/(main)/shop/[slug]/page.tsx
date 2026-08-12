@@ -42,7 +42,7 @@ async function Product({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <ProductImages productImages={images} />
         <ProductVariants productDetails={product} token={token} />
-        <ProductAddOns currentAddOnsPage={addOnsPage} />
+        {/* <ProductAddOns currentAddOnsPage={addOnsPage} /> */}
         <ProductInfo product={product} reviewCurrentPage={reviewPage} />
         <SimilarProducts products={similar} />
       </div>
