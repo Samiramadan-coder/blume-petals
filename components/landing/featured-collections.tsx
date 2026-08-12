@@ -13,7 +13,7 @@ export default async function FeaturedCollections() {
     data: {
       items: Product[];
     };
-  }>(`/api/v1/products?sort=newest`);
+  }>(`/api/v1/products?sort=rating`);
 
   if (!ok) {
     throw new Error("Failed to fetch featured collections");

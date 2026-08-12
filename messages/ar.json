@@ -623,7 +623,8 @@
     "HowToReceiveOrder": "كيف ترغب في استلام طلبك؟",
     "RatingBreakdown": "توزيع التقييمات",
     "MyCart": "سلتي",
-    "OrderSummary": "ملخص الطلب"
+    "OrderSummary": "ملخص الطلب",
+    "Bestseller": "الأكثر مبيعًا"
   },
   "Notifications": {
     "Title": "الإشعارات",

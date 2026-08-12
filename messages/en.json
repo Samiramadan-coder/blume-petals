@@ -632,7 +632,8 @@
     "HowToReceiveOrder": "How would you like to receive your order?",
     "RatingBreakdown": "Rating Breakdown",
     "MyCart": "My Cart",
-    "OrderSummary": "Order Summary"
+    "OrderSummary": "Order Summary",
+    "Bestseller": "Bestseller"
   },
   "Notifications": {
     "Title": "Notifications",

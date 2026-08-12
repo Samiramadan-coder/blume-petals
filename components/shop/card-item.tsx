@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import { Rating } from "../ui/rating";
 import { cookies } from "next/headers";
@@ -7,7 +8,6 @@ import { Product } from "@/types/products";
 import { Card, CardContent } from "../ui/card";
 import { getTranslations } from "next-intl/server";
 import AddToFavoriteBtn from "./add-to-favorite-btn";
-import { cn } from "@/lib/utils";
 
 export default async function CardItem({
   item,
@@ -61,10 +61,15 @@ export default async function CardItem({
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           <div className="absolute z-20 top-0 left-0 p-4 w-full flex items-center justify-between">
-            <div>
+            <div className="flex gap-2">
               {item.is_new && (
                 <Badge className="text-white bg-secondary text-xs h-6">
                   ✨ {t("New")}
+                </Badge>
+              )}
+              {item.is_best_seller && (
+                <Badge className="text-white bg-primary text-xs h-6">
+                  🏆 {t("Bestseller")}
                 </Badge>
               )}
             </div>
