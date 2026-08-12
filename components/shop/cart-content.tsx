@@ -1,21 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useLocale, useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/providers/cart-provider";
 import GoBackBtn from "@/components/shop/go-back-btn";
+import { useLocale, useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import ValidateCoupon from "@/components/shop/validate-coupon";
 import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
 import NoDataFounded from "@/components/reusable/no-data-founded";
-import { cn } from "@/lib/utils";
+import { PackageX } from "lucide-react";
 
 export default function CartContent() {
   const t = useTranslations("Shop");
   const locale = useLocale();
   const { items, summary } = useCart();
+
+  console.log("Cart items:", items);
 
   return (
     <main>
@@ -42,7 +45,11 @@ export default function CartContent() {
                   className="w-full rounded-xl border-0 bg-white"
                   key={index}
                 >
-                  <CardContent className="flex items-center gap-4 px-4">
+                  <CardContent
+                    className={cn("flex items-center gap-4 px-4", {
+                      "opacity-70": !item.variant.in_stock,
+                    })}
+                  >
                     <div className="relative size-24 shrink-0 overflow-hidden rounded-xl">
                       <Image
                         src={item.product.image_url}
@@ -55,12 +62,20 @@ export default function CartContent() {
                     <div className="flex min-w-0 flex-1 flex-col self-stretch">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className="text-sm md:text-lg font-semibold text-foreground">
+                          <h3 className="flex items-center gap-2 text-sm md:text-lg font-semibold text-foreground">
                             {item.product.name}
+                            {!item.variant.in_stock && (
+                              <PackageX className="size-5 text-red-400" />
+                            )}
                           </h3>
                           <p className="mt-1 text-xs md:text-sm text-muted-foreground">
                             {t("Size")}: {item.variant.size}
                           </p>
+                          {!item.variant.in_stock && (
+                            <p className="mt-1 text-xs md:text-sm text-red-400 italic underline">
+                              {t("OutOfStock")}
+                            </p>
+                          )}
                         </div>
                         <DeleteFromCart itemId={item.id} />
                       </div>
