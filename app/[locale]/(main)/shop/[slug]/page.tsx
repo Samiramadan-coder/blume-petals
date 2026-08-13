@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { cookies } from "next/headers";
+import { AppSettings } from "@/types/landing";
 import ProductInfo from "@/components/shop/product-info";
 import ProductImages from "@/components/shop/product-images";
 import ProductAddOns from "@/components/shop/product-add-ons";
@@ -24,17 +25,23 @@ async function Product({
   const token = cookie.get("token")?.value;
   const { addOnsPage, reviewPage } = searchParams;
 
-  const { data, ok } = await http.get<{
+  // Fetch product details from the API
+  const { data: productData, ok: ok1 } = await http.get<{
     data: {
       product: ProductDetailsType;
     };
   }>(`/api/v1/products/${slug}`);
 
-  if (!ok) {
-    throw new Error("Failed to fetch product");
+  // Fetch app settings from the API
+  const { data: appSettings, ok: ok2 } = await http.get<{
+    data: AppSettings;
+  }>(`/api/v1/settings`);
+
+  if (!ok1 || !ok2) {
+    throw new Error("Failed to fetch product or app settings");
   }
 
-  const product = data.data.product;
+  const product = productData.data.product;
   const { images, similar } = product;
 
   return (
@@ -42,7 +49,9 @@ async function Product({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <ProductImages productImages={images} />
         <ProductVariants productDetails={product} token={token} />
-        {/* <ProductAddOns currentAddOnsPage={addOnsPage} /> */}
+        {appSettings.data.showAddition && (
+          <ProductAddOns currentAddOnsPage={addOnsPage} />
+        )}
         <ProductInfo product={product} reviewCurrentPage={reviewPage} />
         <SimilarProducts products={similar} />
       </div>

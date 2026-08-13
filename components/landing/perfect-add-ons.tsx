@@ -21,13 +21,10 @@ export default async function PerfectAddOns() {
     },
   });
 
+  // Fetch app settings from the API
   const { data: appSettings, ok: ok2 } = await http.get<{
     data: AppSettings;
-  }>(`/api/v1/settings`, {
-    params: {
-      per_page: 1,
-    },
-  });
+  }>(`/api/v1/settings`);
 
   if (!ok1 || !ok2) {
     throw new Error("Failed to fetch add-ons or app settings");
