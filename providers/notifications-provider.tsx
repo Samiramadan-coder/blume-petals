@@ -113,7 +113,6 @@ export function NotificationsProvider({
 
         unsubscribe = onMessage(messaging, async (payload) => {
           console.log("New notification received:", payload);
-
           await refreshUnreadCount();
         });
       } catch (error) {

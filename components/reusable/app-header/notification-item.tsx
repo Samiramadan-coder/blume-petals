@@ -6,6 +6,7 @@ import {
 } from "@/lib/notifications";
 import { useState } from "react";
 import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { DialogDelete } from "../delete-dialoge";
 import { cn, formatSmartDate } from "@/lib/utils";
@@ -22,6 +23,36 @@ export default function NotificationItem({
   showActions?: boolean;
   isPopup?: boolean;
 }) {
+  if (notification.type.includes("order")) {
+    return (
+      <Link href={notification.link} className="w-full">
+        <NotificationContent
+          notification={notification}
+          showActions={showActions}
+          isPopup={isPopup}
+        />
+      </Link>
+    );
+  }
+
+  return (
+    <NotificationContent
+      notification={notification}
+      showActions={showActions}
+      isPopup={isPopup}
+    />
+  );
+}
+
+function NotificationContent({
+  notification,
+  showActions,
+  isPopup,
+}: {
+  notification: Notification;
+  showActions: boolean;
+  isPopup: boolean;
+}) {
   const locale = useLocale();
   const { refreshUnreadCount } = useNotifications();
   const [isRead, setIsRead] = useState(notification.read);
@@ -32,10 +63,8 @@ export default function NotificationItem({
     await markNotificationAsRead(notificationId);
     await refreshUnreadCount();
   }
-
   return (
     <div
-      key={notification.id}
       className={cn(
         "flex items-start gap-3 rounded-none px-5 py-4 text-left",
         "transition-colors hover:bg-primary/20",
