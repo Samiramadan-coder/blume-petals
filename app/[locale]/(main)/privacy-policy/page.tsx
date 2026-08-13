@@ -13,6 +13,7 @@ export default async function Page() {
   return (
     <main className="container max-w-7xl py-20 min-h-[50vh]">
       <div
+        className="rich-content"
         dangerouslySetInnerHTML={{
           __html: data.data.policy || "",
         }}
