@@ -10,12 +10,6 @@ export type Category = {
   type: string;
 };
 
-export type CategoriesResponse = {
-  data: {
-    items: Category[];
-  };
-};
-
 export type Occasion = {
   banner_url: string;
   color: string;
@@ -33,8 +27,10 @@ export type Occasion = {
   type: string;
 };
 
-export type OccasionsResponse = {
-  data: {
-    items: Occasion[];
-  };
+export type AppSettings = {
+  about_us: string | null;
+  terms_and_conditions: string | null;
+  policy: string | null;
+  logo_url: string | null;
+  showAddition: boolean;
 };

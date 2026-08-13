@@ -1,15 +1,19 @@
 import Image from "next/image";
 import { http } from "@/lib/http";
+import { Link } from "@/i18n/navigation";
 import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
+import type { Category } from "@/types/landing";
 import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
 import { Card, CardContent } from "@/components/ui/card";
-import type { CategoriesResponse } from "@/types/landing";
-import { Link } from "@/i18n/navigation";
 
 async function Categories() {
-  const { data, ok } = await http.get<CategoriesResponse>("/api/v1/categories");
+  const { data, ok } = await http.get<{
+    data: {
+      items: Category[];
+    };
+  }>("/api/v1/categories");
 
   if (!ok) {
     throw new Error("Failed to fetch categories");

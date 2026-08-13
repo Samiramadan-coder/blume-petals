@@ -5,18 +5,22 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import AppLogo from "./app-logo";
+import { http } from "@/lib/http";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Category } from "@/types/landing";
 import { Separator } from "../ui/separator";
 import { LocaleSwitcher } from "./locale-switcher";
 import { getTranslations } from "next-intl/server";
 import FooterNavLink from "./app-footer/footer-nav-link";
-import { http } from "@/lib/http";
-import { CategoriesResponse } from "@/types/landing";
 
 export default async function AppFooter() {
   const t = await getTranslations("AppFooter");
-  const { data, ok } = await http.get<CategoriesResponse>("/api/v1/categories");
+  const { data, ok } = await http.get<{
+    data: {
+      items: Category[];
+    };
+  }>("/api/v1/categories");
 
   if (!ok) {
     throw new Error("Failed to fetch categories");

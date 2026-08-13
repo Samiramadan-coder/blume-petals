@@ -3,14 +3,18 @@ import { Card } from "../ui/card";
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
+import { Occasion } from "@/types/landing";
 import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
-import { OccasionsResponse } from "@/types/landing";
 
 async function Occasions() {
-  const { data, ok } = await http.get<OccasionsResponse>("/api/v1/occasions");
+  const { data, ok } = await http.get<{
+    data: {
+      items: Occasion[];
+    };
+  }>("/api/v1/occasions");
 
   if (!ok) {
     throw new Error("Failed to fetch occasions");

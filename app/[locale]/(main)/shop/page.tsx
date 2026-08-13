@@ -8,13 +8,13 @@ import {
 import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { ListFilter } from "lucide-react";
+import { Occasion } from "@/types/landing";
 import { Pagination } from "@/types/shared";
 import * as motion from "motion/react-client";
 import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
-import { OccasionsResponse } from "@/types/landing";
 import { getLocale, getTranslations } from "next-intl/server";
 import NoDataFounded from "@/components/reusable/no-data-founded";
 import ProductSortSelect from "@/components/shop/product-sort-select";
@@ -131,7 +131,11 @@ export default async function ShopPage({
   const t = await getTranslations("Shop");
 
   // Fetch occasions data for the shop-the-moment section
-  const { data, ok } = await http.get<OccasionsResponse>("/api/v1/occasions");
+  const { data, ok } = await http.get<{
+    data: {
+      items: Occasion[];
+    };
+  }>("/api/v1/occasions");
 
   if (!ok) {
     throw new Error("Failed to fetch occasions");
