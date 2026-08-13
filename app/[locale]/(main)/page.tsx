@@ -1,6 +1,6 @@
 import Hero from "@/components/landing/hero";
 import HowItWorks from "@/components/landing/how-it-works";
-// import PerfectAddOns from "@/components/landing/perfect-add-ons";
+import PerfectAddOns from "@/components/landing/perfect-add-ons";
 import ShopTheMoment from "@/components/landing/shop-the-moment";
 import BouquetBuilder from "@/components/landing/bouquet-builder";
 import ShopByCategory from "@/components/landing/shop-by-category";
@@ -18,7 +18,7 @@ export default async function Home() {
       <BouquetBuilder />
       <ShopTheMoment />
       <FeaturedCollections />
-      {/* <PerfectAddOns /> */}
+      <PerfectAddOns />
       <TodayExclusiveOffers />
       <DesignedByOurCustomers />
       <SubscribeSection />

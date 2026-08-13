@@ -5,11 +5,13 @@ import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
 import AddOnCard from "../shop/add-on-card";
+import { AppSettings } from "@/types/landing";
 
 export default async function PerfectAddOns() {
   const t = await getTranslations("LandingPerfectAddOns");
 
-  const { data, ok } = await http.get<{
+  // Fetch add-ons from the API
+  const { data: addOns, ok: ok1 } = await http.get<{
     data: {
       items: Product[];
     };
@@ -19,8 +21,20 @@ export default async function PerfectAddOns() {
     },
   });
 
-  if (!ok) {
-    throw new Error("Failed to fetch featured collections");
+  const { data: appSettings, ok: ok2 } = await http.get<{
+    data: AppSettings;
+  }>(`/api/v1/settings`, {
+    params: {
+      per_page: 1,
+    },
+  });
+
+  if (!ok1 || !ok2) {
+    throw new Error("Failed to fetch add-ons or app settings");
+  }
+
+  if (!appSettings.data.showAddition) {
+    return null;
   }
 
   return (
@@ -40,7 +54,7 @@ export default async function PerfectAddOns() {
           </motion.p>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
-            {data.data.items.map((item, index) => (
+            {addOns.data.items.map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 40 }}
