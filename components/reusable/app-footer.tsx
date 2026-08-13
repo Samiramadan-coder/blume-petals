@@ -4,16 +4,23 @@ import {
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
-import FooterNavLink from "./app-footer/footer-nav-link";
 import AppLogo from "./app-logo";
-import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 import { LocaleSwitcher } from "./locale-switcher";
 import { getTranslations } from "next-intl/server";
+import FooterNavLink from "./app-footer/footer-nav-link";
+import { http } from "@/lib/http";
+import { CategoriesResponse } from "@/types/landing";
 
 export default async function AppFooter() {
   const t = await getTranslations("AppFooter");
+  const { data, ok } = await http.get<CategoriesResponse>("/api/v1/categories");
+
+  if (!ok) {
+    throw new Error("Failed to fetch categories");
+  }
 
   return (
     <footer className="pt-16 bg-foreground">
@@ -84,24 +91,13 @@ export default async function AppFooter() {
             </div>
             <nav>
               <ul className="space-y-2.5">
-                <li>
-                  <FooterNavLink href="">{t("Bouquets")}</FooterNavLink>
-                </li>
-                <li>
-                  <FooterNavLink href="">{t("Preserved")}</FooterNavLink>
-                </li>
-                <li>
-                  <FooterNavLink href="">{t("Gifting")}</FooterNavLink>
-                </li>
-                <li>
-                  <FooterNavLink href="">{t("CustomBuilder")}</FooterNavLink>
-                </li>
-                <li>
-                  <FooterNavLink href="">{t("Seasonal")}</FooterNavLink>
-                </li>
-                <li>
-                  <FooterNavLink href="">{t("Occasions")}</FooterNavLink>
-                </li>
+                {data.data.items.slice(0, 5).map((item) => (
+                  <li key={item.id}>
+                    <FooterNavLink href={`/shop?category=${item.slug}`}>
+                      {item.name}
+                    </FooterNavLink>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
@@ -113,16 +109,16 @@ export default async function AppFooter() {
             <nav>
               <ul className="space-y-2.5">
                 <li>
-                  <FooterNavLink href="">{t("AboutUs")}</FooterNavLink>
+                  <FooterNavLink href="/about">{t("AboutUs")}</FooterNavLink>
                 </li>
-                <li>
+                {/* <li>
                   <FooterNavLink href="">{t("OurStory")}</FooterNavLink>
                 </li>
                 <li>
                   <FooterNavLink href="">{t("Careers")}</FooterNavLink>
-                </li>
+                </li> */}
                 <li>
-                  <FooterNavLink href="">{t("Contact")}</FooterNavLink>
+                  <FooterNavLink href="/contact">{t("Contact")}</FooterNavLink>
                 </li>
               </ul>
             </nav>
@@ -135,22 +131,26 @@ export default async function AppFooter() {
             <nav>
               <ul className="space-y-2.5">
                 <li>
-                  <FooterNavLink href="">{t("HelpCenter")}</FooterNavLink>
+                  <FooterNavLink href="/contact">
+                    {t("HelpCenter")}
+                  </FooterNavLink>
                 </li>
-                <li>
+                {/* <li>
                   <FooterNavLink href="">{t("TrackOrder")}</FooterNavLink>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <FooterNavLink href="">{t("ReturnsRefunds")}</FooterNavLink>
+                </li> */}
+                <li>
+                  <FooterNavLink href="/faq">{t("FAQ")}</FooterNavLink>
                 </li>
                 <li>
-                  <FooterNavLink href="">{t("FAQ")}</FooterNavLink>
+                  <FooterNavLink href="/privacy-policy">
+                    {t("PrivacyPolicy")}
+                  </FooterNavLink>
                 </li>
                 <li>
-                  <FooterNavLink href="">{t("PrivacyPolicy")}</FooterNavLink>
-                </li>
-                <li>
-                  <FooterNavLink href="">{t("Terms")}</FooterNavLink>
+                  <FooterNavLink href="/terms">{t("Terms")}</FooterNavLink>
                 </li>
               </ul>
             </nav>
