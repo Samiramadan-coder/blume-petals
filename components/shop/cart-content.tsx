@@ -14,11 +14,9 @@ import NoDataFounded from "@/components/reusable/no-data-founded";
 import { PackageX } from "lucide-react";
 
 export default function CartContent() {
-  const t = useTranslations("Shop");
   const locale = useLocale();
+  const t = useTranslations("Shop");
   const { items, summary } = useCart();
-
-  console.log("Cart items:", items);
 
   return (
     <main>
