@@ -80,9 +80,9 @@ export default function ProductVariants({
                 setQuantity(1);
               }}
               className={cn(
-                `rounded-full w-14 h-14 border-2 border-border cursor-pointer hover:bg-transparent`,
+                `rounded-full font-bold w-14 h-14 border-2 border-muted cursor-pointer hover:bg-transparent hover:border-primary`,
                 {
-                  "bg-primary hover:bg-primary font-semibold":
+                  "bg-primary hover:bg-primary text-white border-primary hover:text-white":
                     variant.size === activeVariant.size,
                 },
               )}
