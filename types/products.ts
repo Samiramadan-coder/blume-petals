@@ -21,6 +21,7 @@ export type Product = {
   in_stock: boolean;
   is_best_seller: boolean;
   description: string;
+  eta_text: string;
   is_new: boolean;
   is_new_arrival: boolean;
   name: string;

@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Product } from "@/types/products";
 import CardItem from "./card-item";
+import NoDataFounded from "../reusable/no-data-founded";
 
 export default async function SimilarProducts({
   products,
@@ -29,9 +30,13 @@ export default async function SimilarProducts({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        {products.map((product) => (
-          <CardItem key={product.id} item={product} />
-        ))}
+        {products.length === 0 ? (
+          <NoDataFounded />
+        ) : (
+          products.map((product) => (
+            <CardItem key={product.id} item={product} />
+          ))
+        )}
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ export default async function ProductInfo({
           <Reviews slug={product.slug} reviewCurrentPage={reviewCurrentPage} />
         </TabsContent>
         <TabsContent value="delivery">
-          <Delivery />
+          <Delivery etaText={product.eta_text} />
         </TabsContent>
       </Tabs>
     </div>
