@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { PackageX } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/providers/cart-provider";
 import GoBackBtn from "@/components/shop/go-back-btn";
@@ -11,7 +12,6 @@ import ValidateCoupon from "@/components/shop/validate-coupon";
 import UpdateQuantity from "@/components/shop/update-quantity";
 import DeleteFromCart from "@/components/shop/delete-form-cart";
 import NoDataFounded from "@/components/reusable/no-data-founded";
-import { PackageX } from "lucide-react";
 
 export default function CartContent() {
   const locale = useLocale();
