@@ -623,7 +623,9 @@
     "MyCart": "سلتي",
     "OrderSummary": "ملخص الطلب",
     "Bestseller": "الأكثر مبيعًا",
-    "AddAddressToProceed": "يرجى إضافة عنوان للمتابعة في طلبك."
+    "AddAddressToProceed": "يرجى إضافة عنوان للمتابعة في طلبك.",
+    "BouquetComposition": "تركيب الباقة",
+    "Stems": "سيقان"
   },
   "Notifications": {
     "Title": "الإشعارات",

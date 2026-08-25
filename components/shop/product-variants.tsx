@@ -64,10 +64,22 @@ export default function ProductVariants({
         )}
       </p>
 
-      <div
-        className="text-foreground/70 leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: productDetails.description }}
-      />
+      <div className="space-y-3">
+        <h3 className="text-base text-foreground/70 font-semibold">
+          {t("BouquetComposition")}
+        </h3>
+        <div className="space-y-1.5">
+          {activeVariant.contains.map((item) => (
+            <div className="flex items-center justify-between" key={item.name}>
+              <span className="text-foreground text-sm">✓ {item.name}</span>
+              <span className="text-sm text-muted-foreground">
+                ({item.qty}) {t("Stems")}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="space-y-3">
         <p className="font-semibold text-foreground mb-3">{t("Size")}</p>
         <div className="flex gap-3 flex-wrap">

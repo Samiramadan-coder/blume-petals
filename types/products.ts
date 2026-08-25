@@ -13,6 +13,7 @@ type Variant = {
   sku: string;
   stock: number;
   available_stock: number;
+  contains: { name: string; qty: number }[];
 };
 
 export type Product = {

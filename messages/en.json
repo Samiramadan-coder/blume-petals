@@ -631,7 +631,9 @@
     "MyCart": "My Cart",
     "OrderSummary": "Order Summary",
     "Bestseller": "Bestseller",
-    "AddAddressToProceed": "Please add an address to proceed with your order."
+    "AddAddressToProceed": "Please add an address to proceed with your order.",
+    "BouquetComposition": "Bouquet Composition",
+    "Stems": "Stems"
   },
   "Notifications": {
     "Title": "Notifications",
