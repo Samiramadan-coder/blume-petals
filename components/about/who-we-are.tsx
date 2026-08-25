@@ -18,6 +18,7 @@ export default async function WhoWeAre() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.35, delay: 0.2 }}
             className="text-foreground/68 leading-relaxed text-[15px] max-w-137.5 space-y-5"
           >

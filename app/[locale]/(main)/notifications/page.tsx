@@ -46,7 +46,7 @@ async function NotificationsData({
   return (
     <>
       <p className="text-sm font-semibold flex items-center gap-2">
-        <Badge className="w-6 h-6 text-foreground">
+        <Badge className="w-7 h-7 text-white font-bold">
           {data.data.unread_count}
         </Badge>
         <span>{t("Unread")}</span>

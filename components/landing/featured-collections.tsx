@@ -39,7 +39,7 @@ export default async function FeaturedCollections() {
                 item={item}
                 cardClassName="shadow-[0_10px_30px_rgba(61,46,0,0.08)]"
                 cardContentClassName="p-4"
-                imageClassName="rounded-none rounded-t-2xl"
+                imageClassName="rounded-none"
                 titleClassName="text-sm group-hover:text-foreground!"
                 priceClassName="text-foreground"
               />

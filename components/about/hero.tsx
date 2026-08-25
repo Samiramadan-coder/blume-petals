@@ -14,6 +14,7 @@ export default async function Hero() {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.35 }}
           className={cn(
             "text-5xl md:text-6xl font-bold text-foreground mb-5 leading-tight text-balance max-w-156 text-center",
@@ -26,6 +27,7 @@ export default async function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.35, delay: 0.1 }}
           className="text-base md:text-lg leading-relaxed text-pretty text-foreground/65 max-w-156 text-center"
         >

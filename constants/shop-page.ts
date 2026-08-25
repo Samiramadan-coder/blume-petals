@@ -1,12 +1,15 @@
 import { T } from "./shared";
 
-export const tabs = (t: T): { label: string; value: string }[] => [
+export const tabs = (
+  t: T,
+  reviewsCount: number,
+): { label: string; value: string }[] => [
   {
     label: t("Descriptions"),
     value: "description",
   },
   {
-    label: t("Reviews"),
+    label: t("Reviews") + ` (${reviewsCount})`,
     value: "reviews",
   },
   {

@@ -20,11 +20,11 @@ export default async function ProductInfo({
     <div className="md:col-span-2">
       <Tabs defaultValue="description" className="gap-0">
         <TabsList variant="line" className="h-16! space-x-6">
-          {tabs(t).map((tab) => (
+          {tabs(t, product.reviews.length).map((tab) => (
             <TabsTrigger
               key={tab.value}
               value={tab.value}
-              className="text-base px-0 cursor-pointer data-[state=active]:after:bg-primary! data-[state=active]:text-primary!"
+              className="font-semibold text-base px-0 cursor-pointer data-[state=active]:after:bg-primary! data-[state=active]:text-primary!"
             >
               {tab.label}
             </TabsTrigger>

@@ -142,47 +142,56 @@ export default async function ShopPage({
   }
 
   return (
-    <div className="container max-w-7xl">
-      <div className="py-20">
-        <h1
-          className={cn("text-4xl md:text-5xl font-bold text-foreground mb-2", {
-            "font-heading": locale === "en",
-          })}
-        >
-          {t("Title")}
-        </h1>
-
-        <p className="text-lg text-foreground/60">{t("Description")}</p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 items-start mt-25">
-          <div className="hidden md:block sticky top-28">
-            <Filters occasions={data.data.items} />
-          </div>
-
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                className="bg-transparent hover:bg-transparent block md:hidden cursor-pointer"
-              >
-                <ListFilter />
-              </Button>
-            </SheetTrigger>
-            <SheetContent showCloseButton={true}>
-              <SheetHeader className="mt-6">
-                <SheetDescription asChild className="py-4 flex flex-col gap-3">
-                  <Filters occasions={data.data.items} />
-                </SheetDescription>
-              </SheetHeader>
-            </SheetContent>
-          </Sheet>
-
-          <Suspense
-            key={JSON.stringify(await searchParams)}
-            fallback={<ListOfProductsSkeleton />}
+    <div>
+      <section className="bg-linear-to-br from-muted via-background to-background pt-10 md:pt-16">
+        <div className="container max-w-7xl">
+          <h1
+            className={cn(
+              "text-4xl md:text-5xl font-bold text-foreground mb-2",
+              { "font-heading": locale === "en" },
+            )}
           >
-            <ListOfProducts searchParams={await searchParams} />
-          </Suspense>
+            {t("Title")}
+          </h1>
+
+          <p className="text-lg text-foreground/60">{t("Description")}</p>
+        </div>
+      </section>
+      <div className="container max-w-7xl">
+        <div className="py-25">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 items-start">
+            <div className="hidden md:block sticky top-28">
+              <Filters occasions={data.data.items} />
+            </div>
+
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="bg-transparent hover:bg-transparent block md:hidden cursor-pointer"
+                >
+                  <ListFilter />
+                </Button>
+              </SheetTrigger>
+              <SheetContent showCloseButton={true}>
+                <SheetHeader className="mt-6">
+                  <SheetDescription
+                    asChild
+                    className="py-4 flex flex-col gap-3"
+                  >
+                    <Filters occasions={data.data.items} />
+                  </SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
+
+            <Suspense
+              key={JSON.stringify(await searchParams)}
+              fallback={<ListOfProductsSkeleton />}
+            >
+              <ListOfProducts searchParams={await searchParams} />
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>

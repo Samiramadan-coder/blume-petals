@@ -25,8 +25,8 @@ export default async function OurPerform() {
   const locale = await getLocale();
 
   return (
-    <div className="bg-[#faf8f5]">
-      <div className="container max-w-7xl">
+    <div className="bg-[#f7f3ee]">
+      <div className="container max-w-5xl">
         <div className="py-20">
           <AboutSubtitle className="text-center">{t("Eyebrow")}</AboutSubtitle>
           <AboutTitle className="text-center">{t("Title")}</AboutTitle>
@@ -36,6 +36,7 @@ export default async function OurPerform() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: 0.1 + index * 0.1 }}
                 key={key}
               >

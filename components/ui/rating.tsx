@@ -34,7 +34,7 @@ export function Rating({ rating, count, max = 5, size = 16 }: RatingProps) {
       </div>
 
       {typeof count === "number" && (
-        <span className="ms-2 text-sm text-muted-foreground">({count})</span>
+        <span className="ms-2 text-xs text-foreground/50">({count})</span>
       )}
     </div>
   );
