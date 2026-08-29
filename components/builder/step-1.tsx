@@ -1,25 +1,29 @@
 import Image from "next/image";
+import { useState } from "react";
 import { Check } from "lucide-react";
+import { Button } from "../ui/button";
 import { Product } from "@/types/products";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "../ui/card";
 import { BuilderFormData } from "@/types/builder-page";
-import { UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { Button } from "../ui/button";
+import { Control, UseFormSetValue, Controller } from "react-hook-form";
 
 export default function Step1({
   setValue,
-  watch,
+  control,
   templates,
 }: {
-  setValue: UseFormSetValue<BuilderFormData>;
-  watch: UseFormWatch<BuilderFormData>;
   templates: Product[];
+  control: Control<BuilderFormData>;
+  setValue: UseFormSetValue<BuilderFormData>;
 }) {
-  const t = useTranslations("CustomBuilder");
   const tCommon = useTranslations("Common");
+  const t = useTranslations("CustomBuilder");
+  const [selectedTemplateId, setSelectedTemplateId] = useState(
+    templates[0]?.id,
+  );
   const choosedTemplate = templates.find(
-    (template) => template.id === watch("template_id"),
+    (template) => template.id === selectedTemplateId,
   );
 
   return (
@@ -27,8 +31,8 @@ export default function Step1({
       <p className="text-foreground/60 text-base text-center">{t("Pick")}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {templates.map((shape) => (
-          <Card key={shape.id} className="bg-transparent p-0">
+        {templates.map((template) => (
+          <Card key={template.id} className="bg-transparent p-0">
             <CardContent className="p-0">
               <div
                 className={`
@@ -37,13 +41,16 @@ export default function Step1({
                   relative 
                   overflow-hidden 
                   rounded-[24px] 
-                  ${watch("template_id") === shape.id ? "border-2 border-primary" : ""}
+                  ${selectedTemplateId === template.id ? "border-2 border-primary" : ""}
                 `}
-                onClick={() => setValue("template_id", shape.id)}
+                onClick={() => {
+                  setSelectedTemplateId(template.id);
+                  setValue("variant_id", template.variants[0]?.id);
+                }}
               >
                 <Image
-                  src={shape.image_url}
-                  alt={shape.name}
+                  src={template.image_url}
+                  alt={template.name}
                   width={500}
                   height={500}
                   className="
@@ -55,7 +62,7 @@ export default function Step1({
                     duration-300
                   "
                 />
-                {watch("template_id") === shape.id && (
+                {selectedTemplateId === template.id && (
                   <div
                     className="
                     absolute 
@@ -76,7 +83,7 @@ export default function Step1({
             </CardContent>
             <div>
               <p className="font-semibold text-center text-base text-foreground">
-                {shape.name}
+                {template.name}
               </p>
             </div>
           </Card>
@@ -90,63 +97,46 @@ export default function Step1({
           </p>
         </div>
 
-        {choosedTemplate?.variants.map((size) => (
-          <Button
-            type="button"
-            key={size.id}
-            variant="outline"
-            className="
-              border-2 
-              border-muted 
-              h-auto! 
-              flex 
-              flex-col 
-              py-4 
-              rounded-xl 
-              hover:bg-transparent
-            "
-          >
-            <p className="font-semibold">{size.size}</p>
-            <p className="text-primary">
-              {tCommon("AED")}: {size.price}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {size.max_stems} {t("Flowers")}
-            </p>
-          </Button>
-          // <Card key={size.id} className="bg-transparent p-0">
-          //   <CardContent className="p-0">
-          //     <div
-          //       className={`
-          //         group
-          //         cursor-pointer
-          //         relative
-          //         overflow-hidden
-          //         rounded-[24px]
-          //         border
-          //         border-border
-          //         p-4
-          //         flex
-          //         flex-col
-          //         items-center
-          //         justify-center
-          //         ${watch("size") === size.id ? "border-2 border-primary" : ""}
-          //       `}
-          //       onClick={() => setValue("size", size.id)}
-          //     >
-          //       <p className="font-semibold text-lg text-foreground">
-          //         {size.size}
-          //       </p>
-          //       <p className="text-sm mt-2 text-foreground/60 text-center">
-          //         From AED {size.price}
-          //       </p>
-          //       <p className="text-sm mt-1 text-foreground/60 text-center">
-          //         {size.max_stems} flowers
-          //       </p>
-          //     </div>
-          //   </CardContent>
-          // </Card>
-        ))}
+        <Controller
+          control={control}
+          name="variant_id"
+          render={({ field }) => {
+            const { value, onChange } = field;
+
+            return (
+              <>
+                {choosedTemplate?.variants.map((size) => (
+                  <Button
+                    type="button"
+                    key={size.id}
+                    variant="outline"
+                    onClick={() => onChange(size.id)}
+                    className={`
+                      border-2 
+                      border-muted 
+                      h-auto! 
+                      flex 
+                      flex-col 
+                      py-5 
+                      rounded-xl 
+                      hover:bg-transparent
+                      bg-white
+                      ${value === size.id ? "border-primary bg-primary/20" : ""}
+                    `}
+                  >
+                    <p className="font-semibold">{size.size}</p>
+                    <p className="text-primary">
+                      {tCommon("AED")}: {size.price}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {size.max_stems} {t("Flowers")}
+                    </p>
+                  </Button>
+                ))}
+              </>
+            );
+          }}
+        />
       </div>
     </div>
   );

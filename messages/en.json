@@ -684,8 +684,8 @@
     "Size": "Size",
     "Flowers": "Flowers",
     "Steps": {
-      "Template": "Template",
-      "Build": "Build",
+      "Template": "Choose Template",
+      "Build": "Add Flowers",
       "Accessories": "Accessories",
       "Preview": "Preview"
     }

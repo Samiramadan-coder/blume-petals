@@ -60,6 +60,7 @@ async function ListOfProducts({
     ...(searchParams.category ? { category: searchParams.category } : {}),
     ...(searchParams.sort ? { sort: searchParams.sort } : {}),
     per_page: 12,
+    made_to_order: 0,
   };
 
   const { data, ok } = await http.get<{
