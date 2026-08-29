@@ -1,5 +1,6 @@
 import { T } from "@/constants/shared";
 import z from "zod";
+import { Occasion } from "./landing";
 
 type Variant = {
   color_hex: string | null;
@@ -108,4 +109,16 @@ export type PickupLocation = {
   name: string;
   ready_in: string;
   sort_order: number;
+};
+
+export type FiltersOptions = {
+  sorts: ["newest", "best_selling", "price_asc", "price_desc", "rating"];
+  occasions: Occasion[];
+  templates: string[];
+  sizes: string[];
+  colors: string[];
+  price_range: {
+    min: number;
+    max: number;
+  };
 };

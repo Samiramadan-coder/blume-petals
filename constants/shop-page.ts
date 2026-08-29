@@ -17,22 +17,3 @@ export const tabs = (
     value: "delivery",
   },
 ];
-
-export const sizes = (t: T) => [
-  {
-    id: "S",
-    label: t("Small"),
-  },
-  {
-    id: "M",
-    label: t("Medium"),
-  },
-  {
-    id: "L",
-    label: t("Large"),
-  },
-  {
-    id: "XL",
-    label: t("XLarge"),
-  },
-];

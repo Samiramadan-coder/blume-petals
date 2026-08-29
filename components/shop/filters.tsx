@@ -6,16 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { useState } from "react";
-import { Label } from "../ui/label";
-import { Slider } from "../ui/slider";
-import { Checkbox } from "../ui/checkbox";
-import { Occasion } from "@/types/landing";
-import { Separator } from "../ui/separator";
-import { useTranslations } from "next-intl";
-import { sizes } from "@/constants/shop-page";
-import { Card, CardContent } from "../ui/card";
-import { Field, FieldGroup } from "../ui/field";
+
 import {
   parseAsInteger,
   parseAsNativeArrayOf,
@@ -23,13 +14,23 @@ import {
   useQueryStates,
 } from "nuqs";
 
-export default function Filters({ occasions }: { occasions: Occasion[] }) {
+import { useState } from "react";
+import { Label } from "../ui/label";
+import { Slider } from "../ui/slider";
+import { Checkbox } from "../ui/checkbox";
+import { Separator } from "../ui/separator";
+import { useTranslations } from "next-intl";
+import { Card, CardContent } from "../ui/card";
+import { Field, FieldGroup } from "../ui/field";
+import { FiltersOptions } from "@/types/products";
+
+export default function Filters({ filters }: { filters: FiltersOptions }) {
   const t = useTranslations("Shop");
 
   const [query, setQuery] = useQueryStates(
     {
       price_min: parseAsInteger.withDefault(0),
-      price_max: parseAsInteger.withDefault(500),
+      price_max: parseAsInteger.withDefault(filters.price_range.max),
       size: parseAsNativeArrayOf(parseAsString).withDefault([]),
       occasion: parseAsNativeArrayOf(parseAsString).withDefault([]),
       in_stock: parseAsString,
@@ -82,7 +83,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                       page: "1",
                     });
                   }}
-                  max={500}
+                  max={filters.price_range.max}
                   step={1}
                   className="mx-auto w-full max-w-xs"
                 />
@@ -93,7 +94,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                   {t("Max")}: {t("AED")} {max[0]}
                 </p>
                 <Slider
-                  max={500}
+                  max={filters.price_range.max}
                   value={max}
                   onValueChange={(value) => {
                     setMaxDraft(value);
@@ -130,19 +131,19 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
               {t("Size")}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
-              {sizes(t).map((size) => (
-                <FieldGroup key={size.id} className="max-w-sm">
+              {filters.sizes.map((size) => (
+                <FieldGroup key={size} className="max-w-sm">
                   <Field orientation="horizontal">
                     <Checkbox
-                      id={size.id}
-                      name={size.id}
-                      checked={selectedSizes.includes(size.id)}
+                      id={size}
+                      name={size}
+                      checked={selectedSizes.includes(size)}
                       onCheckedChange={(checked) => {
                         const nextSizes =
                           checked === true
-                            ? [...selectedSizes, size.id]
+                            ? [...selectedSizes, size]
                             : selectedSizes.filter(
-                                (selectedSize) => selectedSize !== size.id,
+                                (selectedSize) => selectedSize !== size,
                               );
 
                         void setQuery({
@@ -151,8 +152,8 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
                         });
                       }}
                     />
-                    <Label htmlFor={size.id} className="text-foreground/70">
-                      {size.label}
+                    <Label htmlFor={size} className="text-foreground/70">
+                      {size}
                     </Label>
                   </Field>
                 </FieldGroup>
@@ -192,7 +193,7 @@ export default function Filters({ occasions }: { occasions: Occasion[] }) {
               {t("Occasions")}
             </AccordionTrigger>
             <AccordionContent className="space-y-3">
-              {occasions.map((occasion) => (
+              {filters.occasions.map((occasion) => (
                 <FieldGroup key={occasion.id} className="max-w-sm">
                   <Field orientation="horizontal">
                     <Checkbox

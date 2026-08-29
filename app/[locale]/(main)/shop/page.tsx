@@ -8,12 +8,11 @@ import {
 import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { ListFilter } from "lucide-react";
-import { Occasion } from "@/types/landing";
 import { Pagination } from "@/types/shared";
 import * as motion from "motion/react-client";
 import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
-import type { Product } from "@/types/products";
+import type { FiltersOptions, Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
 import { getLocale, getTranslations } from "next-intl/server";
 import NoDataFounded from "@/components/reusable/no-data-founded";
@@ -130,16 +129,16 @@ export default async function ShopPage({
   const locale = await getLocale();
   const t = await getTranslations("Shop");
 
-  // Fetch occasions data for the shop-the-moment section
+  // Fetch Filters
   const { data, ok } = await http.get<{
-    data: {
-      items: Occasion[];
-    };
-  }>("/api/v1/occasions");
+    data: FiltersOptions;
+  }>("/api/v1/filters/options");
 
   if (!ok) {
     throw new Error("Failed to fetch occasions");
   }
+
+  console.log(data);
 
   return (
     <div>
@@ -161,7 +160,7 @@ export default async function ShopPage({
         <div className="py-25">
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 items-start">
             <div className="hidden md:block sticky top-28">
-              <Filters occasions={data.data.items} />
+              <Filters filters={data.data} />
             </div>
 
             <Sheet>
@@ -179,7 +178,7 @@ export default async function ShopPage({
                     asChild
                     className="py-4 flex flex-col gap-3"
                   >
-                    <Filters occasions={data.data.items} />
+                    <Filters filters={data.data} />
                   </SheetDescription>
                 </SheetHeader>
               </SheetContent>
