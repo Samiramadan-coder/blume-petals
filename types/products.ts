@@ -124,3 +124,17 @@ export type FiltersOptions = {
     max: number;
   };
 };
+
+export type Flower = {
+  available_stock: number;
+  color_hex: string | null;
+  color_slug: string | null;
+  id: number;
+  image_url: string;
+  in_stock: boolean;
+  price: string;
+  product_id: number;
+  product_name: string;
+  size: string | null;
+  sku: string;
+};

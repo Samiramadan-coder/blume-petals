@@ -683,6 +683,10 @@
     "Pick": "Pick a bouquet shape to start with",
     "Size": "Size",
     "Flowers": "Flowers",
+    "Left": "left",
+    "ChooseFlower": "Choose a flower to add to your bouquet",
+    "AddToBouquet": "Add to Bouquet",
+    "AutoFillRemaining": "Auto-fill remaining {count}",
     "Steps": {
       "Template": "Choose Template",
       "Build": "Add Flowers",

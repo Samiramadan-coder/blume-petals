@@ -7,8 +7,8 @@ import Step4 from "./step-4";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { T } from "@/constants/shared";
-import { Product } from "@/types/products";
 import { useTranslations } from "next-intl";
+import { Flower, Product } from "@/types/products";
 import { BuilderFormData } from "@/types/builder-page";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -20,25 +20,29 @@ const steps = (t: T) => [
 ];
 
 export default function BuilderForm({
-  maintemplates,
+  templates,
+  flowers,
 }: {
-  maintemplates: Product[];
+  templates: Product[];
+  flowers: Flower[];
 }) {
   const t = useTranslations("CustomBuilder");
   const stepsList = steps(t);
   const [currentStep, setCurrentStep] = useState(0);
-  const isLastStep = currentStep === stepsList.length - 1;
 
   const { handleSubmit, setValue, control } = useForm<BuilderFormData>({
     defaultValues: {
-      variant_id: maintemplates[0]?.variants[0]?.id,
+      variant_id: templates[0]?.variants[0]?.id,
     },
   });
 
   const onSubmit: SubmitHandler<BuilderFormData> = (data) => {
-    console.log(data);
-    if (!isLastStep) {
+    if (currentStep === 0) {
       return setCurrentStep((prev) => prev + 1);
+    }
+
+    if (currentStep === 1) {
+      // logic for step 2
     }
   };
 
@@ -79,13 +83,9 @@ export default function BuilderForm({
 
       <div className="py-6">
         {currentStep === 0 && (
-          <Step1
-            templates={maintemplates}
-            setValue={setValue}
-            control={control}
-          />
+          <Step1 templates={templates} setValue={setValue} control={control} />
         )}
-        {currentStep === 1 && <Step2 />}
+        {currentStep === 1 && <Step2 flowers={flowers} control={control} />}
         {currentStep === 2 && <Step3 />}
         {currentStep === 3 && <Step4 />}
       </div>
@@ -104,7 +104,7 @@ export default function BuilderForm({
           className="flex-1 h-12 rounded-full text-lg text-foreground"
           type="submit"
         >
-          {isLastStep
+          {currentStep === 3
             ? t("Submit")
             : `${t("Next")}: ${stepsList[currentStep + 1]}`}
         </Button>
