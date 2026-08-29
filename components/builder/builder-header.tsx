@@ -11,7 +11,7 @@ export default function BuilderHeader() {
 
   return (
     <header className="py-5 border-b border-border sticky top-0 z-50 bg-background">
-      <div className="container max-w-5xl flex items-center justify-between">
+      <div className="container max-w-3xl flex items-center justify-between">
         <h1 className="text-2xl text-foreground">Design Your Bouquet</h1>
         <Button
           size="lg"

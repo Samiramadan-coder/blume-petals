@@ -14,6 +14,8 @@ type Variant = {
   sku: string;
   stock: number;
   available_stock: number;
+  min_stems: number;
+  max_stems: number;
   contains: { name: string; qty: number }[];
 };
 

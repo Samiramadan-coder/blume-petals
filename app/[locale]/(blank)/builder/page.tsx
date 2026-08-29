@@ -1,19 +1,34 @@
+import { http } from "@/lib/http";
+import { buildQueryString } from "@/lib/utils";
+import { FiltersOptions, Product } from "@/types/products";
 import BuilderForm from "@/components/builder/builder-form";
 import BuilderHeader from "@/components/builder/builder-header";
-import { http } from "@/lib/http";
 
 export default async function Page() {
-  const { data, ok } = await http.get("/api/v1/filters/options");
+  const { data: filters, ok: ok1 } = await http.get<{ data: FiltersOptions }>(
+    "/api/v1/filters/options",
+  );
 
-  if (!ok) {
+  if (!ok1) {
     throw new Error("Failed to fetch data");
   }
 
-  console.log(data);
+  const { data: templates, ok: ok2 } = await http.get<{
+    data: {
+      items: Product[];
+    };
+  }>(
+    `/api/v1/products?${buildQueryString({ template: filters.data.templates })}`,
+  );
+
+  if (!ok2) {
+    throw new Error("Failed to fetch templates");
+  }
+
   return (
     <main className="pb-12">
       <BuilderHeader />
-      <BuilderForm />
+      <BuilderForm maintemplates={templates.data.items} />
     </main>
   );
 }

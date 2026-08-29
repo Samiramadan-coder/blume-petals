@@ -1,24 +1,38 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { useForm, SubmitHandler } from "react-hook-form";
 import Step1 from "./step-1";
 import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { Product } from "@/types/products";
+import { useTranslations } from "next-intl";
 import { BuilderFormData } from "@/types/builder-page";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-const steps = ["Template", "Build", "Accessories", "Preview"];
-
-export default function BuilderForm() {
+export default function BuilderForm({
+  maintemplates,
+}: {
+  maintemplates: Product[];
+}) {
+  console.log(maintemplates);
+  const t = useTranslations("CustomBuilder");
   const [currentStep, setCurrentStep] = useState(0);
+
   const { register, handleSubmit, setValue, watch } = useForm<BuilderFormData>({
     defaultValues: {
-      bouquetShape: "circular",
-      size: "small",
+      template_id: maintemplates[0]?.id,
+      size: maintemplates[0]?.variants[0]?.id,
     },
   });
+
+  const steps = [
+    t("Steps.Template"),
+    t("Steps.Build"),
+    t("Steps.Accessories"),
+    t("Steps.Preview"),
+  ];
 
   const isLastStep = currentStep === steps.length - 1;
 
@@ -29,11 +43,11 @@ export default function BuilderForm() {
   };
 
   return (
-    <form className="container max-w-5xl" onSubmit={handleSubmit(onSubmit)}>
+    <form className="container max-w-3xl" onSubmit={handleSubmit(onSubmit)}>
       <header className="bg-border p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-medium text-foreground/60">
-            STEP {currentStep + 1} OF {steps.length}
+            {t("Step")} {currentStep + 1} {t("Of")} {steps.length}
           </p>
           <p className="text-sm font-medium text-primary">
             {steps[currentStep]}
@@ -64,7 +78,9 @@ export default function BuilderForm() {
       </header>
 
       <div className="py-6">
-        {currentStep === 0 && <Step1 setValue={setValue} watch={watch} />}
+        {currentStep === 0 && (
+          <Step1 templates={maintemplates} setValue={setValue} watch={watch} />
+        )}
         {currentStep === 1 && <Step2 />}
         {currentStep === 2 && <Step3 />}
         {currentStep === 3 && <Step4 />}
@@ -77,14 +93,14 @@ export default function BuilderForm() {
             type="button"
             onClick={() => setCurrentStep((prev) => prev - 1)}
           >
-            Back: {steps[currentStep - 1]}
+            {t("Back")}: {steps[currentStep - 1]}
           </Button>
         )}
         <Button
           className="flex-1 h-12 rounded-full cursor-pointer"
           type="submit"
         >
-          {isLastStep ? "Submit" : `Next: ${steps[currentStep + 1]}`}
+          {isLastStep ? t("Submit") : `${t("Next")}: ${steps[currentStep + 1]}`}
         </Button>
       </footer>
     </form>

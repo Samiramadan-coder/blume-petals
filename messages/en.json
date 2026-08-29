@@ -673,5 +673,21 @@
         "MinLength": "Message must be at least 10 characters"
       }
     }
+  },
+  "CustomBuilder": {
+    "Step": "Step",
+    "Of": "Of",
+    "Back": "Back",
+    "Submit": "Submit",
+    "Next": "Next",
+    "Pick": "Pick a bouquet shape to start with",
+    "Size": "Size",
+    "Flowers": "Flowers",
+    "Steps": {
+      "Template": "Template",
+      "Build": "Build",
+      "Accessories": "Accessories",
+      "Preview": "Preview"
+    }
   }
 }

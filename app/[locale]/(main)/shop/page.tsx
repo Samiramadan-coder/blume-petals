@@ -138,8 +138,6 @@ export default async function ShopPage({
     throw new Error("Failed to fetch occasions");
   }
 
-  console.log(data);
-
   return (
     <div>
       <section className="bg-linear-to-br from-muted via-background to-background pt-10 md:pt-16">
