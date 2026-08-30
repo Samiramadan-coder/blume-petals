@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Flower } from "@/types/products";
 import { useTranslations } from "next-intl";
 import { UseFormSetValue } from "react-hook-form";
-import { Minus, Plus, Sparkle, X } from "lucide-react";
+import { Minus, Plus, Sparkle } from "lucide-react";
 import { BuilderFormData } from "@/types/builder-page";
 
 export default function Step2({
@@ -149,7 +149,7 @@ export default function Step2({
                 alt={flower.product_name}
                 width={100}
                 height={100}
-                className="object-cover max-h-25 rounded-2xl"
+                className="object-cover rounded-2xl"
               />
 
               <p className="font-semibold text-xs">{flower.product_name}</p>
