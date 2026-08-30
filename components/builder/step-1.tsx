@@ -12,12 +12,10 @@ export default function Step1({
   setValue,
   control,
   templates,
-  setSelectedTemplate,
 }: {
   templates: Product[];
   control: Control<BuilderFormData>;
   setValue: UseFormSetValue<BuilderFormData>;
-  setSelectedTemplate: (id: number) => void;
 }) {
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
@@ -47,7 +45,7 @@ export default function Step1({
                 `}
                 onClick={() => {
                   setSelectedTemplateId(template.id);
-                  setSelectedTemplate(template.id);
+                  setValue("template_id", template.id);
                   setValue("variant_id", template.variants[0]?.id);
                   setValue("slots", []);
                 }}
@@ -116,7 +114,7 @@ export default function Step1({
                     variant="outline"
                     onClick={() => {
                       onChange(size.id);
-                      // setRequiredFlowersCount(size.max_stems);
+                      setValue("flowersCount", size.max_stems);
                     }}
                     className={`
                       border-2 

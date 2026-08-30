@@ -32,31 +32,21 @@ export default function BuilderForm({
   const tCommon = useTranslations("Common");
   const stepsList = steps(t);
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedTemplate, setSelectedTemplate] = useState(templates[0].id);
 
   const { handleSubmit, setValue, control } = useForm<BuilderFormData>({
     defaultValues: {
+      template_id: templates[0].id,
       variant_id: templates[0]?.variants[0]?.id,
+      flowersCount: templates[0]?.variants[0]?.max_stems || 0,
       slots: [],
     },
   });
 
   /* Watch the selected slots in the form */
-  const choosedSlots = useWatch({ control, name: "slots" });
+  const selectedTemplate = useWatch({ control, name: "template_id" });
   const selectedVariant = useWatch({ control, name: "variant_id" });
-
-  /* Calculate the required number of flowers based on the selected template and variant */
-  const requiredFlowersCount = useMemo(() => {
-    const selectedTemplateObj = templates.find(
-      (template) => template.id === selectedTemplate,
-    );
-
-    const selectedSize = selectedTemplateObj?.variants.find(
-      (variant) => variant.id === selectedVariant,
-    );
-
-    return selectedSize?.max_stems || 0;
-  }, [selectedTemplate, selectedVariant, templates]);
+  const flowersCount = useWatch({ control, name: "flowersCount" });
+  const choosedSlots = useWatch({ control, name: "slots" });
 
   /* Calculate the total number of chosen flowers from client */
   const choosedFlowersCount = useMemo(() => {
@@ -74,13 +64,11 @@ export default function BuilderForm({
     );
 
     const totalFlowersPrice = choosedSlots.reduce((acc, slot) => {
-      const flowerPrice =
-        flowers.find((flower) => flower.id === slot.variant_id)?.price || 0;
-      return acc + slot.qty * +flowerPrice;
+      return acc + slot.qty * slot.price;
     }, 0);
 
     return (selectedSize ? +selectedSize.price : 0) + totalFlowersPrice;
-  }, [selectedTemplate, selectedVariant, templates, choosedSlots, flowers]);
+  }, [templates, choosedSlots, selectedTemplate, selectedVariant]);
 
   /* Handle form submission based on the current step */
   const onSubmit: SubmitHandler<BuilderFormData> = (data) => {
@@ -88,15 +76,15 @@ export default function BuilderForm({
       return setCurrentStep((prev) => prev + 1);
     }
 
-    if (currentStep === 1 && choosedFlowersCount < requiredFlowersCount) {
+    if (currentStep === 1 && choosedFlowersCount < flowersCount) {
       return toast.error(
         t("PleaseChooseFlowers", {
-          count: requiredFlowersCount - choosedFlowersCount,
+          count: flowersCount - choosedFlowersCount,
         }),
       );
     }
 
-    if (currentStep === 1 && choosedFlowersCount === requiredFlowersCount) {
+    if (currentStep === 1 && choosedFlowersCount === flowersCount) {
       console.log(data);
       return setCurrentStep((prev) => prev + 1);
     }
@@ -120,7 +108,7 @@ export default function BuilderForm({
                 {tCommon("AED")} {totalPrice}
               </Badge>
               <Badge className="text-foreground h-6 font-semibold text-sm px-3">
-                {choosedFlowersCount} / {requiredFlowersCount}
+                {choosedFlowersCount} / {flowersCount}
               </Badge>
             </div>
           </div>
@@ -151,18 +139,13 @@ export default function BuilderForm({
 
       <div className="py-6">
         {currentStep === 0 && (
-          <Step1
-            templates={templates}
-            setValue={setValue}
-            control={control}
-            setSelectedTemplate={setSelectedTemplate}
-          />
+          <Step1 templates={templates} setValue={setValue} control={control} />
         )}
 
         {currentStep === 1 && (
           <Step2
             flowers={flowers}
-            requiredFlowersCount={requiredFlowersCount}
+            requiredFlowersCount={flowersCount}
             choosedFlowersCount={choosedFlowersCount}
             choosedSlots={choosedSlots}
             setValue={setValue}
