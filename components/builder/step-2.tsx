@@ -26,6 +26,9 @@ export default function Step2({
   const [selectedFlowerIndex, setSelectedFlowerIndex] = useState<number | null>(
     null,
   );
+  const [hoveredFlowerIndex, setHoveredFlowerIndex] = useState<number | null>(
+    null,
+  );
 
   function handleFlowerCountControl(operation: "increment" | "decrement") {
     if (selectedFlowerIndex === null) return;
@@ -144,13 +147,33 @@ export default function Step2({
           `}
               onClick={() => setSelectedFlowerIndex(index)}
             >
-              <Image
-                src={flower.image_url}
-                alt={flower.product_name}
-                width={100}
-                height={100}
-                className="object-cover rounded-2xl"
-              />
+              <div
+                className="relative"
+                onMouseEnter={() => setHoveredFlowerIndex(index)}
+                onMouseLeave={() => setHoveredFlowerIndex(null)}
+              >
+                <Image
+                  src={flower.image_url}
+                  alt={flower.product_name}
+                  width={100}
+                  height={100}
+                  className="object-cover max-h-25 rounded-2xl"
+                />
+
+                {hoveredFlowerIndex === index && (
+                  <div className="absolute z-50 left-1/2 -translate-x-1/2 bottom-full mb-2 pointer-events-none">
+                    <div className="bg-white rounded-2xl border-2 border-primary p-2">
+                      <Image
+                        src={flower.image_url}
+                        alt={flower.product_name}
+                        width={300}
+                        height={300}
+                        className="object-cover min-w-30 rounded-xl"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
 
               <p className="font-semibold text-xs">{flower.product_name}</p>
               <p className="text-muted-foreground text-xs">
