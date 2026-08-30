@@ -46,6 +46,7 @@ export default function Step1({
                 onClick={() => {
                   setSelectedTemplateId(template.id);
                   setValue("template_id", template.id);
+                  setValue("template_url", template.image_url);
                   setValue("variant_id", template.variants[0]?.id);
                   setValue("slots", []);
                 }}

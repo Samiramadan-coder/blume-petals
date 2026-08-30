@@ -78,6 +78,7 @@ export default function Step2({
         qty: 1,
         price: +flowers[index].price,
         name: flowers[index].product_name,
+        image_url: flowers[index].image_url,
       },
     ]);
   }
@@ -127,6 +128,7 @@ export default function Step2({
             qty: 1,
             price: +flower.price,
             name: flower.product_name,
+            image_url: flower.image_url,
           });
         }
 
