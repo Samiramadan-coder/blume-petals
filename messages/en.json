@@ -687,6 +687,9 @@
     "ChooseFlower": "Choose a flower to add to your bouquet",
     "AddToBouquet": "Add to Bouquet",
     "AutoFillRemaining": "Auto-fill remaining {count}",
+    "Selected": "Selected",
+    "PleaseChooseFlowers": "Please choose {count} flowers to add to your bouquet",
+    "YouHaveReachedTheRequiredNumberOfFlowers": "You have reached the required number of flowers.",
     "Steps": {
       "Template": "Choose Template",
       "Build": "Add Flowers",
