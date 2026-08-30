@@ -690,6 +690,7 @@
     "Selected": "Selected",
     "PleaseChooseFlowers": "Please choose {count} flowers to add to your bouquet",
     "YouHaveReachedTheRequiredNumberOfFlowers": "You have reached the required number of flowers.",
+    "AutoFillCompleted": "Auto-fill completed!",
     "Steps": {
       "Template": "Choose Template",
       "Build": "Add Flowers",

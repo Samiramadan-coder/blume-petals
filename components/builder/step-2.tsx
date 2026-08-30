@@ -30,8 +30,12 @@ export default function Step2({
     null,
   );
 
-  function handleFlowerCountControl(operation: "increment" | "decrement") {
-    if (selectedFlowerIndex === null) return;
+  // Handle incrementing or decrementing the count of the selected flower
+  function handleFlowerCountControl(
+    operation: "increment" | "decrement",
+    index: number,
+  ) {
+    // if (selectedFlowerIndex === null) return;
 
     // Check if the required number of flowers has been reached
     if (
@@ -42,8 +46,7 @@ export default function Step2({
     }
 
     // Find if the selected flower is already in the choosed slots
-    const selectedFlowerId = flowers[selectedFlowerIndex].id;
-    const selectedFlower = flowers[selectedFlowerIndex];
+    const selectedFlowerId = flowers[index].id;
     const flower = choosedSlots.find(
       (slot) => slot.variant_id === selectedFlowerId,
     );
@@ -73,10 +76,74 @@ export default function Step2({
       {
         variant_id: selectedFlowerId,
         qty: 1,
-        price: +selectedFlower.price,
-        name: selectedFlower.product_name,
+        price: +flowers[index].price,
+        name: flowers[index].product_name,
       },
     ]);
+  }
+
+  // Automatically fill the remaining required flowers with available stock
+  function handleAutoFill() {
+    const remainingCount = requiredFlowersCount - choosedFlowersCount;
+
+    if (remainingCount <= 0) {
+      return toast.error(t("YouHaveReachedTheRequiredNumberOfFlowers"));
+    }
+
+    // Filter flowers with available stock
+    const availableFlowers = flowers.filter(
+      (flower) => flower.available_stock > 0,
+    );
+
+    if (availableFlowers.length === 0) {
+      return toast.error(
+        t("NoAvailableFlowersToAutoFill") || "No available flowers to autofill",
+      );
+    }
+
+    // Create a copy of current slots
+    const updatedSlots = [...choosedSlots];
+    let remainingToFill = remainingCount;
+
+    // Distribute flowers evenly across available options
+    while (remainingToFill > 0) {
+      for (const flower of availableFlowers) {
+        if (remainingToFill <= 0) break;
+
+        // Find if this flower is already in slots
+        const existingSlot = updatedSlots.find(
+          (slot) => slot.variant_id === flower.id,
+        );
+
+        // Check available stock considering already added quantities
+        const currentQty = existingSlot ? existingSlot.qty : 0;
+        if (currentQty >= flower.available_stock) continue;
+
+        if (existingSlot) {
+          existingSlot.qty += 1;
+        } else {
+          updatedSlots.push({
+            variant_id: flower.id,
+            qty: 1,
+            price: +flower.price,
+            name: flower.product_name,
+          });
+        }
+
+        remainingToFill--;
+        if (remainingToFill <= 0) break;
+      }
+
+      // Safety check: if we can't add any more flowers, break the loop
+      const totalInSlots = updatedSlots.reduce(
+        (sum, slot) => sum + slot.qty,
+        0,
+      );
+      if (totalInSlots === choosedFlowersCount) break;
+    }
+
+    setValue("slots", updatedSlots);
+    toast.success(t("AutoFillCompleted"));
   }
 
   return (
@@ -95,7 +162,12 @@ export default function Step2({
                 size="icon"
                 variant="outline"
                 className="rounded-full"
-                onClick={() => handleFlowerCountControl("decrement")}
+                onClick={() => {
+                  const index = flowers.findIndex(
+                    (f) => f.id === slot.variant_id,
+                  );
+                  handleFlowerCountControl("decrement", index);
+                }}
               >
                 <Minus />
               </Button>
@@ -104,7 +176,12 @@ export default function Step2({
                 size="icon"
                 variant="outline"
                 className="rounded-full"
-                onClick={() => handleFlowerCountControl("increment")}
+                onClick={() => {
+                  const index = flowers.findIndex(
+                    (f) => f.id === slot.variant_id,
+                  );
+                  handleFlowerCountControl("increment", index);
+                }}
               >
                 <Plus />
               </Button>
@@ -192,23 +269,28 @@ export default function Step2({
               type="button"
               variant="default"
               className="text-base h-12 text-foreground font-semibold rounded-xl w-full"
-              onClick={() => handleFlowerCountControl("increment")}
+              onClick={() =>
+                handleFlowerCountControl("increment", selectedFlowerIndex!)
+              }
             >
               <Plus />
               {t("AddToBouquet")}
             </Button>
           )}
 
-          <Button
-            variant="outline"
-            type="button"
-            className="text-base h-12 text-foreground font-semibold rounded-xl w-full"
-          >
-            <Sparkle />
-            {t("AutoFillRemaining", {
-              count: requiredFlowersCount - choosedFlowersCount,
-            })}
-          </Button>
+          {requiredFlowersCount - choosedFlowersCount > 0 && (
+            <Button
+              variant="outline"
+              type="button"
+              className="text-base h-12 text-foreground font-semibold rounded-xl w-full"
+              onClick={handleAutoFill}
+            >
+              <Sparkle />
+              {t("AutoFillRemaining", {
+                count: requiredFlowersCount - choosedFlowersCount,
+              })}
+            </Button>
+          )}
         </div>
       </div>
     </div>

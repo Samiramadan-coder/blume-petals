@@ -92,7 +92,7 @@ export default function BuilderForm({
 
   return (
     <form className="container max-w-3xl" onSubmit={handleSubmit(onSubmit)}>
-      <header className="bg-border p-4">
+      <header className="bg-muted/30 p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-medium text-foreground/60">
             {t("Step")} {currentStep + 1} {t("Of")} {stepsList.length}
@@ -137,7 +137,7 @@ export default function BuilderForm({
         </div>
       </header>
 
-      <div className="py-6">
+      <div className="py-8">
         {currentStep === 0 && (
           <Step1 templates={templates} setValue={setValue} control={control} />
         )}
