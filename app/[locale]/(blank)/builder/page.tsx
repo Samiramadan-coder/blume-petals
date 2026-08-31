@@ -2,6 +2,7 @@ import { http } from "@/lib/http";
 import { Flower, Product } from "@/types/products";
 import BuilderForm from "@/components/builder/builder-form";
 import BuilderHeader from "@/components/builder/builder-header";
+import { GiftOptions } from "@/types/builder-page";
 
 export default async function Page() {
   const { data: templates, ok: ok1 } = await http.get<{
@@ -16,8 +17,12 @@ export default async function Page() {
     };
   }>(`/api/v1/builder/flowers`);
 
-  if (!ok1 || !ok2) {
-    throw new Error("Failed to fetch templates or flowers");
+  const { data: giftOptions, ok: ok3 } = await http.get<{
+    data: GiftOptions;
+  }>(`/api/v1/gift-options`);
+
+  if (!ok1 || !ok2 || !ok3) {
+    throw new Error("Failed to fetch templates, flowers, or gift options");
   }
 
   return (
@@ -26,6 +31,7 @@ export default async function Page() {
       <BuilderForm
         templates={templates.data.items}
         flowers={flowers.data.items}
+        giftOptions={giftOptions.data}
       />
     </main>
   );

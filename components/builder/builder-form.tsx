@@ -11,7 +11,7 @@ import { T } from "@/constants/shared";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Flower, Product } from "@/types/products";
-import { BuilderFormData } from "@/types/builder-page";
+import { BuilderFormData, GiftOptions } from "@/types/builder-page";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 
 const steps = (t: T) => [
@@ -24,22 +24,25 @@ const steps = (t: T) => [
 export default function BuilderForm({
   templates,
   flowers,
+  giftOptions,
 }: {
   templates: Product[];
   flowers: Flower[];
+  giftOptions: GiftOptions;
 }) {
   const t = useTranslations("CustomBuilder");
   const tCommon = useTranslations("Common");
   const stepsList = steps(t);
   const [currentStep, setCurrentStep] = useState(0);
 
-  const { handleSubmit, setValue, getValues, control } =
+  const { handleSubmit, setValue, getValues, control, register } =
     useForm<BuilderFormData>({
       defaultValues: {
         template_id: templates[0].id,
         template_url: templates[0].image_url,
         variant_id: templates[0]?.variants[0]?.id,
         flowersCount: templates[0]?.variants[0]?.max_stems || 0,
+        ribbon_id: giftOptions.ribbons[0]?.id,
         slots: [],
       },
     });
@@ -48,6 +51,8 @@ export default function BuilderForm({
   const selectedTemplate = useWatch({ control, name: "template_id" });
   const selectedVariant = useWatch({ control, name: "variant_id" });
   const flowersCount = useWatch({ control, name: "flowersCount" });
+  const selectedRibbon = useWatch({ control, name: "ribbon_id" });
+  const selectedCardStyle = useWatch({ control, name: "card_style_id" });
   const choosedSlots = useWatch({ control, name: "slots" });
 
   /* Calculate the total number of chosen flowers from client */
@@ -61,6 +66,14 @@ export default function BuilderForm({
       (template) => template.id === selectedTemplate,
     );
 
+    const selectedRibbonObj = giftOptions.ribbons.find(
+      (ribbon) => ribbon.id === selectedRibbon,
+    );
+
+    const selectedCardStyleObj = giftOptions.card_styles.find(
+      (cardStyle) => cardStyle.id === selectedCardStyle,
+    );
+
     const selectedSize = selectedTemplateObj?.variants.find(
       (variant) => variant.id === selectedVariant,
     );
@@ -69,8 +82,22 @@ export default function BuilderForm({
       return acc + slot.qty * slot.price;
     }, 0);
 
-    return (selectedSize ? +selectedSize.price : 0) + totalFlowersPrice;
-  }, [templates, choosedSlots, selectedTemplate, selectedVariant]);
+    return (
+      (selectedSize ? +selectedSize.price : 0) +
+      totalFlowersPrice +
+      (selectedRibbonObj ? +selectedRibbonObj.price : 0) +
+      (selectedCardStyleObj ? +selectedCardStyleObj.price : 0)
+    );
+  }, [
+    templates,
+    giftOptions.ribbons,
+    giftOptions.card_styles,
+    choosedSlots,
+    selectedTemplate,
+    selectedRibbon,
+    selectedCardStyle,
+    selectedVariant,
+  ]);
 
   /* Handle form submission based on the current step */
   const onSubmit: SubmitHandler<BuilderFormData> = (data) => {
@@ -90,6 +117,8 @@ export default function BuilderForm({
       console.log(data);
       return setCurrentStep((prev) => prev + 1);
     }
+
+    console.log(data);
   };
 
   return (
@@ -155,7 +184,14 @@ export default function BuilderForm({
           />
         )}
 
-        {currentStep === 2 && <Step3 data={getValues()} />}
+        {currentStep === 2 && (
+          <Step3
+            giftOptions={giftOptions}
+            control={control}
+            register={register}
+            setValue={setValue}
+          />
+        )}
 
         {currentStep === 3 && <Step4 />}
       </div>

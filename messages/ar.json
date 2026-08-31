@@ -667,5 +667,33 @@
         "MinLength": "يجب أن تكون الرسالة على الأقل 10 أحرف"
       }
     }
+  },
+  "CustomBuilder": {
+    "Step": "الخطوة",
+    "Of": "من",
+    "Back": "رجوع",
+    "Submit": "إرسال",
+    "Next": "التالي",
+    "Pick": "اختر شكل الباقة للبدء",
+    "Size": "الحجم",
+    "Flowers": "الزهور",
+    "Left": "متبقي",
+    "ChooseFlower": "اختر الزهور لإضافتها",
+    "AddToBouquet": "أضف إلى الباقة",
+    "AutoFillRemaining": "املأ الباقي تلقائيًا {count}",
+    "Selected": "المختار",
+    "PleaseChooseFlowers": "يرجى اختيار {count} زهور لإضافتها إلى باقتك",
+    "YouHaveReachedTheRequiredNumberOfFlowers": "لقد وصلت إلى العدد المطلوب من الزهور.",
+    "AutoFillCompleted": "تم ملء الباقي تلقائيًا!",
+    "RibbonColor": "لون الشريط",
+    "AddCard": "أضف بطاقة رسالة",
+    "YourCardMessage": "رسالتك على البطاقة",
+    "CardMessagePlaceholder": "اكتب رسالتك الشخصية...",
+    "Steps": {
+      "Template": "اختر القالب",
+      "Build": "أضف الزهور",
+      "Accessories": "الإكسسوارات",
+      "Preview": "معاينة"
+    }
   }
 }

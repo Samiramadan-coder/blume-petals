@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { UseFormSetValue } from "react-hook-form";
 import { Minus, Plus, Sparkle } from "lucide-react";
 import { BuilderFormData } from "@/types/builder-page";
-import Step3 from "./step-3";
+import BouquetEditor from "./preview";
 
 export default function Step2({
   flowers,
@@ -197,7 +197,7 @@ export default function Step2({
 
         <div className="mt-auto flex justify-center pt-5">
           <div className="w-[220px] overflow-hidden rounded-xl">
-            <Step3 data={getValues()} />
+            <BouquetEditor data={getValues()} />
           </div>
         </div>
       </div>

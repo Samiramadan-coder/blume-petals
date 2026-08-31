@@ -691,6 +691,10 @@
     "PleaseChooseFlowers": "Please choose {count} flowers to add to your bouquet",
     "YouHaveReachedTheRequiredNumberOfFlowers": "You have reached the required number of flowers.",
     "AutoFillCompleted": "Auto-fill completed!",
+    "RibbonColor": "Ribbon Color",
+    "AddCard": "Add a message Card",
+    "YourCardMessage": "Your Card Message",
+    "CardMessagePlaceholder": "Write your personal message...",
     "Steps": {
       "Template": "Choose Template",
       "Build": "Add Flowers",
