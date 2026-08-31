@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { toast } from "sonner";
 import { useState } from "react";
+import type { UseFormGetValues } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Flower } from "@/types/products";
 import { useTranslations } from "next-intl";
 import { UseFormSetValue } from "react-hook-form";
 import { Minus, Plus, Sparkle } from "lucide-react";
 import { BuilderFormData } from "@/types/builder-page";
+import Step3 from "./step-3";
 
 export default function Step2({
   flowers,
@@ -14,12 +16,14 @@ export default function Step2({
   choosedFlowersCount,
   choosedSlots,
   setValue,
+  getValues,
 }: {
   flowers: Flower[];
   requiredFlowersCount: number;
   choosedFlowersCount: number;
   choosedSlots: BuilderFormData["slots"];
   setValue: UseFormSetValue<BuilderFormData>;
+  getValues: UseFormGetValues<BuilderFormData>;
 }) {
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
@@ -190,6 +194,12 @@ export default function Step2({
             </div>
           </div>
         ))}
+
+        <div className="mt-auto flex justify-center pt-5">
+          <div className="w-[220px] overflow-hidden rounded-xl">
+            <Step3 data={getValues()} />
+          </div>
+        </div>
       </div>
 
       {/* Flower selection panel */}

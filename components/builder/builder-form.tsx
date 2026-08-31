@@ -33,14 +33,16 @@ export default function BuilderForm({
   const stepsList = steps(t);
   const [currentStep, setCurrentStep] = useState(0);
 
-  const { handleSubmit, setValue, control } = useForm<BuilderFormData>({
-    defaultValues: {
-      template_id: templates[0].id,
-      variant_id: templates[0]?.variants[0]?.id,
-      flowersCount: templates[0]?.variants[0]?.max_stems || 0,
-      slots: [],
-    },
-  });
+  const { handleSubmit, setValue, getValues, control } =
+    useForm<BuilderFormData>({
+      defaultValues: {
+        template_id: templates[0].id,
+        template_url: templates[0].image_url,
+        variant_id: templates[0]?.variants[0]?.id,
+        flowersCount: templates[0]?.variants[0]?.max_stems || 0,
+        slots: [],
+      },
+    });
 
   /* Watch the selected slots in the form */
   const selectedTemplate = useWatch({ control, name: "template_id" });
@@ -149,10 +151,12 @@ export default function BuilderForm({
             choosedFlowersCount={choosedFlowersCount}
             choosedSlots={choosedSlots}
             setValue={setValue}
+            getValues={getValues}
           />
         )}
 
-        {currentStep === 2 && <Step3 />}
+        {currentStep === 2 && <Step3 data={getValues()} />}
+
         {currentStep === 3 && <Step4 />}
       </div>
 
