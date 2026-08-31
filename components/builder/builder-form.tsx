@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 import { Flower, Product } from "@/types/products";
 import { BuilderFormData, GiftOptions } from "@/types/builder-page";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
+import { http } from "@/lib/http";
 
 const steps = (t: T) => [
   t("Steps.Template"),
@@ -100,7 +101,7 @@ export default function BuilderForm({
   ]);
 
   /* Handle form submission based on the current step */
-  const onSubmit: SubmitHandler<BuilderFormData> = (data) => {
+  const onSubmit: SubmitHandler<BuilderFormData> = async (data) => {
     if (currentStep === 0) {
       return setCurrentStep((prev) => prev + 1);
     }
@@ -114,11 +115,12 @@ export default function BuilderForm({
     }
 
     if (currentStep === 1 && choosedFlowersCount === flowersCount) {
-      console.log(data);
+      // console.log(data);
       return setCurrentStep((prev) => prev + 1);
     }
 
-    console.log(data);
+    // console.log(data);
+    await http.post("/api/v1/cart/designs", data);
   };
 
   return (
