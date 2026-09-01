@@ -9,6 +9,11 @@ import AppHeaderControl from "./app-header/app-header-control";
 
 export interface UserResponse {
   data: {
+    stats: {
+      designs: number;
+      orders: number;
+      saved: number;
+    };
     user: User;
   };
 }

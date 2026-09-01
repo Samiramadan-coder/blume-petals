@@ -39,7 +39,13 @@ async function ProfileContent({
     throw new Error("Failed to fetch user profile");
   }
 
-  return <ProfileForm user={data.data.user} isEditMode={editMode} />;
+  return (
+    <ProfileForm
+      user={data.data.user}
+      isEditMode={editMode}
+      stats={data.data.stats}
+    />
+  );
 }
 
 export default async function ProfilePage({

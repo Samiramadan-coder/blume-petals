@@ -39,13 +39,16 @@ import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { Account, accountSchema, OTPForm, otpSchema } from "@/types/account";
 import { Field, FieldContent, FieldError, FieldLabel } from "../../ui/field";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
+import { UserResponse } from "@/components/reusable/app-header";
 
 export default function ProfileForm({
   user,
+  stats,
   isEditMode,
 }: {
   user: User;
   isEditMode: boolean;
+  stats: UserResponse["data"]["stats"];
 }) {
   const router = useRouter();
   const locale = useLocale();
@@ -126,17 +129,17 @@ export default function ProfileForm({
     <>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-6 mb-6">
         <div className="border border-border bg-primary/10 p-2 sm:p-4 grid place-content-center text-center rounded-full">
-          <p className="text-lg font-semibold text-primary">12</p>
+          <p className="text-lg font-semibold text-primary">{stats.orders}</p>
           <p className="text-xs text-foreground/60 mt-1">{t("Orders")}</p>
         </div>
 
         <div className="border border-border bg-primary/10 p-2 sm:p-4 grid place-content-center text-center rounded-full">
-          <p className="text-lg font-semibold text-primary">5</p>
+          <p className="text-lg font-semibold text-primary">{stats.saved}</p>
           <p className="text-xs text-foreground/60 mt-1">{t("Saved")}</p>
         </div>
 
         <div className="border border-border bg-primary/10 p-2 sm:p-4 grid place-content-center text-center rounded-full">
-          <p className="text-lg font-semibold text-primary">3</p>
+          <p className="text-lg font-semibold text-primary">{stats.designs}</p>
           <p className="text-xs text-foreground/60 mt-1">{t("Design")}</p>
         </div>
       </div>
