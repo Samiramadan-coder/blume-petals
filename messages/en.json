@@ -311,6 +311,7 @@
     "PrimaryCta": "Start Your Own"
   },
   "AboutHero": {
+    "About": "About Blúme Petals",
     "Eyebrow": "About Blúme Petals",
     "Title": "Crafted Luxury. Made to Last.",
     "Description": "Blúme Petals brings artificial flowers to life — beautifully crafted, lasting forever, made for every moment that matters."
@@ -675,6 +676,7 @@
     }
   },
   "CustomBuilder": {
+    "Title": "Custom Builder",
     "Step": "Step",
     "Of": "Of",
     "Back": "Back",

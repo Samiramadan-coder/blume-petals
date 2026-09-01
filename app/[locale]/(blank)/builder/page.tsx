@@ -3,6 +3,15 @@ import { Flower, Product } from "@/types/products";
 import BuilderForm from "@/components/builder/builder-form";
 import BuilderHeader from "@/components/builder/builder-header";
 import { GiftOptions } from "@/types/builder-page";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata() {
+  const t = await getTranslations("CustomBuilder");
+
+  return {
+    title: t("Title"),
+  };
+}
 
 export default async function Page() {
   const { data: templates, ok: ok1 } = await http.get<{

@@ -12,14 +12,22 @@ import { Pagination } from "@/types/shared";
 import * as motion from "motion/react-client";
 import Filters from "@/components/shop/filters";
 import { Button } from "@/components/ui/button";
-import type { FiltersOptions, Product } from "@/types/products";
 import CardItem from "@/components/shop/card-item";
 import { getLocale, getTranslations } from "next-intl/server";
+import type { FiltersOptions, Product } from "@/types/products";
 import NoDataFounded from "@/components/reusable/no-data-founded";
 import ProductSortSelect from "@/components/shop/product-sort-select";
 import { buildQueryString, cn, normalizeArrayParam } from "@/lib/utils";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 import ListOfProductsSkeleton from "@/components/shop/skeleton/list-of-product-skeleton";
+
+export async function generateMetadata() {
+  const t = await getTranslations("Shop");
+
+  return {
+    title: t("Title"),
+  };
+}
 
 type SearchParams = {
   price_min?: string;
