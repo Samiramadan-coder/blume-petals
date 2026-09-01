@@ -167,6 +167,7 @@ export default async function ShopPage({
                 <Button
                   variant="ghost"
                   className="bg-transparent hover:bg-transparent block md:hidden cursor-pointer"
+                  aria-label="Filter"
                 >
                   <ListFilter />
                 </Button>

@@ -81,6 +81,7 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
 
           <Button
             type="submit"
+            aria-label="Apply coupon code"
             className="h-12 text-base rounded-full bg-primary px-7 font-semibold text-white hover:bg-primary hover:scale-105"
           >
             {isSubmitting ? <Spinner /> : t("Apply")}
@@ -137,7 +138,10 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
         href={`/cart/order?total=${currentSummary.old_total}&coupon_code=${getValues("coupon_code")}&discount=${currentSummary.discount || ""}`}
         className="w-full"
       >
-        <Button className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-primary hover:scale-105">
+        <Button
+          aria-label="Proceed to checkout"
+          className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-primary hover:scale-105"
+        >
           {t("ProceedToCheckout")} · {currentSummary.total}
         </Button>
       </Link>

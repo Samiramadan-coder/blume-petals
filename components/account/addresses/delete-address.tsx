@@ -47,7 +47,12 @@ export default function DeleteAddress({
   return (
     <Dialog>
       <DialogClose asChild>
-        <Button ref={closeBtn} type="button" className="hidden"></Button>
+        <Button
+          ref={closeBtn}
+          type="button"
+          aria-label="Close Delete Address Dialog"
+          className="hidden"
+        ></Button>
       </DialogClose>
 
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -69,11 +74,16 @@ export default function DeleteAddress({
             className="h-10 cursor-pointer"
             onClick={handleDelete}
             disabled={isLoading}
+            aria-label="Delete Address"
           >
             {isLoading ? <Spinner /> : tActions("Delete")}
           </Button>
           <DialogClose asChild>
-            <Button type="button" className="h-10 cursor-pointer">
+            <Button
+              type="button"
+              className="h-10 cursor-pointer"
+              aria-label="Close Delete Address Dialog"
+            >
               {tActions("Close")}
             </Button>
           </DialogClose>

@@ -66,6 +66,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             type="button"
             onClick={reset}
             className="h-11 rounded-full px-7"
+            aria-label="Try Again"
           >
             <RefreshCcw className="me-2 size-4" />
             {t("TryAgain")}
@@ -76,6 +77,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             variant="outline"
             onClick={() => router.push("/")}
             className="h-11 rounded-full px-7"
+            aria-label="Go Back"
           >
             <Home className="me-2 size-4" />
             {t("GoBack")}

@@ -40,6 +40,7 @@ export default function LogoutBtn({ className }: { className?: string }) {
       )}
       variant="ghost"
       onClick={logout}
+      aria-label="Logout"
     >
       <LogOut className="mr-2 h-4 w-4" />
       {isLoading ? <Spinner /> : t("Logout")}

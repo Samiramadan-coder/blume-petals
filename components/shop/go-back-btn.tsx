@@ -15,6 +15,7 @@ export default function GoBackBtn() {
       variant="ghost"
       className="px-0 text-primary hover:text-primary hover:bg-transparent text-sm"
       onClick={() => router.back()}
+      aria-label="Go back"
     >
       {locale === "en" ? (
         <ArrowLeft className="size-5" />

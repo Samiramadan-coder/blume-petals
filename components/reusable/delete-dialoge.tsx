@@ -39,7 +39,11 @@ export function DialogDelete({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogClose asChild>
-          <Button className="hidden" ref={closeButtonRef}></Button>
+          <Button
+            className="hidden"
+            aria-label="Close"
+            ref={closeButtonRef}
+          ></Button>
         </DialogClose>
         <DialogHeader>
           <DialogTitle>{title ?? "Delete item"}</DialogTitle>
@@ -49,7 +53,12 @@ export function DialogDelete({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
-          <Button type="button" onClick={handleConfirm} variant="destructive">
+          <Button
+            type="button"
+            aria-label="Confirm Delete"
+            onClick={handleConfirm}
+            variant="destructive"
+          >
             {loading ? <Spinner /> : "Confirm"}
           </Button>
         </DialogFooter>

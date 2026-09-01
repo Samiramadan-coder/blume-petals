@@ -165,6 +165,7 @@ export default async function OrderCard({
                   type="button"
                   variant="ghost"
                   size="icon"
+                  aria-label="Toggle Order Details"
                   className={cn(
                     "size-10 cursor-pointer rounded-full",
                     "[&[data-state=open]>svg]:rotate-180",
@@ -237,7 +238,12 @@ export default async function OrderCard({
 
                 {!defaultOpen && (
                   <Link href={`/account/orders/${order.id}`} className="flex-1">
-                    <Button className="w-full h-11">Details</Button>
+                    <Button
+                      className="w-full h-11"
+                      aria-label="View Order Details"
+                    >
+                      Details
+                    </Button>
                   </Link>
                 )}
               </div>

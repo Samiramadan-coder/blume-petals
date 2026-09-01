@@ -205,6 +205,7 @@ export default function BuilderForm({
           <Button
             className="flex-1 h-12 rounded-full text-lg text-foreground"
             type="button"
+            aria-label="Go Back"
             onClick={() => setCurrentStep((prev) => prev - 1)}
           >
             {t("Back")}: {stepsList[currentStep - 1]}
@@ -213,6 +214,9 @@ export default function BuilderForm({
         <Button
           className="flex-1 h-12 rounded-full text-lg text-foreground"
           type="submit"
+          aria-label={
+            currentStep === 3 ? "Submit" : `Next: ${stepsList[currentStep + 1]}`
+          }
         >
           {currentStep === 3
             ? t("Submit")

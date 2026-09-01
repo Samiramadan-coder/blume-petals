@@ -140,6 +140,7 @@ export default function OrderFinalDetails({
             disabled={!showButton || loading}
             onClick={handleContinueToPayment}
             className="h-14 w-full border-2 px-6 text-base bg-primary text-white"
+            aria-label="Continue to payment"
           >
             {t("ContinueToPayment")} ({finalTotal} {t("AED")})
             {loading ? <Spinner /> : <MoveRight className="rtl:rotate-180" />}

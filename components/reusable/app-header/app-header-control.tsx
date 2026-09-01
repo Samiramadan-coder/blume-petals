@@ -93,6 +93,7 @@ export default function AppHeaderControl({
                 <Button
                   variant="ghost"
                   size="icon"
+                  aria-label="User Menu"
                   className="size-9 rounded-full bg-secondary hover:bg-secondary focus:bg-secondary cursor-pointer"
                 >
                   {user.name?.charAt(0).toUpperCase() || "U"}
@@ -140,6 +141,7 @@ export default function AppHeaderControl({
           <Link href="/login">
             <Button
               variant="outline"
+              aria-label="Sign In"
               className={cn(
                 `
                 cursor-pointer 
@@ -166,6 +168,7 @@ export default function AppHeaderControl({
         <SheetTrigger asChild>
           <Button
             variant="ghost"
+            aria-label="Open Menu"
             className="bg-transparent hover:bg-transparent block lg:hidden cursor-pointer"
           >
             <Menu className={cn(`size-5`, textColor)} />

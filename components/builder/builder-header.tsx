@@ -15,6 +15,7 @@ export default function BuilderHeader() {
         <h1 className="text-2xl text-foreground">Design Your Bouquet</h1>
         <Button
           size="lg"
+          aria-label="Close Builder"
           variant="ghost"
           className="cursor-pointer hover:bg-border"
           onClick={() => router.back()}

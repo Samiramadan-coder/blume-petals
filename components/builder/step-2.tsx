@@ -165,6 +165,7 @@ export default function Step2({
             <div className="flex items-center gap-2">
               <Button
                 type="button"
+                aria-label={`Decrement count for ${slot.name}`}
                 size="icon"
                 variant="outline"
                 className="rounded-full"
@@ -180,6 +181,7 @@ export default function Step2({
               <Button
                 type="button"
                 size="icon"
+                aria-label={`Increment count for ${slot.name}`}
                 variant="outline"
                 className="rounded-full"
                 onClick={() => {
@@ -219,6 +221,7 @@ export default function Step2({
             <Button
               variant="outline"
               type="button"
+              aria-label={`Select flower ${flower.product_name}`}
               key={flower.id}
               disabled={flower.available_stock === 0}
               className={`
@@ -280,6 +283,7 @@ export default function Step2({
             <Button
               type="button"
               variant="default"
+              aria-label="Add selected flower to bouquet"
               className="text-base h-12 text-foreground font-semibold rounded-xl w-full"
               onClick={() =>
                 handleFlowerCountControl("increment", selectedFlowerIndex!)
@@ -294,6 +298,7 @@ export default function Step2({
             <Button
               variant="outline"
               type="button"
+              aria-label="Auto fill remaining flowers"
               className="text-base h-12 text-foreground font-semibold rounded-xl w-full"
               onClick={handleAutoFill}
             >

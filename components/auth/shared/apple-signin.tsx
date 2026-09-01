@@ -12,6 +12,7 @@ export default function AppleLoginButton() {
     <Button
       type="button"
       variant="outline"
+      aria-label="Sign in with Apple"
       className="h-10 w-full rounded-xs bg-white cursor-pointer"
       onClick={() =>
         signIn("apple", { callbackUrl: `/${locale}/apple/callback` })

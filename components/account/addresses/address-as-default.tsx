@@ -31,6 +31,7 @@ export default function AddressAsDefault({ address }: { address: Address }) {
         className="cursor-pointer text-xs text-primary hover:text-primary"
         onClick={setAsDefault}
         disabled={isLoading}
+        aria-label="Set as Default"
       >
         {isLoading ? <Spinner /> : t("SetAsDefault")}
       </Button>

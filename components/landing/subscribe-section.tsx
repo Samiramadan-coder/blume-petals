@@ -104,6 +104,7 @@ export default function SubscribeSection() {
 
             <Button
               type="submit"
+              aria-label="Submit"
               className="h-12 w-35 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
             >
               {t("PrimaryCta")}

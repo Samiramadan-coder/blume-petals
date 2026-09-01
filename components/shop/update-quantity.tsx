@@ -54,6 +54,7 @@ export default function UpdateQuantity({
         size="icon"
         className="size-8 rounded-full hover:bg-white/60"
         onClick={() => changeQuantity("decrement")}
+        aria-label="Decrease quantity"
       >
         <Minus className="size-3.5" />
       </Button>
@@ -68,6 +69,7 @@ export default function UpdateQuantity({
         size="icon"
         className="size-8 rounded-full hover:bg-white/60"
         onClick={() => changeQuantity("increment")}
+        aria-label="Increase quantity"
       >
         <Plus className="size-3.5" />
       </Button>

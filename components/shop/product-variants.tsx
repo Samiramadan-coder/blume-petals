@@ -86,6 +86,7 @@ export default function ProductVariants({
           {productDetails.variants.map((variant) => (
             <Button
               variant="outline"
+              aria-label="Product images carousel"
               key={variant.size}
               onClick={() => {
                 setActiveVariant(variant);

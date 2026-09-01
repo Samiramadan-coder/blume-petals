@@ -30,7 +30,11 @@ export default function OrderCancel({ orderId }: { orderId: number }) {
       title="Order Cancel"
       description="Are you sure you want to cancel this order? This action cannot be undone."
       trigger={
-        <Button className="flex-1 uppercase h-11" variant="destructive">
+        <Button
+          className="flex-1 uppercase h-11"
+          variant="destructive"
+          aria-label="Cancel Order"
+        >
           {t("Cancel")}
         </Button>
       }

@@ -27,6 +27,7 @@ export default async function Designs() {
             <Button
               variant="outline"
               className="border-2 bg-white cursor-pointer w-70 h-70 border-dashed flex-col"
+              aria-label="Create New Design"
             >
               <Plus className="size-9 text-primary" />
               {t("CreateNewDesign")}

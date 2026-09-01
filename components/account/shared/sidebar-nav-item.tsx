@@ -20,6 +20,7 @@ export default function SidebarNavItem({
     <Button
       asChild
       variant="ghost"
+      aria-label={`Navigate to ${label}`}
       className={cn(
         "h-11 w-full border-0 justify-start rounded-lg px-4 text-sm font-medium text-muted-foreground hover:bg-primary/20 hover:text-foreground",
         isActive &&

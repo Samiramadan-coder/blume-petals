@@ -114,6 +114,7 @@ function NotificationContent({
               {!isRead && (
                 <Button
                   size="icon"
+                  aria-label="Mark as Read"
                   variant="ghost"
                   className="hover:bg-transparent"
                   onClick={() => markRead(notification.id)}
@@ -133,6 +134,7 @@ function NotificationContent({
                   <Button
                     size="icon"
                     variant="ghost"
+                    aria-label="Delete Notification"
                     className="hover:bg-transparent"
                   >
                     <Trash2 className="size-4 text-red-400" />

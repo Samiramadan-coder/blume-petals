@@ -39,7 +39,6 @@ async function ProfileContent({
     throw new Error("Failed to fetch user profile");
   }
 
-
   return <ProfileForm user={data.data.user} isEditMode={editMode} />;
 }
 
@@ -53,7 +52,11 @@ export default async function ProfilePage({
     <div className="space-y-6">
       <PageTitle title={t("Title")}>
         <Link href="/account/profile?edit=true">
-          <Button className="cursor-pointer" variant="ghost">
+          <Button
+            className="cursor-pointer"
+            variant="ghost"
+            aria-label="Edit Profile"
+          >
             <Pencil className="text-primary size-5" />
           </Button>
         </Link>

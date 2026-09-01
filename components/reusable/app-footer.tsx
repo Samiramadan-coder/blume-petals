@@ -48,6 +48,7 @@ export default async function AppFooter() {
 
               <Button
                 type="submit"
+                aria-label="Submit"
                 className="h-11 rounded-full bg-primary text-foreground px-6"
               >
                 {t("Subscribe")}

@@ -105,6 +105,7 @@ export default function RegisterWithEmail() {
             <Button
               type="button"
               variant="ghost"
+              aria-label={showPassword ? "Hide Password" : "Show Password"}
               size="icon"
               className="w-8 h-8 cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}
@@ -130,6 +131,7 @@ export default function RegisterWithEmail() {
             <Button
               type="button"
               variant="ghost"
+              aria-label={showPassword ? "Hide Password" : "Show Password"}
               size="icon"
               className="w-8 h-8 cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}

@@ -89,6 +89,7 @@ export default function NotificationsContent() {
           <Button
             onClick={markAllAsRead}
             variant="ghost"
+            aria-label="Mark all as read"
             className="text-primary text-xs hover:bg-transparent hover:text-primary"
           >
             {t("MarkAllAsRead")}
@@ -149,6 +150,7 @@ export default function NotificationsContent() {
                 ) : (
                   <Button
                     variant="ghost"
+                    aria-label="Load more notifications"
                     className="text-primary font-bold text-xs hover:bg-transparent hover:text-primary"
                     onClick={() => {
                       setLoading(true);

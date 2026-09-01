@@ -48,6 +48,7 @@ export default function Login() {
       <div className="mb-8 flex border-b border-border">
         <Button
           variant="ghost"
+          aria-label="Sign in with Email"
           className={`text-base flex-1 h-12 rounded-none cursor-pointer border-0 ${activeTab === "email" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
           onClick={() => setActiveTab("email")}
         >
@@ -57,6 +58,7 @@ export default function Login() {
           variant="ghost"
           className={`text-base flex-1 h-12 rounded-none cursor-pointer border-0 ${activeTab === "phone" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
           onClick={() => setActiveTab("phone")}
+          aria-label="Sign in with Phone"
         >
           {tFields("Labels.Phone")}
         </Button>

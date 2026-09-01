@@ -81,6 +81,7 @@ export default function NormalLoginForm() {
             type="button"
             variant="ghost"
             size="icon"
+            aria-label={showPassword ? "Hide Password" : "Show Password"}
             className="h-8 w-8 cursor-pointer"
             onClick={() => setShowPassword((prev) => !prev)}
           >

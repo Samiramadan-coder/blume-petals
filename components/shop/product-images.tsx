@@ -58,6 +58,7 @@ export default function ProductImages({
               {productImages.length > 4 && index === 3 && (
                 <button
                   type="button"
+                  aria-label="Open image carousel"
                   className="absolute inset-0 grid cursor-pointer place-content-center bg-black/40 text-2xl text-white"
                   onClick={(event) => {
                     event.stopPropagation();
@@ -106,6 +107,7 @@ export default function ProductImages({
                 <Button
                   type="button"
                   size="icon-sm"
+                  aria-label="Previous image"
                   className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full"
                   onClick={showPreviousImage}
                 >
@@ -116,6 +118,7 @@ export default function ProductImages({
                 <Button
                   type="button"
                   size="icon-sm"
+                  aria-label="Next image"
                   className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full"
                   onClick={showNextImage}
                 >
@@ -130,6 +133,7 @@ export default function ProductImages({
                 <button
                   type="button"
                   key={image.id}
+                  aria-label={`View image ${index + 1}`}
                   className={`overflow-hidden rounded-lg border-2 ${
                     activeImageIndex === index
                       ? "border-white"

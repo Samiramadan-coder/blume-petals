@@ -78,7 +78,11 @@ export default async function Addresses({
                     countries={countries}
                     address={address}
                     trigger={
-                      <Button variant="ghost" className="cursor-pointer">
+                      <Button
+                        variant="ghost"
+                        className="cursor-pointer"
+                        aria-label="Edit Address"
+                      >
                         <Pencil className="text-primary" />
                       </Button>
                     }
@@ -87,7 +91,11 @@ export default async function Addresses({
                   <DeleteAddress
                     addressId={address.id}
                     trigger={
-                      <Button variant="ghost" className="cursor-pointer">
+                      <Button
+                        variant="ghost"
+                        className="cursor-pointer"
+                        aria-label="Delete Address"
+                      >
                         <Trash2 className="text-red-400" />
                       </Button>
                     }

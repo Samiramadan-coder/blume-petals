@@ -28,6 +28,7 @@ export default async function GetStarted() {
               <Button
                 variant="ghost"
                 className="bg-secondary hover:bg-secondary py-7 px-10 cursor-pointer font-semibold w-full sm:w-auto"
+                aria-label="Get Started"
               >
                 {t("PrimaryCta")}
                 <ArrowRight />
@@ -38,6 +39,7 @@ export default async function GetStarted() {
               <Button
                 variant="outline"
                 className="py-7 px-10 cursor-pointer border-2 border-border font-semibold w-full sm:w-auto"
+                aria-label="Shop"
               >
                 {t("SecondaryCta")}
               </Button>

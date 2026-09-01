@@ -88,6 +88,7 @@ export default async function Hero() {
             <Button
               asChild
               variant="ghost"
+              aria-label="Secondary Call to Action"
               className="h-12 px-0 cursor-pointer rounded-full text-white underline underline-offset-8 hover:bg-transparent hover:text-white"
             >
               <Link href="/shop">{t("SecondaryCta")}</Link>

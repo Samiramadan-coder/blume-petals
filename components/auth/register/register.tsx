@@ -50,6 +50,7 @@ export default function Register() {
             className={`text-base flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "email" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
             onClick={() => setActiveTab("email")}
             type="button"
+            aria-label="Sign in with Email"
           >
             {tFields("Labels.Email")}
           </Button>
@@ -58,6 +59,7 @@ export default function Register() {
             className={`text-base flex-1 h-11 rounded-none cursor-pointer border-0 ${activeTab === "phone" ? "border-b-4 border-primary text-primary" : "text-muted-foreground"}`}
             onClick={() => setActiveTab("phone")}
             type="button"
+            aria-label="Sign in with Phone"
           >
             {tFields("Labels.Phone")}
           </Button>

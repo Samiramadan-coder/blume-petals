@@ -26,7 +26,12 @@ export default function DeleteFromCart({ itemId }: { itemId: number }) {
         toast.error("RemoveFromCartError");
       }}
       trigger={
-        <Button size="icon" variant="ghost" className="hover:bg-transparent">
+        <Button
+          size="icon"
+          variant="ghost"
+          className="hover:bg-transparent"
+          aria-label="Delete from cart"
+        >
           <Trash2 className="size-4 text-red-400" />
         </Button>
       }

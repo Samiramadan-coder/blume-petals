@@ -224,6 +224,7 @@ export default function ProfileForm({
                           <Button
                             variant="outline"
                             type="button"
+                            aria-label="Change Profile Photo"
                             className="cursor-pointer h-12 w-38 border-2 border-primary text-primary hover:text-primary"
                             onClick={() => fileInputRef.current?.click()}
                           >
@@ -256,6 +257,7 @@ export default function ProfileForm({
                 <Button
                   type="submit"
                   disabled={isSubmitting}
+                  aria-label="Save Profile Changes"
                   className="h-12 text-white cursor-pointer flex-1"
                 >
                   {isSubmitting ? <Spinner /> : tActions("SaveChanges")}
@@ -265,6 +267,7 @@ export default function ProfileForm({
                   <Button
                     type="button"
                     variant="outline"
+                    aria-label="Cancel Profile Changes"
                     className="h-12 border-2 border-primary text-foreground cursor-pointer w-full"
                   >
                     {tActions("Cancel")}

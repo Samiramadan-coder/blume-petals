@@ -50,13 +50,17 @@ export default function DesignCard() {
         <div className="grid grid-cols-2 gap-2">
           <Button
             variant="outline"
+            aria-label="Edit Design"
             className="h-10 rounded-[10px] border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary"
           >
             <Pencil className="size-4" />
             Edit
           </Button>
 
-          <Button className="h-10 rounded-[10px] bg-primary text-white hover:bg-primary/90">
+          <Button
+            className="h-10 rounded-[10px] bg-primary text-white hover:bg-primary/90"
+            aria-label="Add to Cart"
+          >
             <ShoppingCart className="size-4" />
             Add to Cart
           </Button>

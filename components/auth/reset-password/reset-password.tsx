@@ -97,6 +97,7 @@ export default function ResetPassword() {
             <Button
               type="button"
               variant="ghost"
+              aria-label={showPassword ? "Hide Password" : "Show Password"}
               size="icon"
               className="h-8 w-8 cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}
@@ -122,6 +123,7 @@ export default function ResetPassword() {
             <Button
               type="button"
               variant="ghost"
+              aria-label={showPassword ? "Hide Password" : "Show Password"}
               size="icon"
               className="h-8 w-8 cursor-pointer"
               onClick={() => setShowPassword((prev) => !prev)}

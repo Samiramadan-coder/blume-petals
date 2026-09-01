@@ -147,7 +147,11 @@ export default function AddressForm({
   return (
     <Dialog>
       <DialogClose asChild>
-        <Button className="hidden" ref={closeBtn}></Button>
+        <Button
+          className="hidden"
+          aria-label="Close Address Form"
+          ref={closeBtn}
+        ></Button>
       </DialogClose>
 
       <DialogTrigger asChild>
@@ -156,6 +160,7 @@ export default function AddressForm({
         ) : (
           <Button
             variant="outline"
+            aria-label="Add New Address"
             className={cn(
               "cursor-pointer border border-primary text-primary hover:text-primary font-semibold h-10 w-45",
               buttonClassName,
@@ -354,6 +359,7 @@ export default function AddressForm({
             className="w-full h-11 cursor-pointer"
             onClick={() => form.current?.requestSubmit()}
             disabled={isSubmitting}
+            aria-label="Save Address"
           >
             {isSubmitting ? (
               <Spinner />

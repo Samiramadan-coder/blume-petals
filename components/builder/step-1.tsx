@@ -111,6 +111,7 @@ export default function Step1({
                 {choosedTemplate?.variants.map((size) => (
                   <Button
                     type="button"
+                    aria-label={`Select size ${size.size}`}
                     key={size.id}
                     variant="outline"
                     onClick={() => {

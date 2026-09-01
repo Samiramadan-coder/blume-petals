@@ -22,6 +22,7 @@ export default function OrdersStatusFilter() {
           variant="ghost"
           key={status.value}
           onClick={() => setQueryParam(status.value)}
+          aria-label={`Filter orders by ${status.label}`}
           className={cn(
             "rounded-full text-base h-10 px-4 bg-primary/20 hover:bg-primary/20",
             queryParam === status.value &&

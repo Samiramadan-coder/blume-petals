@@ -66,7 +66,11 @@ export default function OrderRate({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex-1 uppercase h-11" variant="default">
+        <Button
+          className="flex-1 uppercase h-11"
+          variant="default"
+          aria-label="Rate Order"
+        >
           {t("RateOrder")}
         </Button>
       </DialogTrigger>
@@ -132,6 +136,7 @@ export default function OrderRate({
           <Button
             onClick={() => formRef.current?.requestSubmit()}
             className="h-10 cursor-pointer"
+            aria-label="Submit Order Rating"
           >
             {isSubmitting ? <Spinner /> : t("SubmitRating")}
           </Button>
@@ -140,6 +145,7 @@ export default function OrderRate({
               variant="outline"
               ref={closeBtn}
               className="h-10 cursor-pointer"
+              aria-label="Close Order Rating Dialog"
             >
               {t("MaybeLater")}
             </Button>

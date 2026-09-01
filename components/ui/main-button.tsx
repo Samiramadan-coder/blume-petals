@@ -13,6 +13,7 @@ export default function MainButton({
     <Link href={href}>
       <Button
         variant="default"
+        aria-label={label}
         className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
       >
         {label}
