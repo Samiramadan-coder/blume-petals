@@ -5,6 +5,7 @@ import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { toast } from "sonner";
+import { http } from "@/lib/http";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { T } from "@/constants/shared";
@@ -12,8 +13,8 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Flower, Product } from "@/types/products";
 import { BuilderFormData, GiftOptions } from "@/types/builder-page";
+import { Design } from "@/types/account";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
-import { http } from "@/lib/http";
 
 const steps = (t: T) => [
   t("Steps.Template"),
@@ -26,11 +27,14 @@ export default function BuilderForm({
   templates,
   flowers,
   giftOptions,
+  design,
 }: {
   templates: Product[];
   flowers: Flower[];
   giftOptions: GiftOptions;
+  design?: Design;
 }) {
+  console.log(design);
   const t = useTranslations("CustomBuilder");
   const tCommon = useTranslations("Common");
   const stepsList = steps(t);
