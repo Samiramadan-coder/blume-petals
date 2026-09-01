@@ -13,6 +13,30 @@ import ProductPageSkeleton from "@/components/shop/skeleton/product-details-skel
 type Params = { slug: string };
 type SearchParams = { addOnsPage: string; reviewPage: string };
 
+// Generate metadata for the product page based on the product slug
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { slug } = await params;
+
+  const { data: productData, ok: ok1 } = await http.get<{
+    data: {
+      product: ProductDetailsType;
+    };
+  }>(`/api/v1/products/${slug}`);
+
+  if (!ok1) {
+    throw new Error("Failed to fetch product details");
+  }
+
+  return {
+    title: productData?.data?.product?.name,
+    description: productData?.data?.product?.description,
+  };
+}
+
 async function Product({
   params,
   searchParams,
