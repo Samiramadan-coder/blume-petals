@@ -526,7 +526,11 @@
     "Designs": {
       "Title": "My Designs",
       "SavedDesigns": "Saved Designs",
-      "CreateNewDesign": "Create New"
+      "CreateNewDesign": "Create New",
+      "CustomBuild": "Custom Build",
+      "Saved": "Saved",
+      "AddToCart": "Add to Cart",
+      "Edit": "Edit"
     },
     "MYSettings": {
       "Title": "Settings",

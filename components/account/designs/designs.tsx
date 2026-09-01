@@ -1,11 +1,19 @@
-import PageTitle from "../shared/page-title";
-import { getTranslations } from "next-intl/server";
-import DesignCard from "./design-card";
-import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import DesignCard from "./design-card";
 import { Link } from "@/i18n/navigation";
+import { Design } from "@/types/account";
+import { Pagination } from "@/types/shared";
+import PageTitle from "../shared/page-title";
+import { Button } from "@/components/ui/button";
+import { getTranslations } from "next-intl/server";
 
-export default async function Designs() {
+export default async function Designs({
+  items,
+  pagination,
+}: {
+  items: Design[];
+  pagination: Pagination;
+}) {
   const t = await getTranslations("Account.Designs");
 
   return (
@@ -13,13 +21,13 @@ export default async function Designs() {
       <div className="space-y-1">
         <PageTitle title={t("Title")} />
         <span className="text-muted-foreground text-xs">
-          3 {t("SavedDesigns")}
+          {pagination.total} {t("SavedDesigns")}
         </span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {[...Array(6)].map((_, index) => (
-          <DesignCard key={index} />
+        {items.map((item, index) => (
+          <DesignCard key={index} item={item} />
         ))}
 
         <div className="col-span-1 sm:col-span-2 md:col-span-3">

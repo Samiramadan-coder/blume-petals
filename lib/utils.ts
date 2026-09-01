@@ -87,3 +87,10 @@ export function formatSmartDate(
     year: "numeric",
   }).format(date);
 }
+
+export const formatDate = (date: string | Date) =>
+  new Date(date).toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });

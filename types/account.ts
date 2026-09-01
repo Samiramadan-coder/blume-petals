@@ -198,3 +198,29 @@ export type OrderItem = {
     reviewed: boolean;
   }[];
 };
+
+export type Design = {
+  id: number;
+  in_cart: boolean;
+  ordered: boolean;
+  total_stems: number;
+  unit_price: string;
+  buildable: number;
+  created_at: string;
+  available: boolean;
+  flowers: {
+    name: string;
+    qty: number;
+    variant_id: number;
+  }[];
+  bouquet: {
+    image_url: string;
+    max_stems: number;
+    min_stems: number;
+    name: string;
+    size: string;
+    sku: string;
+    slug: string;
+    variant_id: number;
+  };
+};

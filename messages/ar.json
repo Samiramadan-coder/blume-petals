@@ -519,7 +519,9 @@
     "Designs": {
       "Title": "تصاميمي",
       "SavedDesigns": "التصاميم المحفوظة",
-      "createNewDesign": "إنشاء تصميم"
+      "createNewDesign": "إنشاء تصميم",
+      "CustomBuild": "تصميم مخصص",
+      "Saved": "تم الحفظ"
     },
     "MYSettings": {
       "Title": "الإعدادات",

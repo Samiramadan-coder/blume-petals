@@ -1,15 +1,25 @@
 import Image from "next/image";
+import { Design } from "@/types/account";
+import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getTranslations } from "next-intl/server";
+import { Pencil, ShoppingCart } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Pencil, ShoppingCart } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
-export default function DesignCard() {
+export default async function DesignCard({ item }: { item: Design }) {
+  const t = await getTranslations("Account.Designs");
+  const tCommon = await getTranslations("Common");
+
   return (
     <Card className="overflow-hidden p-0 shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
       <div className="relative h-70">
         <Image
-          src="/images/home/how-it-works/2.png"
+          src={
+            item.bouquet.image_url ||
+            "/images/home/bouquet-builder/bouquet-builder.png"
+          }
           alt="Sunset Romance"
           fill
           priority
@@ -17,44 +27,48 @@ export default function DesignCard() {
           sizes="294px"
         />
 
-        <Badge className="absolute left-4 top-4 rounded-full bg-primary/40 px-3 py-1 text-xs font-semibold text-white shadow-none hover:bg-primary/50">
-          Custom Build
+        <Badge className="absolute left-4 top-4 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary border border-primary/30">
+          {t("CustomBuild")}
         </Badge>
-
-        <button
-          type="button"
-          aria-label="Add to wishlist"
-          className="absolute right-4 top-4 flex size-10 items-center justify-center rounded-full bg-white shadow-sm"
-        >
-          <Heart className="size-5 fill-red-600 text-red-600" />
-        </button>
       </div>
 
       <CardContent className="space-y-4 p-4">
         <div className="space-y-1">
           <h3 className="text-base font-bold leading-none text-foreground">
-            Sunset Romance
+            {item.bouquet.name}
           </h3>
 
           <p className="text-sm text-muted-foreground">
-            Circular M · 12 flowers · Rosa + Hydrangea
+            {item.flowers.map((flower, index) => (
+              <span key={index}>
+                {flower.qty} {flower.name}
+                {index < item.flowers.length - 1 && " · "}
+              </span>
+            ))}
           </p>
         </div>
 
         <div className="space-y-2">
-          <p className="text-xl font-bold text-primary">AED 294.00</p>
+          <p className="text-xl font-bold text-primary">
+            {tCommon("AED")} {item.unit_price}
+          </p>
 
-          <p className="text-sm text-muted-foreground">Saved Jun 1, 2026</p>
+          <p className="text-sm text-muted-foreground">
+            {t("Saved")} {formatDate(item.created_at)}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
           <Button
+            asChild
             variant="outline"
             aria-label="Edit Design"
             className="h-10 rounded-[10px] border-primary bg-white text-primary hover:bg-primary/10 hover:text-primary"
           >
-            <Pencil className="size-4" />
-            Edit
+            <Link href={`/builder?designId=${item.id}`}>
+              <Pencil className="size-4" />
+              {t("Edit")}
+            </Link>
           </Button>
 
           <Button
@@ -62,7 +76,7 @@ export default function DesignCard() {
             aria-label="Add to Cart"
           >
             <ShoppingCart className="size-4" />
-            Add to Cart
+            {t("AddToCart")}
           </Button>
         </div>
       </CardContent>
