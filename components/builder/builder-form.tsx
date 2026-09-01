@@ -43,7 +43,9 @@ export default function BuilderForm({
         template_url: templates[0].image_url,
         variant_id: templates[0]?.variants[0]?.id,
         flowersCount: templates[0]?.variants[0]?.max_stems || 0,
-        ribbon_id: giftOptions.ribbons[0]?.id,
+        ribbon_id: undefined,
+        card_style_id: undefined,
+        message_text: "",
         slots: [],
       },
     });
@@ -157,11 +159,11 @@ export default function BuilderForm({
             ))}
           </div>
 
-          <div className="flex items-center justify-center">
+          <div className="flex items-center gap-2 justify-center">
             {stepsList.map((step, index) => (
               <div
                 key={index}
-                className={`text-sm mx-2 ${index === currentStep ? "text-primary" : "text-foreground/60"}`}
+                className={`text-[11px] sm:text-sm ${index === currentStep ? "text-primary" : "text-foreground/60"}`}
               >
                 {step}
               </div>
@@ -198,7 +200,7 @@ export default function BuilderForm({
         {currentStep === 3 && <Step4 />}
       </div>
 
-      <footer className="flex gap-2">
+      <footer className="flex flex-wrap gap-2">
         {currentStep > 0 && (
           <Button
             className="flex-1 h-12 rounded-full text-lg text-foreground"

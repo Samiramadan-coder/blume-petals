@@ -59,7 +59,7 @@ export default function Step3({
                   </p>
                 </div>
 
-                <div className="flex gap-4 mt-4">
+                <div className="flex flex-wrap gap-4 mt-4">
                   {giftOptions.ribbons.map((ribbon) => (
                     <div
                       key={ribbon.id}
@@ -136,7 +136,7 @@ export default function Step3({
 
                 {open && (
                   <>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
                       {giftOptions.card_styles.map((cardStyle) => (
                         <div
                           key={cardStyle.id}

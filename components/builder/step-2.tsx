@@ -153,7 +153,7 @@ export default function Step2({
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-col sm:flex-row gap-2">
       {/* Empty space or preview panel */}
       <div className="p-4 space-y-3 flex-1 bg-linear-to-b from-muted/30 to-background rounded-2xl">
         {choosedSlots.map((slot, index) => (
@@ -196,7 +196,7 @@ export default function Step2({
         ))}
 
         <div className="mt-auto flex justify-center pt-5">
-          <div className="w-[220px] overflow-hidden rounded-xl">
+          <div className="w-55 overflow-hidden rounded-xl">
             <BouquetEditor data={getValues()} />
           </div>
         </div>
