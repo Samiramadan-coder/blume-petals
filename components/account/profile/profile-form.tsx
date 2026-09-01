@@ -124,18 +124,18 @@ export default function ProfileForm({
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-2 md:gap-6 mb-6">
-        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-6 mb-6">
+        <div className="border border-border bg-primary/10 p-2 sm:p-4 grid place-content-center text-center rounded-full">
           <p className="text-lg font-semibold text-primary">12</p>
           <p className="text-xs text-foreground/60 mt-1">{t("Orders")}</p>
         </div>
 
-        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+        <div className="border border-border bg-primary/10 p-2 sm:p-4 grid place-content-center text-center rounded-full">
           <p className="text-lg font-semibold text-primary">5</p>
           <p className="text-xs text-foreground/60 mt-1">{t("Saved")}</p>
         </div>
 
-        <div className="border border-border bg-primary/10 p-4 grid place-content-center text-center rounded-full">
+        <div className="border border-border bg-primary/10 p-2 sm:p-4 grid place-content-center text-center rounded-full">
           <p className="text-lg font-semibold text-primary">3</p>
           <p className="text-xs text-foreground/60 mt-1">{t("Design")}</p>
         </div>
