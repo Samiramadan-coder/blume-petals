@@ -17,7 +17,7 @@ export default async function FeaturedCollections() {
     data: {
       items: Product[];
     };
-  }>("/api/v1/products?sort=rating");
+  }>("/api/v1/products?sort=rating&made_to_order=0");
 
   if (!ok) {
     throw new Error("Failed to fetch featured collections");

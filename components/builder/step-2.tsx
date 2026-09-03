@@ -1,14 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import { toast } from "sonner";
 import { useState } from "react";
-import type { UseFormGetValues } from "react-hook-form";
-import { Button } from "../ui/button";
-import { Flower } from "@/types/products";
-import { useTranslations } from "next-intl";
-import { UseFormSetValue } from "react-hook-form";
+import * as motion from "motion/react-client";
+
 import { Minus, Plus, Sparkle } from "lucide-react";
-import { BuilderFormData } from "@/types/builder-page";
+
+import { Button } from "../ui/button";
+
+import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+
+import type { Flower } from "@/types/products";
+import type { BuilderFormData } from "@/types/builder-page";
+
+import { useTranslations } from "next-intl";
+
 import BouquetEditor from "./preview";
+import { cn } from "@/lib/utils";
 
 export default function Step2({
   flowers,
@@ -27,21 +36,23 @@ export default function Step2({
 }) {
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
+
   const [selectedFlowerIndex, setSelectedFlowerIndex] = useState<number | null>(
     null,
   );
+
   const [hoveredFlowerIndex, setHoveredFlowerIndex] = useState<number | null>(
     null,
   );
 
-  // Handle incrementing or decrementing the count of the selected flower
   function handleFlowerCountControl(
     operation: "increment" | "decrement",
     index: number,
   ) {
-    // if (selectedFlowerIndex === null) return;
+    const selectedFlower = flowers[index];
 
-    // Check if the required number of flowers has been reached
+    if (!selectedFlower) return;
+
     if (
       operation === "increment" &&
       requiredFlowersCount === choosedFlowersCount
@@ -49,13 +60,12 @@ export default function Step2({
       return toast.error(t("YouHaveReachedTheRequiredNumberOfFlowers"));
     }
 
-    // Find if the selected flower is already in the choosed slots
-    const selectedFlowerId = flowers[index].id;
+    const selectedFlowerId = selectedFlower.id;
+
     const flower = choosedSlots.find(
       (slot) => slot.variant_id === selectedFlowerId,
     );
 
-    // If the flower is already in the choosed slots, increment its quantity
     if (flower) {
       if (operation === "decrement" && flower.qty === 1) {
         return setValue(
@@ -72,22 +82,24 @@ export default function Step2({
             }
           : slot,
       );
+
       return setValue("slots", preparedSlots);
     }
+
+    if (operation === "decrement") return;
 
     setValue("slots", [
       ...choosedSlots,
       {
         variant_id: selectedFlowerId,
         qty: 1,
-        price: +flowers[index].price,
-        name: flowers[index].product_name,
-        image_url: flowers[index].image_url,
+        price: +selectedFlower.price,
+        name: selectedFlower.product_name,
+        image_url: selectedFlower.image_url,
       },
     ]);
   }
 
-  // Automatically fill the remaining required flowers with available stock
   function handleAutoFill() {
     const remainingCount = requiredFlowersCount - choosedFlowersCount;
 
@@ -95,7 +107,6 @@ export default function Step2({
       return toast.error(t("YouHaveReachedTheRequiredNumberOfFlowers"));
     }
 
-    // Filter flowers with available stock
     const availableFlowers = flowers.filter(
       (flower) => flower.available_stock > 0,
     );
@@ -106,23 +117,27 @@ export default function Step2({
       );
     }
 
-    // Create a copy of current slots
-    const updatedSlots = [...choosedSlots];
+    const updatedSlots = choosedSlots.map((slot) => ({
+      ...slot,
+    }));
+
     let remainingToFill = remainingCount;
 
-    // Distribute flowers evenly across available options
     while (remainingToFill > 0) {
+      let addedInPass = 0;
+
       for (const flower of availableFlowers) {
         if (remainingToFill <= 0) break;
 
-        // Find if this flower is already in slots
         const existingSlot = updatedSlots.find(
           (slot) => slot.variant_id === flower.id,
         );
 
-        // Check available stock considering already added quantities
-        const currentQty = existingSlot ? existingSlot.qty : 0;
-        if (currentQty >= flower.available_stock) continue;
+        const currentQty = existingSlot?.qty ?? 0;
+
+        if (currentQty >= flower.available_stock) {
+          continue;
+        }
 
         if (existingSlot) {
           existingSlot.qty += 1;
@@ -137,179 +152,295 @@ export default function Step2({
         }
 
         remainingToFill--;
-        if (remainingToFill <= 0) break;
+        addedInPass++;
       }
 
-      // Safety check: if we can't add any more flowers, break the loop
-      const totalInSlots = updatedSlots.reduce(
-        (sum, slot) => sum + slot.qty,
-        0,
-      );
-      if (totalInSlots === choosedFlowersCount) break;
+      if (addedInPass === 0) break;
     }
 
     setValue("slots", updatedSlots);
+
     toast.success(t("AutoFillCompleted"));
   }
 
   return (
-    <div className="flex flex-col sm:flex-row gap-2">
-      {/* Empty space or preview panel */}
-      <div className="p-4 space-y-3 flex-1 bg-linear-to-b from-muted/30 to-background rounded-2xl">
-        {choosedSlots.map((slot, index) => (
-          <div key={index} className="flex items-center justify-between">
-            <p className="text-sm">
-              {slot.qty}x <span className="font-semibold">{slot.name}</span>
-            </p>
+    <div className="flex flex-col gap-2 sm:flex-row">
+      <motion.div
+        initial={{
+          opacity: 0,
+          x: -10,
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+        transition={{
+          duration: 0.55,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="flex-1 space-y-3 rounded-2xl bg-linear-to-b from-muted/30 to-background p-4"
+      >
+        <div className="space-y-2">
+          {choosedSlots.map((slot, index) => (
+            <motion.div
+              key={slot.variant_id}
+              initial={{
+                opacity: 0,
+                x: -6,
+              }}
+              animate={{
+                opacity: 1,
+                x: 0,
+              }}
+              transition={{
+                duration: 0.4,
+                delay: index * 0.035,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="flex items-center justify-between gap-3"
+            >
+              <p className="text-sm">
+                {slot.qty}x <span className="font-semibold">{slot.name}</span>
+              </p>
 
-            <div className="flex items-center gap-2">
-              <Button
-                type="button"
-                aria-label={`Decrement count for ${slot.name}`}
-                size="icon"
-                variant="outline"
-                className="rounded-full"
-                onClick={() => {
-                  const index = flowers.findIndex(
-                    (f) => f.id === slot.variant_id,
-                  );
-                  handleFlowerCountControl("decrement", index);
-                }}
-              >
-                <Minus />
-              </Button>
-              <Button
-                type="button"
-                size="icon"
-                aria-label={`Increment count for ${slot.name}`}
-                variant="outline"
-                className="rounded-full"
-                onClick={() => {
-                  const index = flowers.findIndex(
-                    (f) => f.id === slot.variant_id,
-                  );
-                  handleFlowerCountControl("increment", index);
-                }}
-              >
-                <Plus />
-              </Button>
-            </div>
-          </div>
-        ))}
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  aria-label={`Decrement count for ${slot.name}`}
+                  size="icon"
+                  variant="outline"
+                  className="rounded-full"
+                  onClick={() => {
+                    const flowerIndex = flowers.findIndex(
+                      (flower) => flower.id === slot.variant_id,
+                    );
 
-        <div className="mt-auto flex justify-center pt-5">
+                    handleFlowerCountControl("decrement", flowerIndex);
+                  }}
+                >
+                  <Minus />
+                </Button>
+
+                <Button
+                  type="button"
+                  size="icon"
+                  aria-label={`Increment count for ${slot.name}`}
+                  variant="outline"
+                  className="rounded-full"
+                  onClick={() => {
+                    const flowerIndex = flowers.findIndex(
+                      (flower) => flower.id === slot.variant_id,
+                    );
+
+                    handleFlowerCountControl("increment", flowerIndex);
+                  }}
+                >
+                  <Plus />
+                </Button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 6,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: 0.08,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="mt-auto flex justify-center pt-5"
+        >
           <div className="w-55 overflow-hidden rounded-xl">
             <BouquetEditor data={getValues()} />
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      {/* Flower selection panel */}
-      <div className="p-4 border-2 border-muted bg-white rounded-2xl flex-1">
+      <motion.div
+        initial={{
+          opacity: 0,
+          x: 10,
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+        transition={{
+          duration: 0.55,
+          delay: 0.04,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="flex-1 rounded-2xl border-2 border-muted bg-white p-4"
+      >
         <div className="mb-4">
           <h3 className="text-lg font-semibold">{t("ChooseFlower")}</h3>
+
           {selectedFlowerIndex !== null && (
-            <p className="text-muted-foreground text-xs">
-              {t("Selected")}: {flowers[selectedFlowerIndex].product_name}
+            <p className="text-xs text-muted-foreground">
+              {t("Selected")}: {flowers[selectedFlowerIndex]?.product_name}
             </p>
           )}
-          <p className="text-muted-foreground text-xs"></p>
         </div>
 
         <div className="grid grid-cols-2 gap-2">
-          {flowers.map((flower, index) => (
-            <Button
-              variant="outline"
-              type="button"
-              aria-label={`Select flower ${flower.product_name}`}
-              key={flower.id}
-              disabled={flower.available_stock === 0}
-              className={`
-              border-2 
-              bg-background 
-              border-muted 
-              h-auto 
-              py-3 
-              flex 
-              flex-col 
-              items-center 
-              gap-1 
-              rounded-2xl 
-              ${selectedFlowerIndex === index ? "border-primary bg-primary/20" : ""}
-          `}
-              onClick={() => setSelectedFlowerIndex(index)}
-            >
-              <div
-                className="relative"
-                onMouseEnter={() => setHoveredFlowerIndex(index)}
-                onMouseLeave={() => setHoveredFlowerIndex(null)}
+          {flowers.map((flower, index) => {
+            const isSelected = selectedFlowerIndex === index;
+
+            return (
+              <motion.div
+                key={flower.id}
+                initial={{
+                  opacity: 0,
+                  x: index % 2 === 0 ? -6 : 6,
+                }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.035,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               >
-                <Image
-                  src={flower.image_url}
-                  alt={flower.product_name}
-                  width={100}
-                  height={100}
-                  className="object-cover max-h-25 rounded-2xl"
-                />
+                <Button
+                  variant="outline"
+                  type="button"
+                  aria-label={`Select flower ${flower.product_name}`}
+                  aria-pressed={isSelected}
+                  disabled={flower.available_stock === 0}
+                  className={cn(
+                    "h-auto w-full flex-col items-center gap-1 rounded-2xl border-2 border-muted bg-background py-3 hover:bg-background",
+                    isSelected &&
+                      "border-primary bg-primary/20 hover:bg-primary/20",
+                  )}
+                  onClick={() => setSelectedFlowerIndex(index)}
+                >
+                  <div
+                    className="relative"
+                    onMouseEnter={() => setHoveredFlowerIndex(index)}
+                    onMouseLeave={() => setHoveredFlowerIndex(null)}
+                  >
+                    <Image
+                      src={flower.image_url}
+                      alt={flower.product_name}
+                      width={100}
+                      height={100}
+                      className="max-h-25 rounded-2xl object-cover"
+                    />
 
-                {hoveredFlowerIndex === index && (
-                  <div className="absolute z-50 left-1/2 -translate-x-1/2 bottom-full mb-2 pointer-events-none">
-                    <div className="bg-white rounded-2xl border-2 border-primary p-2">
-                      <Image
-                        src={flower.image_url}
-                        alt={flower.product_name}
-                        width={300}
-                        height={300}
-                        className="object-cover min-w-30 rounded-xl"
-                      />
-                    </div>
+                    {hoveredFlowerIndex === index && (
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: 4,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                        }}
+                        transition={{
+                          duration: 0.2,
+                        }}
+                        className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2"
+                      >
+                        <div className="rounded-2xl border-2 border-primary bg-white p-2 shadow-lg">
+                          <Image
+                            src={flower.image_url}
+                            alt={flower.product_name}
+                            width={300}
+                            height={300}
+                            className="min-w-30 rounded-xl object-cover"
+                          />
+                        </div>
+                      </motion.div>
+                    )}
                   </div>
-                )}
-              </div>
 
-              <p className="font-semibold text-xs">{flower.product_name}</p>
-              <p className="text-muted-foreground text-xs">
-                {tCommon("AED")} {flower.price}
-              </p>
-              <p className="text-muted-foreground text-xs">
-                {t("Left")} {flower.available_stock}
-              </p>
-            </Button>
-          ))}
+                  <p className="text-xs font-semibold">{flower.product_name}</p>
+
+                  <p className="text-xs text-muted-foreground">
+                    {tCommon("AED")} {flower.price}
+                  </p>
+
+                  <p className="text-xs text-muted-foreground">
+                    {t("Left")} {flower.available_stock}
+                  </p>
+                </Button>
+              </motion.div>
+            );
+          })}
         </div>
 
         <div className="mt-4 space-y-2">
           {selectedFlowerIndex !== null && (
-            <Button
-              type="button"
-              variant="default"
-              aria-label="Add selected flower to bouquet"
-              className="text-base h-12 text-foreground font-semibold rounded-xl w-full"
-              onClick={() =>
-                handleFlowerCountControl("increment", selectedFlowerIndex!)
-              }
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 5,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
-              <Plus />
-              {t("AddToBouquet")}
-            </Button>
+              <Button
+                type="button"
+                variant="default"
+                aria-label="Add selected flower to bouquet"
+                className="h-12 w-full rounded-xl text-base font-semibold text-foreground"
+                onClick={() =>
+                  handleFlowerCountControl("increment", selectedFlowerIndex)
+                }
+              >
+                <Plus />
+                {t("AddToBouquet")}
+              </Button>
+            </motion.div>
           )}
 
           {requiredFlowersCount - choosedFlowersCount > 0 && (
-            <Button
-              variant="outline"
-              type="button"
-              aria-label="Auto fill remaining flowers"
-              className="text-base h-12 text-foreground font-semibold rounded-xl w-full"
-              onClick={handleAutoFill}
+            <motion.div
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                duration: 0.35,
+                delay: 0.05,
+              }}
             >
-              <Sparkle />
-              {t("AutoFillRemaining", {
-                count: requiredFlowersCount - choosedFlowersCount,
-              })}
-            </Button>
+              <Button
+                variant="outline"
+                type="button"
+                aria-label="Auto fill remaining flowers"
+                className="h-12 w-full rounded-xl text-base font-semibold text-foreground"
+                onClick={handleAutoFill}
+              >
+                <Sparkle />
+
+                {t("AutoFillRemaining", {
+                  count: requiredFlowersCount - choosedFlowersCount,
+                })}
+              </Button>
+            </motion.div>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
