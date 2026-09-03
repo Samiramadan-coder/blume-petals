@@ -1,12 +1,16 @@
 import Image from "next/image";
+import * as motion from "motion/react-client";
+
 import { Card } from "../ui/card";
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
-import { Occasion } from "@/types/landing";
+
+import type { Occasion } from "@/types/landing";
+
 import LandingTitle from "./landing-title";
-import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
+
 import { getTranslations } from "next-intl/server";
 
 async function Occasions() {
@@ -22,42 +26,58 @@ async function Occasions() {
 
   return (
     <>
-      {data.data.items.map((item, index) => (
-        <motion.div
-          key={item.id}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
-          className={cn(
-            "h-full",
-            index === 0 || index === 3 ? "md:row-span-2" : "",
-          )}
-        >
-          <Card
+      {data.data.items.map((item, index) => {
+        const direction = index % 3 === 0 ? -10 : index % 3 === 2 ? 10 : 0;
+
+        return (
+          <motion.div
+            key={item.id}
+            initial={{
+              opacity: 0,
+              x: direction,
+              y: direction === 0 ? 8 : 0,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.15,
+            }}
+            transition={{
+              duration: 0.55,
+              delay: index * 0.06,
+              ease: [0.16, 1, 0.3, 1],
+            }}
             className={cn(
-              "group relative h-full min-h-55 overflow-hidden rounded-4xl p-0",
+              "h-full",
+              index === 0 || index === 3 ? "md:row-span-2" : "",
             )}
           >
-            <Image
-              src={item.banner_url}
-              alt={item.name}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(min-width: 768px) 33vw, 100vw"
-            />
-            <Link
-              href={`/shop?occasion=${item.slug}`}
-              aria-label={item.name}
-              className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition duration-200 hover:bg-black/20"
-            >
-              <p className="text-base font-semibold text-white w-full px-5 pb-4 pt-12 bg-[linear-gradient(to_top,rgba(20,12,0,0.7)_0%,transparent_100%)]">
-                {item.name}
-              </p>
-            </Link>
-          </Card>
-        </motion.div>
-      ))}
+            <Card className="group relative h-full min-h-55 overflow-hidden rounded-4xl p-0">
+              <Image
+                src={item.banner_url}
+                alt={item.name}
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 33vw, 100vw"
+              />
+
+              <Link
+                href={`/shop?occasion=${item.slug}`}
+                aria-label={item.name}
+                className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition-colors duration-300 hover:bg-black/20"
+              >
+                <p className="w-full bg-[linear-gradient(to_top,rgba(20,12,0,0.7)_0%,transparent_100%)] px-5 pb-4 pt-12 text-base font-semibold text-white">
+                  {item.name}
+                </p>
+              </Link>
+            </Card>
+          </motion.div>
+        );
+      })}
     </>
   );
 }
@@ -66,10 +86,11 @@ export default async function ShopTheMoment() {
   const t = await getTranslations("LandingShopTheMoment");
 
   return (
-    <div className="bg-border">
+    <section className="bg-border">
       <div className="container max-w-7xl">
         <div className="py-20">
           <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+
           <LandingTitle>{t("Title")}</LandingTitle>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[220px]">
@@ -77,6 +98,6 @@ export default async function ShopTheMoment() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

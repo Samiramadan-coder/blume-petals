@@ -14,7 +14,7 @@ export default async function ContactPage() {
   const t = await getTranslations("Contact");
 
   return (
-    <main className="container max-w-7xl py-20">
+    <main className="container max-w-7xl py-20 min-h-screen">
       <h1
         className={cn("text-3xl font-bold", {
           "font-heading": locale === "en",

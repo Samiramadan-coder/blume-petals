@@ -1,30 +1,30 @@
 import { http } from "@/lib/http";
-import { Product } from "@/types/products";
+import type { Product } from "@/types/products";
+import type { AppSettings } from "@/types/landing";
+
 import LandingTitle from "./landing-title";
-import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
-import { getTranslations } from "next-intl/server";
 import AddOnCard from "../shop/add-on-card";
-import { AppSettings } from "@/types/landing";
+
+import * as motion from "motion/react-client";
+import { getTranslations } from "next-intl/server";
 
 export default async function PerfectAddOns() {
   const t = await getTranslations("LandingPerfectAddOns");
 
-  // Fetch add-ons from the API
   const { data: addOns, ok: ok1 } = await http.get<{
     data: {
       items: Product[];
     };
-  }>(`/api/v1/products?category_type=addon`, {
+  }>("/api/v1/products?category_type=addon", {
     params: {
       per_page: 6,
     },
   });
 
-  // Fetch app settings from the API
   const { data: appSettings, ok: ok2 } = await http.get<{
     data: AppSettings;
-  }>(`/api/v1/settings`);
+  }>("/api/v1/settings");
 
   if (!ok1 || !ok2) {
     throw new Error("Failed to fetch add-ons or app settings");
@@ -35,17 +35,31 @@ export default async function PerfectAddOns() {
   }
 
   return (
-    <div className="bg-[#faf8f5]">
+    <section className="bg-[#faf8f5]">
       <div className="container max-w-7xl">
         <div className="py-20">
           <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+
           <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.2 }}
-            className="mb-12 mt-3 text-sm md:text-base max-w-sm text-foreground"
+            initial={{
+              opacity: 0,
+              x: 8,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.3,
+            }}
+            transition={{
+              duration: 0.5,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="mb-12 mt-3 max-w-sm text-sm text-foreground md:text-base"
           >
             {t("Description")}
           </motion.p>
@@ -54,10 +68,23 @@ export default async function PerfectAddOns() {
             {addOns.data.items.map((item, index) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
+                initial={{
+                  opacity: 0,
+                  x: index % 2 === 0 ? -8 : 8,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.15,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.045,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               >
                 <AddOnCard item={item} />
               </motion.div>
@@ -65,6 +92,6 @@ export default async function PerfectAddOns() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

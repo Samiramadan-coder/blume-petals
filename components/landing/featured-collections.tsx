@@ -1,9 +1,13 @@
 import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
+
 import { getTranslations } from "next-intl/server";
+
 import { http } from "@/lib/http";
-import { Product } from "@/types/products";
+
+import type { Product } from "@/types/products";
+
 import CardItem from "../shop/card-item";
 
 export default async function FeaturedCollections() {
@@ -13,26 +17,40 @@ export default async function FeaturedCollections() {
     data: {
       items: Product[];
     };
-  }>(`/api/v1/products?sort=rating`);
+  }>("/api/v1/products?sort=rating");
 
   if (!ok) {
     throw new Error("Failed to fetch featured collections");
   }
 
   return (
-    <div className="container max-w-7xl">
+    <section className="container max-w-7xl">
       <div className="py-20">
         <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+
         <LandingTitle>{t("Title")}</LandingTitle>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {data.data.items.slice(0, 4).map((item, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: 0.1 + index * 0.2 }}
               key={item.id}
+              initial={{
+                opacity: 0,
+                x: index % 2 === 0 ? -10 : 10,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.15,
+              }}
+              transition={{
+                duration: 0.55,
+                delay: index * 0.06,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
               <CardItem
                 showCategory={false}
@@ -47,6 +65,6 @@ export default async function FeaturedCollections() {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

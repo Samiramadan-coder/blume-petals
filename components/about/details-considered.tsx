@@ -1,49 +1,133 @@
+import * as motion from "motion/react-client";
+
 import AppLogo from "../reusable/app-logo";
+
 import { getTranslations } from "next-intl/server";
+
+const palette = [
+  {
+    key: "Gold",
+    className: "bg-primary",
+  },
+  {
+    key: "Sage",
+    className: "bg-[#7d947b]",
+  },
+  {
+    key: "Beige",
+    className: "bg-border",
+  },
+  {
+    key: "Terracotta",
+    className: "bg-[#ed8074]",
+  },
+] as const;
 
 export default async function DetailsConsidered() {
   const t = await getTranslations("AboutDetailsConsidered");
 
   return (
-    <div className="bg-border">
+    <section className="overflow-hidden bg-border">
       <div className="container max-w-7xl">
-        <div className="py-20 flex flex-col items-center gap-6 text-center">
-          <AppLogo width={120} />
-          <p className="text-sm italic text-foreground/50">{t("Statement")}</p>
-          <div className="flex items-center gap-6 flex-wrap justify-center">
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-10 h-10 rounded-full shadow-md border-2 border-white bg-primary"></div>
-              <span className="text-[11px] font-medium text-foreground/50">
-                {t("Palette.Gold")}
-              </span>
-            </div>
+        <div className="flex flex-col items-center gap-6 py-20 text-center">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 6,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.5,
+            }}
+            transition={{
+              duration: 0.5,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          >
+            <AppLogo width={120} />
+          </motion.div>
 
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-10 h-10 rounded-full shadow-md border-2 border-white bg-[#7d947b]"></div>
-              <span className="text-[11px] font-medium text-foreground/50">
-                {t("Palette.Sage")}
-              </span>
-            </div>
+          <motion.p
+            initial={{
+              opacity: 0,
+              x: -8,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.4,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: 0.05,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="text-sm italic text-foreground/50"
+          >
+            {t("Statement")}
+          </motion.p>
 
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-10 h-10 rounded-full shadow-md border-2 border-white bg-border"></div>
-              <span className="text-[11px] font-medium text-foreground/50">
-                {t("Palette.Beige")}
-              </span>
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            {palette.map((item, index) => (
+              <motion.div
+                key={item.key}
+                initial={{
+                  opacity: 0,
+                  x: index % 2 === 0 ? -8 : 8,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.3,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.05,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="flex flex-col items-center gap-2"
+              >
+                <div
+                  className={`size-10 rounded-full border-2 border-white shadow-md ${item.className}`}
+                />
 
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-10 h-10 rounded-full shadow-md border-2 border-white bg-[#ed8074]"></div>
-              <span className="text-[11px] font-medium text-foreground/50">
-                {t("Palette.Terracotta")}
-              </span>
-            </div>
+                <span className="text-[11px] font-medium text-foreground/50">
+                  {t(`Palette.${item.key}`)}
+                </span>
+              </motion.div>
+            ))}
           </div>
-          <p className="text-xs text-foreground/40 tracking-wide">
+
+          <motion.p
+            initial={{
+              opacity: 0,
+            }}
+            whileInView={{
+              opacity: 1,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: 0.15,
+            }}
+            className="text-xs tracking-wide text-foreground/40"
+          >
             {t("Caption")}
-          </p>
+          </motion.p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

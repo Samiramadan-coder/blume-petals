@@ -18,7 +18,7 @@ export default async function DesignCard({ item }: { item: Design }) {
         <Image
           src={
             item.bouquet.image_url ||
-            "/images/home/bouquet-builder/bouquet-builder.png"
+            "/images/home/bouquet-builder/bouquet-builder.webp"
           }
           alt="Sunset Romance"
           fill

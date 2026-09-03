@@ -1,16 +1,20 @@
 import Image from "next/image";
+import * as motion from "motion/react-client";
+
 import { Button } from "../ui/button";
 import { Link } from "@/i18n/navigation";
 import MainButton from "../ui/main-button";
+
 import { getLocale, getTranslations } from "next-intl/server";
-import * as motion from "motion/react-client";
+
 import { cn } from "@/lib/utils";
 
 const containerVariants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.06,
+      delayChildren: 0.08,
     },
   },
 };
@@ -18,13 +22,14 @@ const containerVariants = {
 const itemVariants = {
   hidden: {
     opacity: 0,
-    y: 20,
+    x: -10,
   },
   show: {
     opacity: 1,
-    y: 0,
+    x: 0,
     transition: {
-      duration: 0.35,
+      duration: 0.55,
+      ease: [0.16, 1, 0.3, 1] as const,
     },
   },
 };
@@ -36,11 +41,11 @@ export default async function Hero() {
   return (
     <section className="relative isolate min-h-svh overflow-hidden">
       <Image
-        src="/images/home/hero/bouquet-of-rose.png"
+        src="/images/home/hero/bouquet-of-rose.webp"
         alt="Bouquet of rose"
         fill
         priority
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 75vw"
+        sizes="100vw"
         className="absolute inset-0 -z-30 object-cover object-center animate-hero-zoom"
       />
 
@@ -57,7 +62,7 @@ export default async function Hero() {
         >
           <motion.p
             variants={itemVariants}
-            className="mb-5 text-xs uppercase tracking-[0.25rem] text-primary font-semibold"
+            className="mb-5 text-xs font-semibold uppercase tracking-[0.25rem] text-primary"
           >
             {t("Eyebrow")}
           </motion.p>
@@ -66,7 +71,9 @@ export default async function Hero() {
             variants={itemVariants}
             className={cn(
               "mb-5 max-w-xl text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl",
-              { "font-heading": locale === "en" },
+              {
+                "font-heading": locale === "en",
+              },
             )}
           >
             {t("Title")}
@@ -74,7 +81,7 @@ export default async function Hero() {
 
           <motion.p
             variants={itemVariants}
-            className="mb-8 text-base leading-relaxed text-white/82 max-w-105 md:text-lg"
+            className="mb-8 max-w-105 text-base leading-relaxed text-white/82 md:text-lg"
           >
             {t("Description")}
           </motion.p>
@@ -88,8 +95,7 @@ export default async function Hero() {
             <Button
               asChild
               variant="ghost"
-              aria-label="Secondary Call to Action"
-              className="h-12 px-0 cursor-pointer rounded-full text-white underline underline-offset-8 hover:bg-transparent hover:text-white"
+              className="h-12 cursor-pointer rounded-full px-0 text-white underline underline-offset-8 hover:bg-transparent hover:text-white"
             >
               <Link href="/shop">{t("SecondaryCta")}</Link>
             </Button>
