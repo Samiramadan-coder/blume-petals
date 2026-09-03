@@ -121,16 +121,14 @@ export default function BuilderForm({
     }
 
     if (currentStep === 1 && choosedFlowersCount === flowersCount) {
-      // console.log(data);
       return setCurrentStep((prev) => prev + 1);
     }
 
-    // console.log(data);
     await http.post("/api/v1/cart/designs", data);
   };
 
   return (
-    <form className="container max-w-3xl" onSubmit={handleSubmit(onSubmit)}>
+    <form className="container max-w-220" onSubmit={handleSubmit(onSubmit)}>
       <header className="bg-muted/30 p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-medium text-foreground/60">

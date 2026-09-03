@@ -58,7 +58,7 @@ export default async function DesignCard({ item }: { item: Design }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        {/* <div className="grid grid-cols-2 gap-2">
           <Button
             asChild
             variant="outline"
@@ -78,7 +78,7 @@ export default async function DesignCard({ item }: { item: Design }) {
             <ShoppingCart className="size-4" />
             {t("AddToCart")}
           </Button>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );

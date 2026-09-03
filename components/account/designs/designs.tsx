@@ -6,6 +6,7 @@ import { Pagination } from "@/types/shared";
 import PageTitle from "../shared/page-title";
 import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
+import PaginationTemplate from "@/components/reusable/pagination-template";
 
 export default async function Designs({
   items,
@@ -29,6 +30,13 @@ export default async function Designs({
         {items.map((item, index) => (
           <DesignCard key={index} item={item} />
         ))}
+
+        <div className="sm:col-span-2 md:col-span-3">
+          <PaginationTemplate
+            currentPage={pagination.current_page}
+            totalPages={pagination.last_page}
+          />
+        </div>
 
         <div className="col-span-1 sm:col-span-2 md:col-span-3">
           <Link href="/builder">

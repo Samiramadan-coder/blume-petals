@@ -25,19 +25,18 @@ export default async function Page({
   const { designId } = await searchParams;
   let design;
 
-  if (designId) {
-    // Fetch the design details for the given designId if it exists
-    const { data: designDetails, ok: okDesign } = await http.get<{
-      data: { design: Design };
-    }>(`/api/v1/designs/${designId}`);
+  // if (designId) {
+  //   const { data: designDetails, ok: okDesign } = await http.get<{
+  //     data: { design: Design };
+  //   }>(`/api/v1/designs/${designId}`);
 
-    if (!okDesign) {
-      throw new Error("Failed to fetch design details");
-    }
+  //   if (!okDesign) {
+  //     throw new Error("Failed to fetch design details");
+  //   }
 
-    // console.log(designDetails);
-    design = designDetails.data.design;
-  }
+  //   console.log(designDetails);
+  //   design = designDetails.data.design;
+  // }
 
   // Fetch templates, flowers, and gift options for the builder page
   const { data: templates, ok: ok1 } = await http.get<{

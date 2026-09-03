@@ -71,7 +71,7 @@ export default async function RootLayout({
               <body className="min-h-full flex flex-col">
                 <NuqsAdapter>
                   {children}
-                  <Toaster richColors position="top-right" />
+                  <Toaster richColors position="top-center" />
                 </NuqsAdapter>
               </body>
             </DirectionProvider>
