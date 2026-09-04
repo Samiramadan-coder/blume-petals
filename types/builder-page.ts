@@ -6,6 +6,7 @@ export type BuilderFormData = {
   ribbon_id: number;
   card_style_id: number;
   message_text: string;
+  generated_image_url: string | null;
   slots: {
     variant_id: number;
     qty: number;

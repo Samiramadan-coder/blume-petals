@@ -29,7 +29,7 @@ export async function generateBouquet(formData: BuilderFormData) {
   }
 
   if (!formData.template_url) {
-    throw new Error("Vase image is missing");
+    throw new Error("Template image is missing");
   }
 
   const flowers = formData.slots.filter(
@@ -40,11 +40,11 @@ export async function generateBouquet(formData: BuilderFormData) {
     throw new Error("No flowers selected");
   }
 
-  // Gemini 3.1 Flash Image يدعم حتى 10 object references
-  // 1 vase + 9 flower types
+  // Gemini 3.1 Flash Image يدعم حتى 10 مراجع
+  // 1 base template + 9 flower types
   if (flowers.length > 9) {
     throw new Error(
-      "Maximum supported selection is 9 flower types plus the vase.",
+      "Maximum supported selection is 9 flower types plus the base template.",
     );
   }
 
@@ -55,31 +55,46 @@ export async function generateBouquet(formData: BuilderFormData) {
       (flower, index) => `
 Reference image ${index + 2}
 Flower name: ${flower.name}
-Required quantity: exactly ${flower.qty} stems
+Required quantity: exactly ${flower.qty} stems.
+Do not use more than ${flower.qty} stems.
+Do not use fewer than ${flower.qty} stems.
 `,
     )
     .join("\n");
 
   const prompt = `
-Using reference image 1 as the exact vase container.
+Using reference image 1 as the exact floral arrangement base template.
 
-Keep the vase shape, color, proportions, material, finish, opening size, and camera angle unchanged.
+Reference image 1 may be a vase, basket, flower box, wrapped bouquet base, bag, tray, or another floral container or presentation shape.
 
-Total requested flowers: ${totalFlowers} stems.
+Preserve the base template exactly:
+- shape
+- proportions
+- material
+- finish
+- opening or support structure
+- placement and presentation style
+- camera angle
+
+Total requested flowers: exactly ${totalFlowers} stems.
 
 The following images are exact flower product references.
 
 ${flowerReferences}
 
-Create a professional florist-style bouquet arrangement inside the provided vase.
+Create a professional florist-style floral arrangement using the provided base template and the provided flower references.
 
 Treat every reference image as an exact product reference, not merely visual inspiration.
 
 Use every requested flower type.
 
-Follow the requested quantity for every flower type as closely and visibly as possible.
+Follow the requested quantity for every flower type exactly.
 
-The final bouquet should contain approximately ${totalFlowers} stems in total.
+Each requested flower type must appear in the final arrangement with exactly the requested number of stems.
+
+Do not use more or fewer stems than requested for any flower type.
+
+The final arrangement must contain exactly ${totalFlowers} stems in total.
 
 Do not invent additional flower species.
 Do not replace a requested flower with another flower type.
@@ -93,22 +108,23 @@ Preserve from every flower reference:
 - overall appearance
 
 Arrangement requirements:
-- fuller stems toward the back and center
-- smaller blooms toward the front
-- natural height variation
-- realistic stem overlap
-- realistic insertion through the vase opening
-- natural stem angles
-- some flowers slightly turned to create depth
-- balanced professional florist composition
+- arrange the flowers naturally according to the shape of the base template
+- place fuller stems toward the back and center when appropriate
+- place smaller blooms toward the front when appropriate
+- use natural height variation
+- use realistic stem overlap
+- make the flower placement believable for the provided template
+- use natural flower angles
+- turn some flowers slightly to create depth
+- create a balanced professional florist composition
 - avoid overcrowding
 
-Vase requirements:
-- preserve the exact vase
+Base template requirements:
+- preserve the exact template
 - do not redesign it
 - preserve its original color
 - preserve its proportions
-- preserve its ceramic material
+- preserve its material
 - preserve its original camera angle
 
 Photography requirements:
@@ -117,8 +133,8 @@ Photography requirements:
 - clean white studio background
 - soft even studio lighting
 - realistic natural shadows
-- full vase visible
-- full bouquet visible
+- full template visible
+- full floral arrangement visible
 - centered composition
 - no illustration style
 - no text
@@ -166,7 +182,6 @@ Photography requirements:
 
     if (!generatedImage?.data) {
       console.error("Gemini response:", interaction);
-
       throw new Error("Gemini did not return an image");
     }
 

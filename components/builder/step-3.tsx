@@ -1,39 +1,37 @@
 "use client";
 
+import {
+  Control,
+  Controller,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { Switch } from "../ui/switch";
 import * as motion from "motion/react-client";
-
-import {
-  Control,
-  Controller,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
-
 import { useLocale, useTranslations } from "next-intl";
-
-import { BuilderFormData, GiftOptions } from "@/types/builder-page";
-
 import FormTextarea from "../reusable/form/form-textarea";
+import { BuilderFormData, GiftOptions } from "@/types/builder-page";
 
 export default function Step3({
   giftOptions,
   control,
   register,
   setValue,
+  cardStyleId,
 }: {
   giftOptions: GiftOptions;
   control: Control<BuilderFormData>;
   register: UseFormRegister<BuilderFormData>;
   setValue: UseFormSetValue<BuilderFormData>;
+  cardStyleId: number;
 }) {
   const locale = useLocale();
-  const [open, setOpen] = useState(false);
-
+  const [open, setOpen] = useState(!!cardStyleId);
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
 

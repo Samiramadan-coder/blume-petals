@@ -1,23 +1,26 @@
+import Image from "next/image";
 import { useState } from "react";
-import { UseFormGetValues } from "react-hook-form";
-import { ImageIcon, Loader2, RefreshCw, Sparkles } from "lucide-react";
-
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { BuilderFormData } from "@/types/builder-page";
 import { generateBouquet } from "@/lib/generateBouquet";
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { ImageIcon, Loader2, Sparkles } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import Image from "next/image";
+import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 export default function Step4({
+  generated_image_url,
   getValues,
+  setValue,
 }: {
+  generated_image_url: string | null;
   getValues: UseFormGetValues<BuilderFormData>;
+  setValue: UseFormSetValue<BuilderFormData>;
 }) {
+  const t = useTranslations("CustomBuilder");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
 
   const handleGenerateBouquet = async () => {
@@ -29,7 +32,7 @@ export default function Step4({
 
       const result = await generateBouquet(getValues());
 
-      setGeneratedImage(result.imageUrl);
+      setValue("generated_image_url", result.imageUrl);
     } catch (error) {
       console.error(error);
 
@@ -46,9 +49,9 @@ export default function Step4({
       <Card className="overflow-hidden p-0">
         <CardContent className="p-0">
           <div className="relative aspect-4/5 w-full overflow-hidden bg-muted">
-            {generatedImage && (
+            {generated_image_url && (
               <Image
-                src={generatedImage}
+                src={generated_image_url}
                 alt="Generated bouquet"
                 fill
                 unoptimized
@@ -56,18 +59,17 @@ export default function Step4({
               />
             )}
 
-            {!generatedImage && !isGenerating && (
+            {!generated_image_url && !isGenerating && (
               <div className="flex h-full flex-col items-center justify-center gap-4 px-8 text-center">
                 <div className="flex size-14 items-center justify-center rounded-full border bg-background">
                   <ImageIcon className="size-6 text-muted-foreground" />
                 </div>
 
                 <div className="space-y-1">
-                  <p className="font-medium">Bouquet Preview</p>
+                  <p className="font-medium">{t("BouquetPreview")}</p>
 
                   <p className="text-sm text-muted-foreground">
-                    Generate your bouquet to preview the selected flowers
-                    arranged inside your vase.
+                    {t("BouquetPreviewDescription")}
                   </p>
                 </div>
               </div>
@@ -75,13 +77,13 @@ export default function Step4({
 
             {isGenerating && (
               <div className="absolute inset-0">
-                {!generatedImage && (
+                {!generated_image_url && (
                   <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
                 )}
 
                 <div
                   className={
-                    generatedImage
+                    generated_image_url
                       ? "absolute inset-0 flex items-center justify-center bg-background/70 backdrop-blur-sm"
                       : "absolute inset-0 flex items-center justify-center"
                   }
@@ -93,11 +95,11 @@ export default function Step4({
 
                     <div className="text-center">
                       <p className="text-sm font-medium">
-                        Creating your bouquet
+                        {t("CreatingYourBouquet")}
                       </p>
 
                       <p className="mt-1 text-xs text-muted-foreground">
-                        Generating your preview...
+                        {t("GeneratingYourBouquet")}
                       </p>
                     </div>
                   </div>
@@ -118,24 +120,19 @@ export default function Step4({
             {isGenerating ? (
               <>
                 <Loader2 className="animate-spin" />
-                Generating...
+                {t("Generating")}
               </>
-            ) : generatedImage ? (
-              <>
-                <RefreshCw />
-                Regenerate Bouquet
-              </>
-            ) : (
+            ) : !generated_image_url ? (
               <>
                 <Sparkles />
-                Generate Bouquet
+                {t("GenerateBouquet")}
               </>
-            )}
+            ) : null}
           </Button>
 
-          {generatedImage && (
+          {generated_image_url && (
             <p className="text-center text-xs text-muted-foreground">
-              AI generated preview. The final arrangement may vary slightly.
+              {t("AIGenerate")}
             </p>
           )}
         </CardFooter>

@@ -5,16 +5,18 @@ import Step2 from "./step-2";
 import Step3 from "./step-3";
 import Step4 from "./step-4";
 import { toast } from "sonner";
-import { http } from "@/lib/http";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { T } from "@/constants/shared";
 import { Design } from "@/types/account";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { addToCart } from "@/lib/custom-builder";
 import { Flower, Product } from "@/types/products";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { BuilderFormData, GiftOptions } from "@/types/builder-page";
+import { useRouter } from "@/i18n/navigation";
+import { Spinner } from "../ui/spinner";
 
 const steps = (t: T) => [
   t("Steps.Template"),
@@ -35,24 +37,31 @@ export default function BuilderForm({
   design?: Design;
 }) {
   console.log(design);
+  const router = useRouter();
   const t = useTranslations("CustomBuilder");
   const tCommon = useTranslations("Common");
   const stepsList = steps(t);
   const [currentStep, setCurrentStep] = useState(0);
 
-  const { handleSubmit, setValue, getValues, control, register } =
-    useForm<BuilderFormData>({
-      defaultValues: {
-        template_id: templates[0].id,
-        template_url: templates[0].image_url,
-        variant_id: templates[0]?.variants[0]?.id,
-        flowersCount: templates[0]?.variants[0]?.max_stems || 0,
-        ribbon_id: undefined,
-        card_style_id: undefined,
-        message_text: "",
-        slots: [],
-      },
-    });
+  const {
+    handleSubmit,
+    setValue,
+    getValues,
+    control,
+    register,
+    formState: { isSubmitting },
+  } = useForm<BuilderFormData>({
+    defaultValues: {
+      template_id: templates[0].id,
+      template_url: templates[0].image_url,
+      variant_id: templates[0]?.variants[0]?.id,
+      flowersCount: templates[0]?.variants[0]?.max_stems || 0,
+      ribbon_id: undefined,
+      card_style_id: undefined,
+      message_text: "",
+      slots: [],
+    },
+  });
 
   /* Watch the selected slots in the form */
   const selectedTemplate = useWatch({ control, name: "template_id" });
@@ -61,6 +70,10 @@ export default function BuilderForm({
   const selectedRibbon = useWatch({ control, name: "ribbon_id" });
   const selectedCardStyle = useWatch({ control, name: "card_style_id" });
   const choosedSlots = useWatch({ control, name: "slots" });
+  const generated_image_url = useWatch({
+    control,
+    name: "generated_image_url",
+  });
 
   /* Calculate the total number of chosen flowers from client */
   const choosedFlowersCount = useMemo(() => {
@@ -132,7 +145,14 @@ export default function BuilderForm({
       return setCurrentStep(3);
     }
 
-    // await http.post("/api/v1/cart/designs", data);
+    const result = await addToCart(data);
+
+    if (result.success) {
+      toast.success(t("AddedToCartSuccessfully"));
+      router.push("/cart");
+    } else {
+      toast.error(t("FailedToAddToCart"));
+    }
   };
 
   return (
@@ -203,10 +223,17 @@ export default function BuilderForm({
             control={control}
             register={register}
             setValue={setValue}
+            cardStyleId={selectedCardStyle}
           />
         )}
 
-        {currentStep === 3 && <Step4 getValues={getValues} />}
+        {currentStep === 3 && (
+          <Step4
+            getValues={getValues}
+            setValue={setValue}
+            generated_image_url={generated_image_url}
+          />
+        )}
       </div>
 
       <footer className="flex flex-wrap gap-2">
@@ -220,13 +247,16 @@ export default function BuilderForm({
             {t("Back")}: {stepsList[currentStep - 1]}
           </Button>
         )}
+
         <Button
           className="flex-1 h-12 rounded-full text-lg text-foreground"
           type="submit"
+          disabled={isSubmitting}
           aria-label={
             currentStep === 3 ? "Submit" : `Next: ${stepsList[currentStep + 1]}`
           }
         >
+          {isSubmitting && <Spinner />}
           {currentStep === 3
             ? t("Submit")
             : `${t("Next")}: ${stepsList[currentStep + 1]}`}
