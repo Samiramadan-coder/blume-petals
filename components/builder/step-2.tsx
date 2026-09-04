@@ -1,23 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import { toast } from "sonner";
+import Image from "next/image";
 import { useState } from "react";
-import * as motion from "motion/react-client";
-
-import { Minus, Plus, Sparkle } from "lucide-react";
-
-import { Button } from "../ui/button";
-
-import type { UseFormGetValues, UseFormSetValue } from "react-hook-form";
-
-import type { Flower } from "@/types/products";
-import type { BuilderFormData } from "@/types/builder-page";
-
-import { useTranslations } from "next-intl";
-
-import BouquetEditor from "./preview";
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
+import * as motion from "motion/react-client";
+import type { Flower } from "@/types/products";
+import { Minus, Plus, Sparkle } from "lucide-react";
+import type { UseFormSetValue } from "react-hook-form";
+import type { BuilderFormData } from "@/types/builder-page";
 
 export default function Step2({
   flowers,
@@ -25,26 +18,23 @@ export default function Step2({
   choosedFlowersCount,
   choosedSlots,
   setValue,
-  getValues,
 }: {
   flowers: Flower[];
   requiredFlowersCount: number;
   choosedFlowersCount: number;
   choosedSlots: BuilderFormData["slots"];
   setValue: UseFormSetValue<BuilderFormData>;
-  getValues: UseFormGetValues<BuilderFormData>;
 }) {
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
-
   const [selectedFlowerIndex, setSelectedFlowerIndex] = useState<number | null>(
     null,
   );
-
   const [hoveredFlowerIndex, setHoveredFlowerIndex] = useState<number | null>(
     null,
   );
 
+  // Handle flower count control (increment/decrement)
   function handleFlowerCountControl(
     operation: "increment" | "decrement",
     index: number,
@@ -100,6 +90,7 @@ export default function Step2({
     ]);
   }
 
+  // Handle Auto fill
   function handleAutoFill() {
     const remainingCount = requiredFlowersCount - choosedFlowersCount;
 
@@ -165,105 +156,88 @@ export default function Step2({
 
   return (
     <div className="flex flex-col gap-2 sm:flex-row">
-      <motion.div
-        initial={{
-          opacity: 0,
-          x: -10,
-        }}
-        animate={{
-          opacity: 1,
-          x: 0,
-        }}
-        transition={{
-          duration: 0.55,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="flex-1 space-y-3 rounded-2xl bg-linear-to-b from-muted/30 to-background p-4"
-      >
-        <div className="space-y-2">
-          {choosedSlots.map((slot, index) => (
-            <motion.div
-              key={slot.variant_id}
-              initial={{
-                opacity: 0,
-                x: -6,
-              }}
-              animate={{
-                opacity: 1,
-                x: 0,
-              }}
-              transition={{
-                duration: 0.4,
-                delay: index * 0.035,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="flex items-center justify-between gap-3"
-            >
-              <p className="text-sm">
-                {slot.qty}x <span className="font-semibold">{slot.name}</span>
-              </p>
-
-              <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  aria-label={`Decrement count for ${slot.name}`}
-                  size="icon"
-                  variant="outline"
-                  className="rounded-full"
-                  onClick={() => {
-                    const flowerIndex = flowers.findIndex(
-                      (flower) => flower.id === slot.variant_id,
-                    );
-
-                    handleFlowerCountControl("decrement", flowerIndex);
-                  }}
-                >
-                  <Minus />
-                </Button>
-
-                <Button
-                  type="button"
-                  size="icon"
-                  aria-label={`Increment count for ${slot.name}`}
-                  variant="outline"
-                  className="rounded-full"
-                  onClick={() => {
-                    const flowerIndex = flowers.findIndex(
-                      (flower) => flower.id === slot.variant_id,
-                    );
-
-                    handleFlowerCountControl("increment", flowerIndex);
-                  }}
-                >
-                  <Plus />
-                </Button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
+      {/* Chosen flowers list */}
+      {choosedFlowersCount > 0 && (
         <motion.div
           initial={{
             opacity: 0,
-            y: 6,
+            x: -10,
           }}
           animate={{
             opacity: 1,
-            y: 0,
+            x: 0,
           }}
           transition={{
-            duration: 0.5,
-            delay: 0.08,
+            duration: 0.55,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="mt-auto flex justify-center pt-5"
+          className="flex-1 space-y-3 rounded-2xl bg-linear-to-b from-muted/30 to-background p-4"
         >
-          <div className="w-55 overflow-hidden rounded-xl">
-            <BouquetEditor data={getValues()} />
+          <div className="space-y-2">
+            {choosedSlots.map((slot, index) => (
+              <motion.div
+                key={slot.variant_id}
+                initial={{
+                  opacity: 0,
+                  x: -6,
+                }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.035,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="flex items-center justify-between gap-3"
+              >
+                <p className="text-sm">
+                  {slot.qty}x <span className="font-semibold">{slot.name}</span>
+                </p>
+
+                <div className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    aria-label={`Decrement count for ${slot.name}`}
+                    size="icon"
+                    variant="outline"
+                    className="rounded-full"
+                    onClick={() => {
+                      const flowerIndex = flowers.findIndex(
+                        (flower) => flower.id === slot.variant_id,
+                      );
+
+                      handleFlowerCountControl("decrement", flowerIndex);
+                    }}
+                  >
+                    <Minus />
+                  </Button>
+
+                  <Button
+                    type="button"
+                    size="icon"
+                    aria-label={`Increment count for ${slot.name}`}
+                    variant="outline"
+                    className="rounded-full"
+                    onClick={() => {
+                      const flowerIndex = flowers.findIndex(
+                        (flower) => flower.id === slot.variant_id,
+                      );
+
+                      handleFlowerCountControl("increment", flowerIndex);
+                    }}
+                  >
+                    <Plus />
+                  </Button>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
-      </motion.div>
+      )}
 
+      {/* Flower selection section */}
       <motion.div
         initial={{
           opacity: 0,
@@ -290,7 +264,9 @@ export default function Step2({
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div
+          className={`grid grid-cols-2 gap-2 ${choosedFlowersCount === 0 ? "lg:grid-cols-3" : ""}`}
+        >
           {flowers.map((flower, index) => {
             const isSelected = selectedFlowerIndex === index;
 
@@ -334,7 +310,7 @@ export default function Step2({
                       alt={flower.product_name}
                       width={100}
                       height={100}
-                      className="max-h-25 rounded-2xl object-cover"
+                      className="max-h-30 rounded-2xl object-cover"
                     />
 
                     {hoveredFlowerIndex === index && (

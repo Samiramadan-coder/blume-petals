@@ -9,12 +9,12 @@ import { http } from "@/lib/http";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { T } from "@/constants/shared";
+import { Design } from "@/types/account";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Flower, Product } from "@/types/products";
-import { BuilderFormData, GiftOptions } from "@/types/builder-page";
-import { Design } from "@/types/account";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
+import { BuilderFormData, GiftOptions } from "@/types/builder-page";
 
 const steps = (t: T) => [
   t("Steps.Template"),
@@ -108,10 +108,12 @@ export default function BuilderForm({
 
   /* Handle form submission based on the current step */
   const onSubmit: SubmitHandler<BuilderFormData> = async (data) => {
+    // Handle step 0: template selection
     if (currentStep === 0) {
       return setCurrentStep((prev) => prev + 1);
     }
 
+    // Handle step 1: flower selection
     if (currentStep === 1 && choosedFlowersCount < flowersCount) {
       return toast.error(
         t("PleaseChooseFlowers", {
@@ -120,11 +122,17 @@ export default function BuilderForm({
       );
     }
 
+    // Handle step 2: review and confirmation
     if (currentStep === 1 && choosedFlowersCount === flowersCount) {
-      return setCurrentStep((prev) => prev + 1);
+      return setCurrentStep(2);
     }
 
-    await http.post("/api/v1/cart/designs", data);
+    // Handle step 3: final confirmation
+    if (currentStep === 2) {
+      return setCurrentStep(3);
+    }
+
+    // await http.post("/api/v1/cart/designs", data);
   };
 
   return (
@@ -186,7 +194,6 @@ export default function BuilderForm({
             choosedFlowersCount={choosedFlowersCount}
             choosedSlots={choosedSlots}
             setValue={setValue}
-            getValues={getValues}
           />
         )}
 
@@ -199,7 +206,7 @@ export default function BuilderForm({
           />
         )}
 
-        {currentStep === 3 && <Step4 />}
+        {currentStep === 3 && <Step4 getValues={getValues} />}
       </div>
 
       <footer className="flex flex-wrap gap-2">
