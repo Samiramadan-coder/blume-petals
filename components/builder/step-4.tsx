@@ -110,25 +110,27 @@ export default function Step4({
         </CardContent>
 
         <CardFooter className="flex flex-col gap-3 p-4">
-          <Button
-            type="button"
-            size="lg"
-            className="w-full"
-            onClick={handleGenerateBouquet}
-            disabled={isGenerating}
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="animate-spin" />
-                {t("Generating")}
-              </>
-            ) : !generated_image_url ? (
-              <>
-                <Sparkles />
-                {t("GenerateBouquet")}
-              </>
-            ) : null}
-          </Button>
+          {!generated_image_url && (
+            <Button
+              type="button"
+              size="lg"
+              className="w-full"
+              onClick={handleGenerateBouquet}
+              disabled={isGenerating}
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="animate-spin" />
+                  {t("Generating")}
+                </>
+              ) : !generated_image_url ? (
+                <>
+                  <Sparkles />
+                  {t("GenerateBouquet")}
+                </>
+              ) : null}
+            </Button>
+          )}
 
           {generated_image_url && (
             <p className="text-center text-xs text-muted-foreground">
