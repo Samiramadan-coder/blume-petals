@@ -184,12 +184,6 @@ export default function Step3({
                   <Switch
                     checked={open}
                     onCheckedChange={(value) => {
-                      // if (value) {
-                      //   onChange(giftOptions.card_styles[0]?.id);
-                      // } else {
-                      //   onChange(undefined);
-                      //   setValue("message_text", "");
-                      // }
                       if (!value) {
                         onChange(undefined);
                         setValue("message_text", "");

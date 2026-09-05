@@ -83,18 +83,14 @@ export default function Step1({
                     aria-pressed={isSelected}
                     onClick={() => {
                       setSelectedTemplateId(template.id);
-
                       setValue("template_id", template.id);
-
                       setValue("template_url", template.image_url);
-
                       setValue("variant_id", template.variants[0]?.id);
-
                       setValue("slots", []);
                     }}
                     className={cn(
                       "group relative block w-full cursor-pointer overflow-hidden rounded-[24px] border-2 text-start transition-colors duration-300",
-                      isSelected ? "border-primary" : "border-transparent",
+                      isSelected ? "border-primary" : "border-muted",
                     )}
                   >
                     <Image

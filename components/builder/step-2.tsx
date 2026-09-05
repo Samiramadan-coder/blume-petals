@@ -254,7 +254,7 @@ export default function Step2({
           delay: 0.04,
           ease: [0.16, 1, 0.3, 1],
         }}
-        className="w-full flex-1 rounded-lg border-2 border-muted bg-white p-4"
+        className="w-full flex-1 rounded-lg border border-muted bg-white p-4"
       >
         <div className="mb-4">
           <h3 className="text-lg font-semibold">{t("ChooseFlower")}</h3>
@@ -296,7 +296,7 @@ export default function Step2({
                   aria-pressed={isSelected}
                   disabled={flower.available_stock === 0}
                   className={cn(
-                    "h-auto w-full flex-col items-center gap-1 rounded-lg border border-muted bg-background py-3 hover:bg-background",
+                    "h-full w-full flex-col items-center gap-1 rounded-lg border border-muted bg-background py-3 hover:bg-background",
                     isSelected &&
                       "border-primary bg-primary/20 hover:bg-primary/20",
                   )}

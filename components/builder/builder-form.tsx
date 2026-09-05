@@ -157,7 +157,7 @@ export default function BuilderForm({
   };
 
   return (
-    <form className="container max-w-220" onSubmit={handleSubmit(onSubmit)}>
+    <form className="container max-w-200" onSubmit={handleSubmit(onSubmit)}>
       <header className="bg-muted/30 p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-medium text-foreground/60">
