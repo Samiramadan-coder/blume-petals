@@ -254,12 +254,12 @@ ${flower.name}
 Required quantity:
 EXACTLY ${flower.qty} stems.
 
-This image is an EXACT product reference.
-
-Use exactly ${flower.qty} stems of this exact flower product.
+Use exactly ${flower.qty} stems of this exact referenced flower product.
 
 Do not use more than ${flower.qty}.
 Do not use fewer than ${flower.qty}.
+
+This image is an EXACT product reference.
 
 Preserve with maximum possible visual fidelity:
 
@@ -277,16 +277,11 @@ Preserve with maximum possible visual fidelity:
 - all distinctive visible characteristics
 
 Do not redesign this flower.
-
 Do not reinterpret this flower.
+Do not replace this flower.
+Do not create a generic version inspired by it.
 
-Do not beautify it into another flower variety.
-
-Do not replace it with a visually similar flower.
-
-Do not create a generic version inspired by this flower.
-
-Repeated stems must clearly look like multiple physical stems of THIS SAME exact flower product.
+Repeated stems must clearly look like physical stems of this SAME referenced flower product.
 `,
     )
     .join("\n");
@@ -294,116 +289,75 @@ Repeated stems must clearly look like multiple physical stems of THIS SAME exact
   const prompt = `
 You are a professional floral designer specializing in luxurious, modern floral arrangements.
 
-You will receive:
+Create ONE highly photorealistic professional floral arrangement.
 
-1. Reference image 1 containing the exact vase, vessel, basket, box, tray, bag, or floral container that must be used.
-2. Additional reference images containing the exact flower products, foliage, and botanical materials available for the arrangement.
+You must use:
 
-Your task is to create ONE realistic, professional floral arrangement using ONLY the exact supplied container and ONLY the exact supplied flower products.
+1. The exact container from reference image 1.
+2. Only the exact supplied flower products from the remaining reference images.
+3. Exactly the requested flower quantities.
 
-The reference images are PRODUCT REFERENCES.
+The task is to ARRANGE the supplied products.
 
-They are not loose inspiration.
+The task is NOT to redesign the container.
 
-You must preserve their visual identity with maximum possible fidelity.
+The task is NOT to redesign the flowers.
 
 ==================================================
-ABSOLUTE PRIORITY ORDER
+PRIORITY ORDER
 ==================================================
 
-If any instruction conflicts with another instruction, follow this exact order:
+If any instruction conflicts with another instruction, follow this order:
 
-1. Preserve the exact container from reference image 1.
-2. Preserve the exact appearance of every supplied flower reference.
-3. Use ONLY botanical materials visibly present in the supplied references.
-4. Follow the exact requested quantities.
-5. Create the densest and most luxurious arrangement possible using only those exact materials.
-6. Apply professional florist composition and photography.
-
-Never sacrifice product fidelity for artistic creativity.
+1. Preserve the exact container.
+2. Preserve the exact identity of every supplied flower.
+3. Use only supplied botanical materials.
+4. Follow exact flower quantities.
+5. Keep the arrangement dense and compact.
+6. Keep all raised flowers visually connected to the main floral mass.
+7. Apply professional florist styling.
 
 ==================================================
 REFERENCE IMAGE 1 — EXACT CONTAINER
 ==================================================
 
-Reference image 1 is the EXACT physical container product.
+Reference image 1 is the exact physical container product.
 
 It is immutable.
 
 The final image must contain the SAME container shown in reference image 1.
 
-Do NOT generate a similar container.
-
-Do NOT replace it.
-
-Do NOT redesign it.
-
-Do NOT reinterpret it.
-
-Do NOT improve it.
-
-Do NOT alter it to fit the flowers.
+Do not create a similar container.
+Do not redesign it.
+Do not reinterpret it.
+Do not replace it.
 
 Preserve exactly:
 
-- original silhouette
-- original shape
-- original height
-- original width
-- original proportions
-- original neck
-- original opening
-- original rim
-- original base
-- original curves
-- original material
-- original transparency or opacity
-- original surface texture
-- original finish
-- original color
-- original patterns
-- original decorative details
-- original visible reflections
-- original perspective
-- original camera angle
+- silhouette
+- height
+- width
+- proportions
+- neck
+- opening
+- rim
+- body shape
+- base
+- material
+- texture
+- finish
+- color
+- transparency or opacity
+- decorative details
+- visible reflections
+- camera angle
+- perspective
 
-Do not make the container:
+Do not change the container in any way.
 
-- wider
-- narrower
-- taller
-- shorter
-- rounder
-- flatter
-- more cylindrical
-- more tapered
-- more decorative
-- smoother
-- rougher
-- more glossy
-- more matte
-- more transparent
-- less transparent
+The container is a fixed product asset.
 
-Glass must remain glass.
-
-Ceramic must remain ceramic.
-
-Metal must remain metal.
-
-Transparent material must remain transparent.
-
-Opaque material must remain opaque.
-
-The container is a FIXED PRODUCT ASSET.
-
-The flowers must adapt around the container.
-
-If the floral composition conflicts with preserving the container, adjust the FLOWERS.
-
-Never adjust the container.
-
-The final result must look as if the exact physical container from reference image 1 was photographed after flowers were physically arranged inside it.
+The flowers must adapt to it.
 
 ==================================================
 FLOWER REFERENCES
@@ -412,527 +366,344 @@ FLOWER REFERENCES
 ${flowerReferences}
 
 ==================================================
-EXACT FLOWER QUANTITY
+EXACT QUANTITY
 ==================================================
 
-Total requested quantity:
-
-EXACTLY ${totalFlowers} stems.
-
-The final arrangement must contain exactly ${totalFlowers} requested flower stems.
+The final arrangement must contain EXACTLY ${totalFlowers} requested stems.
 
 Use every requested flower type.
 
-Follow every requested quantity exactly.
+Do not add stems.
 
-Do not add extra stems.
+Do not remove stems.
 
-Do not remove requested stems.
-
-Do not duplicate a flower beyond its requested quantity.
+Do not duplicate flowers beyond the requested quantities.
 
 ==================================================
-CRITICAL FLOWER IMAGE PRESERVATION
+FLOWER IDENTITY
 ==================================================
 
-Every supplied flower image is an EXACT commercial product reference.
+Every supplied flower image is an exact commercial product reference.
 
-The flowers in the final image must look like physical stems of those exact supplied products.
+Preserve every flower with maximum possible visual fidelity.
 
-The task is to ARRANGE the supplied flowers.
+Preserve:
 
-The task is NOT to redesign them.
-
-For every flower preserve with maximum possible fidelity:
-
-- exact flower species appearance
-- exact bloom silhouette
-- exact bloom proportions
-- exact petal structure
-- exact petal shape
-- exact petal arrangement
-- exact flower center
-- exact characteristic color
-- exact color distribution
-- exact gradients
-- exact foliage appearance
-- exact leaf shape
+- flower species appearance
+- bloom silhouette
+- petal structure
+- petal shape
+- flower center
+- characteristic color
+- foliage
+- leaf structure
 - approximate flower-head size
-- distinctive product characteristics
+- distinctive appearance
 
-Do NOT:
+Do not redesign flowers.
 
-- redesign flowers
-- reinterpret flowers
-- stylize flowers
-- beautify flowers into different varieties
-- simplify flower structures
-- exaggerate flower structures
-- change bloom morphology
-- change petal structure
-- change petal shape
-- change characteristic flower centers
-- change characteristic colors
-- transform one flower species into another
-- create generic flowers inspired by the reference
-- substitute a supplied flower with a similar-looking flower
+Do not substitute flowers.
 
-When multiple stems of one flower are required, generate multiple stems of the SAME exact referenced flower product.
+Do not turn one flower into another variety.
 
-For example:
+Do not create generic interpretations.
 
-If 4 stems are requested, show 4 stems that clearly belong to that exact referenced product.
-
-Natural variation is allowed ONLY in:
+Natural variation is allowed only in:
 
 - position
-- stem direction
 - slight rotation
+- stem direction
 - depth
-- partial overlap
-- minor perspective variation
+- overlap
+- small perspective changes
 
-Natural variation must NOT change the visual identity of the flower.
-
-If changing the viewing angle would require inventing a different flower shape, keep the flower closer to the viewing angle shown in its original reference.
-
-Preserve flower identity over artistic variation.
+Do not change flower morphology.
 
 ==================================================
 ABSOLUTE MATERIAL RESTRICTION
 ==================================================
 
-Use ONLY the botanical materials visibly present in the supplied reference images.
+Use ONLY botanical materials visibly present in the supplied reference images.
 
-Every visible botanical element in the final image must be traceable directly to a supplied reference image.
-
-This includes:
-
-- flowers
-- blooms
-- leaves
-- foliage
-- buds
-- stems
-- greenery
-- botanical accessories
-
-Do NOT invent or add:
+Do not add:
 
 - filler flowers
 - baby's breath
 - eucalyptus
 - fern
-- decorative greenery
-- branches
 - grass
-- small white flowers
+- decorative branches
 - generic foliage
 - extra leaves
 - extra buds
-- unidentified flowers
-- generic flowers
-- flowers inspired by the references
-- similar flower varieties
-- botanical materials not supplied
+- unreferenced greenery
+- unreferenced flowers
 
-If an element is not visibly present in one of the supplied reference images, it must NOT appear in the final arrangement.
-
-This rule is absolute.
-
-Do not add botanical elements to make the arrangement fuller.
-
-Do not add botanical elements to hide gaps.
-
-Do not add botanical elements for visual balance.
-
-Do not add botanical elements for artistic effect.
-
-If the supplied materials are insufficient for a large dense arrangement, make the arrangement SMALLER and MORE COMPACT.
-
-A smaller arrangement made only from the exact supplied materials is always preferred over a larger arrangement containing invented materials.
+If a botanical element cannot be traced to a supplied reference image, it must not appear.
 
 ==================================================
-FLORAL ARRANGEMENT STYLE
+DENSE ARRANGEMENT
 ==================================================
 
-Create a luxurious, dense, full, modern professional florist arrangement.
-
-The arrangement must feel:
-
-- dense
-- full
-- luxurious
-- cohesive
-- clean
-- balanced
-- professionally constructed
-- physically executable in a real flower shop
+Create a dense, full, luxurious, compact florist arrangement.
 
 The flowers must form ONE connected floral mass.
 
-Do not create an airy or sparse arrangement.
+The floral mass must begin directly at the container opening.
 
-Do not leave obvious gaps between flower heads.
+The lower part must visually cover the rim and upper neck transition using only the supplied flowers and their existing foliage.
 
-Do not leave a large empty center.
+There should be:
 
-Do not leave background visible through large internal holes.
+- minimal visible gaps
+- no large internal holes
+- no empty center
+- no sparse lower area
+- no visible bundle of stems between the container and the flowers
+
+If necessary:
+
+- reduce bouquet width
+- reduce bouquet height
+- bring flowers closer together
+- increase natural overlap
+- move flowers lower
+
+Do not add extra materials to create density.
 
 ==================================================
-CONTAINER RIM AND NECK COVERAGE
+CRITICAL STEM HEIGHT RULE
 ==================================================
 
 This is a critical requirement.
 
-The floral mass must begin immediately at the container opening.
+Do NOT allow isolated stems to rise far above the main floral mass.
 
-Use the requested flowers and ONLY the foliage already visible in their supplied references to create a dense lower floral layer.
+Do NOT create long exposed stems with a flower or bud sitting alone at the top.
 
-The lower flower heads should sit close to the rim.
+Do NOT allow individual flowers to float visually above the bouquet.
 
-The flowers should naturally overlap and visually cover the rim and upper neck transition where physically appropriate.
+Every raised flower must remain visually connected to the main arrangement.
 
-The transition between the container and flowers must appear full and professionally finished.
+The stem between an elevated flower and the main floral mass should be mostly hidden by surrounding flowers and foliage.
 
-Do not leave a visible empty zone between the container and the flowers.
+If a flower is positioned too high and its stem becomes visibly isolated:
 
-Do not leave a bundle of long exposed stems above the container neck.
+LOWER THAT FLOWER.
 
-Do not let the flowers begin far above the opening.
+Move it deeper into the arrangement.
 
-Do not change the container neck to achieve this.
+Bring the flower head closer to the main floral mass.
 
-Do not widen the container opening.
+Use surrounding requested blooms to visually connect it.
 
-Do not shorten the container.
+Do NOT solve this by adding new flowers or foliage.
 
-Achieve coverage by repositioning and lowering the requested flowers only.
-
-==================================================
-DENSITY
-==================================================
-
-Make the arrangement as dense and luxurious as possible using ONLY the exact requested materials.
-
-Minimize visible gaps between neighboring blooms.
-
-The lower third must be especially dense.
-
-The middle must be full and connected.
-
-The upper area may contain limited height variation but must remain visually connected to the main floral mass.
-
-Density must be achieved ONLY through:
-
-- bringing the requested flowers closer together
-- lowering flowers closer to the opening
-- reducing unnecessary bouquet width
-- reducing unnecessary bouquet height
-- natural overlap
-- front-to-back layering
-- stem direction
-- compact placement
-- foliage already physically present in the flower references
-
-Do NOT create density by:
-
-- adding new flowers
-- adding filler flowers
-- adding additional greenery
-- adding extra leaves
-- increasing stem quantities
-- changing flowers into larger varieties
-- modifying flower morphology
-
-If the supplied quantity cannot support both a large arrangement and a dense arrangement:
-
-PRIORITIZE DENSITY.
-
-Reduce the arrangement's width.
-
-Reduce unnecessary height.
-
-Bring flowers closer together.
-
-Create a smaller, richer, tighter floral mass.
+The solution must be repositioning.
 
 ==================================================
-PROFESSIONAL DISTRIBUTION
+GREEN OR SMALL RAISED BLOOMS
 ==================================================
 
-Distribute the flowers professionally rather than randomly.
+Pay special attention to small green blooms, green ranunculus, buds, and compact elevated flowers.
 
-Use the larger, fuller supplied flowers as primary focal points.
+Do not place them on tall exposed stems above the arrangement.
 
-Use the medium supplied flowers to visually connect different areas of the composition.
+These smaller green blooms should sit within or just slightly above the main floral mass.
 
-Use smaller supplied flowers only if those smaller flowers are among the provided references.
+They should feel embedded in the bouquet, not separated from it.
 
-Use foliage only if it is visibly part of the supplied references.
+If a small green bloom appears isolated:
 
-Repeat flower colors and flower types across multiple areas when appropriate to achieve visual cohesion.
+- lower it
+- move it inward
+- shorten the visible stem
+- surround it naturally with the requested flowers
+- keep it visually connected to the bouquet
 
-Do not group all large flowers on one side.
+Only a very small height difference is allowed.
 
-Do not cluster all stems of one flower type in a single isolated area unless it is intentionally required by the composition.
-
-Keep the composition visually balanced:
-
-- left to right
-- front to back
-- lower to upper areas
+Do not create tall green stems extending above the bouquet.
 
 ==================================================
 HEIGHT GRADATION
 ==================================================
 
-Create a deliberate and professional height progression.
+Create professional height variation, but keep the bouquet connected.
 
 Use:
 
-- lower flowers around the outer and front edges
-- medium-height flowers through the inner floral mass
-- a limited number of prominent elevated flowers
+- low flowers around the rim
+- medium flowers through the central mass
+- only a small number of slightly elevated focal flowers
 
-Do not place all flowers at the same height.
+The majority of flowers should remain within one cohesive height range.
 
-Do not create abrupt changes in height.
+The height transition must be gradual.
 
-Do not create excessively long isolated stems.
+Do not create sudden jumps.
 
-Every raised flower must visually connect to the main arrangement.
+Do not create isolated tall flowers.
 
-If an elevated flower creates empty space underneath it, lower or reposition that flower.
+Do not create long exposed stems.
 
-Do not add filler underneath it.
+If a flower creates a visible vertical gap underneath it, lower it.
 
-The highest point must remain proportional to the container size.
-
-As a general rule, the visible floral portion should be approximately one to one-and-a-half times the container height when appropriate.
-
-Adjust according to the container shape.
-
-For wide, low containers:
-
-- favor a horizontal or semi-circular design
-- make the floral composition wider than it is tall
-- maintain strong density around the opening
-
-For tall containers:
-
-- use a vertically graduated composition
-- maintain strong base density
-- avoid isolated long stems
+If the flower is still too high after adjustment, move it inward.
 
 ==================================================
-FLOWER VISIBILITY
+MAXIMUM STEM EXPOSURE RULE
 ==================================================
 
-Keep the distinctive details of each flower visible.
+Visible bare stem length above the main floral mass should be minimal.
 
-Do not excessively overlap flowers in a way that destroys their recognizable shapes.
+The viewer should primarily see:
 
-Some overlap is required for density.
+- flower heads
+- foliage
+- dense floral layering
 
-However, every requested flower type must remain recognizable.
+Not:
 
-Angle some flowers slightly forward.
+- long vertical stems
+- unsupported flowers
+- isolated buds
 
-Angle some flowers slightly sideways.
-
-Use only a limited number facing upward.
-
-Do not radically rotate flowers if doing so changes their visible identity.
-
-Use positioning and overlap to create depth instead of changing flower anatomy.
+Elevated flowers must look physically supported by the surrounding floral mass.
 
 ==================================================
-FOLIAGE
+FLOWER DISTRIBUTION
 ==================================================
 
-Use foliage only as a supporting element.
+Distribute the flowers professionally.
 
-Only use foliage visibly present in the supplied reference images.
+Do not place every stem of one flower type in one isolated group unless necessary.
 
-Use it to:
+Spread focal blooms through:
 
-- support the composition
-- close small gaps
-- connect nearby flowers
-- enhance color contrast
+- left
+- center
+- right
 
-Do not let foliage cover the main flowers.
+Use natural overlap.
 
-Do not invent foliage.
+Keep the composition balanced from:
 
-Do not add separate filler greenery.
+- left to right
+- front to back
+- low to high
 
 ==================================================
-REALISTIC CONSTRUCTION
+BASE FULLNESS
 ==================================================
 
-The arrangement must look physically executable by a professional florist.
+The opening and upper neck area must feel full.
 
-The stems must appear naturally inserted into the exact original container.
+Place the lowest requested flowers close to the rim.
 
-Hide all internal construction.
+Use only their existing foliage.
 
-Do not show:
+Do not expose:
 
 - floral foam
 - wires
 - holders
-- internal support systems
 - cut stem ends
-- artificial mechanics
-
-No floating flowers.
-
-No impossible stem placement.
-
-No disconnected flower heads.
+- internal construction
 
 ==================================================
-INTERNAL ANALYSIS BEFORE GENERATION
+DEPTH
 ==================================================
 
-Before generating the final image, internally analyze:
+Create depth through:
 
-- available flower types
-- requested quantity of every flower
-- total requested quantity of exactly ${totalFlowers} stems
-- available colors
-- relative flower sizes
-- flower-head shapes
-- foliage available in each reference
-- exact container shape
-- exact container proportions
-- exact container opening
-- appropriate arrangement shape
-- which supplied flowers should form the base
-- which supplied flowers should act as focal flowers
-- which supplied flowers should connect areas
-- which supplied flowers should be elevated
-- how to achieve maximum density without introducing any unprovided material
+- overlap
+- layering
+- front-to-back positioning
+- subtle rotation
+- stem direction
 
-Do NOT output this analysis as text.
+Do not create depth by raising flowers too far above the bouquet.
 
-Use it only to construct the final image.
+Do not create depth using isolated stems.
 
 ==================================================
-FINAL MATERIAL VERIFICATION
+FINAL STEM CHECK
 ==================================================
 
-Before creating the final image, verify every visible botanical element.
+Before generating the final image, internally inspect every raised stem.
 
-For each visible:
+For each raised flower ask:
 
-- flower
-- bloom
-- leaf
-- foliage element
-- bud
-- stem
-- greenery element
+1. Is the flower visually connected to the main floral mass?
+2. Is too much bare stem visible?
+3. Does the flower appear to float above the bouquet?
+4. Would lowering the flower create a more cohesive arrangement?
 
-ask:
+If too much stem is visible:
 
-"Which supplied reference image does this exact element come from?"
+LOWER THE FLOWER.
 
-If there is no clear supplied reference image for that element:
+If the flower appears isolated:
 
-REMOVE IT.
+MOVE IT INTO THE MAIN MASS.
 
-There must be ZERO unreferenced botanical elements.
+If a small green flower or bud is standing alone above the bouquet:
 
-==================================================
-FINAL FLOWER IDENTITY VERIFICATION
-==================================================
+LOWER IT SIGNIFICANTLY.
 
-Before generating the final image, compare every flower visually to its supplied reference.
-
-If a generated flower does not clearly preserve the identity of its supplied reference:
-
-CORRECT IT.
-
-Do not output a different flower.
-
-Do not output an approximate substitute.
-
-Do not output an invented variety.
+Do not output this analysis as text.
 
 ==================================================
-FINAL QUANTITY VERIFICATION
+MATERIAL CHECK
 ==================================================
 
-Use exactly these quantities:
+Before generating the final image, verify every visible botanical element.
+
+Every flower, leaf, bud, stem, and foliage element must come from a supplied reference.
+
+If it does not, remove it.
+
+==================================================
+QUANTITY CHECK
+==================================================
+
+Use exactly these requested quantities:
 
 ${flowerReferences}
 
-TOTAL:
+Total:
 
 EXACTLY ${totalFlowers} stems.
 
-Do not output this verification as text.
+Do not output this check as text.
 
 ==================================================
-FINAL PHOTOGRAPH
+FINAL IMAGE
 ==================================================
 
 Generate ONE final image only.
 
-Create a highly photorealistic photograph of the finished floral arrangement.
+Create a highly photorealistic commercial floral product photograph.
 
-Photography requirements:
+Use:
 
-- premium commercial flower-shop photography
-- highly photorealistic
-- realistic botanical textures
+- premium ecommerce photography
+- realistic botanical details
 - natural colors
-- fine details
 - realistic scale
 - realistic shadows
-- soft luxurious lighting
-- refined neutral interior or studio background
+- soft luxury lighting
+- refined neutral background
 - clean composition
-- high commercial photography quality
+- full original container visible
+- full arrangement visible
 
-Show:
-
-- the full floral arrangement
-- the complete original container
-
-Do not crop the sides of the arrangement.
-
-Do not crop elevated flowers.
-
-Do not crop the container.
-
-Keep the container at the same visible angle and perspective as reference image 1.
+Keep the container at the same angle and perspective as reference image 1.
 
 Do not rotate it.
 
-Do not generate a new viewing angle for the container.
-
-Create depth through flower placement instead.
-
-==================================================
-DO NOT ADD
-==================================================
-
-Do not add:
-
-- text
-- logos
-- cards
-- ribbons
-- hands
-- people
-- decorative props
-- unrelated objects
-
-unless explicitly supplied and specifically requested.
+Do not change it.
 
 ==================================================
 STRICTLY AVOID
@@ -940,86 +711,60 @@ STRICTLY AVOID
 
 Strictly avoid:
 
-- visible gaps
-- sparse design
-- airy arrangement
-- random flower distribution
-- visual imbalance
-- long isolated stems
-- floating flowers
-- all flowers at equal height
-- excessive bouquet height
-- excessive bouquet width
-- visible floral foam
-- visible wires
-- visible internal mechanics
-- changing the container shape
-- changing container proportions
-- changing container dimensions
-- changing container material
-- changing container color
-- changing container texture
-- changing container opening
-- changing container neck
-- changing container rim
-- replacing the container
-- generating a similar container
-- changing flower morphology
-- changing flower species appearance
-- changing bloom silhouettes
-- changing petal structure
-- changing flower centers
-- changing flower colors
+- changing the container
+- changing flower identity
+- changing bloom structure
 - generic flower substitutions
-- similar but different flower varieties
-- invented flower varieties
-- invented filler flowers
-- unreferenced flowers
-- unreferenced foliage
-- unreferenced greenery
-- unreferenced buds
-- unreferenced branches
-- additional leaves not shown in the references
-- additional flowers added for density
-- additional greenery added for density
-- artificial repetition patterns
-- distorted petals
-- unrealistic flower sizes
-- artificial colors
-- cluttered background
-- cropping the container
-- cropping the floral arrangement
-- unrequested text
-- unrequested logos
-- unrequested cards
-- unrequested ribbons
-- unrequested accessories
+- invented flowers
+- invented foliage
+- extra stems
+- sparse design
+- large gaps
+- empty center
+- exposed container opening
+- long visible stems
+- isolated raised stems
+- isolated green stems
+- isolated green blooms
+- flowers floating above the bouquet
+- excessive vertical separation
+- large height jumps
+- flowers sitting far above the main floral mass
+- long unsupported flower stems
+- random distribution
+- excessive bouquet width
+- excessive bouquet height
+- visible foam
+- visible wires
+- text
+- logos
+- cards
+- ribbons
+- hands
+- people
+- props
 
 ==================================================
 FINAL CRITICAL INSTRUCTION
 ==================================================
 
-DO NOT CHANGE THE PROVIDED IMAGES' PRODUCT IDENTITIES.
+Use the exact original container.
 
-The exact container must remain the same product.
-
-Every flower must remain visually faithful to its exact supplied reference.
-
-Do not invent anything.
-
-Do not add anything that is not supplied.
-
-Use only the requested flower products and the foliage physically visible in their references.
+Use only the exact supplied flower products.
 
 Use exactly the requested quantities.
 
-Create fullness only through professional placement, overlap, lower positioning, and compact composition.
+Preserve flower identity.
 
-If the arrangement cannot be made sufficiently dense with the supplied quantity, make the arrangement smaller and tighter.
+Keep the bouquet dense and cohesive.
 
-Never compensate by creating additional flowers or foliage.
+The floral mass must begin directly at the container opening.
 
-The final result must look like the exact supplied container was physically filled by a florist using the exact supplied flower products.
+Do not allow individual flowers or green blooms to rise on long exposed stems.
+
+Lower isolated raised flowers into the main arrangement.
+
+The final result should look like one dense professional floral mass, not a collection of separate stems.
 `;
 
   const ai = new GoogleGenAI({
