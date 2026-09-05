@@ -8,9 +8,9 @@ import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import * as motion from "motion/react-client";
 import type { Flower } from "@/types/products";
-import { Minus, Plus, Sparkle } from "lucide-react";
 import type { UseFormSetValue } from "react-hook-form";
 import type { BuilderFormData } from "@/types/builder-page";
+import { Flower2, Minus, Plus, Sparkle } from "lucide-react";
 
 export default function Step2({
   flowers,
@@ -155,7 +155,7 @@ export default function Step2({
   }
 
   return (
-    <div className="flex flex-col gap-2 sm:flex-row">
+    <div className="flex flex-col gap-4 sm:flex-row items-start">
       {/* Chosen flowers list */}
       {choosedFlowersCount > 0 && (
         <motion.div
@@ -171,7 +171,7 @@ export default function Step2({
             duration: 0.55,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="flex-1 space-y-3 rounded-2xl bg-linear-to-b from-muted/30 to-background p-4"
+          className="w-full sm:w-85 space-y-3 rounded-lg bg-muted/30 p-4"
         >
           <div className="space-y-2">
             {choosedSlots.map((slot, index) => (
@@ -192,9 +192,13 @@ export default function Step2({
                 }}
                 className="flex items-center justify-between gap-3"
               >
-                <p className="text-sm">
-                  {slot.qty}x <span className="font-semibold">{slot.name}</span>
-                </p>
+                <div className="text-sm flex items-center gap-2">
+                  <Flower2 className="size-4 text-primary" />
+                  <span className="text-xs font-semibold">
+                    {slot.qty}x
+                  </span>{" "}
+                  <span className="underline italic">{slot.name}</span>
+                </div>
 
                 <div className="flex items-center gap-2">
                   <Button
@@ -202,16 +206,15 @@ export default function Step2({
                     aria-label={`Decrement count for ${slot.name}`}
                     size="icon"
                     variant="outline"
-                    className="rounded-full"
+                    className="rounded-full size-7"
                     onClick={() => {
                       const flowerIndex = flowers.findIndex(
                         (flower) => flower.id === slot.variant_id,
                       );
-
                       handleFlowerCountControl("decrement", flowerIndex);
                     }}
                   >
-                    <Minus />
+                    <Minus className="size-3" />
                   </Button>
 
                   <Button
@@ -219,16 +222,15 @@ export default function Step2({
                     size="icon"
                     aria-label={`Increment count for ${slot.name}`}
                     variant="outline"
-                    className="rounded-full"
+                    className="rounded-full size-7"
                     onClick={() => {
                       const flowerIndex = flowers.findIndex(
                         (flower) => flower.id === slot.variant_id,
                       );
-
                       handleFlowerCountControl("increment", flowerIndex);
                     }}
                   >
-                    <Plus />
+                    <Plus className="size-3" />
                   </Button>
                 </div>
               </motion.div>
@@ -252,7 +254,7 @@ export default function Step2({
           delay: 0.04,
           ease: [0.16, 1, 0.3, 1],
         }}
-        className="flex-1 rounded-2xl border-2 border-muted bg-white p-4"
+        className="w-full flex-1 rounded-lg border-2 border-muted bg-white p-4"
       >
         <div className="mb-4">
           <h3 className="text-lg font-semibold">{t("ChooseFlower")}</h3>
@@ -294,7 +296,7 @@ export default function Step2({
                   aria-pressed={isSelected}
                   disabled={flower.available_stock === 0}
                   className={cn(
-                    "h-auto w-full flex-col items-center gap-1 rounded-2xl border-2 border-muted bg-background py-3 hover:bg-background",
+                    "h-auto w-full flex-col items-center gap-1 rounded-lg border border-muted bg-background py-3 hover:bg-background",
                     isSelected &&
                       "border-primary bg-primary/20 hover:bg-primary/20",
                   )}

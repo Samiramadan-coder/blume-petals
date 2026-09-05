@@ -3,7 +3,6 @@
 import {
   Control,
   Controller,
-  UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
@@ -101,8 +100,8 @@ export default function Step3({
                       <div
                         style={{
                           backgroundColor: ribbon.color_hex,
-                          width: "50px",
-                          height: "50px",
+                          width: "40px",
+                          height: "40px",
                           borderRadius: "50%",
                           cursor: "pointer",
                         }}
@@ -185,9 +184,13 @@ export default function Step3({
                   <Switch
                     checked={open}
                     onCheckedChange={(value) => {
-                      if (value) {
-                        onChange(giftOptions.card_styles[0]?.id);
-                      } else {
+                      // if (value) {
+                      //   onChange(giftOptions.card_styles[0]?.id);
+                      // } else {
+                      //   onChange(undefined);
+                      //   setValue("message_text", "");
+                      // }
+                      if (!value) {
                         onChange(undefined);
                         setValue("message_text", "");
                       }
@@ -261,38 +264,40 @@ export default function Step3({
                       ))}
                     </div>
 
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        x: -6,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                      }}
-                      transition={{
-                        duration: 0.4,
-                        delay: 0.08,
-                        ease: [0.16, 1, 0.3, 1],
-                      }}
-                      className="mt-4"
-                    >
-                      <p
-                        className={cn(
-                          "mb-2 font-semibold uppercase",
-                          locale === "en" ? "font-heading" : "",
-                        )}
+                    {choosedCardStyle && (
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: -6,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                        }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.08,
+                          ease: [0.16, 1, 0.3, 1],
+                        }}
+                        className="mt-4"
                       >
-                        {t("YourCardMessage")}
-                      </p>
+                        <p
+                          className={cn(
+                            "mb-2 font-semibold uppercase",
+                            locale === "en" ? "font-heading" : "",
+                          )}
+                        >
+                          {t("YourCardMessage")}
+                        </p>
 
-                      <FormTextarea
-                        register={register}
-                        name="message_text"
-                        inputClassName="h-40 bg-white"
-                        placeholder={t("CardMessagePlaceholder")}
-                      />
-                    </motion.div>
+                        <FormTextarea
+                          register={register}
+                          name="message_text"
+                          inputClassName="h-40 bg-white"
+                          placeholder={t("CardMessagePlaceholder")}
+                        />
+                      </motion.div>
+                    )}
                   </motion.div>
                 )}
               </>
