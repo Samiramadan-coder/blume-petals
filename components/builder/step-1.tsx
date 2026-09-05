@@ -1,25 +1,20 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
-import { Check } from "lucide-react";
-import * as motion from "motion/react-client";
-
 import {
   Controller,
   type Control,
   type UseFormSetValue,
 } from "react-hook-form";
-
+import Image from "next/image";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
 import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-
 import { useTranslations } from "next-intl";
-
+import * as motion from "motion/react-client";
+import { Card, CardContent } from "../ui/card";
 import type { Product } from "@/types/products";
 import type { BuilderFormData } from "@/types/builder-page";
-
-import { cn } from "@/lib/utils";
 
 export default function Step1({
   setValue,
@@ -32,11 +27,9 @@ export default function Step1({
 }) {
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
-
   const [selectedTemplateId, setSelectedTemplateId] = useState(
     templates[0]?.id,
   );
-
   const choosedTemplate = templates.find(
     (template) => template.id === selectedTemplateId,
   );
@@ -61,7 +54,7 @@ export default function Step1({
         {t("Pick")}
       </motion.p>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {templates.map((template, index) => {
           const isSelected = selectedTemplateId === template.id;
 

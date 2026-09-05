@@ -240,7 +240,7 @@ export default function BuilderForm({
       <footer className="min-h-30 flex flex-wrap flex-col sm:flex-row gap-2 px-10">
         {currentStep > 0 && (
           <Button
-            className="flex-1 h-12! rounded-full sm:text-lg text-foreground px-6"
+            className="flex-1 max-h-12! rounded-full sm:text-lg text-foreground px-6"
             type="button"
             aria-label="Go Back"
             onClick={() => setCurrentStep((prev) => prev - 1)}
@@ -251,7 +251,7 @@ export default function BuilderForm({
         )}
 
         <Button
-          className="flex-1 h-12 rounded-full sm:text-lg text-foreground px-6"
+          className="flex-1 max-h-12! rounded-full sm:text-lg text-foreground px-6"
           type="submit"
           disabled={isSubmitting}
           aria-label={
