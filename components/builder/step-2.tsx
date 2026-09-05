@@ -5,12 +5,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import * as motion from "motion/react-client";
 import type { Flower } from "@/types/products";
 import type { UseFormSetValue } from "react-hook-form";
 import type { BuilderFormData } from "@/types/builder-page";
 import { Flower2, Minus, Plus, Sparkle } from "lucide-react";
+import { createPortal } from "react-dom";
 
 export default function Step2({
   flowers,
@@ -25,6 +26,8 @@ export default function Step2({
   choosedSlots: BuilderFormData["slots"];
   setValue: UseFormSetValue<BuilderFormData>;
 }) {
+  const locale = useLocale();
+  const fontClass = locale === "en" ? "font-heading" : "";
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
   const [selectedFlowerIndex, setSelectedFlowerIndex] = useState<number | null>(
@@ -33,6 +36,11 @@ export default function Step2({
   const [hoveredFlowerIndex, setHoveredFlowerIndex] = useState<number | null>(
     null,
   );
+  const [hoverPreviewPosition, setHoverPreviewPosition] = useState<{
+    top: number;
+    left: number;
+    showBelow: boolean;
+  } | null>(null);
 
   // Handle flower count control (increment/decrement)
   function handleFlowerCountControl(
@@ -171,7 +179,7 @@ export default function Step2({
             duration: 0.55,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="w-full sm:w-85 space-y-3 rounded-lg bg-muted/30 p-4"
+          className="w-full sm:w-75 space-y-3 rounded-lg bg-muted/30 p-4"
         >
           <div className="space-y-2">
             {choosedSlots.map((slot, index) => (
@@ -266,128 +274,174 @@ export default function Step2({
           )}
         </div>
 
-        <div
-          className={`grid grid-cols-2 gap-2 ${choosedFlowersCount === 0 ? "lg:grid-cols-3" : ""}`}
-        >
-          {flowers.map((flower, index) => {
-            const isSelected = selectedFlowerIndex === index;
+        <>
+          <div
+            className={`grid max-h-180 grid-cols-2 gap-2 overflow-auto pe-2 ${
+              choosedFlowersCount === 0 ? "lg:grid-cols-3" : ""
+            }`}
+          >
+            {flowers.map((flower, index) => {
+              const isSelected = selectedFlowerIndex === index;
 
-            return (
+              return (
+                <motion.div
+                  key={flower.id}
+                  className="min-w-0"
+                  initial={{
+                    opacity: 0,
+                    x: index % 2 === 0 ? -6 : 6,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                  }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.035,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  <Button
+                    variant="outline"
+                    type="button"
+                    aria-label={`Select flower ${flower.product_name}`}
+                    aria-pressed={isSelected}
+                    disabled={flower.available_stock === 0}
+                    className={cn(
+                      "h-full w-full min-w-0 flex-col items-center gap-1.5 rounded-lg border border-muted bg-background px-3 py-3 hover:bg-background",
+                      isSelected &&
+                        "border-primary bg-primary/20 hover:bg-primary/20",
+                    )}
+                    onClick={() => setSelectedFlowerIndex(index)}
+                  >
+                    <div
+                      className="relative"
+                      onMouseEnter={(event) => {
+                        const rect =
+                          event.currentTarget.getBoundingClientRect();
+
+                        const previewHeight = 320;
+                        const spaceAbove = rect.top;
+
+                        const showBelow = spaceAbove < previewHeight;
+
+                        setHoveredFlowerIndex(index);
+
+                        setHoverPreviewPosition({
+                          left: rect.left + rect.width / 2,
+                          top: showBelow ? rect.bottom + 10 : rect.top - 10,
+                          showBelow,
+                        });
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredFlowerIndex(null);
+                        setHoverPreviewPosition(null);
+                      }}
+                    >
+                      <Image
+                        src={flower.image_url}
+                        alt={flower.product_name}
+                        width={100}
+                        height={100}
+                        className="max-h-30 rounded-2xl object-cover"
+                      />
+                    </div>
+
+                    <p
+                      className={`w-full min-w-0 max-w-full truncate text-center text-[13px] font-bold uppercase tracking-widest ${fontClass}`}
+                      title={flower.product_name}
+                    >
+                      {flower.product_name}
+                    </p>
+
+                    <p className="text-xs text-primary">
+                      {tCommon("AED")} {flower.price}
+                    </p>
+
+                    <p className="text-xs uppercase text-muted-foreground">
+                      {t("Left")}:{" "}
+                      <span className="font-bold">
+                        {flower.available_stock}
+                      </span>
+                    </p>
+                  </Button>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {hoveredFlowerIndex !== null &&
+            hoverPreviewPosition &&
+            typeof document !== "undefined" &&
+            createPortal(
               <motion.div
-                key={flower.id}
                 initial={{
                   opacity: 0,
-                  x: index % 2 === 0 ? -6 : 6,
+                  y: hoverPreviewPosition.showBelow ? -4 : 4,
+                  scale: 0.98,
                 }}
                 animate={{
                   opacity: 1,
-                  x: 0,
+                  y: 0,
+                  scale: 1,
                 }}
                 transition={{
-                  duration: 0.45,
-                  delay: index * 0.035,
+                  duration: 0.2,
+                }}
+                className="pointer-events-none fixed z-[9999]"
+                style={{
+                  left: hoverPreviewPosition.left,
+                  top: hoverPreviewPosition.top,
+                  transform: hoverPreviewPosition.showBelow
+                    ? "translateX(-50%)"
+                    : "translate(-50%, -100%)",
+                }}
+              >
+                <div className="rounded-2xl border-2 border-primary bg-white p-2 shadow-xl">
+                  <Image
+                    src={flowers[hoveredFlowerIndex].image_url}
+                    alt={flowers[hoveredFlowerIndex].product_name}
+                    width={300}
+                    height={300}
+                    className="h-auto w-[300px] rounded-xl object-cover"
+                  />
+                </div>
+              </motion.div>,
+              document.body,
+            )}
+        </>
+
+        <div className="mt-4 space-y-2">
+          {selectedFlowerIndex !== null &&
+            choosedFlowersCount < requiredFlowersCount && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 5,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.3,
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
                 <Button
-                  variant="outline"
                   type="button"
-                  aria-label={`Select flower ${flower.product_name}`}
-                  aria-pressed={isSelected}
-                  disabled={flower.available_stock === 0}
-                  className={cn(
-                    "h-full w-full flex-col items-center gap-1 rounded-lg border border-muted bg-background py-3 hover:bg-background",
-                    isSelected &&
-                      "border-primary bg-primary/20 hover:bg-primary/20",
-                  )}
-                  onClick={() => setSelectedFlowerIndex(index)}
+                  variant="default"
+                  aria-label="Add selected flower to bouquet"
+                  className="h-12 w-full rounded-xl text-base font-semibold text-foreground"
+                  onClick={() =>
+                    handleFlowerCountControl("increment", selectedFlowerIndex)
+                  }
                 >
-                  <div
-                    className="relative"
-                    onMouseEnter={() => setHoveredFlowerIndex(index)}
-                    onMouseLeave={() => setHoveredFlowerIndex(null)}
-                  >
-                    <Image
-                      src={flower.image_url}
-                      alt={flower.product_name}
-                      width={100}
-                      height={100}
-                      className="max-h-30 rounded-2xl object-cover"
-                    />
-
-                    {hoveredFlowerIndex === index && (
-                      <motion.div
-                        initial={{
-                          opacity: 0,
-                          y: 4,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                        }}
-                        transition={{
-                          duration: 0.2,
-                        }}
-                        className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2"
-                      >
-                        <div className="rounded-2xl border-2 border-primary bg-white p-2 shadow-lg">
-                          <Image
-                            src={flower.image_url}
-                            alt={flower.product_name}
-                            width={300}
-                            height={300}
-                            className="min-w-30 rounded-xl object-cover"
-                          />
-                        </div>
-                      </motion.div>
-                    )}
-                  </div>
-
-                  <p className="text-xs font-semibold">{flower.product_name}</p>
-
-                  <p className="text-xs text-muted-foreground">
-                    {tCommon("AED")} {flower.price}
-                  </p>
-
-                  <p className="text-xs text-muted-foreground">
-                    {t("Left")} {flower.available_stock}
-                  </p>
+                  <Plus />
+                  {t("AddToBouquet")}
                 </Button>
               </motion.div>
-            );
-          })}
-        </div>
-
-        <div className="mt-4 space-y-2">
-          {selectedFlowerIndex !== null && (
-            <motion.div
-              initial={{
-                opacity: 0,
-                y: 5,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.3,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
-              <Button
-                type="button"
-                variant="default"
-                aria-label="Add selected flower to bouquet"
-                className="h-12 w-full rounded-xl text-base font-semibold text-foreground"
-                onClick={() =>
-                  handleFlowerCountControl("increment", selectedFlowerIndex)
-                }
-              >
-                <Plus />
-                {t("AddToBouquet")}
-              </Button>
-            </motion.div>
-          )}
+            )}
 
           {requiredFlowersCount - choosedFlowersCount > 0 && (
             <motion.div
