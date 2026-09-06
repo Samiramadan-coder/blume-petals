@@ -48,10 +48,8 @@ export const registerSchemawithPhone = (t: T) =>
       .string()
       .min(1, t("Errors.FullNameIsRequired"))
       .min(2, t("Errors.FullNameIsTooShort")),
-    phone: z
-      .string()
-      .trim()
-      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+    phone: z.string().trim(),
+    // .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
     locale: z.string(),
   });
 
@@ -79,10 +77,8 @@ export const loginSchema = (t: T) =>
 
 export const phoneLoginSchema = (t: T) =>
   z.object({
-    phone: z
-      .string()
-      .trim()
-      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+    phone: z.string().trim(),
+    // .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
     purpose: z.string().optional(),
   });
 
