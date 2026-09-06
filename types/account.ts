@@ -14,10 +14,8 @@ export const accountSchema = (t: T) =>
       .min(1, t("Errors.FullNameIsRequired"))
       .min(2, t("Errors.FullNameIsTooShort")),
     email: z.email(t("Errors.EmailIsInvalid")),
-    phone: z
-      .string()
-      .trim()
-      .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
+    phone: z.string().trim(),
+    // .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
     photo_url: imageSchema.optional(),
     locale: z.string(),
   });

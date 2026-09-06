@@ -388,7 +388,7 @@ export default function Step2({
                 transition={{
                   duration: 0.2,
                 }}
-                className="pointer-events-none fixed z-[9999]"
+                className="pointer-events-none fixed z-9999"
                 style={{
                   left: hoverPreviewPosition.left,
                   top: hoverPreviewPosition.top,
@@ -403,7 +403,7 @@ export default function Step2({
                     alt={flowers[hoveredFlowerIndex].product_name}
                     width={300}
                     height={300}
-                    className="h-auto w-[300px] rounded-xl object-cover"
+                    className="h-auto w-75 rounded-xl object-cover"
                   />
                 </div>
               </motion.div>,
