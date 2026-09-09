@@ -530,7 +530,9 @@
       "CustomBuild": "Custom Build",
       "Saved": "Saved",
       "AddToCart": "Add to Cart",
-      "Edit": "Edit"
+      "Edit": "Edit",
+      "AddedToCartSuccessfully": "Added to cart successfully.",
+      "FailedToAddToCart": "Failed to add to cart. Please try again."
     },
     "MYSettings": {
       "Title": "Settings",
@@ -711,6 +713,9 @@
     "GenerateBouquet": "Generate Bouquet",
     "Generating": "Generating....",
     "AIGenerate": "AI generated preview. The final arrangement may vary slightly.",
+    "SaveDesign": "Save Design",
+    "DesignSavedSuccessfully": "Design saved successfully",
+    "FailedToSaveDesign": "Failed to save design",
     "Steps": {
       "Template": "Choose Template",
       "Build": "Add Flowers",

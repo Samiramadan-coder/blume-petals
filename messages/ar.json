@@ -703,6 +703,9 @@
     "GenerateBouquet": "توليد الباقة",
     "Generating": "جاري التوليد....",
     "AIGenerate": "معاينة تم إنشاؤها بواسطة الذكاء الاصطناعي. قد يختلف الترتيب النهائي قليلاً.",
+    "SaveDesign": "حفظ التصميم",
+    "DesignSavedSuccessfully": "تم حفظ التصميم بنجاح",
+    "FailedToSaveDesign": "فشل في حفظ التصميم",
     "Steps": {
       "Template": "اختر القالب",
       "Build": "أضف الزهور",

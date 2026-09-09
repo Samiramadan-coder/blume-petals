@@ -9,6 +9,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
+import { saveDesign } from "@/lib/custom-builder";
+import { toast } from "sonner";
 
 export default function Step4({
   generated_image_url,
@@ -22,6 +24,7 @@ export default function Step4({
   const t = useTranslations("CustomBuilder");
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationError, setGenerationError] = useState<string | null>(null);
+  const [loadingSaveDesign, setLoadingSaveDesign] = useState(false);
 
   const handleGenerateBouquet = async () => {
     if (isGenerating) return;
@@ -42,6 +45,20 @@ export default function Step4({
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleSaveDesign = async () => {
+    setLoadingSaveDesign(true);
+    const result = await saveDesign(getValues());
+
+    if (result.success) {
+      toast.success(t("DesignSavedSuccessfully"));
+      setLoadingSaveDesign(false);
+      return;
+    }
+
+    toast.error(t("FailedToSaveDesign"));
+    setLoadingSaveDesign(false);
   };
 
   return (
@@ -110,7 +127,7 @@ export default function Step4({
         </CardContent>
 
         <CardFooter className="flex flex-col gap-3 p-4">
-          {!generated_image_url && (
+          {!generated_image_url ? (
             <Button
               type="button"
               size="lg"
@@ -129,6 +146,17 @@ export default function Step4({
                   {t("GenerateBouquet")}
                 </>
               ) : null}
+            </Button>
+          ) : (
+            <Button
+              onClick={handleSaveDesign}
+              type="button"
+              size="lg"
+              className="w-full"
+              disabled={loadingSaveDesign}
+            >
+              {loadingSaveDesign && <Loader2 className="animate-spin" />}{" "}
+              {t("SaveDesign")}
             </Button>
           )}
 

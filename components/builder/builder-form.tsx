@@ -37,7 +37,6 @@ export default function BuilderForm({
   giftOptions: GiftOptions;
   design?: Design;
 }) {
-  console.log(design);
   const router = useRouter();
   const t = useTranslations("CustomBuilder");
   const tCommon = useTranslations("Common");

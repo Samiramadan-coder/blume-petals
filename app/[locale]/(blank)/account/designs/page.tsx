@@ -30,7 +30,7 @@ export default async function DesignsPage({
   }>("/api/v1/designs", {
     params: {
       page: page ?? 1,
-      per_page: 10,
+      per_page: 6,
     },
   });
 
