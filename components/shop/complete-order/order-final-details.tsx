@@ -2,6 +2,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { MoveRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useCart } from "@/providers/cart-provider";
@@ -32,9 +33,11 @@ export default function OrderFinalDetails({
   pickupLocationId: string | null;
   note: string;
 }) {
+  const router = useRouter();
   const { items } = useCart();
   const t = useTranslations("Shop");
   const [loading, setLoading] = useState(false);
+  const [loadingOnDelivery, setLoadingOnDelivery] = useState(false);
 
   async function handleContinueToPayment() {
     setLoading(true);
@@ -73,6 +76,32 @@ export default function OrderFinalDetails({
         return;
       }
 
+      return;
+    }
+
+    toast.error(t("OrderPlacementFailed"));
+  }
+
+  async function handlePaymentOnDelivery() {
+    setLoadingOnDelivery(true);
+
+    const formData: { [key: string]: string } = {
+      customer_notes: note,
+      address_id: addressId || "",
+      payment_method: "cod",
+    };
+
+    if (couponCode) {
+      formData.coupon_code = couponCode;
+    }
+
+    const result = await checkoutOrderAction(formData);
+
+    setLoadingOnDelivery(false);
+
+    if (result.success) {
+      toast.success(t("OrderPlacedSuccessfully"));
+      router.push("/orders");
       return;
     }
 
@@ -137,13 +166,32 @@ export default function OrderFinalDetails({
           </div>
 
           <Button
-            disabled={!showButton || loading}
+            disabled={!showButton || loadingOnDelivery || loading}
             onClick={handleContinueToPayment}
             className="h-14 w-full border-2 px-6 text-base bg-primary text-white"
             aria-label="Continue to payment"
           >
             {t("ContinueToPayment")} ({finalTotal} {t("AED")})
             {loading ? <Spinner /> : <MoveRight className="rtl:rotate-180" />}
+          </Button>
+
+          <Button
+            disabled={
+              !showButton ||
+              deliveryMethod !== "delivery" ||
+              loadingOnDelivery ||
+              loading
+            }
+            onClick={handlePaymentOnDelivery}
+            className="h-14 w-full border-2 px-6 text-base bg-secondary text-foreground"
+            aria-label="Payment On Delivery"
+          >
+            {t("PaymentOnDelivery")} ({finalTotal} {t("AED")})
+            {loadingOnDelivery ? (
+              <Spinner />
+            ) : (
+              <MoveRight className="rtl:rotate-180" />
+            )}
           </Button>
         </CardContent>
       </Card>

@@ -633,7 +633,8 @@
     "Bestseller": "الأكثر مبيعًا",
     "AddAddressToProceed": "يرجى إضافة عنوان للمتابعة في طلبك.",
     "BouquetComposition": "تركيب الباقة",
-    "Stems": "سيقان"
+    "Stems": "سيقان",
+    "PaymentOnDelivery": "الدفع عند الاستلام"
   },
   "Notifications": {
     "Title": "الإشعارات",

@@ -44,6 +44,8 @@ export default async function CartLayout({
     throw new Error("Failed to fetch cart");
   }
 
+  // console.log(cartData);
+
   return (
     <CartProvider
       initialItems={cartData.data.cart.items}
