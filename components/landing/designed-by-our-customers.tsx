@@ -28,6 +28,8 @@ export default async function DesignedByOurCustomers() {
     throw new Error("Failed to fetch designs showcase");
   }
 
+  console.log(data);
+
   return (
     <section className="overflow-hidden bg-[#faf8f5]">
       <div className="container max-w-7xl">

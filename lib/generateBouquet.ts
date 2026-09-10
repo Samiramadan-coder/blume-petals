@@ -202,7 +202,9 @@
 import { BuilderFormData } from "@/types/builder-page";
 import { GoogleGenAI } from "@google/genai";
 
-const MODEL = "gemini-3-pro-image";
+// const MODEL = "gemini-3-pro-image";
+
+const MODEL = "gemini-3.1-flash-image";
 
 function getMimeType(url: string): string {
   const cleanUrl = url.split("?")[0].toLowerCase();
