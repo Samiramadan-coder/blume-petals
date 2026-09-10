@@ -14,18 +14,18 @@ export default async function DesignCard({ item }: { item: Design }) {
   const tCommon = await getTranslations("Common");
 
   return (
-    <Card className="overflow-hidden p-0 shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
-      <div className="relative h-55">
+    <Card className="overflow-hidden gap-0 p-0 shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
+      <div className="relative h-65">
         <Image
           src={
+            item.image_url ||
             item.bouquet.image_url ||
             "/images/home/bouquet-builder/bouquet-builder.webp"
           }
           alt="Sunset Romance"
           fill
           priority
-          className="object-contain"
-          sizes="294px"
+          className="object-cover"
         />
 
         <Badge className="absolute left-4 top-4 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary border border-primary/30">
@@ -40,10 +40,10 @@ export default async function DesignCard({ item }: { item: Design }) {
               {item.bouquet.name}
             </h3>
 
-            <p className="text-[13px] text-muted-foreground">
+            <p className="text-[13px] text-muted-foreground leading-relaxed line-clamp-2">
               {item.flowers.map((flower, index) => (
                 <span key={index}>
-                  {flower.qty} {flower.name}
+                  {flower.name} {flower.qty} {t("Flower")}
                   {index < item.flowers.length - 1 && " · "}
                 </span>
               ))}

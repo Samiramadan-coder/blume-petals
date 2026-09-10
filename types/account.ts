@@ -206,6 +206,7 @@ export type Design = {
   buildable: number;
   created_at: string;
   available: boolean;
+  image_url: string | null;
   flowers: {
     name: string;
     qty: number;

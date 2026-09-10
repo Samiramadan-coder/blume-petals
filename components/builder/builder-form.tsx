@@ -38,10 +38,10 @@ export default function BuilderForm({
   design?: Design;
 }) {
   const router = useRouter();
-  const t = useTranslations("CustomBuilder");
   const tCommon = useTranslations("Common");
-  const stepsList = steps(t);
+  const t = useTranslations("CustomBuilder");
   const [currentStep, setCurrentStep] = useState(0);
+  const stepsList = steps(t);
 
   const {
     handleSubmit,
@@ -70,9 +70,9 @@ export default function BuilderForm({
   const selectedRibbon = useWatch({ control, name: "ribbon_id" });
   const selectedCardStyle = useWatch({ control, name: "card_style_id" });
   const choosedSlots = useWatch({ control, name: "slots" });
-  const generated_image_url = useWatch({
+  const image = useWatch({
     control,
-    name: "generated_image_url",
+    name: "image",
   });
 
   /* Calculate the total number of chosen flowers from client */
@@ -228,11 +228,7 @@ export default function BuilderForm({
         )}
 
         {currentStep === 3 && (
-          <Step4
-            getValues={getValues}
-            setValue={setValue}
-            generated_image_url={generated_image_url}
-          />
+          <Step4 getValues={getValues} setValue={setValue} image={image} />
         )}
       </div>
 

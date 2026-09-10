@@ -519,9 +519,14 @@
     "Designs": {
       "Title": "تصاميمي",
       "SavedDesigns": "التصاميم المحفوظة",
-      "createNewDesign": "إنشاء تصميم",
+      "CreateNewDesign": "إنشاء تصميم جديد",
       "CustomBuild": "تصميم مخصص",
-      "Saved": "تم الحفظ"
+      "Saved": "تم الحفظ",
+      "AddToCart": "أضف إلى السلة",
+      "Edit": "تعديل",
+      "AddedToCartSuccessfully": "تمت الإضافة إلى السلة بنجاح.",
+      "FailedToAddToCart": "فشل في الإضافة إلى السلة. يرجى المحاولة مرة أخرى.",
+      "Flower": "زهرة"
     },
     "MYSettings": {
       "Title": "الإعدادات",

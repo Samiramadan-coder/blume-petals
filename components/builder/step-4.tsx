@@ -13,11 +13,11 @@ import { saveDesign } from "@/lib/custom-builder";
 import { toast } from "sonner";
 
 export default function Step4({
-  generated_image_url,
+  image,
   getValues,
   setValue,
 }: {
-  generated_image_url: string | null;
+  image: string | null;
   getValues: UseFormGetValues<BuilderFormData>;
   setValue: UseFormSetValue<BuilderFormData>;
 }) {
@@ -26,6 +26,7 @@ export default function Step4({
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [loadingSaveDesign, setLoadingSaveDesign] = useState(false);
 
+  // Handle bouquet generation and saving design
   const handleGenerateBouquet = async () => {
     if (isGenerating) return;
 
@@ -35,7 +36,7 @@ export default function Step4({
 
       const result = await generateBouquet(getValues());
 
-      setValue("generated_image_url", result.imageUrl);
+      setValue("image", result.imageUrl);
     } catch (error) {
       console.error(error);
 
@@ -47,6 +48,7 @@ export default function Step4({
     }
   };
 
+  // Handle saving the current design
   const handleSaveDesign = async () => {
     setLoadingSaveDesign(true);
     const result = await saveDesign(getValues());
@@ -66,9 +68,9 @@ export default function Step4({
       <Card className="overflow-hidden p-0">
         <CardContent className="p-0">
           <div className="relative aspect-4/5 w-full overflow-hidden bg-muted">
-            {generated_image_url && (
+            {image && (
               <Image
-                src={generated_image_url}
+                src={image}
                 alt="Generated bouquet"
                 fill
                 unoptimized
@@ -76,7 +78,7 @@ export default function Step4({
               />
             )}
 
-            {!generated_image_url && !isGenerating && (
+            {!image && !isGenerating && (
               <div className="flex h-full flex-col items-center justify-center gap-4 px-8 text-center">
                 <div className="flex size-14 items-center justify-center rounded-full border bg-background">
                   <ImageIcon className="size-6 text-muted-foreground" />
@@ -94,13 +96,13 @@ export default function Step4({
 
             {isGenerating && (
               <div className="absolute inset-0">
-                {!generated_image_url && (
+                {!image && (
                   <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
                 )}
 
                 <div
                   className={
-                    generated_image_url
+                    image
                       ? "absolute inset-0 flex items-center justify-center bg-background/70 backdrop-blur-sm"
                       : "absolute inset-0 flex items-center justify-center"
                   }
@@ -127,7 +129,7 @@ export default function Step4({
         </CardContent>
 
         <CardFooter className="flex flex-col gap-3 p-4">
-          {!generated_image_url ? (
+          {!image ? (
             <Button
               type="button"
               size="lg"
@@ -140,7 +142,7 @@ export default function Step4({
                   <Loader2 className="animate-spin" />
                   {t("Generating")}
                 </>
-              ) : !generated_image_url ? (
+              ) : !image ? (
                 <>
                   <Sparkles />
                   {t("GenerateBouquet")}
@@ -160,7 +162,7 @@ export default function Step4({
             </Button>
           )}
 
-          {generated_image_url && (
+          {image && (
             <p className="text-center text-xs text-muted-foreground">
               {t("AIGenerate")}
             </p>

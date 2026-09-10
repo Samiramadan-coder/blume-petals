@@ -532,7 +532,8 @@
       "AddToCart": "Add to Cart",
       "Edit": "Edit",
       "AddedToCartSuccessfully": "Added to cart successfully.",
-      "FailedToAddToCart": "Failed to add to cart. Please try again."
+      "FailedToAddToCart": "Failed to add to cart. Please try again.",
+      "Flower": "Flower"
     },
     "MYSettings": {
       "Title": "Settings",

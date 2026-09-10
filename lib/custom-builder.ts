@@ -28,6 +28,7 @@ export async function saveDesign(
 ): Promise<SaveDesignResponse> {
   const preparedData = {
     variant_id: data.variant_id,
+    image: data.image,
     slots: data.slots.map((slot) => ({
       variant_id: slot.variant_id,
       qty: slot.qty,

@@ -38,5 +38,7 @@ export default async function DesignsPage({
     throw new Error("Failed to fetch designs");
   }
 
+  console.log(data);
+
   return <Designs items={data.data.items} pagination={data.data.pagination} />;
 }
