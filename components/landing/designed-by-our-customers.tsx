@@ -28,8 +28,6 @@ export default async function DesignedByOurCustomers() {
     throw new Error("Failed to fetch designs showcase");
   }
 
-  console.log(data);
-
   return (
     <section className="overflow-hidden bg-[#faf8f5]">
       <div className="container max-w-7xl">
@@ -105,7 +103,7 @@ export default async function DesignedByOurCustomers() {
 
                 <div className="pt-4 text-center">
                   <h3 className="text-sm font-semibold text-foreground">
-                    {/* {review.name} */}
+                    {review.made_by}
                   </h3>
 
                   <p className="text-[11px]">{t("CardCaption")}</p>

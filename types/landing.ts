@@ -40,6 +40,7 @@ export type CustomerDesign = {
   image_url: string;
   total_stems: number;
   unit_price: string;
+  made_by: string;
   flowers: {
     name: string;
     qty: number;
