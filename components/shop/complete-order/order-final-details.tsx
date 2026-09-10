@@ -101,7 +101,7 @@ export default function OrderFinalDetails({
 
     if (result.success) {
       toast.success(t("OrderPlacedSuccessfully"));
-      router.push("/orders");
+      router.push("/account/orders");
       return;
     }
 
