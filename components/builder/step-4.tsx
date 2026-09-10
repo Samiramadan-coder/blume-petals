@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { toast } from "sonner";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { saveDesign } from "@/lib/custom-builder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BuilderFormData } from "@/types/builder-page";
 import { generateBouquet } from "@/lib/generateBouquet";
@@ -8,9 +11,7 @@ import { ImageIcon, Loader2, Sparkles } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { useTranslations } from "next-intl";
-import { saveDesign } from "@/lib/custom-builder";
-import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
 export default function Step4({
   image,
@@ -23,8 +24,10 @@ export default function Step4({
 }) {
   const t = useTranslations("CustomBuilder");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generationError, setGenerationError] = useState<string | null>(null);
   const [loadingSaveDesign, setLoadingSaveDesign] = useState(false);
+  const [generationError, setGenerationError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const designId = searchParams.get("designId");
 
   // Handle bouquet generation and saving design
   const handleGenerateBouquet = async () => {
@@ -129,7 +132,7 @@ export default function Step4({
         </CardContent>
 
         <CardFooter className="flex flex-col gap-3 p-4">
-          {!image ? (
+          {!image && (
             <Button
               type="button"
               size="lg"
@@ -149,7 +152,9 @@ export default function Step4({
                 </>
               ) : null}
             </Button>
-          ) : (
+          )}
+
+          {image && !designId && (
             <Button
               onClick={handleSaveDesign}
               type="button"

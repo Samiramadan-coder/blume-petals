@@ -8,16 +8,16 @@ import { toast } from "sonner";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { T } from "@/constants/shared";
+import { Spinner } from "../ui/spinner";
 import { Design } from "@/types/account";
 import { useMemo, useState } from "react";
+import { ChevronLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { addToCart } from "@/lib/custom-builder";
 import { Flower, Product } from "@/types/products";
 import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { BuilderFormData, GiftOptions } from "@/types/builder-page";
-import { useRouter } from "@/i18n/navigation";
-import { Spinner } from "../ui/spinner";
-import { ChevronLeft } from "lucide-react";
 
 const steps = (t: T) => [
   t("Steps.Template"),
@@ -52,14 +52,35 @@ export default function BuilderForm({
     formState: { isSubmitting },
   } = useForm<BuilderFormData>({
     defaultValues: {
-      template_id: templates[0].id,
-      template_url: templates[0].image_url,
-      variant_id: templates[0]?.variants[0]?.id,
-      flowersCount: templates[0]?.variants[0]?.max_stems || 0,
+      template_id: design?.bouquet?.product_id ?? templates[0].id,
+
+      template_url: design?.bouquet?.image_url ?? templates[0].image_url,
+
+      variant_id: design?.bouquet?.variant_id ?? templates[0]?.variants[0]?.id,
+
+      flowersCount:
+        design?.bouquet?.max_stems ?? templates[0]?.variants[0]?.max_stems ?? 0,
+
+      image: design?.image_url || "",
+
       ribbon_id: undefined,
+
       card_style_id: undefined,
+
       message_text: "",
-      slots: [],
+
+      slots:
+        design?.flowers.map((flower) => {
+          const activeFlower = flowers.find((f) => f.id === flower.variant_id);
+
+          return {
+            qty: flower.qty,
+            variant_id: flower.variant_id,
+            price: Number(activeFlower?.price) ?? 0,
+            name: flower.name,
+            image_url: activeFlower?.image_url ?? "",
+          };
+        }) ?? [],
     },
   });
 
@@ -204,7 +225,12 @@ export default function BuilderForm({
 
       <div className="py-8">
         {currentStep === 0 && (
-          <Step1 templates={templates} setValue={setValue} control={control} />
+          <Step1
+            templates={templates}
+            setValue={setValue}
+            control={control}
+            templateId={selectedTemplate}
+          />
         )}
 
         {currentStep === 1 && (

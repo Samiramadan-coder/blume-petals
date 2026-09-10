@@ -220,6 +220,7 @@ export type Design = {
     size: string;
     sku: string;
     slug: string;
+    product_id: number;
     variant_id: number;
   };
 };

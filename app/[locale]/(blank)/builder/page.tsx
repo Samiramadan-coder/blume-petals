@@ -1,10 +1,10 @@
 import { http } from "@/lib/http";
+import { Design } from "@/types/account";
 import { Flower, Product } from "@/types/products";
-import BuilderForm from "@/components/builder/builder-form";
-import BuilderHeader from "@/components/builder/builder-header";
 import { GiftOptions } from "@/types/builder-page";
 import { getTranslations } from "next-intl/server";
-import { Design } from "@/types/account";
+import BuilderForm from "@/components/builder/builder-form";
+import BuilderHeader from "@/components/builder/builder-header";
 
 type SerachParams = {
   designId?: string;
@@ -25,18 +25,17 @@ export default async function Page({
   const { designId } = await searchParams;
   let design;
 
-  // if (designId) {
-  //   const { data: designDetails, ok: okDesign } = await http.get<{
-  //     data: { design: Design };
-  //   }>(`/api/v1/designs/${designId}`);
+  if (designId) {
+    const { data: designDetails, ok: okDesign } = await http.get<{
+      data: { design: Design };
+    }>(`/api/v1/designs/${designId}`);
 
-  //   if (!okDesign) {
-  //     throw new Error("Failed to fetch design details");
-  //   }
+    if (!okDesign) {
+      throw new Error("Failed to fetch design details");
+    }
 
-  //   console.log(designDetails);
-  //   design = designDetails.data.design;
-  // }
+    design = designDetails.data.design;
+  }
 
   // Fetch templates, flowers, and gift options for the builder page
   const { data: templates, ok: ok1 } = await http.get<{

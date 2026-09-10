@@ -6,7 +6,6 @@ import {
   type UseFormSetValue,
 } from "react-hook-form";
 import Image from "next/image";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import { Button } from "../ui/button";
@@ -20,18 +19,17 @@ export default function Step1({
   setValue,
   control,
   templates,
+  templateId,
 }: {
   templates: Product[];
   control: Control<BuilderFormData>;
   setValue: UseFormSetValue<BuilderFormData>;
+  templateId: number;
 }) {
   const tCommon = useTranslations("Common");
   const t = useTranslations("CustomBuilder");
-  const [selectedTemplateId, setSelectedTemplateId] = useState(
-    templates[0]?.id,
-  );
   const choosedTemplate = templates.find(
-    (template) => template.id === selectedTemplateId,
+    (template) => template.id === templateId,
   );
 
   return (
@@ -56,7 +54,7 @@ export default function Step1({
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {templates.map((template, index) => {
-          const isSelected = selectedTemplateId === template.id;
+          const isSelected = templateId === template.id;
 
           return (
             <motion.div
@@ -82,7 +80,7 @@ export default function Step1({
                     aria-label={`Select ${template.name}`}
                     aria-pressed={isSelected}
                     onClick={() => {
-                      setSelectedTemplateId(template.id);
+                      // setSelectedTemplateId(template.id);
                       setValue("template_id", template.id);
                       setValue("template_url", template.image_url);
                       setValue("variant_id", template.variants[0]?.id);
