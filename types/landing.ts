@@ -34,3 +34,23 @@ export type AppSettings = {
   logo_url: string | null;
   showAddition: boolean;
 };
+
+export type CustomerDesign = {
+  id: number;
+  image_url: string;
+  total_stems: number;
+  unit_price: string;
+  flowers: {
+    name: string;
+    qty: number;
+    variant_id: number;
+  }[];
+  bouquet: {
+    image_url: string;
+    name: string;
+    product_id: number;
+    size: string;
+    slug: string;
+    variant_id: number;
+  };
+};

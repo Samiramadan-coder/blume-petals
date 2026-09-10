@@ -1,16 +1,13 @@
 import Image from "next/image";
-import * as motion from "motion/react-client";
-
-import { Card, CardContent } from "@/components/ui/card";
-
 import { cn } from "@/lib/utils";
-
 import MainButton from "../ui/main-button";
-import LandingSubtitle from "./landing-subtitle";
 import LandingTitle from "./landing-title";
-
-import { reviews } from "@/constants/home-page";
+import * as motion from "motion/react-client";
+import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
+import { Card, CardContent } from "@/components/ui/card";
+import { http } from "@/lib/http";
+import { CustomerDesign } from "@/types/landing";
 
 const rotations = [
   "-rotate-2",
@@ -22,6 +19,14 @@ const rotations = [
 
 export default async function DesignedByOurCustomers() {
   const t = await getTranslations("LandingDesignedByOurCustomers");
+
+  const { data, ok } = await http.get<{
+    data: { items: CustomerDesign[] };
+  }>("/api/v1/designs/showcase?limit=5");
+
+  if (!ok) {
+    throw new Error("Failed to fetch designs showcase");
+  }
 
   return (
     <section className="overflow-hidden bg-[#faf8f5]">
@@ -56,9 +61,9 @@ export default async function DesignedByOurCustomers() {
           </motion.p>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {reviews.map((review, index) => (
+            {data.data.items.map((review, index) => (
               <motion.div
-                key={review.name}
+                key={review.id}
                 initial={{
                   opacity: 0,
                   x: index % 2 === 0 ? -8 : 8,
@@ -86,8 +91,8 @@ export default async function DesignedByOurCustomers() {
                   <CardContent className="p-3">
                     <div className="relative aspect-square overflow-hidden">
                       <Image
-                        src={review.image}
-                        alt={review.name}
+                        src={review.image_url || review.bouquet.image_url}
+                        alt={review.bouquet.name}
                         fill
                         sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw"
                         className="object-cover"
@@ -98,7 +103,7 @@ export default async function DesignedByOurCustomers() {
 
                 <div className="pt-4 text-center">
                   <h3 className="text-sm font-semibold text-foreground">
-                    {review.name}
+                    {/* {review.name} */}
                   </h3>
 
                   <p className="text-[11px]">{t("CardCaption")}</p>

@@ -1,8 +1,4 @@
-import {
-  HowItWorksStep,
-  BouquetBuilderFeature,
-  Review,
-} from "@/types/home-page";
+import { HowItWorksStep, BouquetBuilderFeature } from "@/types/home-page";
 
 export const steps: HowItWorksStep[] = [
   {
@@ -43,28 +39,5 @@ export const features: BouquetBuilderFeature[] = [
   {
     key: "AddMessage",
     icon: "✉",
-  },
-];
-
-export const reviews: Review[] = [
-  {
-    name: "Sara A.",
-    image: "/images/home/reviews/review.webp",
-  },
-  {
-    name: "Fatima K.",
-    image: "/images/home/reviews/review.webp",
-  },
-  {
-    name: "Leila M.",
-    image: "/images/home/reviews/review.webp",
-  },
-  {
-    name: "Nour H.",
-    image: "/images/home/reviews/review.webp",
-  },
-  {
-    name: "Amira S.",
-    image: "/images/home/reviews/review.webp",
   },
 ];

@@ -8,8 +8,3 @@ export type BouquetBuilderFeature = {
   key: "ChooseShape" | "SelectStem" | "PickWrapping" | "AddMessage";
   icon: string;
 };
-
-export type Review = {
-  name: string;
-  image: string;
-};
