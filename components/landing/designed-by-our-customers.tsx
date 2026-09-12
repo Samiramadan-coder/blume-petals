@@ -1,13 +1,20 @@
 import Image from "next/image";
+import { Suspense } from "react";
+import * as motion from "motion/react-client";
+
 import { cn } from "@/lib/utils";
+import { http } from "@/lib/http";
+
 import MainButton from "../ui/main-button";
 import LandingTitle from "./landing-title";
-import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
+
 import { getTranslations } from "next-intl/server";
+
 import { Card, CardContent } from "@/components/ui/card";
-import { http } from "@/lib/http";
-import { CustomerDesign } from "@/types/landing";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import type { CustomerDesign } from "@/types/landing";
 
 const rotations = [
   "-rotate-2",
@@ -17,16 +24,98 @@ const rotations = [
   "-rotate-2",
 ];
 
-export default async function DesignedByOurCustomers() {
-  const t = await getTranslations("LandingDesignedByOurCustomers");
-
+async function CustomerDesigns({ cardCaption }: { cardCaption: string }) {
   const { data, ok } = await http.get<{
-    data: { items: CustomerDesign[] };
+    data: {
+      items: CustomerDesign[];
+    };
   }>("/api/v1/designs/showcase?limit=5");
 
   if (!ok) {
     throw new Error("Failed to fetch designs showcase");
   }
+
+  return (
+    <>
+      {data.data.items.map((review, index) => (
+        <motion.div
+          key={review.id}
+          initial={{
+            opacity: 0,
+            x: index % 2 === 0 ? -8 : 8,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.15,
+          }}
+          transition={{
+            duration: 0.5,
+            delay: index * 0.05,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+        >
+          <Card
+            className={cn(
+              "p-0 pb-8 shadow-[0_8px_30px_rgba(61,46,0,0.08)] transition-transform duration-300 ease-out hover:rotate-0",
+              rotations[index % rotations.length],
+            )}
+          >
+            <CardContent className="p-3">
+              <div className="relative aspect-square overflow-hidden">
+                <Image
+                  src={review.image_url || review.bouquet.image_url}
+                  alt={review.bouquet.name}
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="pt-4 text-center">
+            <h3 className="text-sm font-semibold text-foreground">
+              {review.made_by}
+            </h3>
+
+            <p className="text-[11px]">{cardCaption}</p>
+          </div>
+        </motion.div>
+      ))}
+    </>
+  );
+}
+
+function CustomerDesignsSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div
+          key={index}
+          className={cn("space-y-4", rotations[index % rotations.length])}
+        >
+          <Card className="p-0 pb-8">
+            <CardContent className="p-3">
+              <Skeleton className="aspect-square w-full" />
+            </CardContent>
+          </Card>
+
+          <div className="space-y-2 text-center">
+            <Skeleton className="mx-auto h-4 w-24" />
+            <Skeleton className="mx-auto h-3 w-16" />
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
+
+export default async function DesignedByOurCustomers() {
+  const t = await getTranslations("LandingDesignedByOurCustomers");
 
   return (
     <section className="overflow-hidden bg-[#faf8f5]">
@@ -61,55 +150,9 @@ export default async function DesignedByOurCustomers() {
           </motion.p>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {data.data.items.map((review, index) => (
-              <motion.div
-                key={review.id}
-                initial={{
-                  opacity: 0,
-                  x: index % 2 === 0 ? -8 : 8,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.15,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.05,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <Card
-                  className={cn(
-                    "p-0 pb-8 shadow-[0_8px_30px_rgba(61,46,0,0.08)] transition-transform duration-300 ease-out hover:rotate-0",
-                    rotations[index % rotations.length],
-                  )}
-                >
-                  <CardContent className="p-3">
-                    <div className="relative aspect-square overflow-hidden">
-                      <Image
-                        src={review.image_url || review.bouquet.image_url}
-                        alt={review.bouquet.name}
-                        fill
-                        sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="pt-4 text-center">
-                  <h3 className="text-sm font-semibold text-foreground">
-                    {review.made_by}
-                  </h3>
-
-                  <p className="text-[11px]">{t("CardCaption")}</p>
-                </div>
-              </motion.div>
-            ))}
+            <Suspense fallback={<CustomerDesignsSkeleton />}>
+              <CustomerDesigns cardCaption={t("CardCaption")} />
+            </Suspense>
           </div>
 
           <motion.div

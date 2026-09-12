@@ -1,4 +1,8 @@
+import { Suspense } from "react";
+import * as motion from "motion/react-client";
+
 import { http } from "@/lib/http";
+
 import type { Product } from "@/types/products";
 import type { AppSettings } from "@/types/landing";
 
@@ -6,25 +10,31 @@ import LandingTitle from "./landing-title";
 import LandingSubtitle from "./landing-subtitle";
 import AddOnCard from "../shop/add-on-card";
 
-import * as motion from "motion/react-client";
+import { Skeleton } from "@/components/ui/skeleton";
+
 import { getTranslations } from "next-intl/server";
 
-export default async function PerfectAddOns() {
-  const t = await getTranslations("LandingPerfectAddOns");
+async function PerfectAddOnsContent() {
+  const [t, addOnsResponse, appSettingsResponse] = await Promise.all([
+    getTranslations("LandingPerfectAddOns"),
 
-  const { data: addOns, ok: ok1 } = await http.get<{
-    data: {
-      items: Product[];
-    };
-  }>("/api/v1/products?category_type=addon", {
-    params: {
-      per_page: 6,
-    },
-  });
+    http.get<{
+      data: {
+        items: Product[];
+      };
+    }>("/api/v1/products?category_type=addon", {
+      params: {
+        per_page: 6,
+      },
+    }),
 
-  const { data: appSettings, ok: ok2 } = await http.get<{
-    data: AppSettings;
-  }>("/api/v1/settings");
+    http.get<{
+      data: AppSettings;
+    }>("/api/v1/settings"),
+  ]);
+
+  const { data: addOns, ok: ok1 } = addOnsResponse;
+  const { data: appSettings, ok: ok2 } = appSettingsResponse;
 
   if (!ok1 || !ok2) {
     throw new Error("Failed to fetch add-ons or app settings");
@@ -93,5 +103,41 @@ export default async function PerfectAddOns() {
         </div>
       </div>
     </section>
+  );
+}
+
+function PerfectAddOnsSkeleton() {
+  return (
+    <section className="bg-[#faf8f5]">
+      <div className="container max-w-7xl">
+        <div className="py-20">
+          <Skeleton className="mb-3 h-4 w-28" />
+
+          <Skeleton className="mb-6 h-9 w-72" />
+
+          <Skeleton className="mb-12 h-5 w-80 max-w-full" />
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="space-y-3">
+                <Skeleton className="aspect-square w-full rounded-xl" />
+
+                <Skeleton className="h-4 w-3/4" />
+
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function PerfectAddOns() {
+  return (
+    <Suspense fallback={<PerfectAddOnsSkeleton />}>
+      <PerfectAddOnsContent />
+    </Suspense>
   );
 }

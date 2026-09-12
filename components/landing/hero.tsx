@@ -45,6 +45,7 @@ export default async function Hero() {
         alt="Bouquet of rose"
         fill
         priority
+        fetchPriority="high"
         sizes="100vw"
         className="absolute inset-0 -z-30 object-cover object-center animate-hero-zoom"
       />
@@ -67,8 +68,7 @@ export default async function Hero() {
             {t("Eyebrow")}
           </motion.p>
 
-          <motion.h1
-            variants={itemVariants}
+          <h1
             className={cn(
               "mb-5 max-w-xl text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl",
               {
@@ -77,7 +77,7 @@ export default async function Hero() {
             )}
           >
             {t("Title")}
-          </motion.h1>
+          </h1>
 
           <motion.p
             variants={itemVariants}

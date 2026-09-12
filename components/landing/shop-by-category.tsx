@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
 import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
@@ -12,6 +13,7 @@ import type { Category } from "@/types/landing";
 import { getTranslations } from "next-intl/server";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 async function Categories() {
   const { data, ok } = await http.get<{
@@ -74,6 +76,16 @@ async function Categories() {
   );
 }
 
+function CategoriesSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Skeleton key={index} className="min-h-81 rounded-2xl" />
+      ))}
+    </>
+  );
+}
+
 export default async function ShopByCategory() {
   const t = await getTranslations("LandingShopByCategory");
 
@@ -85,7 +97,9 @@ export default async function ShopByCategory() {
         <LandingTitle>{t("Title")}</LandingTitle>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          <Categories />
+          <Suspense fallback={<CategoriesSkeleton />}>
+            <Categories />
+          </Suspense>
         </div>
       </div>
     </section>

@@ -1,7 +1,10 @@
 import Image from "next/image";
+import { Suspense } from "react";
 import * as motion from "motion/react-client";
 
 import { Card } from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
+
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
@@ -82,6 +85,22 @@ async function Occasions() {
   );
 }
 
+function OccasionsSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 6 }).map((_, index) => (
+        <Skeleton
+          key={index}
+          className={cn(
+            "min-h-55 rounded-4xl",
+            index === 0 || index === 3 ? "md:row-span-2" : "",
+          )}
+        />
+      ))}
+    </>
+  );
+}
+
 export default async function ShopTheMoment() {
   const t = await getTranslations("LandingShopTheMoment");
 
@@ -93,8 +112,10 @@ export default async function ShopTheMoment() {
 
           <LandingTitle>{t("Title")}</LandingTitle>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[220px]">
-            <Occasions />
+          <div className="grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3">
+            <Suspense fallback={<OccasionsSkeleton />}>
+              <Occasions />
+            </Suspense>
           </div>
         </div>
       </div>
