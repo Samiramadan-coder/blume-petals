@@ -11,10 +11,11 @@ import {
   parseAsInteger,
   parseAsNativeArrayOf,
   parseAsString,
+  throttle,
   useQueryStates,
 } from "nuqs";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
 import { Checkbox } from "../ui/checkbox";
@@ -27,6 +28,8 @@ import { FiltersOptions } from "@/types/products";
 export default function Filters({ filters }: { filters: FiltersOptions }) {
   const t = useTranslations("Shop");
 
+  const [isPending, startTransition] = useTransition();
+
   const [query, setQuery] = useQueryStates(
     {
       price_min: parseAsInteger.withDefault(0),
@@ -34,44 +37,61 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
       size: parseAsNativeArrayOf(parseAsString).withDefault([]),
       occasion: parseAsNativeArrayOf(parseAsString).withDefault([]),
       in_stock: parseAsString,
-      page: parseAsString,
+      page: parseAsInteger.withDefault(1),
     },
     {
-      history: "push",
+      history: "replace",
       scroll: false,
       shallow: false,
+      startTransition,
+      limitUrlUpdates: throttle(500),
     },
   );
 
   const [minDraft, setMinDraft] = useState<number[] | null>(null);
+
   const [maxDraft, setMaxDraft] = useState<number[] | null>(null);
+
   const min = minDraft ?? [query.price_min];
   const max = maxDraft ?? [query.price_max];
+
   const selectedSizes = query.size;
-  const isOnStock = query.in_stock === "1";
+
   const selectedOccasions = query.occasion;
 
+  const isOnStock = query.in_stock === "1";
+
   return (
-    <Card className="shadow-sm me-8">
+    <Card
+      className={`me-8 shadow-sm transition-opacity ${
+        isPending ? "opacity-70" : ""
+      }`}
+    >
       <CardContent>
         {/* Price Range */}
         <Accordion type="single" collapsible defaultValue="price_range">
           <AccordionItem value="price_range">
-            <AccordionTrigger className="hover:text-primary hover:no-underline text-base font-semibold">
+            <AccordionTrigger className="text-base font-semibold hover:text-primary hover:no-underline">
               {t("PriceRange")}
             </AccordionTrigger>
-            <AccordionContent className="p-2 space-y-5">
+
+            <AccordionContent className="space-y-5 p-2">
               <div>
-                <p className="text-muted-foreground text-xs font-semibold">
+                <p className="text-xs font-semibold text-muted-foreground">
                   {t("Min")}: {t("AED")} {min[0]}
                 </p>
+
                 <Slider
                   value={min}
+                  max={filters.price_range.max}
+                  step={1}
+                  className="mx-auto w-full max-w-xs"
                   onValueChange={(value) => {
                     setMinDraft(value);
                   }}
                   onValueCommit={(value) => {
                     const nextMin = value[0];
+
                     const nextMax = Math.max(max[0], nextMin);
 
                     setMinDraft(null);
@@ -80,22 +100,22 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
                     void setQuery({
                       price_min: nextMin,
                       price_max: nextMax,
-                      page: "1",
+                      page: 1,
                     });
                   }}
-                  max={filters.price_range.max}
-                  step={1}
-                  className="mx-auto w-full max-w-xs"
                 />
               </div>
 
               <div>
-                <p className="text-muted-foreground text-xs font-semibold">
+                <p className="text-xs font-semibold text-muted-foreground">
                   {t("Max")}: {t("AED")} {max[0]}
                 </p>
+
                 <Slider
-                  max={filters.price_range.max}
                   value={max}
+                  max={filters.price_range.max}
+                  step={1}
+                  className="mx-auto w-full max-w-xs"
                   onValueChange={(value) => {
                     setMaxDraft(value);
                   }}
@@ -107,15 +127,13 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
                     void setQuery({
                       price_min: min[0],
                       price_max: nextMax,
-                      page: "1",
+                      page: 1,
                     });
                   }}
-                  step={1}
-                  className="mx-auto w-full max-w-xs"
                 />
               </div>
 
-              <p className="text-primary text-sm font-semibold">
+              <p className="text-sm font-semibold text-primary">
                 {t("AED")} {min[0]} - {t("AED")} {max[0]}
               </p>
             </AccordionContent>
@@ -127,37 +145,46 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
         {/* Size */}
         <Accordion type="single" collapsible>
           <AccordionItem value="size">
-            <AccordionTrigger className="hover:text-primary hover:no-underline text-base font-semibold">
+            <AccordionTrigger className="text-base font-semibold hover:text-primary hover:no-underline">
               {t("Size")}
             </AccordionTrigger>
-            <AccordionContent className="space-y-3">
-              {filters.sizes.map((size) => (
-                <FieldGroup key={size} className="max-w-sm">
-                  <Field orientation="horizontal">
-                    <Checkbox
-                      id={size}
-                      name={size}
-                      checked={selectedSizes.includes(size)}
-                      onCheckedChange={(checked) => {
-                        const nextSizes =
-                          checked === true
-                            ? [...selectedSizes, size]
-                            : selectedSizes.filter(
-                                (selectedSize) => selectedSize !== size,
-                              );
 
-                        void setQuery({
-                          size: nextSizes.length > 0 ? nextSizes : null,
-                          page: "1",
-                        });
-                      }}
-                    />
-                    <Label htmlFor={size} className="text-foreground/70">
-                      {size}
-                    </Label>
-                  </Field>
-                </FieldGroup>
-              ))}
+            <AccordionContent className="space-y-3">
+              {filters.sizes.map((size) => {
+                const checked = selectedSizes.includes(size);
+
+                return (
+                  <FieldGroup key={size} className="max-w-sm">
+                    <Field orientation="horizontal">
+                      <Checkbox
+                        id={size}
+                        name={size}
+                        checked={checked}
+                        onCheckedChange={(value) => {
+                          const nextSizes =
+                            value === true
+                              ? [
+                                  ...selectedSizes.filter(
+                                    (item) => item !== size,
+                                  ),
+                                  size,
+                                ]
+                              : selectedSizes.filter((item) => item !== size);
+
+                          void setQuery({
+                            size: nextSizes.length > 0 ? nextSizes : null,
+                            page: 1,
+                          });
+                        }}
+                      />
+
+                      <Label htmlFor={size} className="text-foreground/70">
+                        {size}
+                      </Label>
+                    </Field>
+                  </FieldGroup>
+                );
+              })}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -165,19 +192,20 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
         <Separator className="my-2" />
 
         {/* In Stock */}
-        <FieldGroup className="max-w-sm my-4">
+        <FieldGroup className="my-4 max-w-sm">
           <Field orientation="horizontal">
             <Checkbox
               id="in_stock"
               name="in_stock"
+              checked={isOnStock}
               onCheckedChange={(checked) => {
                 void setQuery({
                   in_stock: checked === true ? "1" : null,
-                  page: "1",
+                  page: 1,
                 });
               }}
-              checked={isOnStock}
             />
+
             <Label htmlFor="in_stock" className="text-base font-semibold">
               {t("InStockOnly")}
             </Label>
@@ -189,42 +217,52 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
         {/* Occasions */}
         <Accordion type="single" collapsible>
           <AccordionItem value="occasion">
-            <AccordionTrigger className="hover:text-primary hover:no-underline text-base font-semibold">
+            <AccordionTrigger className="text-base font-semibold hover:text-primary hover:no-underline">
               {t("Occasions")}
             </AccordionTrigger>
-            <AccordionContent className="space-y-3">
-              {filters.occasions.map((occasion) => (
-                <FieldGroup key={occasion.id} className="max-w-sm">
-                  <Field orientation="horizontal">
-                    <Checkbox
-                      id={occasion.slug}
-                      name={occasion.name}
-                      checked={selectedOccasions.includes(occasion.slug)}
-                      onCheckedChange={(checked) => {
-                        const nextOccasions =
-                          checked === true
-                            ? [...selectedOccasions, occasion.slug]
-                            : selectedOccasions.filter(
-                                (selectedOccasion) =>
-                                  selectedOccasion !== occasion.slug,
-                              );
 
-                        void setQuery({
-                          occasion:
-                            nextOccasions.length > 0 ? nextOccasions : null,
-                          page: "1",
-                        });
-                      }}
-                    />
-                    <Label
-                      htmlFor={occasion.slug}
-                      className="text-foreground/70 text-sm"
-                    >
-                      {occasion.name}
-                    </Label>
-                  </Field>
-                </FieldGroup>
-              ))}
+            <AccordionContent className="space-y-3">
+              {filters.occasions.map((occasion) => {
+                const checked = selectedOccasions.includes(occasion.slug);
+
+                return (
+                  <FieldGroup key={occasion.id} className="max-w-sm">
+                    <Field orientation="horizontal">
+                      <Checkbox
+                        id={occasion.slug}
+                        name={occasion.name}
+                        checked={checked}
+                        onCheckedChange={(value) => {
+                          const nextOccasions =
+                            value === true
+                              ? [
+                                  ...selectedOccasions.filter(
+                                    (item) => item !== occasion.slug,
+                                  ),
+                                  occasion.slug,
+                                ]
+                              : selectedOccasions.filter(
+                                  (item) => item !== occasion.slug,
+                                );
+
+                          void setQuery({
+                            occasion:
+                              nextOccasions.length > 0 ? nextOccasions : null,
+                            page: 1,
+                          });
+                        }}
+                      />
+
+                      <Label
+                        htmlFor={occasion.slug}
+                        className="text-sm text-foreground/70"
+                      >
+                        {occasion.name}
+                      </Label>
+                    </Field>
+                  </FieldGroup>
+                );
+              })}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
