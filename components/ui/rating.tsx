@@ -1,13 +1,28 @@
+"use client";
+
+import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type RatingProps = {
   rating: number;
   count?: number;
   max?: number;
   size?: number;
+  showReviewsText?: boolean;
+  reviewsTextClassName?: string;
 };
 
-export function Rating({ rating, count, max = 5, size = 16 }: RatingProps) {
+export function Rating({
+  rating,
+  count,
+  max = 5,
+  size = 16,
+  showReviewsText = false,
+  reviewsTextClassName,
+}: RatingProps) {
+  const t = useTranslations("Common");
+
   return (
     <div className="flex items-center gap-1">
       <div className="flex items-center text-primary gap-0.5">
@@ -34,7 +49,15 @@ export function Rating({ rating, count, max = 5, size = 16 }: RatingProps) {
       </div>
 
       {typeof count === "number" && (
-        <span className="ms-2 text-xs text-foreground/50">({count})</span>
+        <span
+          className={cn(
+            "ms-2 text-xs text-foreground/50",
+            reviewsTextClassName,
+          )}
+        >
+          ({count}
+          {showReviewsText ? ` ${t("Reviews")}` : ""})
+        </span>
       )}
     </div>
   );

@@ -231,10 +231,23 @@ export default async function AppFooter() {
             <LocaleSwitcher textColor="text-white/30" />
           </div>
           <div className="flex-1 flex justify-end items-center gap-2">
-            <div className="text-primary text-xs bg-white/30 w-13 h-6 grid place-items-center rounded-xs">
-              Visa
+            <div className="bg-white/8 px-2.5 py-1.5 rounded">
+              <svg width="32" height="12" viewBox="0 0 55 17" fill="none">
+                <text
+                  x="0"
+                  y="13"
+                  font-family="Inter, sans-serif"
+                  font-size="14"
+                  font-weight="700"
+                  fill="#CBB682"
+                  fill-opacity="0.7"
+                >
+                  VISA
+                </text>
+              </svg>
             </div>
-            <div className="bg-white/30 w-12 h-8 grid place-items-center rounded-xs">
+
+            <div className="bg-white/8 px-1.5 py-1.5 rounded">
               <svg width="36" height="22" viewBox="0 0 40 22">
                 <circle
                   cx="14"

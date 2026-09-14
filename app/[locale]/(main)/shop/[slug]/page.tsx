@@ -9,6 +9,15 @@ import SimilarProducts from "@/components/shop/similar-products";
 import ProductVariants from "@/components/shop/product-variants";
 import { ProductDetails as ProductDetailsType } from "@/types/products";
 import ProductPageSkeleton from "@/components/shop/skeleton/product-details-skeleton";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 
 type Params = { slug: string };
 type SearchParams = { addOnsPage: string; reviewPage: string };
@@ -48,6 +57,7 @@ async function Product({
   const cookie = await cookies();
   const token = cookie.get("token")?.value;
   const { addOnsPage, reviewPage } = searchParams;
+  const t = await getTranslations("AppHeader");
 
   // Fetch product details from the API
   const { data: productData, ok: ok1 } = await http.get<{
@@ -69,7 +79,29 @@ async function Product({
   const { images, similar } = product;
 
   return (
-    <main className="container max-w-7xl py-20">
+    <main className="container max-w-7xl pb-20 pt-15">
+      <Breadcrumb className="mb-8">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <Link href="/">{t("Home")}</Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <Link href="/shop">{t("Shop")}</Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <Link href={`/shop?category=${product.category.slug}`}>
+              {product.category.name}
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{product.name}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <ProductImages productImages={images} />
         <ProductVariants productDetails={product} token={token} />

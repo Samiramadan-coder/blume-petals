@@ -40,6 +40,7 @@ async function CustomerDesigns({ cardCaption }: { cardCaption: string }) {
       {data.data.items.map((review, index) => (
         <motion.div
           key={review.id}
+          className="group"
           initial={{
             opacity: 0,
             x: index % 2 === 0 ? -8 : 8,
@@ -58,31 +59,36 @@ async function CustomerDesigns({ cardCaption }: { cardCaption: string }) {
             ease: [0.16, 1, 0.3, 1],
           }}
         >
-          <Card
+          <div
             className={cn(
-              "p-0 pb-8 shadow-[0_8px_30px_rgba(61,46,0,0.08)] transition-transform duration-300 ease-out hover:rotate-0",
+              "transition-transform duration-300 ease-out group-hover:rotate-0 group-hover:scale-103",
               rotations[index % rotations.length],
             )}
           >
-            <CardContent className="p-3">
-              <div className="relative aspect-square overflow-hidden">
-                <Image
-                  src={review.image_url || review.bouquet.image_url}
-                  alt={review.bouquet.name}
-                  fill
-                  sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-            </CardContent>
-          </Card>
+            <Card
+              className={cn(
+                "rounded-none p-3 pb-10 shadow-[0_8px_30px_rgba(61,46,0,0.08)]",
+              )}
+            >
+              <CardContent className="p-0">
+                <div className="relative h-53.75 w-full overflow-hidden">
+                  <Image
+                    src={review.image_url || review.bouquet.image_url}
+                    alt={review.bouquet.name}
+                    fill
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              </CardContent>
+            </Card>
 
-          <div className="pt-4 text-center">
-            <h3 className="text-sm font-semibold text-foreground">
-              {review.made_by}
-            </h3>
-
-            <p className="text-[11px]">{cardCaption}</p>
+            <div className={cn("pt-4 text-center")}>
+              <h3 className="text-sm font-semibold text-foreground">
+                {review.made_by}
+              </h3>
+              <p className="text-[11px] text-[#9caf88]">{cardCaption}</p>
+            </div>
           </div>
         </motion.div>
       ))}
@@ -119,7 +125,7 @@ export default async function DesignedByOurCustomers() {
 
   return (
     <section className="overflow-hidden bg-[#faf8f5]">
-      <div className="container max-w-7xl">
+      <div className="container max-w-6xl">
         <div className="py-20">
           <LandingSubtitle className="text-center">
             {t("Eyebrow")}

@@ -52,6 +52,8 @@ export default function ProductVariants({
         <Rating
           rating={+productDetails.rating_avg}
           count={productDetails.rating_count}
+          showReviewsText={true}
+          reviewsTextClassName="text-base"
         />
       </div>
 
@@ -70,9 +72,9 @@ export default function ProductVariants({
         </h3>
         <div className="space-y-1.5">
           {activeVariant.contains.map((item) => (
-            <div className="flex items-center justify-between" key={item.name}>
+            <div className="flex items-center" key={item.name}>
               <span className="text-foreground text-sm">✓ {item.name}</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-muted-foreground ms-1">
                 ({item.qty}) {t("Stems")}
               </span>
             </div>
