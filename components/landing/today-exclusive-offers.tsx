@@ -46,7 +46,7 @@ export default async function TodayExclusiveOffers() {
               {t("Description")}
             </p>
 
-            <MainButton href="/shop" label={t("PrimaryCta")} />
+            <MainButton href="/shop?is_on_sale=1" label={t("PrimaryCta")} />
           </motion.div>
 
           <motion.div

@@ -236,11 +236,11 @@ export default async function AppFooter() {
                 <text
                   x="0"
                   y="13"
-                  font-family="Inter, sans-serif"
-                  font-size="14"
-                  font-weight="700"
+                  fontFamily="Inter, sans-serif"
+                  fontSize="14"
+                  fontWeight="700"
                   fill="#CBB682"
-                  fill-opacity="0.7"
+                  fillOpacity="0.7"
                 >
                   VISA
                 </text>

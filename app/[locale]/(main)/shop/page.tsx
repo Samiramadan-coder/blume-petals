@@ -7,28 +7,20 @@ import {
 } from "@/components/ui/sheet";
 
 import { Suspense } from "react";
-import * as motion from "motion/react-client";
-
 import { http } from "@/lib/http";
-import { buildQueryString, cn, normalizeArrayParam } from "@/lib/utils";
-
 import { ListFilter } from "lucide-react";
-
+import * as motion from "motion/react-client";
 import { Button } from "@/components/ui/button";
-
 import Filters from "@/components/shop/filters";
-import CardItem from "@/components/shop/card-item";
-import ProductSortSelect from "@/components/shop/product-sort-select";
-
-import NoDataFounded from "@/components/reusable/no-data-founded";
-import PaginationTemplate from "@/components/reusable/pagination-template";
-
-import ListOfProductsSkeleton from "@/components/shop/skeleton/list-of-product-skeleton";
-
-import { getLocale, getTranslations } from "next-intl/server";
-
 import type { Pagination } from "@/types/shared";
+import CardItem from "@/components/shop/card-item";
+import { getLocale, getTranslations } from "next-intl/server";
 import type { FiltersOptions, Product } from "@/types/products";
+import NoDataFounded from "@/components/reusable/no-data-founded";
+import ProductSortSelect from "@/components/shop/product-sort-select";
+import { buildQueryString, cn, normalizeArrayParam } from "@/lib/utils";
+import PaginationTemplate from "@/components/reusable/pagination-template";
+import ListOfProductsSkeleton from "@/components/shop/skeleton/list-of-product-skeleton";
 
 export async function generateMetadata() {
   const t = await getTranslations("Shop");
@@ -47,6 +39,7 @@ type SearchParams = {
   in_stock?: string;
   category?: string;
   sort?: string;
+  is_on_sale?: string;
 };
 
 async function ListOfProducts({
@@ -55,64 +48,23 @@ async function ListOfProducts({
   searchParams: SearchParams;
 }) {
   const t = await getTranslations("Shop");
-
   const sizes = normalizeArrayParam(searchParams.size);
-
   const occasions = normalizeArrayParam(searchParams.occasion);
 
   const requestParams = {
     ...(searchParams.price_min
-      ? {
-          price_min: searchParams.price_min,
-        }
-      : {
-          price_min: "0",
-        }),
-
+      ? { price_min: searchParams.price_min }
+      : { price_min: "0" }),
     ...(searchParams.price_max
-      ? {
-          price_max: searchParams.price_max,
-        }
-      : {
-          price_max: "500",
-        }),
-
-    ...(sizes
-      ? {
-          size: sizes,
-        }
-      : {}),
-
-    ...(searchParams.page
-      ? {
-          page: searchParams.page,
-        }
-      : {}),
-
-    ...(occasions
-      ? {
-          occasion: occasions,
-        }
-      : {}),
-
-    ...(searchParams.in_stock
-      ? {
-          in_stock: searchParams.in_stock,
-        }
-      : {}),
-
-    ...(searchParams.category
-      ? {
-          category: searchParams.category,
-        }
-      : {}),
-
-    ...(searchParams.sort
-      ? {
-          sort: searchParams.sort,
-        }
-      : {}),
-
+      ? { price_max: searchParams.price_max }
+      : { price_max: "500" }),
+    ...(sizes ? { size: sizes } : {}),
+    ...(searchParams.page ? { page: searchParams.page } : {}),
+    ...(occasions ? { occasion: occasions } : {}),
+    ...(searchParams.in_stock ? { in_stock: searchParams.in_stock } : {}),
+    ...(searchParams.category ? { category: searchParams.category } : {}),
+    ...(searchParams.sort ? { sort: searchParams.sort } : {}),
+    ...(searchParams.is_on_sale ? { is_on_sale: searchParams.is_on_sale } : {}),
     per_page: 12,
     made_to_order: 0,
   };
