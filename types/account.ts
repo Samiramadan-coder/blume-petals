@@ -13,7 +13,11 @@ export const accountSchema = (t: T) =>
       .string()
       .min(1, t("Errors.FullNameIsRequired"))
       .min(2, t("Errors.FullNameIsTooShort")),
-    email: z.email(t("Errors.EmailIsInvalid")),
+    email: z
+      .string()
+      .email(t("Errors.EmailIsInvalid"))
+      .optional()
+      .or(z.literal("")),
     phone: z.string().trim(),
     // .regex(/^5[024568]\d{7}$/, t("Errors.PhoneIsInvalid")),
     photo_url: imageSchema.optional(),

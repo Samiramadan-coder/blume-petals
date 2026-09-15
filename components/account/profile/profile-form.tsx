@@ -166,7 +166,6 @@ export default function ProfileForm({
               name="email"
               register={register}
               errors={errors}
-              required
               placeholder={tFields("Placeholders.Email")}
               inputClassName="disabled:bg-primary/30 disabled:opacity-100"
               label={tFields("Labels.Email")}
