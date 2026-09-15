@@ -15,6 +15,8 @@ async function ProductAddOnsData({
 }: {
   currentAddOnsPage: string;
 }) {
+  const t = await getTranslations("Shop");
+
   const { data, ok } = await http.get<{
     data: {
       items: Product[];
@@ -34,7 +36,7 @@ async function ProductAddOnsData({
   return (
     <>
       {data.data.items.length === 0 ? (
-        <NoDataFounded />
+        <NoDataFounded label={t("EmptyStateAddOn")} />
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">

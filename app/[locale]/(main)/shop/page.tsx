@@ -105,7 +105,7 @@ async function ListOfProducts({
       </motion.div>
 
       {data.data.items.length === 0 ? (
-        <NoDataFounded />
+        <NoDataFounded label={t("EmptyState")} />
       ) : (
         <>
           <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">

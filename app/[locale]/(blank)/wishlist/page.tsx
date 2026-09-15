@@ -24,6 +24,8 @@ async function ListOfProducts({
 }: {
   searchParams: SearchParams;
 }) {
+  const t = await getTranslations("Shop");
+
   const { data, ok } = await http.get<{
     data: {
       items: Product[];
@@ -43,7 +45,7 @@ async function ListOfProducts({
   return (
     <>
       {data.data.items.length === 0 ? (
-        <NoDataFounded />
+        <NoDataFounded label={t("EmptyWishlist")} />
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -41,7 +41,7 @@ async function ReviewsData({
   return (
     <>
       {data.data.items.length === 0 ? (
-        <NoDataFounded />
+        <NoDataFounded label={t("EmptyStateReviews")} />
       ) : (
         <>
           <div className="flex flex-col md:flex-row gap-14 mb-6">
