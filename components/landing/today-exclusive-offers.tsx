@@ -1,13 +1,24 @@
 import { Badge } from "../ui/badge";
 import { Countdown } from "./count-down";
-import { getTranslations } from "next-intl/server";
 import MainButton from "../ui/main-button";
 import LandingTitle from "./landing-title";
-
 import * as motion from "motion/react-client";
+import { getTranslations } from "next-intl/server";
 
 export default async function TodayExclusiveOffers() {
   const t = await getTranslations("LandingTodayExclusiveOffers");
+
+  function getTomorrowEndDate() {
+    const date = new Date();
+
+    date.setDate(date.getDate() + 1);
+    date.setHours(23, 59, 59, 0);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}T23:59:59`;
+  }
 
   return (
     <section className="bg-[url('/images/home/today-exclusive-offers/rose.webp')] bg-cover bg-center bg-no-repeat">
@@ -69,7 +80,7 @@ export default async function TodayExclusiveOffers() {
             }}
           >
             <Countdown
-              targetDate="2026-08-14T23:59:59"
+              targetDate={getTomorrowEndDate()}
               labels={{
                 eyebrow: t("Countdown.Eyebrow"),
                 hours: t("Countdown.Hours"),

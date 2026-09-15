@@ -1,46 +1,55 @@
 "use client";
 
-import CountUp from "react-countup";
-import * as motion from "motion/react-client";
-
-import { useLocale, useTranslations } from "next-intl";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-import LandingSubtitle from "./landing-subtitle";
-import LandingTitle from "./landing-title";
-
 import { cn } from "@/lib/utils";
-
-const stats = [
-  {
-    key: "BouquetsDesigned",
-    end: 12000,
-    suffix: "+",
-  },
-  {
-    key: "AverageRating",
-    end: 4.9,
-    decimals: 1,
-    suffix: "★",
-  },
-  {
-    key: "EmiratesDelivered",
-    end: 7,
-  },
-  {
-    key: "HappyCustomers",
-    end: 2500,
-    suffix: "+",
-  },
-];
+import CountUp from "react-countup";
+import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import LandingSubtitle from "./landing-subtitle";
+import { useLocale, useTranslations } from "next-intl";
+// import { useEffect } from "react";
+// import { http } from "@/lib/http";
 
 export default function SubscribeSection() {
-  const t = useTranslations("LandingSubscribeSection");
   const locale = useLocale();
-
+  const t = useTranslations("LandingSubscribeSection");
   const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const { data } = await http.get("/api/v1/stats");
+  //       console.log(data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+
+  const stats = [
+    {
+      key: "BouquetsDesigned",
+      end: 12000,
+      suffix: "+",
+    },
+    {
+      key: "AverageRating",
+      end: 4.9,
+      decimals: 1,
+      suffix: "★",
+    },
+    {
+      key: "EmiratesDelivered",
+      end: 7,
+    },
+    {
+      key: "HappyCustomers",
+      end: 2500,
+      suffix: "+",
+    },
+  ];
 
   return (
     <section>
