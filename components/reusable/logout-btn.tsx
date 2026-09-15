@@ -23,7 +23,7 @@ export default function LogoutBtn({ className }: { className?: string }) {
     if (result.success) {
       await deleteToken();
       toast.success(t("LogoutSuccess"));
-      router.replace("/login");
+      router.replace("/");
       setIsLoading(false);
       return;
     }
