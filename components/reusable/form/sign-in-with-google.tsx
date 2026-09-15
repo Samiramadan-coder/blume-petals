@@ -3,10 +3,10 @@
 import { toast } from "sonner";
 import { http } from "@/lib/http";
 import { saveToken } from "@/lib/actions";
-import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-import { LoginResponse } from "@/types/auth";
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { LoginResponse } from "@/types/auth";
+import { useLocale, useTranslations } from "next-intl";
 
 declare global {
   interface Window {
@@ -21,12 +21,28 @@ export default function GoogleLoginButton() {
   const router = useRouter();
 
   const containerRef = useRef<HTMLDivElement>(null);
+  // Keep latest t/router available to the effect below without making it
+  // re-run (and reload the Google script) on every unrelated re-render.
+  const tRef = useRef(t);
+  const routerRef = useRef(router);
 
   useEffect(() => {
-    const renderGoogleButton = () => {
-      if (!window.google || !containerRef.current) return;
+    tRef.current = t;
+    routerRef.current = router;
+  });
 
-      containerRef.current.innerHTML = "";
+  useEffect(() => {
+    // Guards against a stale script's onload firing after this effect was
+    // cleaned up (e.g. React Strict Mode double-invoke, or removing/adding
+    // the script tag again before the previous load resolved), which used to
+    // race the new render and could momentarily insert the button twice.
+    let cancelled = false;
+    const container = containerRef.current;
+
+    const renderGoogleButton = () => {
+      if (cancelled || !window.google || !container) return;
+
+      container.innerHTML = "";
 
       window.google.accounts.id.initialize({
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
@@ -34,7 +50,7 @@ export default function GoogleLoginButton() {
           const idToken = credentialResponse.credential;
 
           if (!idToken) {
-            toast.error(t("GoogleTokenFailed"));
+            toast.error(tRef.current("GoogleTokenFailed"));
             return;
           }
 
@@ -48,21 +64,21 @@ export default function GoogleLoginButton() {
 
             if (data.data.token) {
               await saveToken(data.data.token);
-              router.push("/");
+              routerRef.current.push("/");
             }
           } catch {
-            toast.error(t("GoogleLoginFailed"));
+            toast.error(tRef.current("GoogleLoginFailed"));
           }
         },
       });
 
-      window.google.accounts.id.renderButton(containerRef.current, {
+      window.google.accounts.id.renderButton(container, {
         theme: "outline",
         size: "large",
         shape: "rectangular",
         text: "signin",
         locale: locale === "ar" ? "ar" : "en",
-        width: containerRef.current.offsetWidth,
+        width: container.offsetWidth,
       });
     };
 
@@ -89,9 +105,16 @@ export default function GoogleLoginButton() {
     document.head.appendChild(script);
 
     return () => {
+      cancelled = true;
       script.remove();
-    };
-  }, [locale, router, t]);
 
-  return <div ref={containerRef} className="w-full" />;
+      if (container) {
+        container.innerHTML = "";
+      }
+    };
+  }, [locale]);
+
+  // Fixed height matches Google's "large" button so the page doesn't jump
+  // once the script loads and renders the button in asynchronously.
+  return <div ref={containerRef} className="w-full h-10" />;
 }

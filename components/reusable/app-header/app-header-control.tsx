@@ -126,12 +126,12 @@ export default function AppHeaderControl({
                 >
                   {tAccount("SavedAddresses")}
                 </DropdownMenuItem>
-                <DropdownMenuItem
+                {/* <DropdownMenuItem
                   className="py-2 text-foreground cursor-pointer rounded-none"
                   onClick={() => router.push("/account/settings")}
                 >
                   {tAccount("Settings")}
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <LogoutBtn className="h-10" />
