@@ -239,8 +239,8 @@ export default function Step3({
                               <Image
                                 src={cardStyle.image_url}
                                 alt={cardStyle.name}
-                                width={50}
-                                height={50}
+                                fill
+                                className="object-cover"
                               />
                             )}
                           </div>
