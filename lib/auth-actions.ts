@@ -144,10 +144,12 @@ type ResetPasswordResult =
     };
 
 export async function resetPassword(
-  data: ResetPasswordForm,
+  formData: ResetPasswordForm,
 ): Promise<ResetPasswordResult> {
   try {
-    await http.post("/api/v1/auth/password/reset", data);
+    const { data } = await http.post("/api/v1/auth/password/reset", formData);
+    console.log("Reset password response data:", data);
+
     return { success: true };
   } catch (err) {
     console.error("Error resetting password:", err);
