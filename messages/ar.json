@@ -517,7 +517,8 @@
       "Delivered": "تم التسليم",
       "Cancelled": "تم الإلغاء",
       "PaymentCompletedSuccessfully": "تم إتمام الدفع بنجاح.",
-      "PaymentFailed": "فشل الدفع. يرجى المحاولة مرة أخرى."
+      "PaymentFailed": "فشل الدفع. يرجى المحاولة مرة أخرى.",
+      "EmptyState": "ليس لديك أي طلبات بعد."
     },
     "Designs": {
       "Title": "تصاميمي",

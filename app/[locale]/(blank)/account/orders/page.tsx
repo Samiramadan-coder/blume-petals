@@ -23,6 +23,7 @@ export async function generateMetadata() {
 
 async function OrdersList({ searchParams }: { searchParams: SearchParams }) {
   const { page, status } = searchParams;
+  const t = await getTranslations("Account.Orders");
 
   const { data, ok } = await http.get<{
     data: {
@@ -47,7 +48,7 @@ async function OrdersList({ searchParams }: { searchParams: SearchParams }) {
   return (
     <>
       {data.data.items.length === 0 ? (
-        <NoDataFounded />
+        <NoDataFounded label={t("EmptyState")} />
       ) : (
         <Orders orders={data?.data.items} pagination={data?.data.pagination} />
       )}

@@ -526,7 +526,8 @@
       "Delivered": "Delivered",
       "Cancelled": "Cancelled",
       "PaymentCompletedSuccessfully": "Payment completed successfully.",
-      "PaymentFailed": "Payment failed. Please try again."
+      "PaymentFailed": "Payment failed. Please try again.",
+      "EmptyState": "You have no orders yet."
     },
     "Designs": {
       "Title": "My Designs",
