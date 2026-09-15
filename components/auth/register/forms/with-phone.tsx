@@ -33,7 +33,12 @@ export default function RegisterWithPhone() {
   });
 
   const onSubmit: SubmitHandler<RegisterFormWithPhone> = async (data) => {
-    const result = await generateRegisterOtp(data);
+    const handeledData = {
+      ...data,
+      phone: "+20" + data.phone,
+    };
+
+    const result = await generateRegisterOtp(handeledData);
 
     if (result.success) {
       setOpenOTP(true);
@@ -44,10 +49,7 @@ export default function RegisterWithPhone() {
     toast.error(tFields("Errors.CreateAccountError"));
   };
 
-  const phone = useWatch({
-    control,
-    name: "phone",
-  });
+  const phone = useWatch({ control, name: "phone" });
 
   return (
     <>
@@ -72,16 +74,16 @@ export default function RegisterWithPhone() {
           label={tFields("Labels.Phone")}
           placeholder={tFields("Placeholders.Phone")}
           required
-          prefix="AE +971"
+          prefix="AE +20"
         />
 
         <p className="text-xs text-foreground/60 text-center">
           {t("AgreeText")}{" "}
-          <Link href="" className="text-primary">
+          <Link href="/terms" className="text-primary">
             {t("TermsConditions")}
           </Link>{" "}
           {t("And", { defaultValue: "and" })}{" "}
-          <Link href="" className="text-primary">
+          <Link href="/privacy-policy" className="text-primary">
             {t("PrivacyPolicy")}
           </Link>
         </p>
@@ -97,7 +99,11 @@ export default function RegisterWithPhone() {
           <OTPDialog
             endPoint="/api/v1/auth/otp/verify"
             subtitle={t("OtpSentToPhone")}
-            extraData={{ phone, device_name: "web", purpose: "login" }}
+            extraData={{
+              phone: "+20" + phone,
+              device_name: "web",
+              purpose: "login",
+            }}
             resendOTP={() => formRef?.current?.requestSubmit?.()}
             loadingResendOTP={isSubmitting}
           />

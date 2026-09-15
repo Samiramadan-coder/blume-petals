@@ -36,7 +36,12 @@ export default function PhoneLogin() {
   });
 
   const onSubmit: SubmitHandler<PhoneLoginForm> = async (data) => {
-    const result = await generateRegisterOtp(data);
+    const handeledData = {
+      ...data,
+      phone: "+20" + data.phone,
+    };
+
+    const result = await generateRegisterOtp(handeledData);
 
     if (result.success) {
       setOpenOTP(true);
@@ -72,7 +77,7 @@ export default function PhoneLogin() {
           errors={errors}
           label={tFields("Labels.Phone")}
           placeholder={tFields("Placeholders.Phone")}
-          prefix="AE +971"
+          prefix="AE +20"
           required
         />
 
@@ -84,7 +89,11 @@ export default function PhoneLogin() {
           <OTPDialog
             endPoint="/api/v1/auth/otp/verify"
             subtitle={t("OtpSentToPhone")}
-            extraData={{ phone, device_name: "web", purpose: "login" }}
+            extraData={{
+              phone: "+20" + phone,
+              device_name: "web",
+              purpose: "login",
+            }}
             resendOTP={() => formRef?.current?.requestSubmit?.()}
             loadingResendOTP={isSubmitting}
           />
