@@ -56,7 +56,7 @@ export default function ProfileForm({
   const tFields = useTranslations("Fields");
   const tActions = useTranslations("Actions");
   const [openOTP, setOpenOTP] = useState(false);
-  const [oldPhone, setOldPhone] = useState(user.phone);
+  const [oldPhone, setOldPhone] = useState(user.phone.split("+20")[1]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -71,7 +71,7 @@ export default function ProfileForm({
     defaultValues: {
       name: user.name,
       email: user.email,
-      phone: user.phone,
+      phone: user.phone.split("+20")[1],
       photo_url: user?.photo_url || "",
       locale: locale,
     },
@@ -79,7 +79,7 @@ export default function ProfileForm({
 
   const onSubmit: SubmitHandler<Account> = async (data) => {
     if (data.phone !== oldPhone) {
-      const result = await getOTPPhoneChange(data.phone);
+      const result = await getOTPPhoneChange("+20" + data.phone);
 
       if (result.success) {
         setOpenOTP(true);
@@ -182,7 +182,7 @@ export default function ProfileForm({
               inputClassName="disabled:bg-primary/30 disabled:opacity-100"
               label={tFields("Labels.Phone")}
               disabled={!isEditMode}
-              prefix={isEditMode ? "AE +971" : undefined}
+              prefix={isEditMode ? "AE +20" : undefined}
             />
 
             <Separator />
