@@ -1,52 +1,61 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { http } from "@/lib/http";
 import CountUp from "react-countup";
 import LandingTitle from "./landing-title";
+import { useEffect, useState } from "react";
 import * as motion from "motion/react-client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LandingSubtitle from "./landing-subtitle";
 import { useLocale, useTranslations } from "next-intl";
-// import { useEffect } from "react";
-// import { http } from "@/lib/http";
+
+type Stats = {
+  average_rating: string;
+  bouquets_designed: number;
+  emirates_delivered: number;
+  happy_customers: number;
+  reviews_count: number;
+};
 
 export default function SubscribeSection() {
   const locale = useLocale();
   const t = useTranslations("LandingSubscribeSection");
   const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
+  const [statsData, setStatsData] = useState<Stats | null>(null);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const { data } = await http.get("/api/v1/stats");
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await http.get<{ data: Stats }>("/api/v1/stats");
+        setStatsData(data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const stats = [
     {
       key: "BouquetsDesigned",
-      end: 12000,
+      end: statsData?.bouquets_designed ?? 0,
       suffix: "+",
     },
     {
       key: "AverageRating",
-      end: 4.9,
+      end: parseFloat(statsData?.average_rating ?? "0"),
       decimals: 1,
       suffix: "★",
     },
     {
       key: "EmiratesDelivered",
-      end: 7,
+      end: statsData?.emirates_delivered ?? 0,
     },
     {
       key: "HappyCustomers",
-      end: 2500,
+      end: statsData?.happy_customers ?? 0,
       suffix: "+",
     },
   ];
