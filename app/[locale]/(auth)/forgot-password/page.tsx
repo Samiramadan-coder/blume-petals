@@ -1,5 +1,5 @@
-import ForgotPassword from "@/components/auth/forgot-password/forgot-password";
 import { getTranslations } from "next-intl/server";
+import ForgotPassword from "@/components/auth/forgot-password/forgot-password";
 
 export async function generateMetadata() {
   const t = await getTranslations("ForgotPassword");

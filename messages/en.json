@@ -420,9 +420,13 @@
   },
   "ForgotPassword": {
     "Title": "Forgot Password?",
-    "Description": "Enter your email and we'll send you a reset link.",
-    "SendResetLink": "Send Reset Link",
-    "BackToSignIn": "Back to Sign In"
+    "Description": "Enter your email and we'll send you a verification code.",
+    "SendResetLink": "Send Verification Code",
+    "BackToSignIn": "Back to Sign In",
+    "CodeMustBe6Digits": "Code must be 6 digits",
+    "VerificationCode": "Verification Code",
+    "EnterVerificationCode": "Enter the verification code sent to your email.",
+    "Verify": "Verify"
   },
   "ResetPassword": {
     "Title": "Reset Password",

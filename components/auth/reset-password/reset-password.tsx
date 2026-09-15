@@ -2,26 +2,33 @@
 
 import { toast } from "sonner";
 import { useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { ArrowLeft, ArrowRight, Eye, EyeOff } from "lucide-react";
 import AuthCard from "../shared/auth-card";
-import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { resetPassword } from "@/lib/auth-actions";
+import { Link, useRouter } from "@/i18n/navigation";
+import AppLogo from "@/components/reusable/app-logo";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLocale, useTranslations } from "next-intl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import FormInput from "@/components/reusable/form/form-input";
+import { ArrowLeft, ArrowRight, Eye, EyeOff } from "lucide-react";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { ResetPasswordForm, resetPasswordSchema } from "@/types/auth";
-import AppLogo from "@/components/reusable/app-logo";
 
-export default function ResetPassword() {
-  const locale = useLocale();
-  const t = useTranslations("ResetPassword");
-  const tFields = useTranslations("Fields");
-  const tForgotPassword = useTranslations("ForgotPassword");
+export default function ResetPassword({
+  code,
+  email,
+}: {
+  code: string;
+  email: string;
+}) {
   const router = useRouter();
+  const locale = useLocale();
+  const tFields = useTranslations("Fields");
+  const t = useTranslations("ResetPassword");
   const [showPassword, setShowPassword] = useState(false);
+  const tForgotPassword = useTranslations("ForgotPassword");
+
   const {
     register,
     handleSubmit,
@@ -29,6 +36,12 @@ export default function ResetPassword() {
     formState: { errors, isSubmitting },
   } = useForm<ResetPasswordForm>({
     resolver: zodResolver(resetPasswordSchema(tFields)),
+    defaultValues: {
+      email: email,
+      code: code,
+      password: "",
+      password_confirmation: "",
+    },
   });
 
   const onSubmit: SubmitHandler<ResetPasswordForm> = async (data) => {
@@ -73,6 +86,7 @@ export default function ResetPassword() {
           label={tFields("Labels.Email")}
           placeholder={tFields("Placeholders.Email")}
           required
+          disabled
         />
 
         <FormInput
@@ -81,8 +95,8 @@ export default function ResetPassword() {
           errors={errors}
           label={tFields("Labels.OTP")}
           placeholder={tFields("Placeholders.OTP")}
-          description={t("OtpSent")}
           required
+          disabled
         />
 
         <FormInput
