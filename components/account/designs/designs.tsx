@@ -7,6 +7,7 @@ import PageTitle from "../shared/page-title";
 import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
 import PaginationTemplate from "@/components/reusable/pagination-template";
+import NoDataFounded from "@/components/reusable/no-data-founded";
 
 export default async function Designs({
   items,
@@ -27,16 +28,22 @@ export default async function Designs({
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {items.map((item, index) => (
-          <DesignCard key={index} item={item} />
-        ))}
+        {items.length > 0 ? (
+          <>
+            {items.map((item, index) => (
+              <DesignCard key={index} item={item} />
+            ))}
 
-        <div className="sm:col-span-2 md:col-span-3">
-          <PaginationTemplate
-            currentPage={pagination.current_page}
-            totalPages={pagination.last_page}
-          />
-        </div>
+            <div className="sm:col-span-2 md:col-span-3">
+              <PaginationTemplate
+                currentPage={pagination.current_page}
+                totalPages={pagination.last_page}
+              />
+            </div>
+          </>
+        ) : (
+          <NoDataFounded label={t("EmptyState")} />
+        )}
 
         <div className="col-span-1 sm:col-span-2 md:col-span-3">
           <Link href="/builder">

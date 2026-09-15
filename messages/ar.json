@@ -530,7 +530,8 @@
       "Edit": "تعديل",
       "AddedToCartSuccessfully": "تمت الإضافة إلى السلة بنجاح.",
       "FailedToAddToCart": "فشل في الإضافة إلى السلة. يرجى المحاولة مرة أخرى.",
-      "Flower": "زهرة"
+      "Flower": "زهرة",
+      "EmptyState": "ليس لديك أي تصاميم بعد."
     },
     "MYSettings": {
       "Title": "الإعدادات",

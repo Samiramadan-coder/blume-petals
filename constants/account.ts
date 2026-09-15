@@ -20,10 +20,10 @@ export const links = (t: T) => [
     label: t("SavedAddresses"),
     href: "/account/addresses",
   },
-  {
-    label: t("Settings"),
-    href: "/account/settings",
-  },
+  // {
+  //   label: t("Settings"),
+  //   href: "/account/settings",
+  // },
 ];
 
 export const accountItems = (t: T) => [

@@ -539,7 +539,8 @@
       "Edit": "Edit",
       "AddedToCartSuccessfully": "Added to cart successfully.",
       "FailedToAddToCart": "Failed to add to cart. Please try again.",
-      "Flower": "Flower"
+      "Flower": "Flower",
+      "EmptyState": "You have no designs yet."
     },
     "MYSettings": {
       "Title": "Settings",
