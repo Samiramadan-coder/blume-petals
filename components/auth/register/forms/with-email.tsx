@@ -147,11 +147,11 @@ export default function RegisterWithEmail() {
 
         <p className="text-xs text-foreground/60 text-center">
           {t("AgreeText")}{" "}
-          <Link href="" className="text-primary font-semibold">
+          <Link href="/terms" className="text-primary font-semibold">
             {t("TermsConditions")}
           </Link>{" "}
           {t("And", { defaultValue: "and" })}{" "}
-          <Link href="" className="text-primary font-semibold">
+          <Link href="/privacy-policy" className="text-primary font-semibold">
             {t("PrivacyPolicy")}
           </Link>
         </p>

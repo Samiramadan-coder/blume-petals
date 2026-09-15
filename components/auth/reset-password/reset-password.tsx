@@ -49,7 +49,7 @@ export default function ResetPassword({
 
     if (result.success) {
       toast.success(tFields("Messages.ResetSuccess"));
-      router.push("/login");
+      router.push("/");
       return;
     }
 
