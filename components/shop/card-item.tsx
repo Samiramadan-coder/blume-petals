@@ -29,6 +29,15 @@ export default async function CardItem({
   const cookieStore = await cookies();
   const t = await getTranslations("Shop");
   const isLoggedIn = Boolean(cookieStore.get("token")?.value);
+  const saleVariant = item.variants.find((variant) => variant.compare_at_price);
+  const percentageOff =
+    saleVariant && saleVariant.compare_at_price
+      ? Math.round(
+          ((+saleVariant.compare_at_price - +saleVariant.price) /
+            +saleVariant.compare_at_price) *
+            100,
+        )
+      : 0;
 
   return (
     <Card
@@ -65,6 +74,11 @@ export default async function CardItem({
               {item.is_new && (
                 <Badge className="text-white bg-secondary text-xs h-6">
                   ✨ {t("New")}
+                </Badge>
+              )}
+              {saleVariant && (
+                <Badge className="text-white bg-red-500 text-xs h-6">
+                  🔥 {percentageOff}% {t("Off")}
                 </Badge>
               )}
               {item.is_best_seller && (

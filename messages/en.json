@@ -643,7 +643,8 @@
     "AddAddressToProceed": "Please add an address to proceed with your order.",
     "BouquetComposition": "Bouquet Composition",
     "Stems": "Stems",
-    "PaymentOnDelivery": "Payment On Delivery"
+    "PaymentOnDelivery": "Payment On Delivery",
+    "Off": "Off"
   },
   "Notifications": {
     "Title": "Notifications",

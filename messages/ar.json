@@ -635,7 +635,8 @@
     "AddAddressToProceed": "يرجى إضافة عنوان للمتابعة في طلبك.",
     "BouquetComposition": "تركيب الباقة",
     "Stems": "سيقان",
-    "PaymentOnDelivery": "الدفع عند الاستلام"
+    "PaymentOnDelivery": "الدفع عند الاستلام",
+    "Off": "خصم"
   },
   "Notifications": {
     "Title": "الإشعارات",

@@ -1,14 +1,3 @@
-import { Suspense } from "react";
-import { http } from "@/lib/http";
-import { cookies } from "next/headers";
-import { AppSettings } from "@/types/landing";
-import ProductInfo from "@/components/shop/product-info";
-import ProductImages from "@/components/shop/product-images";
-import ProductAddOns from "@/components/shop/product-add-ons";
-import SimilarProducts from "@/components/shop/similar-products";
-import ProductVariants from "@/components/shop/product-variants";
-import { ProductDetails as ProductDetailsType } from "@/types/products";
-import ProductPageSkeleton from "@/components/shop/skeleton/product-details-skeleton";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,8 +5,20 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+
+import { Suspense } from "react";
+import { http } from "@/lib/http";
+import { cookies } from "next/headers";
 import { Link } from "@/i18n/navigation";
+import { AppSettings } from "@/types/landing";
 import { getTranslations } from "next-intl/server";
+import ProductInfo from "@/components/shop/product-info";
+import ProductImages from "@/components/shop/product-images";
+import ProductAddOns from "@/components/shop/product-add-ons";
+import SimilarProducts from "@/components/shop/similar-products";
+import ProductVariants from "@/components/shop/product-variants";
+import { ProductDetails as ProductDetailsType } from "@/types/products";
+import ProductPageSkeleton from "@/components/shop/skeleton/product-details-skeleton";
 
 type Params = { slug: string };
 type SearchParams = { addOnsPage: string; reviewPage: string };
