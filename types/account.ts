@@ -161,6 +161,7 @@ export type OrderItem = {
   };
   order_number: number;
   payment_status: string;
+  payment_method: string;
   placed_at: string;
   status:
     | "pending"

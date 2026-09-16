@@ -218,7 +218,9 @@ export default async function OrderCard({
                   <h4 className="mb-2 font-semibold text-foreground md:text-base">
                     {t("PaymentMethod")}
                   </h4>
-                  <p className="text-sm text-foreground/60">Not specified</p>
+                  <p className="text-sm text-foreground/60">
+                    {order.payment_method}
+                  </p>
                 </div>
               </div>
 
