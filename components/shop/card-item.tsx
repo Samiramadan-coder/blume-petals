@@ -92,7 +92,7 @@ export default async function CardItem({
               )}
               {isOutOfStock && (
                 <Badge className="text-white bg-gray-500 text-xs h-6">
-                  ❌ {t("OutOfStock")}
+                  {t("OutOfStock")}
                 </Badge>
               )}
             </div>
