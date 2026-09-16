@@ -8,6 +8,7 @@ import { useCart } from "@/providers/cart-provider";
 import DeleteFromCart from "./delete-form-cart";
 import { useTranslations } from "next-intl";
 import NoDataFounded from "../reusable/no-data-founded";
+import { Badge } from "../ui/badge";
 
 export default function CardItems() {
   const { items } = useCart();
@@ -25,7 +26,7 @@ export default function CardItems() {
             >
               <div className="relative size-24 shrink-0 overflow-hidden rounded-xl">
                 <Image
-                  src={item.product.image_url}
+                  src={item.design?.image_url ?? item.product.image_url}
                   alt={item.product.name}
                   fill
                   className="object-cover"
@@ -37,6 +38,11 @@ export default function CardItems() {
                   <div>
                     <h3 className="flex items-center gap-2 text-sm md:text-lg font-semibold text-foreground">
                       {item.product.name}
+                      {item.design && (
+                        <Badge className="text-sm py-1.5 bg-secondary/30 text-secondary">
+                          {t("CustomDesign")}
+                        </Badge>
+                      )}
                       {!item.variant.in_stock && (
                         <PackageX className="size-5 text-red-400" />
                       )}

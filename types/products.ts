@@ -74,6 +74,9 @@ export type CartItem = {
   unit_price: string;
   product: Product;
   variant: Variant;
+  design: null | {
+    image_url: string;
+  };
 };
 
 export type Summary = {

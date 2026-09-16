@@ -47,6 +47,8 @@ export default function Step2({
     operation: "increment" | "decrement",
     index: number,
   ) {
+    setValue("image", "");
+
     const selectedFlower = flowers[index];
 
     if (!selectedFlower) return;
