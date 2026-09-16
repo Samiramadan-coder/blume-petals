@@ -35,7 +35,7 @@ async function OrdersList({ searchParams }: { searchParams: SearchParams }) {
       tags: ["orders"],
     },
     params: {
-      per_page: 5,
+      per_page: 10,
       page: page ?? "1",
       status: status ?? "all",
     },

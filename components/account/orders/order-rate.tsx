@@ -5,6 +5,7 @@ import {
   DialogClose,
   DialogContent,
   DialogFooter,
+  DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
@@ -19,13 +20,17 @@ import OrderRating from "@/components/account/orders/order-rating";
 import FormTextarea from "@/components/reusable/form/form-textarea";
 import { OrderItem, RatingFormData, ratingSchema } from "@/types/account";
 import { useForm, SubmitHandler, Controller, useWatch } from "react-hook-form";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
 
 export default function OrderRate({
   items,
   orderId,
+  orderNumber,
 }: {
   items: OrderItem["items"];
   orderId: number;
+  orderNumber: number;
 }) {
   const t = useTranslations("Account.Orders");
   const formRef = useRef<HTMLFormElement>(null);
@@ -37,8 +42,9 @@ export default function OrderRate({
     control,
     setValue,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<RatingFormData>({
+    mode: "onChange",
     resolver: zodResolver(ratingSchema(t)),
     defaultValues: {
       reviews: items.map((item) => ({
@@ -74,7 +80,29 @@ export default function OrderRate({
           {t("RateOrder")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
+
+      <DialogContent className="sm:max-w-112.5 p-6">
+        <DialogHeader>
+          <div className="flex gap-2">
+            <Image
+              src={items[0].image_url}
+              alt="Order Image"
+              width={50}
+              height={50}
+              className="rounded-lg max-h-12.5"
+            />
+
+            <div className="p-1 space-y-1">
+              <p className="font-semibold text-foreground truncate">
+                {items[0].name}
+              </p>
+              <p className="text-secondary">#{orderNumber}</p>
+            </div>
+          </div>
+
+          <Separator className="bg-primary/30" />
+        </DialogHeader>
+
         <h3 className="text-2xl text-center font-medium text-foreground">
           {t("OrderExperience")}
         </h3>
@@ -89,6 +117,7 @@ export default function OrderRate({
                   rating: value,
                   product_slug: item.slug,
                 })),
+                { shouldValidate: true },
               );
               setGeneralRating(value);
             }}
@@ -127,24 +156,27 @@ export default function OrderRate({
               register={register}
               label={t("FeedbackLabel")}
               placeholder={t("FeedbackPlaceholder")}
-              inputClassName="h-30"
+              inputClassName="h-30 placeholder:text-muted-foreground placeholder:text-base"
+              labelClassName="font-normal"
             />
           </form>
         )}
 
-        <DialogFooter>
+        <DialogFooter className="bg-white border-0 flex flex-col!">
           <Button
             onClick={() => formRef.current?.requestSubmit()}
-            className="h-10 cursor-pointer"
+            className="font-bold cursor-pointer text-base h-12"
             aria-label="Submit Order Rating"
+            disabled={!isValid || isSubmitting}
           >
             {isSubmitting ? <Spinner /> : t("SubmitRating")}
           </Button>
+
           <DialogClose asChild>
             <Button
-              variant="outline"
+              variant="ghost"
               ref={closeBtn}
-              className="h-10 cursor-pointer"
+              className="h-10 cursor-pointer text-secondary hover:bg-transparent hover:text-secondary"
               aria-label="Close Order Rating Dialog"
             >
               {t("MaybeLater")}

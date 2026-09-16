@@ -234,9 +234,14 @@ export default async function OrderCard({
                   <OrderCancel orderId={order.id} />
                 )}
 
-                {order.status === "delivered" && !order.items[0].reviewed && (
-                  <OrderRate items={order.items} orderId={order.id} />
-                )}
+                {order.status === "delivered" &&
+                  !order.items.every((item) => item.reviewed) && (
+                    <OrderRate
+                      items={order.items.filter((item) => !item.reviewed)}
+                      orderId={order.id}
+                      orderNumber={order.order_number}
+                    />
+                  )}
 
                 {!defaultOpen && (
                   <Link href={`/account/orders/${order.id}`} className="flex-1">

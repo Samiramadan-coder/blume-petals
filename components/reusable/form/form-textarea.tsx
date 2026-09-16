@@ -27,6 +27,7 @@ type FormTextareaProps<T extends FieldValues> = {
   className?: string;
   inputClassName?: string;
   disabled?: boolean;
+  labelClassName?: string;
 };
 
 export default function FormTextarea<T extends FieldValues>({
@@ -39,6 +40,7 @@ export default function FormTextarea<T extends FieldValues>({
   className,
   inputClassName,
   disabled = false,
+  labelClassName,
 }: FormTextareaProps<T>) {
   const error = get(errors, name);
 
@@ -50,6 +52,7 @@ export default function FormTextarea<T extends FieldValues>({
           className={cn(
             "text-sm font-semibold",
             required && "after:ms-1 after:text-destructive after:content-['*']",
+            labelClassName,
           )}
         >
           {label}
