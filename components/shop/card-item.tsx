@@ -29,6 +29,7 @@ export default async function CardItem({
   const cookieStore = await cookies();
   const t = await getTranslations("Shop");
   const isLoggedIn = Boolean(cookieStore.get("token")?.value);
+  const isOutOfStock = item.variants.every((variant) => !variant.in_stock);
   const saleVariant = item.variants.find((variant) => variant.compare_at_price);
   const percentageOff =
     saleVariant && saleVariant.compare_at_price
@@ -38,6 +39,8 @@ export default async function CardItem({
             100,
         )
       : 0;
+
+  // console.log("isOutOfStock:", isOutOfStock);
 
   return (
     <Card
@@ -57,6 +60,7 @@ export default async function CardItem({
           className={cn(
             "overflow-hidden relative aspect-5/5 rounded-lg w-full",
             imageClassName,
+            isOutOfStock && "opacity-50",
           )}
         >
           <Image
@@ -84,6 +88,11 @@ export default async function CardItem({
               {item.is_best_seller && (
                 <Badge className="text-white bg-primary text-xs h-6">
                   🏆 {t("Bestseller")}
+                </Badge>
+              )}
+              {isOutOfStock && (
+                <Badge className="text-white bg-gray-500 text-xs h-6">
+                  ❌ {t("OutOfStock")}
                 </Badge>
               )}
             </div>
