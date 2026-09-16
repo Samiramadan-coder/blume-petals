@@ -2,11 +2,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
-} from "lucide-react";
+import { MoreHorizontalIcon } from "lucide-react";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -27,7 +23,7 @@ function PaginationContent({
   return (
     <ul
       data-slot="pagination-content"
-      className={cn("flex items-center gap-0.5", className)}
+      className={cn("flex items-center gap-2", className)}
       {...props}
     />
   );
@@ -51,10 +47,9 @@ function PaginationLink({
   return (
     <Button
       asChild
-      variant={isActive ? "outline" : "ghost"}
+      variant={isActive ? "default" : "outline"}
       size={size}
-      className={cn(className)}
-      aria-label={isActive ? "Current page" : "Go to page"}
+      className={cn("rounded-lg font-normal text-xs shadow-none", className)}
     >
       <a
         aria-current={isActive ? "page" : undefined}
@@ -75,10 +70,9 @@ function PaginationPrevious({
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
-      className={cn("ps-1.5!", className)}
+      className={cn("ps-3! pe-3.5!", className)}
       {...props}
     >
-      <ChevronLeftIcon data-icon="inline-start" className="rtl:rotate-180" />
       <span className="hidden sm:block">{text}</span>
     </PaginationLink>
   );
@@ -93,11 +87,10 @@ function PaginationNext({
     <PaginationLink
       aria-label="Go to next page"
       size="default"
-      className={cn("pe-1.5!", className)}
+      className={cn("ps-3.5! pe-3!", className)}
       {...props}
     >
       <span className="hidden sm:block">{text}</span>
-      <ChevronRightIcon data-icon="inline-end" className="rtl:rotate-180" />
     </PaginationLink>
   );
 }
@@ -111,7 +104,7 @@ function PaginationEllipsis({
       aria-hidden
       data-slot="pagination-ellipsis"
       className={cn(
-        "flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4",
+        "flex size-8 items-center justify-center text-muted-foreground",
         className,
       )}
       {...props}
