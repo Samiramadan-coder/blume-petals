@@ -137,7 +137,7 @@ export async function forgotPassword(
  * Reset password
  */
 type ResetPasswordResult =
-  | { success: true }
+  | { success: true; token: string }
   | {
       success: false;
       errors?: Partial<Record<keyof ResetPasswordForm, string>>;
@@ -147,10 +147,13 @@ export async function resetPassword(
   formData: ResetPasswordForm,
 ): Promise<ResetPasswordResult> {
   try {
-    const { data } = await http.post("/api/v1/auth/password/reset", formData);
+    const { data } = await http.post<LoginResponse>(
+      "/api/v1/auth/password/reset",
+      formData,
+    );
     console.log("Reset password response data:", data);
 
-    return { success: true };
+    return { success: true, token: data.data.token };
   } catch (err) {
     console.error("Error resetting password:", err);
     if (err instanceof ValidationError) {

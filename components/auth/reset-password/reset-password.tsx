@@ -14,6 +14,7 @@ import FormInput from "@/components/reusable/form/form-input";
 import { ArrowLeft, ArrowRight, Eye, EyeOff } from "lucide-react";
 import AuthSubmitBtn from "@/components/auth/shared/auth-submit-btn";
 import { ResetPasswordForm, resetPasswordSchema } from "@/types/auth";
+import { saveToken } from "@/lib/actions";
 
 export default function ResetPassword({
   code,
@@ -49,7 +50,8 @@ export default function ResetPassword({
 
     if (result.success) {
       toast.success(tFields("Messages.ResetSuccess"));
-      router.push("/login");
+      await saveToken(result.token);
+      router.push("/");
       return;
     }
 
