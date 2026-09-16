@@ -21,6 +21,8 @@ export default function AddToCart({ designId }: { designId: number }) {
     if (result.success) {
       toast.success(t("AddedToCartSuccessfully"));
       router.push("/cart");
+    } else if (result.message) {
+      toast.error(result.message);
     } else {
       toast.error(t("FailedToAddToCart"));
     }

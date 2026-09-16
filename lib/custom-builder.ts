@@ -1,11 +1,13 @@
 "use server";
 
 import { BuilderFormData } from "@/types/builder-page";
-import { http } from "./http";
+import { http, ValidationError } from "./http";
 import { updateTag } from "next/cache";
 
 // Response type for adding a design to the cart
-type AddToCardResponse = { success: boolean };
+type AddToCardResponse =
+  | { success: true }
+  | { success: false; message?: string };
 
 export async function addToCart(
   data: BuilderFormData,
@@ -16,12 +18,17 @@ export async function addToCart(
     return { success: true };
   } catch (error) {
     console.error("Failed to add to cart:", error);
+    if (error instanceof ValidationError) {
+      return { success: false, message: error.message };
+    }
     return { success: false };
   }
 }
 
 // Response type for saving a design to the server
-type SaveDesignResponse = { success: boolean };
+type SaveDesignResponse =
+  | { success: true }
+  | { success: false; message?: string };
 
 export async function saveDesign(
   data: BuilderFormData,
@@ -40,6 +47,9 @@ export async function saveDesign(
     return { success: true };
   } catch (error) {
     console.error("Failed to save design:", error);
+    if (error instanceof ValidationError) {
+      return { success: false, message: error.message };
+    }
     return { success: false };
   }
 }
@@ -55,6 +65,9 @@ export async function addSavedDesignToCart(
     return { success: true };
   } catch (error) {
     console.error("Failed to add saved design to cart:", error);
+    if (error instanceof ValidationError) {
+      return { success: false, message: error.message };
+    }
     return { success: false };
   }
 }

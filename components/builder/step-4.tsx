@@ -62,6 +62,12 @@ export default function Step4({
       return;
     }
 
+    if (result.message) {
+      toast.error(result.message);
+      setLoadingSaveDesign(false);
+      return;
+    }
+
     toast.error(t("FailedToSaveDesign"));
     setLoadingSaveDesign(false);
   };

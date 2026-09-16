@@ -171,9 +171,15 @@ export default function BuilderForm({
     if (result.success) {
       toast.success(t("AddedToCartSuccessfully"));
       router.push("/cart");
-    } else {
-      toast.error(t("FailedToAddToCart"));
+      return;
     }
+
+    if (result.message) {
+      toast.error(result.message);
+      return;
+    }
+
+    toast.error(t("FailedToAddToCart"));
   };
 
   return (

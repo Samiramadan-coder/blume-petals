@@ -31,6 +31,16 @@ export async function deleteToken() {
 }
 
 /**
+ * Resolve the site's public origin for building absolute redirect URLs.
+ * Behind a reverse proxy (e.g. cPanel Passenger) the Host header isn't always
+ * forwarded, so `request.url` can resolve to the internal (localhost) address
+ * in production — prefer APP_URL when it's configured.
+ */
+export async function getAppUrl(requestUrl: string) {
+  return process.env.APP_URL || new URL(requestUrl).origin;
+}
+
+/**
  * Get Language
  */
 export async function getServerLanguage() {
