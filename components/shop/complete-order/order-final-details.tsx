@@ -87,9 +87,17 @@ export default function OrderFinalDetails({
 
     const formData: { [key: string]: string } = {
       customer_notes: note,
-      address_id: addressId || "",
       payment_method: "cod",
     };
+
+    if (deliveryMethod === "delivery" && addressId) {
+      formData.address_id = addressId;
+    }
+
+    if (deliveryMethod === "pickup" && pickupLocationId) {
+      formData.fulfillment_method = "pickup";
+      formData.pickup_location_id = pickupLocationId;
+    }
 
     if (couponCode) {
       formData.coupon_code = couponCode;
@@ -176,12 +184,7 @@ export default function OrderFinalDetails({
           </Button>
 
           <Button
-            disabled={
-              !showButton ||
-              deliveryMethod !== "delivery" ||
-              loadingOnDelivery ||
-              loading
-            }
+            disabled={!showButton || loadingOnDelivery || loading}
             onClick={handlePaymentOnDelivery}
             className="h-14 w-full border-2 px-6 text-base bg-secondary text-foreground"
             aria-label="Payment On Delivery"
