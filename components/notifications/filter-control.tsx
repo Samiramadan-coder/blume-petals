@@ -1,10 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { tabs } from "@/constants/notifications";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { Separator } from "../ui/separator";
+import { tabs } from "@/constants/notifications";
 import { parseAsString, useQueryState } from "nuqs";
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
 export default function FilterControl() {
   const t = useTranslations("Notifications");
@@ -16,12 +16,22 @@ export default function FilterControl() {
       .withOptions({ history: "push", shallow: false }),
   );
 
+  const [, setPageQueryParam] = useQueryState(
+    "page",
+    parseAsString
+      .withDefault("1")
+      .withOptions({ history: "push", shallow: false }),
+  );
+
   return (
     <div>
       <Tabs
         className="w-full bg-transparent"
         value={queryParam}
-        onValueChange={setQueryParam}
+        onValueChange={(value) => {
+          setQueryParam(value);
+          setPageQueryParam("1");
+        }}
       >
         <TabsList variant="line" className="h-10! space-x-6">
           {tabs(t).map((tab) => (

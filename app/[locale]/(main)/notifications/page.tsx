@@ -2,13 +2,13 @@ import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { Bell } from "lucide-react";
 import { Pagination } from "@/types/shared";
+import { Badge } from "@/components/ui/badge";
 import { getTranslations } from "next-intl/server";
 import { Notification } from "@/types/notifications";
 import FilterControl from "@/components/notifications/filter-control";
 import PaginationTemplate from "@/components/reusable/pagination-template";
 import NotificationItem from "@/components/reusable/app-header/notification-item";
 import NotificationsPageSkeleton from "@/components/notifications/notification-page-skeleton";
-import { Badge } from "@/components/ui/badge";
 
 type SearchParams = {
   page?: string;
@@ -33,8 +33,8 @@ async function NotificationsData({
       tags: ["notifications-list"],
     },
     params: {
-      page: searchParams.page ?? 1,
       per_page: 10,
+      page: searchParams.page ?? 1,
       type: searchParams.type ?? "",
     },
   });
