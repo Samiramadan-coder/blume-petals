@@ -8,7 +8,7 @@ import AppLogo from "./app-logo";
 import { http } from "@/lib/http";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Category } from "@/types/landing";
+import { AppSettings, Category } from "@/types/landing";
 import { Separator } from "../ui/separator";
 import { LocaleSwitcher } from "./locale-switcher";
 import { getTranslations } from "next-intl/server";
@@ -16,14 +16,19 @@ import FooterNavLink from "./app-footer/footer-nav-link";
 
 export default async function AppFooter() {
   const t = await getTranslations("AppFooter");
-  const { data, ok } = await http.get<{
+
+  const { data: categoriesData, ok: ok1 } = await http.get<{
     data: {
       items: Category[];
     };
   }>("/api/v1/categories");
 
-  if (!ok) {
-    throw new Error("Failed to fetch categories");
+  const { data: settingsData, ok: ok2 } = await http.get<{
+    data: AppSettings;
+  }>(`/api/v1/settings`);
+
+  if (!ok1 || !ok2) {
+    throw new Error("Failed to fetch categories or app settings");
   }
 
   return (
@@ -96,7 +101,7 @@ export default async function AppFooter() {
             </div>
             <nav>
               <ul className="space-y-2.5">
-                {data.data.items.slice(0, 5).map((item) => (
+                {categoriesData.data.items.slice(0, 5).map((item) => (
                   <li key={item.id}>
                     <FooterNavLink href={`/shop?category=${item.slug}`}>
                       {item.name}
@@ -116,12 +121,6 @@ export default async function AppFooter() {
                 <li>
                   <FooterNavLink href="/about">{t("AboutUs")}</FooterNavLink>
                 </li>
-                {/* <li>
-                  <FooterNavLink href="">{t("OurStory")}</FooterNavLink>
-                </li>
-                <li>
-                  <FooterNavLink href="">{t("Careers")}</FooterNavLink>
-                </li> */}
                 <li>
                   <FooterNavLink href="/contact">{t("Contact")}</FooterNavLink>
                 </li>
@@ -140,12 +139,6 @@ export default async function AppFooter() {
                     {t("HelpCenter")}
                   </FooterNavLink>
                 </li>
-                {/* <li>
-                  <FooterNavLink href="">{t("TrackOrder")}</FooterNavLink>
-                </li> */}
-                {/* <li>
-                  <FooterNavLink href="">{t("ReturnsRefunds")}</FooterNavLink>
-                </li> */}
                 <li>
                   <FooterNavLink href="/faq">{t("FAQ")}</FooterNavLink>
                 </li>
@@ -169,53 +162,55 @@ export default async function AppFooter() {
               <ul className="space-y-2.5">
                 <li>
                   <FooterNavLink
-                    href="#"
+                    href={settingsData.data.connect.instagram_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaInstagram className="text-primary" />
                       </div>
                     }
                   >
-                    {t("InstagramHandle")}
+                    {settingsData.data.connect.instagram ?? "#"}
                   </FooterNavLink>
                 </li>
 
                 <li>
                   <FooterNavLink
-                    href="#"
+                    href={settingsData.data.connect.whatsapp_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaWhatsapp className="text-primary" />
                       </div>
                     }
                   >
-                    {t("WhatsAppUs")}
+                    {settingsData.data.connect.whatsapp ?? "#"}
                   </FooterNavLink>
                 </li>
 
                 <li>
                   <FooterNavLink
-                    href="#"
+                    href={settingsData.data.connect.email_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaEnvelope className="text-primary" />
                       </div>
                     }
                   >
-                    <span className="truncate">{t("EmailUs")}</span>
+                    <span className="truncate">
+                      {settingsData.data.connect.email ?? "#"}
+                    </span>
                   </FooterNavLink>
                 </li>
 
                 <li>
                   <FooterNavLink
-                    href="#"
+                    href={settingsData.data.connect.phone_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                         <FaPhoneAlt className="text-primary" />
                       </div>
                     }
                   >
-                    {t("CallUs")}
+                    {settingsData.data.connect.phone ?? "#"}
                   </FooterNavLink>
                 </li>
               </ul>

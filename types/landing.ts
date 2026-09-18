@@ -33,6 +33,20 @@ export type AppSettings = {
   policy: string | null;
   logo_url: string | null;
   showAddition: boolean;
+  // whatsapp: string | null;
+  // instagram: string | null;
+  // contact_email: string | null;
+  // contact_phone: string | null;
+  connect: {
+    email: string;
+    email_url: string;
+    instagram: string;
+    instagram_url: string;
+    phone: string;
+    phone_url: string;
+    whatsapp: string;
+    whatsapp_url: string;
+  };
 };
 
 export type CustomerDesign = {
