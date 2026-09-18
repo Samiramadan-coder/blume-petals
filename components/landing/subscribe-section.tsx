@@ -1,15 +1,22 @@
 "use client";
 
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import CountUp from "react-countup";
+import { Spinner } from "../ui/spinner";
+import { FieldError } from "../ui/field";
+import { useForm } from "react-hook-form";
 import LandingTitle from "./landing-title";
+import { subscribe } from "@/lib/subscribe";
 import { useEffect, useState } from "react";
 import * as motion from "motion/react-client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LandingSubtitle from "./landing-subtitle";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useLocale, useTranslations } from "next-intl";
+import { subscribeFormSchema, SubscribeFormValues } from "@/types/subscribe";
 
 type Stats = {
   average_rating: string;
@@ -24,6 +31,39 @@ export default function SubscribeSection() {
   const t = useTranslations("LandingSubscribeSection");
   const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
   const [statsData, setStatsData] = useState<Stats | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<SubscribeFormValues>({
+    resolver: zodResolver(subscribeFormSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const onSubmit = async (values: SubscribeFormValues) => {
+    const result = await subscribe(values);
+
+    if (result.success) {
+      toast.success(result.message);
+      return;
+    }
+
+    if (result.success === false && result.errors) {
+      Object.entries(result.errors).forEach(([field, message]) => {
+        if (!message) return;
+        toast.error(message);
+        setError(field as keyof SubscribeFormValues, {
+          type: "server",
+          message,
+        });
+      });
+      return;
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -167,22 +207,26 @@ export default function SubscribeSection() {
                 delay: 0.08,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="mx-auto mt-9 flex max-w-md overflow-hidden rounded-full bg-white"
+              onSubmit={handleSubmit(onSubmit)}
             >
-              <Input
-                type="email"
-                aria-label={t("EmailAria")}
-                placeholder={t("EmailPlaceholder")}
-                className="h-12 flex-1 border-0 bg-white px-6 text-foreground shadow-none focus-visible:ring-0"
-              />
+              <div className="mx-auto mt-9 flex max-w-md overflow-hidden rounded-full bg-white">
+                <Input
+                  type="email"
+                  aria-label={t("EmailAria")}
+                  placeholder={t("EmailPlaceholder")}
+                  className="h-12 flex-1 border-0 bg-white px-6 text-foreground shadow-none focus-visible:ring-0"
+                  {...register("email")}
+                />
 
-              <Button
-                type="submit"
-                aria-label="Submit"
-                className="h-12 w-35 cursor-pointer rounded-full bg-secondary text-secondary-foreground hover:bg-secondary"
-              >
-                {t("PrimaryCta")}
-              </Button>
+                <Button
+                  type="submit"
+                  aria-label="Submit"
+                  className="h-12 w-35 cursor-pointer rounded-full bg-secondary text-secondary-foreground hover:bg-secondary"
+                >
+                  {isSubmitting && <Spinner />} {t("PrimaryCta")}
+                </Button>
+              </div>
+              <FieldError errors={[errors.email]} />
             </motion.form>
 
             <motion.p

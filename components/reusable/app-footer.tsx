@@ -13,6 +13,7 @@ import { Separator } from "../ui/separator";
 import { LocaleSwitcher } from "./locale-switcher";
 import { getTranslations } from "next-intl/server";
 import FooterNavLink from "./app-footer/footer-nav-link";
+import SubscribeForm from "./app-footer/subscribe-form";
 
 export default async function AppFooter() {
   const t = await getTranslations("AppFooter");
@@ -44,21 +45,7 @@ export default async function AppFooter() {
 
           <div className="flex flex-col gap-6">
             <p className="text-white/90 text-sm">{t("GetOffer")}</p>
-            <form className="flex w-full max-w-sm overflow-hidden rounded-full border border-primary/30 bg-primary/10">
-              <Input
-                type="email"
-                placeholder={t("EmailPlaceholder")}
-                className="h-11 flex-1 border-0 bg-transparent px-5 text-[#e6dcd2] placeholder:text-[#e6dcd2]/60 focus-visible:ring-0"
-              />
-
-              <Button
-                type="submit"
-                aria-label="Submit"
-                className="h-11 rounded-full bg-primary text-foreground px-6"
-              >
-                {t("Subscribe")}
-              </Button>
-            </form>
+            <SubscribeForm />
           </div>
         </header>
 
