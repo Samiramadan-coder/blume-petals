@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getAppUrl } from "@/lib/actions";
 
@@ -8,27 +7,49 @@ export async function GET(
   {
     params,
   }: {
-    params: Promise<{ locale: string }>;
+    params: Promise<{
+      locale: string;
+    }>;
   },
 ) {
   const { locale } = await params;
+
   const session = await auth();
-  const backendAccessToken = (session as { backendAccessToken?: string } | null)
-    ?.backendAccessToken;
+
+  const backendAccessToken = (
+    session as {
+      backendAccessToken?: string;
+    } | null
+  )?.backendAccessToken;
+
   const appUrl = await getAppUrl(request.url);
+
+  console.log("Apple callback session:", {
+    hasSession: !!session,
+    hasBackendAccessToken: !!backendAccessToken,
+  });
 
   if (!backendAccessToken) {
     return NextResponse.redirect(new URL(`/${locale}/login`, appUrl));
   }
 
-  const cookieStore = await cookies();
-  cookieStore.set("token", backendAccessToken, {
-    path: "/",
+  const response = NextResponse.redirect(new URL(`/${locale}`, appUrl));
+
+  response.cookies.set({
+    name: "token",
+
+    value: backendAccessToken,
+
     httpOnly: true,
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
+
     secure: process.env.NODE_ENV === "production",
+
+    sameSite: "lax",
+
+    path: "/",
+
+    maxAge: 60 * 60 * 24 * 7,
   });
 
-  return NextResponse.redirect(new URL(`/${locale}`, appUrl));
+  return response;
 }
