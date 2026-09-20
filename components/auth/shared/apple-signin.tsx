@@ -2,8 +2,8 @@
 
 import { useLocale } from "next-intl";
 import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 import { FaApple } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
 
 export default function AppleLoginButton() {
   const locale = useLocale();

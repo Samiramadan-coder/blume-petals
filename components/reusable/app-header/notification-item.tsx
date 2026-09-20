@@ -4,7 +4,7 @@ import {
   deleteNotification,
   markNotificationAsRead,
 } from "@/lib/notifications";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
@@ -63,6 +63,12 @@ function NotificationContent({
     await markNotificationAsRead(notificationId);
     await refreshUnreadCount();
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsRead(notification.read);
+  }, [notification.read]);
+
   return (
     <div
       className={cn(

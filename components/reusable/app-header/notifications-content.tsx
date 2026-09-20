@@ -19,7 +19,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNotifications } from "@/providers/notifications-provider";
 
 export default function NotificationsContent() {
-  const { unreadCount } = useNotifications();
+  const { unreadCount, refreshUnreadCount } = useNotifications();
   const t = useTranslations("Notifications");
   const [activeTab, setActiveTab] = useState("all");
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -67,7 +67,9 @@ export default function NotificationsContent() {
     setNotifications((prev) =>
       prev.map((notification) => ({ ...notification, read: true })),
     );
+
     await markAllNotificationsAsRead();
+    await refreshUnreadCount();
   }
 
   return (
