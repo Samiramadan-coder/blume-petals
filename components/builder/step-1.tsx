@@ -80,10 +80,11 @@ export default function Step1({
                     aria-label={`Select ${template.name}`}
                     aria-pressed={isSelected}
                     onClick={() => {
-                      // setSelectedTemplateId(template.id);
+                      setValue("image", "");
                       setValue("template_id", template.id);
                       setValue("template_url", template.image_url);
                       setValue("variant_id", template.variants[0]?.id);
+                      setValue("flowersCount", template.variants[0]?.max_stems);
                       setValue("slots", []);
                     }}
                     className={cn(
