@@ -6,8 +6,8 @@ import { Pagination } from "@/types/shared";
 import PageTitle from "../shared/page-title";
 import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
-import PaginationTemplate from "@/components/reusable/pagination-template";
 import NoDataFounded from "@/components/reusable/no-data-founded";
+import PaginationTemplate from "@/components/reusable/pagination-template";
 
 export default async function Designs({
   items,

@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Design } from "@/types/account";
-import { formatDate } from "@/lib/utils";
+import { formatSmartDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Pencil } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "@/i18n/navigation";
@@ -12,6 +12,7 @@ import AddToCart from "./add-to-cart";
 export default async function DesignCard({ item }: { item: Design }) {
   const t = await getTranslations("Account.Designs");
   const tCommon = await getTranslations("Common");
+  const locale = await getLocale();
 
   return (
     <Card className="overflow-hidden gap-0 p-0 shadow-[0_6px_20px_rgba(17,24,39,0.08)]">
@@ -55,8 +56,8 @@ export default async function DesignCard({ item }: { item: Design }) {
               {tCommon("AED")} {item.unit_price}
             </p>
 
-            <p className="text-sm text-muted-foreground">
-              {t("Saved")} {formatDate(item.created_at)}
+            <p className="text-sm font-semibold text-muted-foreground">
+              {t("Saved")} {formatSmartDate(item.created_at, locale)}
             </p>
           </div>
         </div>

@@ -8,6 +8,7 @@ import {
 import { useTranslations } from "next-intl";
 import { PickupLocation } from "@/types/products";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import MapView from "@/components/reusable/map-view";
 
 export default function PickupLocationsPreview({
   pickupLocations,
@@ -18,6 +19,7 @@ export default function PickupLocationsPreview({
   selectedPickupLocation: string | null;
   setSelectedPickupLocation: (value: string) => void;
 }) {
+  console.log(pickupLocations);
   const t = useTranslations("Shop");
 
   return (
@@ -39,13 +41,17 @@ export default function PickupLocationsPreview({
             <Field orientation="horizontal">
               <FieldContent>
                 <FieldTitle>
-                  <span className="text-foreground">{location.name}</span>
+                  <span className="text-foreground">{location.name} </span>
                 </FieldTitle>
-                <FieldDescription className="flex gap-1">
+                <FieldDescription className="flex items-center gap-1">
                   <span className="text-foreground">{t("Address")}: </span>
                   <span
                     className="underline italic text-muted-foreground font-bold"
                     dangerouslySetInnerHTML={{ __html: location.address }}
+                  />
+                  <MapView
+                    latitude={+location.latitude}
+                    longitude={+location.longitude}
                   />
                 </FieldDescription>
                 <FieldDescription>

@@ -55,9 +55,7 @@ export function formatSmartDate(
 ): string {
   const date = input instanceof Date ? input : new Date(input);
 
-  if (Number.isNaN(date.getTime())) {
-    return "";
-  }
+  if (Number.isNaN(date.getTime())) return "";
 
   const now = new Date();
 
@@ -69,23 +67,29 @@ export function formatSmartDate(
 
   const isArabic = locale.startsWith("ar");
 
-  if (diffInDays === 0) {
-    return isArabic ? "اليوم" : "Today";
-  }
-
-  if (diffInDays === 1) {
-    return isArabic ? "أمس" : "Yesterday";
-  }
-
-  if (diffInDays === 2) {
-    return isArabic ? "منذ يومين" : "2 days ago";
-  }
-
-  return new Intl.DateTimeFormat(locale, {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
+  const time = new Intl.DateTimeFormat(locale, {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
   }).format(date);
+
+  let day: string;
+
+  if (diffInDays === 0) {
+    day = isArabic ? "اليوم" : "Today";
+  } else if (diffInDays === 1) {
+    day = isArabic ? "أمس" : "Yesterday";
+  } else if (diffInDays === 2) {
+    day = isArabic ? "منذ يومين" : "2 days ago";
+  } else {
+    day = new Intl.DateTimeFormat(locale, {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }).format(date);
+  }
+
+  return `${day}${isArabic ? "،" : ","} ${time}`;
 }
 
 export const formatDate = (date: string | Date) =>

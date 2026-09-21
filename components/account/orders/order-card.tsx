@@ -26,6 +26,7 @@ import { Separator } from "../../ui/separator";
 import { Card, CardContent } from "../../ui/card";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import MapView from "@/components/reusable/map-view";
 
 type OrderStatus =
   | "pending"
@@ -209,10 +210,18 @@ export default async function OrderCard({
                   <h4 className="mb-2 font-semibold text-foreground md:text-base">
                     {t("DeliveryAddress")}
                   </h4>
-                  <p
-                    className="text-sm leading-6 text-foreground/60"
-                    dangerouslySetInnerHTML={{ __html: address || "-" }}
-                  ></p>
+                  <div className="flex items-center gap-1">
+                    <p
+                      className="text-sm leading-6 text-foreground/60"
+                      dangerouslySetInnerHTML={{ __html: address || "-" }}
+                    ></p>
+                    {order.pickup && (
+                      <MapView
+                        latitude={+order.pickup?.latitude}
+                        longitude={+order.pickup?.longitude}
+                      />
+                    )}
+                  </div>
                 </div>
                 <div>
                   <h4 className="mb-2 font-semibold text-foreground md:text-base">
