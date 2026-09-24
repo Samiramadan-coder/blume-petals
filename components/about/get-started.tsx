@@ -1,24 +1,29 @@
-import * as motion from "motion/react-client";
-
-import { Link } from "@/i18n/navigation";
-import { Button } from "../ui/button";
-
-import { ArrowRight } from "lucide-react";
-
 import {
   FaInstagram,
   FaWhatsapp,
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
-
-import { getTranslations } from "next-intl/server";
-
-import AboutSubtitle from "./about-subtitle";
+import { Button } from "../ui/button";
 import AboutTitle from "./about-title";
+import { Link } from "@/i18n/navigation";
+import { ArrowRight } from "lucide-react";
+import AboutSubtitle from "./about-subtitle";
+import * as motion from "motion/react-client";
+import { getTranslations } from "next-intl/server";
+import { http } from "@/lib/http";
+import { AppSettings } from "@/types/landing";
 
 export default async function GetStarted() {
   const t = await getTranslations("AboutGetStarted");
+
+  const { data: settingsData, ok: ok2 } = await http.get<{
+    data: AppSettings;
+  }>(`/api/v1/settings`);
+
+  if (!ok2) {
+    throw new Error("Failed to fetch app settings");
+  }
 
   return (
     <section className="overflow-hidden">
@@ -96,35 +101,47 @@ export default async function GetStarted() {
               {t("ContactLabel")}
             </p>
 
-            <Link href="#" className="group flex items-center gap-2">
+            <Link
+              href={settingsData.data.connect.instagram_url}
+              className="group flex items-center gap-2"
+            >
               <FaInstagram className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {t("Contact.Instagram.Value")}
+                {settingsData.data.connect.instagram}
               </span>
             </Link>
 
-            <Link href="#" className="group flex items-center gap-2">
+            <Link
+              href={settingsData.data.connect.whatsapp_url}
+              className="group flex items-center gap-2"
+            >
               <FaWhatsapp className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {t("Contact.WhatsApp.Value")}
+                {settingsData.data.connect.whatsapp}
               </span>
             </Link>
 
-            <Link href="#" className="group flex items-center gap-2">
+            <Link
+              href={settingsData.data.connect.email_url}
+              className="group flex items-center gap-2"
+            >
               <FaEnvelope className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {t("Contact.Email.Value")}
+                {settingsData.data.connect.email}
               </span>
             </Link>
 
-            <Link href="#" className="group flex items-center gap-2">
+            <Link
+              href={settingsData.data.connect.phone_url}
+              className="group flex items-center gap-2"
+            >
               <FaPhoneAlt className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {t("Contact.Phone.Value")}
+                {settingsData.data.connect.phone}
               </span>
             </Link>
           </motion.div>

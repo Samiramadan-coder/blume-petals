@@ -86,8 +86,8 @@ export default async function AppFooter() {
             </div>
             <nav>
               <ul className="space-y-2.5">
-                {categoriesData.data.items.slice(0, 5).map((item) => (
-                  <li key={item.id}>
+                {categoriesData.data.items.slice(0, 5).map((item, index) => (
+                  <li key={index}>
                     <FooterNavLink href={`/shop?category=${item.slug}`}>
                       {item.name}
                     </FooterNavLink>
