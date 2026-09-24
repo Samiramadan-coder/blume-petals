@@ -6,14 +6,12 @@ import {
 } from "react-icons/fa";
 import AppLogo from "./app-logo";
 import { http } from "@/lib/http";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { AppSettings, Category } from "@/types/landing";
 import { Separator } from "../ui/separator";
 import { LocaleSwitcher } from "./locale-switcher";
 import { getTranslations } from "next-intl/server";
-import FooterNavLink from "./app-footer/footer-nav-link";
+import { AppSettings, Category } from "@/types/landing";
 import SubscribeForm from "./app-footer/subscribe-form";
+import FooterNavLink from "./app-footer/footer-nav-link";
 
 export default async function AppFooter() {
   const t = await getTranslations("AppFooter");
@@ -156,7 +154,9 @@ export default async function AppFooter() {
                       </div>
                     }
                   >
-                    {settingsData.data.connect.instagram ?? "#"}
+                    <span className="truncate">
+                      {settingsData.data.connect.instagram ?? "#"}
+                    </span>
                   </FooterNavLink>
                 </li>
 
