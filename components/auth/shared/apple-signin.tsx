@@ -15,7 +15,9 @@ export default function AppleLoginButton() {
       aria-label="Sign in with Apple"
       className="h-10 w-full rounded-[5px] bg-white cursor-pointer border border-[#dadce0]"
       onClick={() =>
-        signIn("apple", { callbackUrl: `/${locale}/apple/callback` })
+        signIn("apple", {
+          redirectTo: `/${locale}/apple/callback`,
+        })
       }
     >
       <FaApple />
