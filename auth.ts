@@ -72,6 +72,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      writeAuthLog("REDIRECT CALLBACK", {
+        url,
+        baseUrl,
+      });
+
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      }
+
+      if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+
+      return baseUrl;
+    },
+
     async jwt({ token, account, profile }) {
       try {
         writeAuthLog("JWT CALLBACK", {
@@ -205,6 +222,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   pages: {
     signIn: "/login",
-    // متحطش error: "/login" أثناء التشخيص
   },
 });

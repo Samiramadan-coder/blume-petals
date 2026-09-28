@@ -56,7 +56,7 @@ export default function ProfileForm({
   const tFields = useTranslations("Fields");
   const tActions = useTranslations("Actions");
   const [openOTP, setOpenOTP] = useState(false);
-  const [oldPhone, setOldPhone] = useState(user.phone.split("+20")[1]);
+  const [oldPhone, setOldPhone] = useState(user.phone?.split("+20")[1]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -71,7 +71,7 @@ export default function ProfileForm({
     defaultValues: {
       name: user.name,
       email: user.email,
-      phone: user.phone.split("+20")[1],
+      phone: user.phone?.split("+20")[1] || "",
       photo_url: user?.photo_url || "",
       locale: locale,
     },
