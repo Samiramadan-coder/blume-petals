@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import Apple from "next-auth/providers/apple";
+import fs from "fs";
+import path from "path";
 
 type AppleLoginResponse = {
   success: boolean;
@@ -14,13 +16,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   logger: {
     error(error) {
-      console.error("AUTH ERROR:", error);
-    },
-    warn(code) {
-      console.warn("AUTH WARN:", code);
-    },
-    debug(message, metadata) {
-      console.log("AUTH DEBUG:", message, metadata);
+      try {
+        const logPath = path.join(process.cwd(), "auth-debug.log");
+
+        fs.appendFileSync(
+          logPath,
+          `\n\n===== ${new Date().toISOString()} =====\n${JSON.stringify(
+            {
+              name: error?.name,
+              message: error?.message,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              type: (error as any)?.type,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              cause: (error as any)?.cause,
+              stack: error?.stack,
+            },
+            null,
+            2,
+          )}`,
+        );
+      } catch (e) {
+        console.error("Could not write auth log:", e);
+      }
     },
   },
 
