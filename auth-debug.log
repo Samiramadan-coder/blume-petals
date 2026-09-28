@@ -4,3 +4,105 @@
 {
   "code": "debug-enabled"
 }
+
+===== 2026-09-28T19:55:40.893Z | AUTH.JS WARN =====
+{
+  "code": "debug-enabled"
+}
+
+===== 2026-09-28T19:55:40.896Z | REDIRECT CALLBACK =====
+{
+  "url": "https://7608-197-35-215-76.ngrok-free.app/en/apple/callback",
+  "baseUrl": "https://7608-197-35-215-76.ngrok-free.app"
+}
+
+===== 2026-09-28T19:55:40.897Z | APPLE CALLBACK ROUTE =====
+{
+  "locale": "en",
+  "requestUrl": "https://localhost:3000/apple/callback",
+  "appUrl": "https://localhost:3000",
+  "hasSession": false,
+  "hasBackendAccessToken": false,
+  "sessionKeys": []
+}
+
+===== 2026-09-28T19:55:40.898Z | APPLE CALLBACK NO TOKEN =====
+{
+  "redirectTo": "/en/login"
+}
+
+===== 2026-09-28T19:55:40.899Z | APPLE CALLBACK ROUTE ERROR =====
+{
+  "message": "Cannot read properties of undefined (reading 'length')",
+  "stack": "TypeError: Cannot read properties of undefined (reading 'length')\n    at GET (D:\\projects\\sidratech\\blume-petals\\.next\\dev\\server\\chunks\\[root-of-the-server]__0ysadcn._.js:356:45)\n    at async AppRouteRouteModule.do (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\compiled\\next-server\\app-route-turbo.runtime.dev.js:5:40131)\n    at async AppRouteRouteModule.handle (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\compiled\\next-server\\app-route-turbo.runtime.dev.js:5:47411)\n    at async responseGenerator (D:\\projects\\sidratech\\blume-petals\\.next\\dev\\server\\chunks\\node_modules_next_0c2-oc-._.js:18427:38)\n    at async AppRouteRouteModule.handleResponse (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\compiled\\next-server\\app-route-turbo.runtime.dev.js:1:228552)\n    at async handleResponse (D:\\projects\\sidratech\\blume-petals\\.next\\dev\\server\\chunks\\node_modules_next_0c2-oc-._.js:18490:32)\n    at async Module.handler (D:\\projects\\sidratech\\blume-petals\\.next\\dev\\server\\chunks\\node_modules_next_0c2-oc-._.js:18544:13)\n    at async DevServer.renderToResponseWithComponentsImpl (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\base-server.js:1462:9)\n    at async DevServer.renderPageComponent (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\base-server.js:1514:24)\n    at async DevServer.renderToResponseImpl (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\base-server.js:1564:32)\n    at async DevServer.pipeImpl (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\base-server.js:1044:25)\n    at async NextNodeServer.handleCatchallRenderRequest (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\next-server.js:338:17)\n    at async DevServer.handleRequestImpl (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\base-server.js:935:17)\n    at async D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js:394:20\n    at async Span.traceAsyncFn (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\trace\\trace.js:164:20)\n    at async DevServer.handleRequest (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\dev\\next-dev-server.js:390:24)\n    at async invokeRender (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\lib\\router-server.js:266:21)\n    at async handleRequest (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\lib\\router-server.js:465:24)\n    at async requestHandlerImpl (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\lib\\router-server.js:514:13)\n    at async Server.requestListener (D:\\projects\\sidratech\\blume-petals\\node_modules\\next\\dist\\server\\lib\\start-server.js:225:13)"
+}
+
+===== 2026-09-28T19:56:18.179Z | AUTH.JS WARN =====
+{
+  "code": "debug-enabled"
+}
+
+===== 2026-09-28T19:56:18.181Z | REDIRECT CALLBACK =====
+{
+  "url": "https://7608-197-35-215-76.ngrok-free.app/en/apple/callback",
+  "baseUrl": "https://7608-197-35-215-76.ngrok-free.app"
+}
+
+===== 2026-09-28T19:56:18.181Z | APPLE CALLBACK ROUTE =====
+{
+  "locale": "en",
+  "requestUrl": "https://localhost:3000/apple/callback",
+  "appUrl": "https://localhost:3000",
+  "hasSession": false,
+  "hasBackendAccessToken": false,
+  "sessionKeys": []
+}
+
+===== 2026-09-28T19:56:18.181Z | APPLE CALLBACK NO TOKEN =====
+{
+  "redirectTo": "/en/login"
+}
+
+===== 2026-09-28T20:18:21.912Z | AUTH.JS WARN =====
+{
+  "code": "debug-enabled"
+}
+
+===== 2026-09-28T20:18:21.917Z | REDIRECT CALLBACK =====
+{
+  "url": "https://7608-197-35-215-76.ngrok-free.app/en/apple/callback",
+  "baseUrl": "https://7608-197-35-215-76.ngrok-free.app"
+}
+
+===== 2026-09-28T20:18:21.949Z | REDIRECT CALLBACK =====
+{
+  "url": "https://7608-197-35-215-76.ngrok-free.app/en/apple/callback",
+  "baseUrl": "https://7608-197-35-215-76.ngrok-free.app"
+}
+
+===== 2026-09-28T20:18:21.976Z | REDIRECT CALLBACK =====
+{
+  "url": "/en/apple/callback",
+  "baseUrl": "https://7608-197-35-215-76.ngrok-free.app"
+}
+
+===== 2026-09-28T21:15:55.688Z | APPLE CALLBACK ROUTE =====
+{
+  "locale": "en",
+  "requestUrl": "https://localhost:3000/apple/callback?debug_token=test123",
+  "appUrl": "https://localhost:3000",
+  "debugMode": true,
+  "hasSession": false,
+  "hasSessionToken": false,
+  "hasBackendAccessToken": true
+}
+
+===== 2026-09-28T21:15:55.689Z | APPLE CALLBACK COOKIE SET =====
+{
+  "debugMode": true,
+  "redirectTo": "/en",
+  "tokenLength": 7,
+  "secure": false,
+  "setCookieHeader": "token=test123; Path=/; Expires=Mon, 05 Oct 2026 21:15:55 GMT; Max-Age=604800; HttpOnly; SameSite=lax",
+  "locationHeader": "https://localhost:3000/en"
+}

@@ -51,6 +51,7 @@ export async function GET(
       hasSession: !!session,
       hasBackendAccessToken: !!backendAccessToken,
       sessionKeys: session ? Object.keys(session) : [],
+      backendAccessToken: backendAccessToken ?? null,
     });
 
     if (!backendAccessToken) {
@@ -75,8 +76,11 @@ export async function GET(
 
     writeRouteLog("APPLE CALLBACK COOKIE SET", {
       redirectTo: `/${locale}`,
+      backendAccessToken,
       tokenLength: backendAccessToken.length,
       secure: process.env.NODE_ENV === "production",
+      setCookieHeader: response.headers.get("set-cookie"),
+      locationHeader: response.headers.get("location"),
     });
 
     return response;
