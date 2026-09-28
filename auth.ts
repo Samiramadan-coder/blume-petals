@@ -32,6 +32,18 @@ function writeAuthLog(title: string, payload: unknown) {
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: true,
 
+  cookies: {
+    callbackUrl: {
+      name: "__Secure-authjs.callback-url",
+      options: {
+        httpOnly: true,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
+
   logger: {
     error(error) {
       writeAuthLog("AUTH.JS ERROR", {
