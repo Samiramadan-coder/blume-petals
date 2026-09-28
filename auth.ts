@@ -10,6 +10,20 @@ type AppleLoginResponse = {
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  debug: true,
+
+  logger: {
+    error(error) {
+      console.error("AUTH ERROR:", error);
+    },
+    warn(code) {
+      console.warn("AUTH WARN:", code);
+    },
+    debug(message, metadata) {
+      console.log("AUTH DEBUG:", message, metadata);
+    },
+  },
+
   providers: [
     Apple({
       clientId: process.env.AUTH_APPLE_ID!,
@@ -97,8 +111,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   pages: {
     signIn: "/login",
-    // error: "/login",
+    error: "/auth-error",
   },
-
-  debug: true,
 });
