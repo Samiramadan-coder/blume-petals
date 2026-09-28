@@ -65,7 +65,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             : (profile?.email ?? token.name ?? token.email ?? "Apple User");
 
         const response = await fetch(
-          `${process.env.API_URL}/api/v1/auth/social/apple`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/social/apple`,
           {
             method: "POST",
 
