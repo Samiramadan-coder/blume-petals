@@ -58,10 +58,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!response.ok) {
           console.error("Apple backend login failed:", {
             status: response.status,
-            success: result?.success,
+            result,
           });
 
-          throw new Error("Apple backend login failed");
+          throw new Error(
+            `Apple backend login failed: ${response.status} ${JSON.stringify(result)}`,
+          );
         }
 
         if (!result.success || !result.data?.token) {
@@ -95,6 +97,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
   pages: {
     signIn: "/login",
-    error: "/login",
+    // error: "/login",
   },
+
+  debug: true,
 });

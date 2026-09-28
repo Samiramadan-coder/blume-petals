@@ -239,9 +239,11 @@ export default async function OrderCard({
               )}
 
               <div className="flex flex-wrap gap-4">
-                {order.status === "pending" && (
-                  <OrderCancel orderId={order.id} />
-                )}
+                {order.status !== "delivered" &&
+                  order.status !== "cancelled" &&
+                  order.payment_method === "cod" && (
+                    <OrderCancel orderId={order.id} />
+                  )}
 
                 {order.status === "delivered" &&
                   !order.items.every((item) => item.reviewed) && (
