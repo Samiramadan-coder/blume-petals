@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 import OrderRate from "./order-rate";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
-import OrderCancel from "./order-cancel";
+// import OrderCancel from "./order-cancel";
 import { OrderItem } from "@/types/account";
 import { Separator } from "../../ui/separator";
 import { Card, CardContent } from "../../ui/card";
@@ -239,11 +239,11 @@ export default async function OrderCard({
               )}
 
               <div className="flex flex-wrap gap-4">
-                {order.status !== "delivered" &&
+                {/* {order.status !== "delivered" &&
                   order.status !== "cancelled" &&
                   order.payment_method === "cod" && (
                     <OrderCancel orderId={order.id} />
-                  )}
+                  )} */}
 
                 {order.status === "delivered" &&
                   !order.items.every((item) => item.reviewed) && (
