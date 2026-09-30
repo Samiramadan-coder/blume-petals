@@ -8,6 +8,7 @@ import MainButton from "../ui/main-button";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { cn } from "@/lib/utils";
+import { HomePageSections } from "@/types/home-page";
 
 const containerVariants = {
   hidden: {},
@@ -34,14 +35,18 @@ const itemVariants = {
   },
 };
 
-export default async function Hero() {
+export default async function Hero({
+  section,
+}: {
+  section: HomePageSections["hero"];
+}) {
   const locale = await getLocale();
   const t = await getTranslations("LandingHero");
 
   return (
     <section className="relative isolate min-h-svh overflow-hidden">
       <Image
-        src="/images/home/hero/bouquet-of-rose.webp"
+        src={section.image ?? "/images/home/hero/bouquet-of-rose.webp"}
         alt="Bouquet of rose"
         fill
         priority
@@ -65,7 +70,7 @@ export default async function Hero() {
             variants={itemVariants}
             className="mb-5 text-xs font-semibold uppercase tracking-[0.25rem] text-primary"
           >
-            {t("Eyebrow")}
+            {section.subtitle ?? t("Eyebrow")}
           </motion.p>
 
           <h1
@@ -76,14 +81,14 @@ export default async function Hero() {
               },
             )}
           >
-            {t("Title")}
+            {section.title ?? t("Title")}
           </h1>
 
           <motion.p
             variants={itemVariants}
             className="mb-8 max-w-105 text-base leading-relaxed text-white/82 md:text-lg"
           >
-            {t("Description")}
+            {section.description ?? t("Description")}
           </motion.p>
 
           <motion.div
