@@ -1,15 +1,11 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
+import MainButton from "../ui/main-button";
+import LandingTitle from "./landing-title";
 import * as motion from "motion/react-client";
-
+import LandingSubtitle from "./landing-subtitle";
 import type { HomePageSections } from "@/types/home-page";
 import { getLocale, getTranslations } from "next-intl/server";
-
-import MainButton from "../ui/main-button";
-import LandingSubtitle from "./landing-subtitle";
-import LandingTitle from "./landing-title";
-
-import { features } from "@/constants/home-page";
-import { cn } from "@/lib/utils";
 
 export default async function BouquetBuilder({
   section,
@@ -121,9 +117,9 @@ export default async function BouquetBuilder({
             </motion.p>
 
             <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {features.map((feature, index) => (
+              {section.items.map((section, index) => (
                 <motion.div
-                  key={feature.key}
+                  key={index}
                   initial={{
                     opacity: 0,
                     x: index % 2 === 0 ? -8 : 8,
@@ -143,17 +139,22 @@ export default async function BouquetBuilder({
                   }}
                   className="flex items-start gap-4"
                 >
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-border text-base text-secondary">
-                    {feature.icon}
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-border text-base">
+                    <Image
+                      src={section.icon ?? ""}
+                      alt={section.title ?? ""}
+                      width={16}
+                      height={16}
+                    />
                   </div>
 
                   <div>
                     <p className="text-sm font-semibold text-foreground">
-                      {t(`Features.${feature.key}.Title`)}
+                      {section.title}
                     </p>
 
                     <p className="mt-0.5 max-w-60.5 text-xs leading-relaxed text-[#6b5b45]">
-                      {t(`Features.${feature.key}.Description`)}
+                      {section.subtitle}
                     </p>
                   </div>
                 </motion.div>

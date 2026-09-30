@@ -62,7 +62,7 @@ export default async function HowItWorks({
                   <CardContent className="p-0">
                     <div className="relative overflow-hidden rounded-[24px]">
                       <Image
-                        src={images[index]}
+                        src={section.image ?? images[index]}
                         alt={section.title || `Step ${index + 1}`}
                         width={500}
                         height={500}

@@ -33,7 +33,11 @@ export type HomePageSections = {
     subtitle: string | null;
     title: string | null;
     description: string | null;
-    items: [];
+    items: {
+      title: string | null;
+      subtitle: string | null;
+      icon: string | null;
+    }[];
   };
   shop_the_moment: {
     title: string | null;

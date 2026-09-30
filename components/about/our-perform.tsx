@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import AboutTitle from "./about-title";
 import AboutSubtitle from "./about-subtitle";
@@ -5,9 +6,6 @@ import * as motion from "motion/react-client";
 import { Card, CardContent } from "../ui/card";
 import { AboutPageSections } from "@/types/home-page";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Clock3, PackageCheck, SlidersHorizontal } from "lucide-react";
-
-const icons = [Clock3, SlidersHorizontal, PackageCheck];
 
 export default async function OurPerform({
   section,
@@ -31,8 +29,6 @@ export default async function OurPerform({
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {section.items.map(({ description, icon, title }, index) => {
-              const Icon = icons[index];
-
               return (
                 <motion.div
                   key={index}
@@ -58,7 +54,12 @@ export default async function OurPerform({
                   <Card className="h-full border border-border p-8 shadow-sm">
                     <CardContent className="flex h-full flex-col items-center gap-4 p-0">
                       <div className="grid size-14 place-items-center rounded-full bg-border">
-                        <Icon className="size-6 text-foreground" />
+                        <Image
+                          src={icon ?? ""}
+                          alt={title ?? ""}
+                          width={24}
+                          height={24}
+                        />
                       </div>
 
                       <h4

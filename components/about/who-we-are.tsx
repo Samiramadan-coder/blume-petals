@@ -7,12 +7,16 @@ import { AboutPageSections } from "@/types/home-page";
 import AboutTitle from "./about-title";
 import AboutSubtitle from "./about-subtitle";
 
+const WHO_WE_ARE_FALLBACK_IMAGE = "/images/about/who-we-are/who-we-are.webp";
+
 export default async function WhoWeAre({
   section,
 }: {
   section: AboutPageSections["who_we_are"];
 }) {
   const t = await getTranslations("AboutWhoWeAre");
+
+  const imageSrc = section.image || WHO_WE_ARE_FALLBACK_IMAGE;
 
   return (
     <section className="container max-w-7xl overflow-hidden">
@@ -42,8 +46,10 @@ export default async function WhoWeAre({
             className="max-w-137.5 space-y-5 text-[15px] leading-relaxed text-foreground/68"
           >
             <div
-              dangerouslySetInnerHTML={{ __html: section.description || "" }}
-            ></div>
+              dangerouslySetInnerHTML={{
+                __html: section.description || "",
+              }}
+            />
           </motion.div>
         </div>
 
@@ -68,7 +74,7 @@ export default async function WhoWeAre({
           className="relative"
         >
           <Image
-            src="/images/about/who-we-are/who-we-are.webp"
+            src={imageSrc}
             alt={t("ImageAlt")}
             width={500}
             height={500}
