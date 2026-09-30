@@ -151,7 +151,6 @@ export async function resetPassword(
       "/api/v1/auth/password/reset",
       formData,
     );
-    console.log("Reset password response data:", data);
 
     return { success: true, token: data.data.token };
   } catch (err) {

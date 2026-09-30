@@ -23,8 +23,6 @@ export default async function AboutPage() {
     throw new Error("Failed to fetch home page content");
   }
 
-  console.log(data);
-
   return (
     <div>
       <Hero section={data.data.sections.hero} />

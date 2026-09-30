@@ -41,7 +41,9 @@ export default async function WhoWeAre({
             }}
             className="max-w-137.5 space-y-5 text-[15px] leading-relaxed text-foreground/68"
           >
-            {section.description ?? t("Paragraph1")}
+            <div
+              dangerouslySetInnerHTML={{ __html: section.description || "" }}
+            ></div>
           </motion.div>
         </div>
 

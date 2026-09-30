@@ -19,7 +19,6 @@ export default function PickupLocationsPreview({
   selectedPickupLocation: string | null;
   setSelectedPickupLocation: (value: string) => void;
 }) {
-  console.log(pickupLocations);
   const t = useTranslations("Shop");
 
   return (
