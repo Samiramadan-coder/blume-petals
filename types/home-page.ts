@@ -49,3 +49,26 @@ export type HomePageSections = {
     description: string | null;
   };
 };
+
+export type AboutPageSections = {
+  hero: {
+    image: string | null;
+    subtitle: string | null;
+    title: string | null;
+  };
+  who_we_are: {
+    description: string | null;
+    image: string | null;
+    subtitle: string | null;
+    title: string | null;
+  };
+  our_promise: {
+    subtitle: string | null;
+    title: string | null;
+    items: {
+      description: string | null;
+      icon: string | null;
+      title: string | null;
+    }[];
+  };
+};

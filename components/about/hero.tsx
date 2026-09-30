@@ -2,6 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import * as motion from "motion/react-client";
 
 import { cn } from "@/lib/utils";
+import { AboutPageSections } from "@/types/home-page";
 
 const containerVariants = {
   hidden: {},
@@ -28,7 +29,11 @@ const itemVariants = {
   },
 };
 
-export default async function Hero() {
+export default async function Hero({
+  section,
+}: {
+  section: AboutPageSections["hero"];
+}) {
   const t = await getTranslations("AboutHero");
   const locale = await getLocale();
 
@@ -53,14 +58,14 @@ export default async function Hero() {
             },
           )}
         >
-          {t("Title")}
+          {section.title ?? t("Title")}
         </motion.h1>
 
         <motion.p
           variants={itemVariants}
           className="max-w-156 text-pretty text-center text-base leading-relaxed text-foreground/65 md:text-lg"
         >
-          {t("Description")}
+          {section.subtitle ?? t("Description")}
         </motion.p>
       </motion.div>
     </section>

@@ -2,20 +2,25 @@ import Image from "next/image";
 import * as motion from "motion/react-client";
 
 import { getTranslations } from "next-intl/server";
+import { AboutPageSections } from "@/types/home-page";
 
 import AboutTitle from "./about-title";
 import AboutSubtitle from "./about-subtitle";
 
-export default async function WhoWeAre() {
+export default async function WhoWeAre({
+  section,
+}: {
+  section: AboutPageSections["who_we_are"];
+}) {
   const t = await getTranslations("AboutWhoWeAre");
 
   return (
     <section className="container max-w-7xl overflow-hidden">
       <div className="grid grid-cols-1 items-center gap-10 py-20 md:grid-cols-2 md:gap-20">
         <div>
-          <AboutSubtitle>{t("Eyebrow")}</AboutSubtitle>
+          <AboutSubtitle>{section.subtitle ?? t("Eyebrow")}</AboutSubtitle>
 
-          <AboutTitle>{t("Title")}</AboutTitle>
+          <AboutTitle>{section.title ?? t("Title")}</AboutTitle>
 
           <motion.div
             initial={{
@@ -36,11 +41,7 @@ export default async function WhoWeAre() {
             }}
             className="max-w-137.5 space-y-5 text-[15px] leading-relaxed text-foreground/68"
           >
-            <p>{t("Paragraph1")}</p>
-
-            <p>{t("Paragraph2")}</p>
-
-            <p>{t("Paragraph3")}</p>
+            {section.description ?? t("Paragraph1")}
           </motion.div>
         </div>
 

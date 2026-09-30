@@ -1,16 +1,19 @@
 import Image from "next/image";
-import * as motion from "motion/react-client";
-
-import { Card, CardContent } from "@/components/ui/card";
-import { getLocale, getTranslations } from "next-intl/server";
-import type { HomePageSections } from "@/types/home-page";
-
-import MainButton from "../ui/main-button";
-import LandingSubtitle from "./landing-subtitle";
-import LandingTitle from "./landing-title";
-
-import { steps } from "@/constants/home-page";
 import { cn } from "@/lib/utils";
+import MainButton from "../ui/main-button";
+import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
+import LandingSubtitle from "./landing-subtitle";
+import { Card, CardContent } from "@/components/ui/card";
+import type { HomePageSections } from "@/types/home-page";
+import { getLocale, getTranslations } from "next-intl/server";
+
+const images = [
+  "/images/home/how-it-works/1.webp",
+  "/images/home/how-it-works/2.webp",
+  "/images/home/how-it-works/3.webp",
+  "/images/home/how-it-works/4.webp",
+];
 
 export default async function HowItWorks({
   section,
@@ -33,9 +36,9 @@ export default async function HowItWorks({
           </LandingTitle>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {steps.map((step, index) => (
+            {section.items.map((section, index) => (
               <motion.div
-                key={step.id}
+                key={index}
                 initial={{
                   opacity: 0,
                   x: index % 2 === 0 ? -10 : 10,
@@ -59,15 +62,15 @@ export default async function HowItWorks({
                   <CardContent className="p-0">
                     <div className="relative overflow-hidden rounded-[24px]">
                       <Image
-                        src={step.image}
-                        alt={t(`Steps.${step.key}.Title`)}
+                        src={images[index]}
+                        alt={section.title || `Step ${index + 1}`}
                         width={500}
                         height={500}
                         className="aspect-square w-full object-cover"
                       />
 
                       <div className="absolute left-4 top-4 flex size-10 items-center justify-center rounded-full bg-[#d8c07f] text-sm font-semibold text-[#3d2e00]">
-                        {step.id}
+                        {index + 1}
                       </div>
                     </div>
 
@@ -77,11 +80,11 @@ export default async function HowItWorks({
                           "font-heading": locale === "en",
                         })}
                       >
-                        {t(`Steps.${step.key}.Title`)}
+                        {section.title}
                       </h3>
 
                       <p className="text-sm leading-relaxed text-[#6b5b45]">
-                        {t(`Steps.${step.key}.Description`)}
+                        {section.description}
                       </p>
                     </div>
                   </CardContent>
