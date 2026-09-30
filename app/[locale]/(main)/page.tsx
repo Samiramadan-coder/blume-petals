@@ -25,9 +25,9 @@ export default async function Home() {
   return (
     <main className="bg-[#f5f2ed]">
       <Hero section={data.data.sections.hero} />
-      <ShopByCategory />
-      <HowItWorks />
-      <BouquetBuilder />
+      <ShopByCategory section={data.data.sections.categories} />
+      <HowItWorks section={data.data.sections.how_it_works} />
+      <BouquetBuilder section={data.data.sections.bouquet_builder} />
       <ShopTheMoment />
       <FeaturedCollections />
       <PerfectAddOns />

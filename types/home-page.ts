@@ -16,4 +16,23 @@ export type HomePageSections = {
     subtitle: string | null;
     title: string | null;
   };
+  categories: {
+    title: string | null;
+    subtitle: null | string;
+  };
+  how_it_works: {
+    title: string | null;
+    subtitle: null | string;
+    items: {
+      description: string | null;
+      image: null | string;
+      title: string | null;
+    }[];
+  };
+  bouquet_builder: {
+    subtitle: string | null;
+    title: string | null;
+    description: string | null;
+    items: [];
+  };
 };

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
 
+import type { HomePageSections } from "@/types/home-page";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import MainButton from "../ui/main-button";
@@ -10,7 +11,11 @@ import LandingTitle from "./landing-title";
 import { features } from "@/constants/home-page";
 import { cn } from "@/lib/utils";
 
-export default async function BouquetBuilder() {
+export default async function BouquetBuilder({
+  section,
+}: {
+  section: HomePageSections["bouquet_builder"];
+}) {
   const t = await getTranslations("LandingBouquetBuilder");
   const locale = await getLocale();
 
@@ -81,12 +86,14 @@ export default async function BouquetBuilder() {
           </motion.div>
 
           <div>
-            <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+            <LandingSubtitle>
+              {section.subtitle ?? t("Eyebrow")}
+            </LandingSubtitle>
 
             <LandingTitle className="mb-0">
               <p
                 dangerouslySetInnerHTML={{
-                  __html: t("Title"),
+                  __html: section.title ?? t("Title"),
                 }}
               />
             </LandingTitle>
@@ -110,7 +117,7 @@ export default async function BouquetBuilder() {
               }}
               className="my-5 max-w-100 text-base leading-relaxed text-[#6b5b45]"
             >
-              {t("Description")}
+              {section.description ?? t("Description")}
             </motion.p>
 
             <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">

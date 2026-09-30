@@ -3,6 +3,7 @@ import * as motion from "motion/react-client";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { getLocale, getTranslations } from "next-intl/server";
+import type { HomePageSections } from "@/types/home-page";
 
 import MainButton from "../ui/main-button";
 import LandingSubtitle from "./landing-subtitle";
@@ -11,7 +12,11 @@ import LandingTitle from "./landing-title";
 import { steps } from "@/constants/home-page";
 import { cn } from "@/lib/utils";
 
-export default async function HowItWorks() {
+export default async function HowItWorks({
+  section,
+}: {
+  section: HomePageSections["how_it_works"];
+}) {
   const t = await getTranslations("LandingHowItWorks");
   const locale = await getLocale();
 
@@ -20,11 +25,11 @@ export default async function HowItWorks() {
       <div className="container max-w-7xl">
         <div className="py-20">
           <LandingSubtitle className="text-center">
-            {t("Eyebrow")}
+            {section.subtitle ?? t("Eyebrow")}
           </LandingSubtitle>
 
           <LandingTitle className="mx-auto max-w-112.5 text-center">
-            {t("Title")}
+            {section.title ?? t("Title")}
           </LandingTitle>
 
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">

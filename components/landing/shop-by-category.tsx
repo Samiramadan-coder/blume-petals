@@ -14,6 +14,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { HomePageSections } from "@/types/home-page";
 
 async function Categories() {
   const { data, ok } = await http.get<{
@@ -86,15 +87,19 @@ function CategoriesSkeleton() {
   );
 }
 
-export default async function ShopByCategory() {
+export default async function ShopByCategory({
+  section,
+}: {
+  section: HomePageSections["categories"];
+}) {
   const t = await getTranslations("LandingShopByCategory");
 
   return (
     <section className="container max-w-7xl">
       <div className="py-20">
-        <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+        <LandingSubtitle>{section.subtitle ?? t("Eyebrow")}</LandingSubtitle>
 
-        <LandingTitle>{t("Title")}</LandingTitle>
+        <LandingTitle>{section.title ?? t("Title")}</LandingTitle>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <Suspense fallback={<CategoriesSkeleton />}>
