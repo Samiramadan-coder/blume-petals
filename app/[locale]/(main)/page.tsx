@@ -1,4 +1,6 @@
+import { http } from "@/lib/http";
 import Hero from "@/components/landing/hero";
+import type { HomePageSections } from "@/types/home-page";
 import HowItWorks from "@/components/landing/how-it-works";
 import PerfectAddOns from "@/components/landing/perfect-add-ons";
 import ShopTheMoment from "@/components/landing/shop-the-moment";
@@ -8,8 +10,6 @@ import SubscribeSection from "@/components/landing/subscribe-section";
 import FeaturedCollections from "@/components/landing/featured-collections";
 import TodayExclusiveOffers from "@/components/landing/today-exclusive-offers";
 import DesignedByOurCustomers from "@/components/landing/designed-by-our-customers";
-import { http } from "@/lib/http";
-import type { HomePageSections } from "@/types/home-page";
 
 export default async function Home() {
   const { data, ok } = await http.get<{ data: { sections: HomePageSections } }>(
@@ -20,19 +20,17 @@ export default async function Home() {
     throw new Error("Failed to fetch home page content");
   }
 
-  console.log(data);
-
   return (
     <main className="bg-[#f5f2ed]">
       <Hero section={data.data.sections.hero} />
       <ShopByCategory section={data.data.sections.categories} />
       <HowItWorks section={data.data.sections.how_it_works} />
       <BouquetBuilder section={data.data.sections.bouquet_builder} />
-      <ShopTheMoment />
-      <FeaturedCollections />
+      <ShopTheMoment section={data.data.sections.shop_the_moment} />
+      <FeaturedCollections section={data.data.sections.our_selection} />
       <PerfectAddOns />
       <TodayExclusiveOffers />
-      <DesignedByOurCustomers />
+      <DesignedByOurCustomers section={data.data.sections.real_creations} />
       <SubscribeSection />
     </main>
   );

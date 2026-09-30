@@ -12,6 +12,7 @@ import type { Product } from "@/types/products";
 
 import CardItem from "../shop/card-item";
 import { Skeleton } from "@/components/ui/skeleton";
+import { HomePageSections } from "@/types/home-page";
 
 async function FeaturedProducts() {
   const { data, ok } = await http.get<{
@@ -78,15 +79,19 @@ function FeaturedProductsSkeleton() {
   );
 }
 
-export default async function FeaturedCollections() {
+export default async function FeaturedCollections({
+  section,
+}: {
+  section: HomePageSections["our_selection"];
+}) {
   const t = await getTranslations("LandingFeaturedCollections");
 
   return (
     <section className="container max-w-7xl">
       <div className="py-20">
-        <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+        <LandingSubtitle>{section.subtitle ?? t("Eyebrow")}</LandingSubtitle>
 
-        <LandingTitle>{t("Title")}</LandingTitle>
+        <LandingTitle>{section.title ?? t("Title")}</LandingTitle>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Suspense fallback={<FeaturedProductsSkeleton />}>

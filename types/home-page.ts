@@ -35,4 +35,17 @@ export type HomePageSections = {
     description: string | null;
     items: [];
   };
+  shop_the_moment: {
+    title: string | null;
+    subtitle: null | string;
+  };
+  our_selection: {
+    title: string | null;
+    subtitle: null | string;
+  };
+  real_creations: {
+    title: string | null;
+    subtitle: null | string;
+    description: string | null;
+  };
 };

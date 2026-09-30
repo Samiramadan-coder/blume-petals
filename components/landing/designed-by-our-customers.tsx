@@ -15,6 +15,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import type { CustomerDesign } from "@/types/landing";
+import { HomePageSections } from "@/types/home-page";
 
 const rotations = [
   "-rotate-2",
@@ -120,7 +121,11 @@ function CustomerDesignsSkeleton() {
   );
 }
 
-export default async function DesignedByOurCustomers() {
+export default async function DesignedByOurCustomers({
+  section,
+}: {
+  section: HomePageSections["real_creations"];
+}) {
   const t = await getTranslations("LandingDesignedByOurCustomers");
 
   return (
@@ -128,10 +133,12 @@ export default async function DesignedByOurCustomers() {
       <div className="container max-w-6xl">
         <div className="py-20">
           <LandingSubtitle className="text-center">
-            {t("Eyebrow")}
+            {section.subtitle ?? t("Eyebrow")}
           </LandingSubtitle>
 
-          <LandingTitle className="mb-6 text-center">{t("Title")}</LandingTitle>
+          <LandingTitle className="mb-6 text-center">
+            {section.title ?? t("Title")}
+          </LandingTitle>
 
           <motion.p
             initial={{
@@ -152,7 +159,7 @@ export default async function DesignedByOurCustomers() {
             }}
             className="mx-auto mb-12 mt-4 max-w-100 text-center text-sm md:text-base"
           >
-            {t("Description")}
+            {section.description ?? t("Description")}
           </motion.p>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">

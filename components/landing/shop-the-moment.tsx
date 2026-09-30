@@ -15,6 +15,7 @@ import LandingTitle from "./landing-title";
 import LandingSubtitle from "./landing-subtitle";
 
 import { getTranslations } from "next-intl/server";
+import { HomePageSections } from "@/types/home-page";
 
 async function Occasions() {
   const { data, ok } = await http.get<{
@@ -101,16 +102,20 @@ function OccasionsSkeleton() {
   );
 }
 
-export default async function ShopTheMoment() {
+export default async function ShopTheMoment({
+  section,
+}: {
+  section: HomePageSections["shop_the_moment"];
+}) {
   const t = await getTranslations("LandingShopTheMoment");
 
   return (
     <section className="bg-border">
       <div className="container max-w-7xl">
         <div className="py-20">
-          <LandingSubtitle>{t("Eyebrow")}</LandingSubtitle>
+          <LandingSubtitle>{section.subtitle ?? t("Eyebrow")}</LandingSubtitle>
 
-          <LandingTitle>{t("Title")}</LandingTitle>
+          <LandingTitle>{section.title ?? t("Title")}</LandingTitle>
 
           <div className="grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3">
             <Suspense fallback={<OccasionsSkeleton />}>
