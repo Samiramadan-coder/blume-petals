@@ -105,7 +105,7 @@ export default function SubscribeSection() {
 
   return (
     <section>
-      <div className="border-y border-[#d4c9bb] bg-border">
+      <div className="border-y border-[#d8cfc3] bg-border">
         <div className="container grid max-w-7xl gap-10 py-16 text-center sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((item, index) => (
             <motion.div

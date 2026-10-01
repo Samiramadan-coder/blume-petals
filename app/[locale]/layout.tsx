@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { DirectionProvider } from "@/components/ui/direction";
-import { Inter, Playfair_Display, Cairo } from "next/font/google";
+import { Inter, Playfair_Display, Noto_Kufi_Arabic } from "next/font/google";
 import GoogleAuthProvider from "@/providers/google-auth-provider";
 import { NotificationsProvider } from "@/providers/notifications-provider";
 
@@ -23,8 +23,8 @@ const PlayfairDisplayFont = Playfair_Display({
   weight: ["400", "500", "600", "700"],
 });
 
-const CairoFont = Cairo({
-  variable: "--font-cairo",
+const NotoKufiArabicFont = Noto_Kufi_Arabic({
+  variable: "--font-noto-kufi-arabic",
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
 });
@@ -60,7 +60,7 @@ export default async function RootLayout({
       className={cn(
         InterFont.variable,
         PlayfairDisplayFont.variable,
-        CairoFont.variable,
+        NotoKufiArabicFont.variable,
         "h-full antialiased",
       )}
     >

@@ -84,9 +84,7 @@ export default function ContactForm() {
             onSubmit={(event) => void handleSubmit(onSubmit)(event)}
             className="grid grid-cols-1 gap-4 md:grid-cols-2"
           >
-            <motion.div
-              {...reveal({ x: -10, delay: 0.06 })}
-            >
+            <motion.div {...reveal({ x: -10, delay: 0.06 })}>
               <FormInput
                 name="email"
                 register={register}
@@ -99,9 +97,7 @@ export default function ContactForm() {
               />
             </motion.div>
 
-            <motion.div
-              {...reveal({ x: 10, delay: 0.12 })}
-            >
+            <motion.div {...reveal({ x: 10, delay: 0.12 })}>
               <FormInput
                 name="phone"
                 register={register}
@@ -134,10 +130,7 @@ export default function ContactForm() {
               {...reveal({ y: 8, delay: 0.24 })}
               className="text-center md:col-span-2"
             >
-              <AuthSubmitBtn
-                isLoading={isSending}
-                label={t("SendMessage")}
-              />
+              <AuthSubmitBtn isLoading={isSending} label={t("SendMessage")} />
             </motion.div>
           </form>
         </CardContent>

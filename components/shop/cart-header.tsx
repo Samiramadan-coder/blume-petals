@@ -16,7 +16,7 @@ export default function CartHeader() {
     <div className="flex gap-8">
       <GoBackBtn />
       <h3 className="text-2xl font-bold flex items-center gap-2">
-        <span className={cn(locale === "en" ? "font-heading" : "font-cairo")}>
+        <span className={cn(locale === "en" ? "font-heading" : "font-noto-kufi-arabic")}>
           {t("MyCart")}:
         </span>
         <Badge className="w-8 h-8 text-base">{items.length}</Badge>

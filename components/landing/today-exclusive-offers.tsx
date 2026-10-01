@@ -42,7 +42,7 @@ export default async function TodayExclusiveOffers() {
               {t("Badge")}
             </Badge>
 
-            <LandingTitle className="max-w-105 text-white">
+            <LandingTitle className="ltr:max-w-105 text-white">
               {t("Title")}
             </LandingTitle>
 

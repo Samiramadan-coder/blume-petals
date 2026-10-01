@@ -32,7 +32,7 @@ export default async function HowItWorks({
             {section.subtitle ?? t("Eyebrow")}
           </LandingSubtitle>
 
-          <LandingTitle className="mx-auto max-w-112.5 text-center">
+          <LandingTitle className="mx-auto ltr:max-w-112.5 text-center">
             {section.title ?? t("Title")}
           </LandingTitle>
 
