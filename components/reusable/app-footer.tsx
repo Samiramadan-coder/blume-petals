@@ -8,27 +8,37 @@ import AppLogo from "./app-logo";
 import { http } from "@/lib/http";
 import { Separator } from "../ui/separator";
 import { LocaleSwitcher } from "./locale-switcher";
+import { unstable_rethrow } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { AppSettings, Category } from "@/types/landing";
 import SubscribeForm from "./app-footer/subscribe-form";
 import FooterNavLink from "./app-footer/footer-nav-link";
 
+// The footer renders in the (main) layout on every page, so a failed request
+// here (e.g. the API rate limiting the burst of requests a locale switch
+// causes) must not throw: it would take the whole page down with it. Render
+// the footer without that data instead.
+async function getFooterData<T>(path: string): Promise<T | null> {
+  try {
+    const { data } = await http.get<{ data: T }>(path);
+
+    return data.data;
+  } catch (error) {
+    // Let the 401 redirect from `http` through.
+    unstable_rethrow(error);
+    console.error(`Failed to fetch footer data from ${path}`, error);
+
+    return null;
+  }
+}
+
 export default async function AppFooter() {
   const t = await getTranslations("AppFooter");
 
-  const { data: categoriesData, ok: ok1 } = await http.get<{
-    data: {
-      items: Category[];
-    };
-  }>("/api/v1/categories");
-
-  const { data: settingsData, ok: ok2 } = await http.get<{
-    data: AppSettings;
-  }>(`/api/v1/settings`);
-
-  if (!ok1 || !ok2) {
-    throw new Error("Failed to fetch categories or app settings");
-  }
+  const categories = await getFooterData<{ items: Category[] }>(
+    "/api/v1/categories",
+  );
+  const settings = await getFooterData<AppSettings>("/api/v1/settings");
 
   return (
     <footer className="pt-16 bg-foreground">
@@ -86,25 +96,27 @@ export default async function AppFooter() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="space-y-4">
-            <h2
-              id="footer-shop"
-              className="text-sm font-semibold uppercase text-primary"
-            >
-              {t("Shop")}
-            </h2>
-            <nav aria-labelledby="footer-shop">
-              <ul className="space-y-2.5">
-                {categoriesData.data.items.slice(0, 5).map((item) => (
-                  <li key={item.slug}>
-                    <FooterNavLink href={`/shop?category=${item.slug}`}>
-                      {item.name}
-                    </FooterNavLink>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
+          {categories && (
+            <div className="space-y-4">
+              <h2
+                id="footer-shop"
+                className="text-sm font-semibold uppercase text-primary"
+              >
+                {t("Shop")}
+              </h2>
+              <nav aria-labelledby="footer-shop">
+                <ul className="space-y-2.5">
+                  {categories.items.slice(0, 5).map((item) => (
+                    <li key={item.slug}>
+                      <FooterNavLink href={`/shop?category=${item.slug}`}>
+                        {item.name}
+                      </FooterNavLink>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          )}
 
           <div className="space-y-4">
             <h2
@@ -154,73 +166,75 @@ export default async function AppFooter() {
             </nav>
           </div>
 
-          <div className="space-y-4">
-            <h2
-              id="footer-connect"
-              className="text-sm font-semibold uppercase text-primary"
-            >
-              {t("Connect")}
-            </h2>
-            <nav aria-labelledby="footer-connect">
-              <ul className="space-y-2.5">
-                <li>
-                  <FooterNavLink
-                    href={settingsData.data.connect.instagram_url ?? "#"}
-                    icon={
-                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaInstagram aria-hidden="true" className="text-primary" />
-                      </div>
-                    }
-                  >
-                    <span className="truncate">
-                      {settingsData.data.connect.instagram ?? "#"}
-                    </span>
-                  </FooterNavLink>
-                </li>
+          {settings && (
+            <div className="space-y-4">
+              <h2
+                id="footer-connect"
+                className="text-sm font-semibold uppercase text-primary"
+              >
+                {t("Connect")}
+              </h2>
+              <nav aria-labelledby="footer-connect">
+                <ul className="space-y-2.5">
+                  <li>
+                    <FooterNavLink
+                      href={settings.connect.instagram_url ?? "#"}
+                      icon={
+                        <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
+                          <FaInstagram aria-hidden="true" className="text-primary" />
+                        </div>
+                      }
+                    >
+                      <span className="truncate">
+                        {settings.connect.instagram ?? "#"}
+                      </span>
+                    </FooterNavLink>
+                  </li>
 
-                <li>
-                  <FooterNavLink
-                    href={settingsData.data.connect.whatsapp_url ?? "#"}
-                    icon={
-                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaWhatsapp aria-hidden="true" className="text-primary" />
-                      </div>
-                    }
-                  >
-                    {settingsData.data.connect.whatsapp ?? "#"}
-                  </FooterNavLink>
-                </li>
+                  <li>
+                    <FooterNavLink
+                      href={settings.connect.whatsapp_url ?? "#"}
+                      icon={
+                        <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
+                          <FaWhatsapp aria-hidden="true" className="text-primary" />
+                        </div>
+                      }
+                    >
+                      {settings.connect.whatsapp ?? "#"}
+                    </FooterNavLink>
+                  </li>
 
-                <li>
-                  <FooterNavLink
-                    href={settingsData.data.connect.email_url ?? "#"}
-                    icon={
-                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaEnvelope aria-hidden="true" className="text-primary" />
-                      </div>
-                    }
-                  >
-                    <span className="truncate">
-                      {settingsData.data.connect.email ?? "#"}
-                    </span>
-                  </FooterNavLink>
-                </li>
+                  <li>
+                    <FooterNavLink
+                      href={settings.connect.email_url ?? "#"}
+                      icon={
+                        <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
+                          <FaEnvelope aria-hidden="true" className="text-primary" />
+                        </div>
+                      }
+                    >
+                      <span className="truncate">
+                        {settings.connect.email ?? "#"}
+                      </span>
+                    </FooterNavLink>
+                  </li>
 
-                <li>
-                  <FooterNavLink
-                    href={settingsData.data.connect.phone_url ?? "#"}
-                    icon={
-                      <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaPhoneAlt aria-hidden="true" className="text-primary" />
-                      </div>
-                    }
-                  >
-                    {settingsData.data.connect.phone ?? "#"}
-                  </FooterNavLink>
-                </li>
-              </ul>
-            </nav>
-          </div>
+                  <li>
+                    <FooterNavLink
+                      href={settings.connect.phone_url ?? "#"}
+                      icon={
+                        <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
+                          <FaPhoneAlt aria-hidden="true" className="text-primary" />
+                        </div>
+                      }
+                    >
+                      {settings.connect.phone ?? "#"}
+                    </FooterNavLink>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          )}
         </div>
 
         <Separator className="bg-primary/30 h-px my-8" />
