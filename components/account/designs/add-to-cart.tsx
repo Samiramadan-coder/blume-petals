@@ -16,17 +16,25 @@ export default function AddToCart({ designId }: { designId: number }) {
 
   async function handleAddToCart() {
     setLoading(true);
-    const result = await addSavedDesignToCart(designId, 1);
 
-    if (result.success) {
-      toast.success(t("AddedToCartSuccessfully"));
-      router.push("/cart");
-    } else if (result.message) {
-      toast.error(result.message);
-    } else {
+    try {
+      const result = await addSavedDesignToCart(designId, 1);
+
+      if (result.success) {
+        toast.success(t("AddedToCartSuccessfully"));
+        router.push("/cart");
+      } else if (result.message) {
+        toast.error(result.message);
+      } else {
+        toast.error(t("FailedToAddToCart"));
+      }
+    } catch {
+      // The action itself failed (e.g. network error) - don't leave the
+      // button stuck in its loading state.
       toast.error(t("FailedToAddToCart"));
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (

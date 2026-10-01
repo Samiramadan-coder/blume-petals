@@ -14,14 +14,22 @@ export default function AddressAsDefault({ address }: { address: Address }) {
 
   async function setAsDefault() {
     setIsLoading(true);
-    const result = await setAddressAsDefault(address);
 
-    if (result.success) {
-      toast.success(t("SetAsDefaultSuccess"));
-    } else {
+    try {
+      const result = await setAddressAsDefault(address);
+
+      if (result.success) {
+        toast.success(t("SetAsDefaultSuccess"));
+      } else {
+        toast.error(t("SetAsDefaultError"));
+      }
+    } catch {
+      // The action itself failed (e.g. network error) - don't leave the
+      // button stuck in its loading state.
       toast.error(t("SetAsDefaultError"));
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   return (

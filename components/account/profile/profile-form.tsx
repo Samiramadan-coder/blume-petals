@@ -27,7 +27,7 @@ import { Upload } from "lucide-react";
 import { User } from "@/types/shared";
 import { Button } from "../../ui/button";
 import { Link, useRouter } from "@/i18n/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Spinner } from "../../ui/spinner";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { Separator } from "../../ui/separator";
@@ -56,9 +56,19 @@ export default function ProfileForm({
   const tFields = useTranslations("Fields");
   const tActions = useTranslations("Actions");
   const [openOTP, setOpenOTP] = useState(false);
-  const [oldPhone, setOldPhone] = useState(user.phone?.split("+20")[1]);
+  // Must match the form's default (`""` when the user has no phone), otherwise
+  // every save is treated as a phone change and asks for an OTP.
+  const [oldPhone, setOldPhone] = useState(user.phone?.split("+20")[1] || "");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
+  // Release the object URL created for the selected photo's preview.
+  useEffect(() => {
+    return () => {
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+    };
+  }, [photoPreview]);
 
   const {
     register,
@@ -78,39 +88,44 @@ export default function ProfileForm({
   });
 
   const onSubmit: SubmitHandler<Account> = async (data) => {
-    if (data.phone !== oldPhone) {
-      const result = await getOTPPhoneChange("+20" + data.phone);
+    try {
+      if (data.phone !== oldPhone) {
+        const result = await getOTPPhoneChange("+20" + data.phone);
 
-      if (result.success) {
-        setOpenOTP(true);
-        setOldPhone(data.phone);
-        return;
-      }
+        if (result.success) {
+          setOpenOTP(true);
+          setOldPhone(data.phone);
+          return;
+        }
 
-      if (result.success === false) {
-        toast.error(t("Errors.OTPRequestFailed"));
-        return;
-      }
-    } else {
-      const result = await updateProfile(data);
+        if (result.success === false) {
+          toast.error(t("OTPRequestFailed"));
+          return;
+        }
+      } else {
+        const result = await updateProfile(data);
 
-      if (result.success) {
-        toast.success(t("UpdatedSuccessfully"));
-        router.push("/account/profile");
-        return;
-      }
+        if (result.success) {
+          toast.success(t("UpdatedSuccessfully"));
+          router.push("/account/profile");
+          return;
+        }
 
-      if (result.success === false && result.errors) {
-        Object.entries(result.errors).forEach(([field, message]) => {
-          toast.error(message);
-          setError(field as keyof Account, {
-            type: "server",
-            message,
+        if (result.success === false && result.errors) {
+          Object.entries(result.errors).forEach(([field, message]) => {
+            toast.error(message);
+            setError(field as keyof Account, {
+              type: "server",
+              message,
+            });
           });
-        });
-        return;
-      }
+          return;
+        }
 
+        toast.error("Error updating profile");
+      }
+    } catch {
+      // The action itself failed (e.g. network error).
       toast.error("Error updating profile");
     }
   };
@@ -194,9 +209,7 @@ export default function ProfileForm({
                 const profilePhotoUrl =
                   typeof selectedPhoto === "string"
                     ? selectedPhoto
-                    : selectedPhoto instanceof File
-                      ? URL.createObjectURL(selectedPhoto)
-                      : null;
+                    : photoPreview;
 
                 return (
                   <Field>
@@ -237,14 +250,17 @@ export default function ProfileForm({
                       </div>
 
                       <input
+                        id="photo_path"
                         type="file"
                         accept="image/*"
                         className="hidden"
                         ref={fileInputRef}
+                        disabled={!isEditMode}
                         onChange={(e) => {
                           const file = e.target.files?.[0];
                           if (!file) return;
                           field.onChange(file);
+                          setPhotoPreview(URL.createObjectURL(file));
                           e.target.value = "";
                         }}
                       />
@@ -265,16 +281,14 @@ export default function ProfileForm({
                   {isSubmitting ? <Spinner /> : tActions("SaveChanges")}
                 </Button>
 
-                <Link href="/account/profile" className="flex-1">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    aria-label="Cancel Profile Changes"
-                    className="h-12 border-2 border-primary text-foreground cursor-pointer w-full"
-                  >
-                    {tActions("Cancel")}
-                  </Button>
-                </Link>
+                <Button
+                  asChild
+                  variant="outline"
+                  aria-label="Cancel Profile Changes"
+                  className="h-12 border-2 border-primary text-foreground cursor-pointer flex-1"
+                >
+                  <Link href="/account/profile">{tActions("Cancel")}</Link>
+                </Button>
               </div>
             )}
           </form>

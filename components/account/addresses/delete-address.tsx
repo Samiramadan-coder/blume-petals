@@ -32,16 +32,22 @@ export default function DeleteAddress({
   async function handleDelete() {
     setIsLoading(true);
 
-    const result = await deleteAddress(addressId);
+    try {
+      const result = await deleteAddress(addressId);
 
-    if (result.success) {
-      toast.success(t("AddressDeletedSuccess"));
-      closeBtn.current?.click();
-    } else {
+      if (result.success) {
+        toast.success(t("AddressDeletedSuccess"));
+        closeBtn.current?.click();
+      } else {
+        toast.error(t("AddressDeletedError"));
+      }
+    } catch {
+      // The action itself failed (e.g. network error) - don't leave the
+      // button stuck in its loading state.
       toast.error(t("AddressDeletedError"));
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   }
 
   return (

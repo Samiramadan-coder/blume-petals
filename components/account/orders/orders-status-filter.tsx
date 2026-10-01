@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { orderStatuses } from "@/constants/account";
 import { useTranslations } from "next-intl";
-import { parseAsString, throttle, useQueryState } from "nuqs";
+import { parseAsString, throttle, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { cn } from "@/lib/utils";
 
@@ -12,14 +12,19 @@ export default function OrdersStatusFilter() {
 
   const [isPending, startTransition] = useTransition();
 
-  const [queryParam, setQueryParam] = useQueryState(
-    "status",
-    parseAsString.withDefault("all").withOptions({
+  // `page` is cleared together with `status`: keeping page=2 after switching
+  // to a filter with a single page showed the empty state.
+  const [{ status: queryParam }, setQuery] = useQueryStates(
+    {
+      status: parseAsString.withDefault("all"),
+      page: parseAsString,
+    },
+    {
       history: "replace",
       shallow: false,
       startTransition,
       limitUrlUpdates: throttle(500),
-    }),
+    },
   );
 
   return (
@@ -37,7 +42,7 @@ export default function OrdersStatusFilter() {
             type="button"
             variant="ghost"
             key={status.value}
-            onClick={() => void setQueryParam(status.value)}
+            onClick={() => void setQuery({ status: status.value, page: null })}
             aria-label={`Filter orders by ${status.label}`}
             aria-pressed={isActive}
             className={cn(

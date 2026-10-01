@@ -78,9 +78,12 @@ export default function FormSelect<T extends FieldValues>({
           <FieldContent>
             <div className="space-y-1.5">
               <Select
+                // An empty string keeps the select controlled and shows the
+                // placeholder; `undefined` made it switch between
+                // uncontrolled and controlled and keep a stale selection.
                 value={
                   field.value == null || field.value === "" || field.value === 0
-                    ? undefined
+                    ? ""
                     : String(field.value)
                 }
                 onValueChange={(value) => {

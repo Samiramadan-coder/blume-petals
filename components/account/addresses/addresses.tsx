@@ -23,8 +23,8 @@ export default async function Addresses({
     <>
       {addresses.length > 0 ? (
         <div className="space-y-4">
-          {addresses.map((address, index) => (
-            <Card key={index} className="shadow-sm">
+          {addresses.map((address) => (
+            <Card key={address.id} className="shadow-sm">
               <CardContent className="flex items-start gap-6 px-8">
                 <div className="bg-primary/10 p-2 rounded-full">
                   <MapPin className="text-primary" />
@@ -36,7 +36,7 @@ export default async function Addresses({
                       className={cn("h-7 font-semibold mb-2 text-xs", {
                         "text-green-900 bg-green-200": address.label === "Home",
                         "text-blue-800 bg-blue-100": address.label === "Work",
-                        "text-black-800 bg-blue-100": address.label === "Other",
+                        "text-slate-800 bg-blue-100": address.label === "Other",
                       })}
                     >
                       {t(address.label)}

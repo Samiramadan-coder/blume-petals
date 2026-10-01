@@ -23,9 +23,10 @@ export default async function DesignCard({ item }: { item: Design }) {
             item.bouquet.image_url ||
             "/images/home/bouquet-builder/bouquet-builder.webp"
           }
-          alt="Sunset Romance"
+          alt={item.bouquet.name}
           fill
-          priority
+          sizes="(min-width: 768px) 25vw, (min-width: 640px) 50vw, 100vw"
+          loading="eager"
           className="object-cover"
         />
 

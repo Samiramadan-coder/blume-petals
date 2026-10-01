@@ -1,8 +1,9 @@
 import OrderCard from "@/components/account/orders/order-card";
 import { OrderDetailsSkeleton } from "@/components/account/orders/order-details-skeleton";
 import VerifyOrder from "@/components/account/orders/verify-order";
-import { http } from "@/lib/http";
+import { http, HttpError } from "@/lib/http";
 import { OrderItem } from "@/types/account";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 type params = {
@@ -20,11 +21,17 @@ async function Order({
   params: params;
   searchParams: searchParams;
 }) {
-  const { data, ok } = await http.get<{
-    data: {
-      order: OrderItem;
-    };
-  }>(`/api/v1/orders/${params["order-id"]}`);
+  const { data, ok } = await http
+    .get<{
+      data: {
+        order: OrderItem;
+      };
+    }>(`/api/v1/orders/${params["order-id"]}`)
+    .catch((error: unknown) => {
+      // An unknown order id is a 404, not a server error.
+      if (error instanceof HttpError && error.status === 404) notFound();
+      throw error;
+    });
 
   if (!ok) {
     throw new Error("Failed to fetch order");

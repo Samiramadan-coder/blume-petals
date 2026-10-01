@@ -30,8 +30,8 @@ export default async function Designs({
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {items.length > 0 ? (
           <>
-            {items.map((item, index) => (
-              <DesignCard key={index} item={item} />
+            {items.map((item) => (
+              <DesignCard key={item.id} item={item} />
             ))}
 
             <div className="sm:col-span-2 md:col-span-3">
@@ -46,16 +46,17 @@ export default async function Designs({
         )}
 
         <div className="col-span-1 sm:col-span-2 md:col-span-3">
-          <Link href="/builder">
-            <Button
-              variant="outline"
-              className="border-2 bg-white cursor-pointer w-70 h-70 border-dashed flex-col"
-              aria-label="Create New Design"
-            >
+          <Button
+            asChild
+            variant="outline"
+            className="border-2 bg-white cursor-pointer w-70 h-70 border-dashed flex-col"
+            aria-label="Create New Design"
+          >
+            <Link href="/builder">
               <Plus className="size-9 text-primary" />
               {t("CreateNewDesign")}
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

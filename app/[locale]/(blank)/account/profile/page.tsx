@@ -24,7 +24,7 @@ type SearchParams = {
 async function ProfileContent({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
   const preparedSearchParams = await searchParams;
   const editMode = preparedSearchParams.edit === "true";
@@ -51,21 +51,22 @@ async function ProfileContent({
 export default async function ProfilePage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }) {
   const t = await getTranslations("Account.Profile");
   return (
     <div className="space-y-6">
       <PageTitle title={t("Title")}>
-        <Link href="/account/profile?edit=true">
-          <Button
-            className="cursor-pointer"
-            variant="ghost"
-            aria-label="Edit Profile"
-          >
+        <Button
+          asChild
+          className="cursor-pointer"
+          variant="ghost"
+          aria-label="Edit Profile"
+        >
+          <Link href="/account/profile?edit=true">
             <Pencil className="text-primary size-5" />
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </PageTitle>
 
       <Suspense fallback={<LoadingProfile />}>

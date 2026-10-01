@@ -50,7 +50,7 @@ const orderStatusConfig: Record<OrderStatus, StatusConfig> = {
   processing: {
     icon: LoaderCircle,
     className: "bg-blue-100 text-blue-700",
-    iconClassName: "animate-spin",
+    iconClassName: "motion-safe:animate-spin",
   },
   shipped: {
     icon: Truck,
@@ -108,6 +108,10 @@ export default async function OrderCard({
   const address = order.address
     ? formatAddress(order.address)
     : order.pickup?.address;
+
+  const canRate =
+    order.status === "delivered" && !order.items.every((item) => item.reviewed);
+  const hasActions = canRate || !defaultOpen;
 
   return (
     <Collapsible defaultOpen={defaultOpen}>
@@ -172,7 +176,7 @@ export default async function OrderCard({
                     "[&[data-state=open]>svg]:rotate-180",
                   )}
                 >
-                  <ChevronDownIcon className="size-5 transition-transform duration-300" />
+                  <ChevronDownIcon className="size-5 transition-transform duration-300 motion-reduce:transition-none" />
                 </Button>
               </CollapsibleTrigger>
             </div>
@@ -233,10 +237,7 @@ export default async function OrderCard({
                 </div>
               </div>
 
-              {(order.status === "pending" ||
-                (order.status === "delivered" && !order.items[0].reviewed)) && (
-                <Separator className="mb-4" />
-              )}
+              {hasActions && <Separator className="mb-4" />}
 
               <div className="flex flex-wrap gap-4">
                 {/* {order.status !== "delivered" &&
@@ -245,24 +246,22 @@ export default async function OrderCard({
                     <OrderCancel orderId={order.id} />
                   )} */}
 
-                {order.status === "delivered" &&
-                  !order.items.every((item) => item.reviewed) && (
-                    <OrderRate
-                      items={order.items.filter((item) => !item.reviewed)}
-                      orderId={order.id}
-                      orderNumber={order.order_number}
-                    />
-                  )}
+                {canRate && (
+                  <OrderRate
+                    items={order.items.filter((item) => !item.reviewed)}
+                    orderId={order.id}
+                    orderNumber={order.order_number}
+                  />
+                )}
 
                 {!defaultOpen && (
-                  <Link href={`/account/orders/${order.id}`} className="flex-1">
-                    <Button
-                      className="w-full h-11"
-                      aria-label="View Order Details"
-                    >
-                      Details
-                    </Button>
-                  </Link>
+                  <Button
+                    asChild
+                    className="flex-1 h-11"
+                    aria-label="View Order Details"
+                  >
+                    <Link href={`/account/orders/${order.id}`}>Details</Link>
+                  </Button>
                 )}
               </div>
             </div>

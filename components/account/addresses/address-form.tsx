@@ -11,7 +11,6 @@ import {
 
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -23,8 +22,8 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { Plus } from "lucide-react";
-import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
+import { badgeVariants } from "../../ui/badge";
 import { Spinner } from "../../ui/spinner";
 import { useTranslations } from "next-intl";
 import { saveAddress } from "@/lib/account-actions";
@@ -33,9 +32,28 @@ import FormInput from "../../reusable/form/form-input";
 import FormSelect from "../../reusable/form/form-select";
 import FormSwitch from "../../reusable/form/form-switch";
 import { Controller, useForm, useWatch } from "react-hook-form";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Field, FieldContent, FieldLabel } from "../../ui/field";
 import LocationPicker from "../../reusable/form/location-picker";
+
+const addressLabels: AddressLabel[] = ["Home", "Work", "Other"];
+
+function getFormValues(address?: Address): AddressFormBody {
+  return {
+    label: address?.label || "Home",
+    recipient_name: address?.recipient_name || "",
+    recipient_phone: address?.recipient_phone || "",
+    street: address?.street || "",
+    area: address?.area || "",
+    city_id: address?.city.id || 0,
+    country_id: address?.country.id || 0,
+    building: address?.building || "",
+    landmark: address?.landmark || "",
+    latitude: address?.latitude ? +address.latitude : 25.2048,
+    longitude: address?.longitude ? +address.longitude : 55.2708,
+    is_default: address?.is_default || false,
+  };
+}
 
 export default function AddressForm({
   address,
@@ -50,12 +68,12 @@ export default function AddressForm({
 }) {
   const t = useTranslations("Account.Address");
   const tFields = useTranslations("Fields");
-  const closeBtn = useRef<HTMLButtonElement>(null);
-  const addresses: AddressLabel[] = ["Home", "Work", "Other"];
   const form = useRef<HTMLFormElement>(null);
+  const [open, setOpen] = useState(false);
   const [cities, setCities] = useState<City[]>([]);
 
   const {
+    reset,
     register,
     control,
     setError,
@@ -64,30 +82,31 @@ export default function AddressForm({
     formState: { errors, isSubmitting },
   } = useForm<AddressFormBody>({
     resolver: zodResolver(addressSchema(tFields)),
-    defaultValues: {
-      label: address?.label || "Home",
-      recipient_name: address?.recipient_name || "",
-      recipient_phone: address?.recipient_phone || "",
-      street: address?.street || "",
-      area: address?.area || "",
-      city_id: address?.city.id || 0,
-      country_id: address?.country.id || 0,
-      building: address?.building || "",
-      landmark: address?.landmark || "",
-      latitude: address?.latitude ? +address.latitude : 25.2048,
-      longitude: address?.longitude ? +address.longitude : 55.2708,
-      is_default: address?.is_default || false,
-    },
+    defaultValues: getFormValues(address),
   });
 
+  const onOpenChange = (nextOpen: boolean) => {
+    // Always start from the current address (or a blank form) so values left
+    // over from a previous add/edit are never submitted.
+    if (nextOpen) reset(getFormValues(address));
+    setOpen(nextOpen);
+  };
+
   const onSubmit = async (data: AddressFormBody) => {
-    const result = await saveAddress(address ?? null, data);
+    let result: Awaited<ReturnType<typeof saveAddress>>;
+
+    try {
+      result = await saveAddress(address ?? null, data);
+    } catch {
+      toast.error(t("ErrorUploading"));
+      return;
+    }
 
     if (result.success) {
       toast.success(
         address ? t("UpdatedSuccessfully") : t("AddedSuccessfully"),
       );
-      closeBtn.current?.click();
+      setOpen(false);
       return;
     }
 
@@ -120,40 +139,37 @@ export default function AddressForm({
     name: "country_id",
   });
 
-  const getListOfCities = useCallback(async () => {
-    try {
-      const { data, ok } = await http.get<{ data: { items: City[] } }>(
-        `/api/v1/countries/${watchCountryId}/cities`,
-      );
+  const countryCities = cities.filter(
+    (city) => city.country_id === watchCountryId,
+  );
+  const hasCities = countryCities.length > 0;
 
-      if (!ok) {
-        throw new Error("Failed to fetch cities");
-      }
-
-      setCities(data.data.items);
-    } catch (error) {
-      console.error("Failed to fetch cities:", error);
-    }
-  }, [watchCountryId]);
-
+  // Cities are only needed while the dialog is open; fetching them on mount
+  // fired one request per saved address on every page load.
   useEffect(() => {
-    if (!watchCountryId) return;
+    if (!open || !watchCountryId || hasCities) return;
+
+    let ignore = false;
 
     (async () => {
-      await getListOfCities();
+      try {
+        const { data } = await http.get<{ data: { items: City[] } }>(
+          `/api/v1/countries/${watchCountryId}/cities`,
+        );
+
+        if (!ignore) setCities(data.data.items);
+      } catch (error) {
+        console.error("Failed to fetch cities:", error);
+      }
     })();
-  }, [getListOfCities, watchCountryId]);
+
+    return () => {
+      ignore = true;
+    };
+  }, [open, watchCountryId, hasCities]);
 
   return (
-    <Dialog>
-      <DialogClose asChild>
-        <Button
-          className="hidden"
-          aria-label="Close Address Form"
-          ref={closeBtn}
-        ></Button>
-      </DialogClose>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         {trigger ? (
           trigger
@@ -219,25 +235,32 @@ export default function AddressForm({
 
                   return (
                     <Field>
-                      <FieldLabel htmlFor="photo_path">
+                      <FieldLabel id="address-label">
                         {tFields("Labels.AddressLabel")}
                       </FieldLabel>
                       <FieldContent>
-                        <div className="flex items-center gap-3">
-                          {addresses.map((address) => (
-                            <Badge
-                              key={address}
-                              onClick={() => onChange(address)}
+                        <div
+                          role="group"
+                          aria-labelledby="address-label"
+                          className="flex items-center gap-3"
+                        >
+                          {addressLabels.map((label) => (
+                            <button
+                              key={label}
+                              type="button"
+                              data-slot="badge"
+                              aria-pressed={value === label}
+                              onClick={() => onChange(label)}
                               className={cn(
+                                badgeVariants(),
                                 `h-9 w-20 bg-primary/40 text-foreground text-sm cursor-pointer`,
                                 {
-                                  "bg-primary text-foreground":
-                                    value === address,
+                                  "bg-primary text-foreground": value === label,
                                 },
                               )}
                             >
-                              {t(address)}
-                            </Badge>
+                              {t(label)}
+                            </button>
                           ))}
                         </div>
                       </FieldContent>
@@ -315,7 +338,7 @@ export default function AddressForm({
                 label={tFields("Labels.City")}
                 placeholder={tFields("Placeholders.City")}
                 name="city_id"
-                options={cities.map((city) => ({
+                options={countryCities.map((city) => ({
                   label: city.name,
                   value: city.id,
                 }))}

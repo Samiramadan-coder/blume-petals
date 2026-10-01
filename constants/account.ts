@@ -80,10 +80,10 @@ export const orderStatuses = (t: T) => [
     value: "all",
     label: t("All"),
   },
-  {
-    value: "pending",
-    label: t("Pending"),
-  },
+  // {
+  //   value: "pending",
+  //   label: t("Pending"),
+  // },
   {
     value: "processing",
     label: t("Processing"),

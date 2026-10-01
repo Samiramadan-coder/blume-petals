@@ -3,7 +3,12 @@
 import { Button } from "../ui/button";
 import { MapPin } from "lucide-react";
 import LocationPicker from "./form/location-picker";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
 export default function MapView({
   latitude,
@@ -15,12 +20,18 @@ export default function MapView({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="icon" className="" variant="ghost">
+        <Button
+          size="icon"
+          className=""
+          variant="ghost"
+          aria-label="View Location on Map"
+        >
           <MapPin />
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-2xl" showCloseButton={false}>
+        <DialogTitle className="sr-only">Location on Map</DialogTitle>
         <LocationPicker
           value={{
             latitude,

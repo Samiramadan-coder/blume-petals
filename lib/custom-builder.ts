@@ -66,7 +66,10 @@ export async function addSavedDesignToCart(
   } catch (error) {
     console.error("Failed to add saved design to cart:", error);
     if (error instanceof ValidationError) {
-      return { success: false, message: error.message };
+      // `error.message` is always the generic "Validation failed"; the API's
+      // actual reason (e.g. out of stock) is in the field errors.
+      const [reason] = Object.values(error.errors).flat();
+      return { success: false, message: reason ?? error.message };
     }
     return { success: false };
   }

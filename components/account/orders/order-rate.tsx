@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
@@ -103,9 +104,9 @@ export default function OrderRate({
           <Separator className="bg-primary/30" />
         </DialogHeader>
 
-        <h3 className="text-2xl text-center font-medium text-foreground">
+        <DialogTitle className="text-2xl text-center font-medium text-foreground">
           {t("OrderExperience")}
-        </h3>
+        </DialogTitle>
 
         {generalRating === 0 && items.length > 1 ? (
           <OrderRating

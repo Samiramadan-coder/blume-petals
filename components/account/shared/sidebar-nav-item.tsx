@@ -27,7 +27,9 @@ export default function SidebarNavItem({
           "bg-primary/20 text-foreground border-s-2 border-primary hover:bg-primary/20 hover:text-foreground",
       )}
     >
-      <Link href={href}>{label}</Link>
+      <Link href={href} aria-current={isActive ? "page" : undefined}>
+        {label}
+      </Link>
     </Button>
   );
 }

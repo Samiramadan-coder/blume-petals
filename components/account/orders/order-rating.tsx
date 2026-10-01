@@ -45,7 +45,7 @@ export default function ActiveRating({
               type="button"
               onClick={() => handleChange(star)}
               onMouseEnter={() => setHoverRating(star)}
-              className="transition-transform hover:scale-110"
+              className="transition-transform hover:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100"
               aria-label={`Rate ${star}`}
             >
               <Star

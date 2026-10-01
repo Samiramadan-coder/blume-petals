@@ -30,5 +30,5 @@ export default function VerifyOrder({
     }
   }, [orderId, payment, t]);
 
-  return <>VerifyOrder</>;
+  return null;
 }
