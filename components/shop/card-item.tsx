@@ -14,6 +14,7 @@ export default async function CardItem({
   cardClassName,
   cardContentClassName,
   imageClassName,
+  imageLoading = "lazy",
   showCategory = true,
   titleClassName,
   priceClassName,
@@ -22,6 +23,7 @@ export default async function CardItem({
   cardClassName?: string;
   cardContentClassName?: string;
   imageClassName?: string;
+  imageLoading?: "eager" | "lazy";
   showCategory?: boolean;
   titleClassName?: string;
   priceClassName?: string;
@@ -39,8 +41,12 @@ export default async function CardItem({
             100,
         )
       : 0;
-
-  // console.log("isOutOfStock:", isOutOfStock);
+  // `price_from` is the cheapest variant, so the crossed-out price shown next
+  // to it has to come from that same variant (not simply the first one).
+  const cheapestVariant =
+    item.variants.find((variant) => +variant.price === +item.price_from) ??
+    item.variants[0];
+  const compareAtPrice = cheapestVariant?.compare_at_price;
 
   return (
     <Card
@@ -52,7 +58,7 @@ export default async function CardItem({
       <Link
         href={`/shop/${item.slug}`}
         aria-label={`View ${item.name} details`}
-        className="absolute inset-0 z-10"
+        className="absolute inset-0 z-10 rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
       />
 
       <CardContent className="px-0">
@@ -67,11 +73,12 @@ export default async function CardItem({
             src={item.image_url}
             alt={item.name}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            loading={imageLoading}
+            className="object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
 
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 motion-reduce:transition-none" />
 
           <div className="absolute z-20 top-0 left-0 p-4 w-full flex items-center justify-between">
             <div className="flex gap-2">
@@ -119,9 +126,9 @@ export default async function CardItem({
           </div>
           <p className={cn("text-base font-bold text-primary", priceClassName)}>
             {t("AED")} {item.price_from}
-            {item.variants[0].compare_at_price && (
+            {compareAtPrice && (
               <span className="font-normal line-through ms-2 text-sm text-foreground/50">
-                {t("AED")} {item.variants[0].compare_at_price}
+                {t("AED")} {compareAtPrice}
               </span>
             )}
           </p>

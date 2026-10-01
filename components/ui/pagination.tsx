@@ -2,7 +2,11 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontalIcon } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MoreHorizontalIcon,
+} from "lucide-react";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -73,6 +77,8 @@ function PaginationPrevious({
       className={cn("ps-3! pe-3.5!", className)}
       {...props}
     >
+      {/* The label is hidden on small screens, where the icon replaces it. */}
+      <ChevronLeftIcon className="sm:hidden rtl:rotate-180" />
       <span className="hidden sm:block">{text}</span>
     </PaginationLink>
   );
@@ -91,6 +97,7 @@ function PaginationNext({
       {...props}
     >
       <span className="hidden sm:block">{text}</span>
+      <ChevronRightIcon className="sm:hidden rtl:rotate-180" />
     </PaginationLink>
   );
 }

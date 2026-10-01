@@ -30,7 +30,10 @@ export default function ProductSortSelect() {
         void setQuery({ sort: value, page: "1" });
       }}
     >
-      <SelectTrigger className="w-full max-w-48 border-border text-sm font-semibold py-5">
+      <SelectTrigger
+        aria-label={t("SortBy")}
+        className="w-full max-w-48 border-border text-sm font-semibold py-5"
+      >
         <SelectValue placeholder={t("Filters")} />
       </SelectTrigger>
       <SelectContent>

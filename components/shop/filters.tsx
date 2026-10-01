@@ -15,7 +15,13 @@ import {
   useQueryStates,
 } from "nuqs";
 
-import { useState, useTransition } from "react";
+import { cn } from "@/lib/utils";
+import {
+  useId,
+  useState,
+  useTransition,
+  useSyncExternalStore,
+} from "react";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
 import { Checkbox } from "../ui/checkbox";
@@ -25,8 +31,28 @@ import { Card, CardContent } from "../ui/card";
 import { Field, FieldGroup } from "../ui/field";
 import { FiltersOptions } from "@/types/products";
 
-export default function Filters({ filters }: { filters: FiltersOptions }) {
+const subscribe = () => () => {};
+
+export default function Filters({
+  filters,
+  className,
+}: {
+  filters: FiltersOptions;
+  className?: string;
+}) {
   const t = useTranslations("Shop");
+
+  // False in the server HTML, true once hydrated. Until then the open panel
+  // must not play its expand animation, or the filters jump on every load.
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
+
+  // The filters are rendered twice (sidebar + mobile sheet), so every field id
+  // is prefixed to stay unique and keep each label bound to its own checkbox.
+  const id = useId();
 
   const [isPending, startTransition] = useTransition();
 
@@ -63,9 +89,13 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
 
   return (
     <Card
-      className={`me-8 shadow-sm transition-opacity ${
-        isPending ? "opacity-70" : ""
-      }`}
+      aria-busy={isPending}
+      className={cn(
+        "me-8 shadow-sm transition-opacity",
+        isPending && "opacity-70",
+        !hydrated && "**:data-[slot=accordion-content]:animate-none!",
+        className,
+      )}
     >
       <CardContent>
         {/* Price Range */}
@@ -83,6 +113,7 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
 
                 <Slider
                   value={min}
+                  aria-label={t("MinPrice")}
                   max={filters.price_range.max}
                   step={1}
                   className="mx-auto w-full max-w-xs"
@@ -113,6 +144,7 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
 
                 <Slider
                   value={max}
+                  aria-label={t("MaxPrice")}
                   max={filters.price_range.max}
                   step={1}
                   className="mx-auto w-full max-w-xs"
@@ -120,7 +152,10 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
                     setMaxDraft(value);
                   }}
                   onValueCommit={(value) => {
-                    const nextMax = value[0] < min[0] ? min[0] + 1 : value[0];
+                    const nextMax =
+                      value[0] < min[0]
+                        ? Math.min(min[0] + 1, filters.price_range.max)
+                        : value[0];
 
                     setMaxDraft(null);
 
@@ -157,7 +192,7 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
                   <FieldGroup key={size} className="max-w-sm">
                     <Field orientation="horizontal">
                       <Checkbox
-                        id={size}
+                        id={`${id}-size-${size}`}
                         name={size}
                         checked={checked}
                         onCheckedChange={(value) => {
@@ -178,7 +213,10 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
                         }}
                       />
 
-                      <Label htmlFor={size} className="text-foreground/70">
+                      <Label
+                        htmlFor={`${id}-size-${size}`}
+                        className="text-foreground/70"
+                      >
                         {size}
                       </Label>
                     </Field>
@@ -195,7 +233,7 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
         <FieldGroup className="my-4 max-w-sm">
           <Field orientation="horizontal">
             <Checkbox
-              id="in_stock"
+              id={`${id}-in_stock`}
               name="in_stock"
               checked={isOnStock}
               onCheckedChange={(checked) => {
@@ -206,7 +244,10 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
               }}
             />
 
-            <Label htmlFor="in_stock" className="text-base font-semibold">
+            <Label
+              htmlFor={`${id}-in_stock`}
+              className="text-base font-semibold"
+            >
               {t("InStockOnly")}
             </Label>
           </Field>
@@ -229,7 +270,7 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
                   <FieldGroup key={occasion.id} className="max-w-sm">
                     <Field orientation="horizontal">
                       <Checkbox
-                        id={occasion.slug}
+                        id={`${id}-occasion-${occasion.slug}`}
                         name={occasion.name}
                         checked={checked}
                         onCheckedChange={(value) => {
@@ -254,7 +295,7 @@ export default function Filters({ filters }: { filters: FiltersOptions }) {
                       />
 
                       <Label
-                        htmlFor={occasion.slug}
+                        htmlFor={`${id}-occasion-${occasion.slug}`}
                         className="text-sm text-foreground/70"
                       >
                         {occasion.name}

@@ -9,9 +9,14 @@ import { AlertTriangle, Home, RefreshCcw } from "lucide-react";
 type ErrorPageProps = {
   error: Error & { digest?: string };
   reset: () => void;
+  unstable_retry: () => void;
 };
 
-export default function ErrorPage({ error, reset }: ErrorPageProps) {
+export default function ErrorPage({
+  error,
+  reset,
+  unstable_retry,
+}: ErrorPageProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -64,7 +69,9 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <Button
             type="button"
-            onClick={reset}
+            // `reset` only re-renders; the failed server data has to be
+            // re-fetched for "Try Again" to be able to recover.
+            onClick={() => unstable_retry()}
             className="h-11 rounded-full px-7"
             aria-label="Try Again"
           >

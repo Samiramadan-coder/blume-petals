@@ -24,19 +24,31 @@ export default function AddToFavoriteBtn({
   const t = useTranslations("Shop");
   const [loading, setLoading] = useState(false);
 
+  // Shown state: updated as soon as the request succeeds, then re-synced with
+  // the server value once the refreshed product list arrives. Without it the
+  // heart keeps the old state for the whole duration of `router.refresh()`.
+  const [isFav, setIsFav] = useState(product.is_fav);
+  const [serverIsFav, setServerIsFav] = useState(product.is_fav);
+
+  if (serverIsFav !== product.is_fav) {
+    setServerIsFav(product.is_fav);
+    setIsFav(product.is_fav);
+  }
+
   async function addToWishlist() {
     if (!isLoggedIn) {
       router.push("/login");
       return;
     }
 
+    if (loading) return;
+
     setLoading(true);
-    const result = await addToWishlistAction(product.is_fav, product.slug);
+    const result = await addToWishlistAction(isFav, product.slug);
 
     if (result.success) {
-      toast.success(
-        product.is_fav ? t("RemovedFromWishlist") : t("AddedToWishlist"),
-      );
+      toast.success(isFav ? t("RemovedFromWishlist") : t("AddedToWishlist"));
+      setIsFav(!isFav);
       router.refresh();
       setLoading(false);
       return;
@@ -50,16 +62,18 @@ export default function AddToFavoriteBtn({
     return (
       <Button
         aria-label={`Add ${product.name} to wishlist`}
+        aria-pressed={isFav}
+        aria-busy={loading}
         onClick={addToWishlist}
-        className="rounded-full h-8 w-8 bg-background hover:bg-background shadow-md"
+        className="rounded-full h-8 w-8 cursor-pointer bg-background hover:bg-background shadow-md"
       >
         {loading ? (
           <Spinner className="size-5 text-primary" />
         ) : (
           <Heart
             className={cn(`size-4`, {
-              "text-foreground": !product.is_fav,
-              "text-primary fill-primary": product.is_fav,
+              "text-foreground": !isFav,
+              "text-primary fill-primary": isFav,
             })}
           />
         )}
@@ -72,13 +86,14 @@ export default function AddToFavoriteBtn({
       <Button
         variant="outline"
         aria-label={`Add ${product.name} to wishlist`}
+        aria-pressed={isFav}
+        aria-busy={loading}
         onClick={addToWishlist}
         className={cn(
           "w-full cursor-pointer h-12 text-base border-2 border-primary p-5 text-primary font-semibold",
           {
-            "hover:bg-primary hover:text-white": !product.is_fav,
-            "bg-primary text-white hover:text-primary hover:bg-white":
-              product.is_fav,
+            "hover:bg-primary hover:text-white": !isFav,
+            "bg-primary text-white hover:text-primary hover:bg-white": isFav,
           },
         )}
       >
@@ -87,12 +102,12 @@ export default function AddToFavoriteBtn({
         ) : (
           <Heart
             className={cn(`size-5`, {
-              "fill-white": product.is_fav,
+              "fill-white": isFav,
             })}
           />
         )}
         <span className="hidden sm:inline">
-          {product.is_fav ? t("InWishlist") : t("AddToWishlist")}
+          {isFav ? t("InWishlist") : t("AddToWishlist")}
         </span>
       </Button>
     );

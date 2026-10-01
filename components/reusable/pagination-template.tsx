@@ -72,6 +72,8 @@ export default function PaginationTemplate({
             href="#"
             text={t("Previous")}
             aria-label={t("Previous")}
+            aria-disabled={currentPage <= 1 || undefined}
+            tabIndex={currentPage <= 1 ? -1 : undefined}
             onClick={(event) => {
               event.preventDefault();
 
@@ -80,7 +82,7 @@ export default function PaginationTemplate({
               }
             }}
             className={
-              currentPage === 1
+              currentPage <= 1
                 ? "pointer-events-none opacity-50"
                 : "cursor-pointer"
             }
@@ -115,6 +117,8 @@ export default function PaginationTemplate({
             href="#"
             text={t("Next")}
             aria-label={t("Next")}
+            aria-disabled={currentPage >= totalPages || undefined}
+            tabIndex={currentPage >= totalPages ? -1 : undefined}
             onClick={(event) => {
               event.preventDefault();
 
@@ -123,7 +127,7 @@ export default function PaginationTemplate({
               }
             }}
             className={
-              currentPage === totalPages
+              currentPage >= totalPages
                 ? "pointer-events-none opacity-50"
                 : "cursor-pointer"
             }
