@@ -5,6 +5,7 @@ import AboutSubtitle from "./about-subtitle";
 import * as motion from "motion/react-client";
 import { Card, CardContent } from "../ui/card";
 import { AboutPageSections } from "@/types/home-page";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 import { getLocale, getTranslations } from "next-intl/server";
 
 export default async function OurPerform({
@@ -27,42 +28,26 @@ export default async function OurPerform({
             {section.title ?? t("Title")}
           </AboutTitle>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {section.items.map(({ description, icon, title }, index) => {
               return (
-                <motion.div
+                <motion.li
                   key={index}
-                  initial={{
-                    opacity: 0,
-                    x: index % 2 === 0 ? -8 : 8,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    x: 0,
-                  }}
-                  viewport={{
-                    once: true,
-                    amount: 0.2,
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.06,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
+                  {...reveal({
+                    x: alternateX(index),
+                    delay: stagger(index),
+                  })}
                   className="h-full"
                 >
                   <Card className="h-full border border-border p-8 shadow-sm">
                     <CardContent className="flex h-full flex-col items-center gap-4 p-0">
                       <div className="grid size-14 place-items-center rounded-full bg-border">
-                        <Image
-                          src={icon ?? ""}
-                          alt={title ?? ""}
-                          width={24}
-                          height={24}
-                        />
+                        {icon && (
+                          <Image src={icon} alt="" width={24} height={24} />
+                        )}
                       </div>
 
-                      <h4
+                      <h3
                         className={cn(
                           "text-center text-xl font-bold text-foreground",
                           {
@@ -71,17 +56,17 @@ export default async function OurPerform({
                         )}
                       >
                         {title}
-                      </h4>
+                      </h3>
 
                       <p className="text-center text-sm leading-relaxed text-foreground/60">
                         {description}
                       </p>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </motion.li>
               );
             })}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

@@ -19,6 +19,7 @@ import AuthSubmitBtn from "../auth/shared/auth-submit-btn";
 import { type ContactFormData, contactFormSchema } from "@/types/contact";
 
 import { sendContactForm } from "@/lib/contact";
+import { reveal } from "@/lib/motion";
 
 export default function ContactForm() {
   const router = useRouter();
@@ -61,47 +62,15 @@ export default function ContactForm() {
   };
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        x: 10,
-      }}
-      whileInView={{
-        opacity: 1,
-        x: 0,
-      }}
-      viewport={{
-        once: true,
-        amount: 0.15,
-      }}
-      transition={{
-        duration: 0.55,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-    >
+    <motion.div {...reveal({ x: 10, amount: 0.15 })}>
       <Card className="mt-8 rounded-lg py-8 shadow-sm">
-        <CardContent className="px-8">
+        <CardContent className="px-4 sm:px-8">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="grid grid-cols-1 gap-4 md:grid-cols-2"
           >
             <motion.div
-              initial={{
-                opacity: 0,
-                x: -6,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.45,
-                delay: 0.05,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              {...reveal({ x: -10, delay: 0.06 })}
             >
               <FormInput
                 name="email"
@@ -109,27 +78,14 @@ export default function ContactForm() {
                 errors={errors}
                 label={t("Fields.Email.Label")}
                 placeholder={t("Fields.Email.Placeholder")}
+                autoComplete="email"
+                inputMode="email"
                 required
               />
             </motion.div>
 
             <motion.div
-              initial={{
-                opacity: 0,
-                x: 6,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.45,
-                delay: 0.08,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              {...reveal({ x: 10, delay: 0.12 })}
             >
               <FormInput
                 name="phone"
@@ -138,27 +94,14 @@ export default function ContactForm() {
                 label={t("Fields.Phone.Label")}
                 placeholder={t("Fields.Phone.Placeholder")}
                 prefix="AE +971"
+                autoComplete="tel-national"
+                inputMode="tel"
                 required
               />
             </motion.div>
 
             <motion.div
-              initial={{
-                opacity: 0,
-                x: -6,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.45,
-                delay: 0.1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              {...reveal({ x: -10, delay: 0.18 })}
               className="md:col-span-2"
             >
               <FormTextarea
@@ -173,22 +116,7 @@ export default function ContactForm() {
             </motion.div>
 
             <motion.div
-              initial={{
-                opacity: 0,
-                y: 5,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.4,
-                delay: 0.14,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              {...reveal({ y: 8, delay: 0.24 })}
               className="text-center md:col-span-2"
             >
               <AuthSubmitBtn

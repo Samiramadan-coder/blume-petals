@@ -10,11 +10,13 @@ import { useForm } from "react-hook-form";
 import LandingTitle from "./landing-title";
 import { subscribe } from "@/lib/subscribe";
 import { useEffect, useState } from "react";
+import { useReducedMotion } from "motion/react";
 import * as motion from "motion/react-client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LandingSubtitle from "./landing-subtitle";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 import { useLocale, useTranslations } from "next-intl";
 import { subscribeFormSchema, SubscribeFormValues } from "@/types/subscribe";
 
@@ -30,6 +32,7 @@ export default function SubscribeSection() {
   const locale = useLocale();
   const t = useTranslations("LandingSubscribeSection");
   const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
+  const reduceMotion = useReducedMotion();
   const [statsData, setStatsData] = useState<Stats | null>(null);
 
   const {
@@ -107,23 +110,11 @@ export default function SubscribeSection() {
           {stats.map((item, index) => (
             <motion.div
               key={item.key}
-              initial={{
-                opacity: 0,
-                x: index % 2 === 0 ? -8 : 8,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-              }}
-              viewport={{
-                once: true,
+              {...reveal({
+                x: alternateX(index),
+                delay: stagger(index),
                 amount: 0.35,
-              }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.05,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              })}
             >
               <div
                 className={cn(
@@ -136,7 +127,7 @@ export default function SubscribeSection() {
                 <CountUp
                   end={item.end}
                   decimals={item.decimals ?? 0}
-                  duration={1.5}
+                  duration={reduceMotion ? 0.01 : 1.5}
                   separator=","
                   enableScrollSpy
                   scrollSpyOnce
@@ -167,51 +158,19 @@ export default function SubscribeSection() {
 
           <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: 8,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.3,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
+          <motion.div {...reveal({ x: 10, amount: 0.3 })}>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-foreground">
               {t("Description")}
             </p>
 
             <motion.form
-              initial={{
-                opacity: 0,
-                y: 6,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.5,
-              }}
-              transition={{
-                duration: 0.45,
-                delay: 0.08,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              {...reveal({ y: 8, delay: 0.06, amount: 0.5 })}
               onSubmit={handleSubmit(onSubmit)}
             >
               <div className="mx-auto mt-9 flex max-w-md overflow-hidden rounded-full bg-white">
                 <Input
                   type="email"
+                  autoComplete="email"
                   aria-label={t("EmailAria")}
                   placeholder={t("EmailPlaceholder")}
                   className="h-12 flex-1 border-0 bg-white px-6 text-foreground shadow-none focus-visible:ring-0"
@@ -220,7 +179,6 @@ export default function SubscribeSection() {
 
                 <Button
                   type="submit"
-                  aria-label="Submit"
                   className="h-12 w-35 cursor-pointer rounded-full bg-secondary text-secondary-foreground hover:bg-secondary"
                 >
                   {isSubmitting && <Spinner />} {t("PrimaryCta")}
@@ -230,19 +188,7 @@ export default function SubscribeSection() {
             </motion.form>
 
             <motion.p
-              initial={{
-                opacity: 0,
-              }}
-              whileInView={{
-                opacity: 1,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.45,
-                delay: 0.14,
-              }}
+              {...reveal({ delay: 0.12 })}
               className="mt-4 text-xs text-foreground"
             >
               {t("Disclaimer")}

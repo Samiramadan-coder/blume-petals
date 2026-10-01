@@ -55,11 +55,11 @@ export function Countdown({ targetDate, labels }: CountdownProps) {
         {labels.eyebrow}
       </p>
 
-      <div className="flex items-start gap-3">
+      <div role="timer" className="flex items-start gap-3">
         {items.map((item, index) => (
           <div key={item.label} className="flex items-start gap-3">
             <div className="flex flex-col items-center gap-2">
-              <div className="flex h-14 w-16 items-center justify-center rounded-2xl bg-white/15 text-3xl font-bold text-white backdrop-blur-sm">
+              <div className="flex h-14 w-16 items-center justify-center rounded-2xl bg-white/15 text-3xl font-bold tabular-nums text-white backdrop-blur-sm">
                 {item.value}
               </div>
 
@@ -69,7 +69,12 @@ export function Countdown({ targetDate, labels }: CountdownProps) {
             </div>
 
             {index < items.length - 1 && (
-              <div className="pt-4 text-3xl font-bold text-white/55">:</div>
+              <div
+                aria-hidden="true"
+                className="pt-4 text-3xl font-bold text-white/55"
+              >
+                :
+              </div>
             )}
           </div>
         ))}

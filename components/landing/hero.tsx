@@ -9,31 +9,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { cn } from "@/lib/utils";
 import { HomePageSections } from "@/types/home-page";
-
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.08,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    x: -10,
-  },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.55,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  },
-};
+import { heroContainerVariants, heroItemVariants } from "@/lib/motion";
 
 export default async function Hero({
   section,
@@ -47,9 +23,9 @@ export default async function Hero({
     <section className="relative isolate min-h-svh overflow-hidden">
       <Image
         src={section.image ?? "/images/home/hero/bouquet-of-rose.webp"}
-        alt="Bouquet of rose"
+        alt=""
         fill
-        priority
+        preload
         fetchPriority="high"
         sizes="100vw"
         className="absolute inset-0 -z-30 object-cover object-center animate-hero-zoom"
@@ -61,13 +37,13 @@ export default async function Hero({
 
       <div className="flex min-h-svh items-end">
         <motion.div
-          variants={containerVariants}
+          variants={heroContainerVariants}
           initial="hidden"
           animate="show"
-          className="container max-w-7xl pb-16 md:pb-20"
+          className="container max-w-7xl pb-16 pt-28 md:pb-20"
         >
           <motion.p
-            variants={itemVariants}
+            variants={heroItemVariants}
             className="mb-5 text-xs font-semibold uppercase tracking-[0.25rem] text-primary"
           >
             {section.subtitle ?? t("Eyebrow")}
@@ -75,7 +51,7 @@ export default async function Hero({
 
           <h1
             className={cn(
-              "mb-5 max-w-xl text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl",
+              "mb-5 max-w-xl text-balance text-5xl font-bold leading-[1.05] text-white md:text-6xl lg:text-7xl",
               {
                 "font-heading": locale === "en",
               },
@@ -85,14 +61,14 @@ export default async function Hero({
           </h1>
 
           <motion.p
-            variants={itemVariants}
+            variants={heroItemVariants}
             className="mb-8 max-w-105 text-base leading-relaxed text-white/82 md:text-lg"
           >
             {section.description ?? t("Description")}
           </motion.p>
 
           <motion.div
-            variants={itemVariants}
+            variants={heroItemVariants}
             className="mb-8 flex flex-wrap items-center gap-4"
           >
             <MainButton href="/builder" label={t("PrimaryCta")} />
@@ -106,7 +82,10 @@ export default async function Hero({
             </Button>
           </motion.div>
 
-          <motion.p variants={itemVariants} className="text-xs text-white/65">
+          <motion.p
+            variants={heroItemVariants}
+            className="text-xs text-white/65"
+          >
             {t("Stats")}
           </motion.p>
         </motion.div>

@@ -13,6 +13,7 @@ import * as motion from "motion/react-client";
 import { getTranslations } from "next-intl/server";
 import { http } from "@/lib/http";
 import { AppSettings } from "@/types/landing";
+import { reveal } from "@/lib/motion";
 
 export default async function GetStarted() {
   const t = await getTranslations("AboutGetStarted");
@@ -36,22 +37,7 @@ export default async function GetStarted() {
           </AboutTitle>
 
           <motion.div
-            initial={{
-              opacity: 0,
-              x: -8,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.4,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            {...reveal({ x: -10, amount: 0.4 })}
             className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row"
           >
             <Button
@@ -61,7 +47,7 @@ export default async function GetStarted() {
             >
               <Link href="/builder">
                 {t("PrimaryCta")}
-                <ArrowRight className="size-4" />
+                <ArrowRight className="size-4 rtl:rotate-180" />
               </Link>
             </Button>
 
@@ -79,22 +65,7 @@ export default async function GetStarted() {
       <div className="border-t border-border py-8">
         <div className="container max-w-7xl">
           <motion.div
-            initial={{
-              opacity: 0,
-              x: 8,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.4,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            {...reveal({ x: 10, amount: 0.4 })}
             className="flex flex-col items-center justify-center gap-4 md:flex-row md:flex-wrap"
           >
             <p className="text-xs font-semibold uppercase tracking-widest text-foreground/35">
@@ -105,7 +76,7 @@ export default async function GetStarted() {
               href={settingsData.data.connect.instagram_url}
               className="group flex items-center gap-2"
             >
-              <FaInstagram className="text-primary" />
+              <FaInstagram aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
                 {settingsData.data.connect.instagram}
@@ -116,7 +87,7 @@ export default async function GetStarted() {
               href={settingsData.data.connect.whatsapp_url}
               className="group flex items-center gap-2"
             >
-              <FaWhatsapp className="text-primary" />
+              <FaWhatsapp aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
                 {settingsData.data.connect.whatsapp}
@@ -127,7 +98,7 @@ export default async function GetStarted() {
               href={settingsData.data.connect.email_url}
               className="group flex items-center gap-2"
             >
-              <FaEnvelope className="text-primary" />
+              <FaEnvelope aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
                 {settingsData.data.connect.email}
@@ -138,7 +109,7 @@ export default async function GetStarted() {
               href={settingsData.data.connect.phone_url}
               className="group flex items-center gap-2"
             >
-              <FaPhoneAlt className="text-primary" />
+              <FaPhoneAlt aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
                 {settingsData.data.connect.phone}

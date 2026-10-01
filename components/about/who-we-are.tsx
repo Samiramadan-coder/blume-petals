@@ -1,6 +1,7 @@
 import Image from "next/image";
 import * as motion from "motion/react-client";
 
+import { reveal } from "@/lib/motion";
 import { getTranslations } from "next-intl/server";
 import { AboutPageSections } from "@/types/home-page";
 
@@ -27,57 +28,21 @@ export default async function WhoWeAre({
           <AboutTitle>{section.title ?? t("Title")}</AboutTitle>
 
           <motion.div
-            initial={{
-              opacity: 0,
-              x: -8,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.25,
-            }}
-            transition={{
-              duration: 0.55,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            {...reveal({ x: -10, amount: 0.25 })}
             className="max-w-137.5 space-y-5 text-[15px] leading-relaxed text-foreground/68"
-          >
-            <div
-              dangerouslySetInnerHTML={{
-                __html: section.description || "",
-              }}
-            />
-          </motion.div>
+            dangerouslySetInnerHTML={{
+              __html: section.description || "",
+            }}
+          />
         </div>
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            x: 10,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 0.05,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="relative"
-        >
+        <motion.div {...reveal({ x: 10, delay: 0.06 })} className="relative">
           <Image
             src={imageSrc}
             alt={t("ImageAlt")}
             width={500}
             height={500}
+            sizes="(min-width: 768px) 50vw, 100vw"
             className="aspect-square w-full rounded-4xl object-cover"
           />
         </motion.div>

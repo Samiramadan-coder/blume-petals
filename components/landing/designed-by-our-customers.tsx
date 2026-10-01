@@ -4,6 +4,7 @@ import * as motion from "motion/react-client";
 
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 
 import MainButton from "../ui/main-button";
 import LandingTitle from "./landing-title";
@@ -39,30 +40,18 @@ async function CustomerDesigns({ cardCaption }: { cardCaption: string }) {
   return (
     <>
       {data.data.items.map((review, index) => (
-        <motion.div
+        <motion.li
           key={review.id}
           className="group"
-          initial={{
-            opacity: 0,
-            x: index % 2 === 0 ? -8 : 8,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
+          {...reveal({
+            x: alternateX(index),
+            delay: stagger(index),
             amount: 0.15,
-          }}
-          transition={{
-            duration: 0.5,
-            delay: index * 0.05,
-            ease: [0.16, 1, 0.3, 1],
-          }}
+          })}
         >
           <div
             className={cn(
-              "transition-transform duration-300 ease-out group-hover:rotate-0 group-hover:scale-103",
+              "transition-transform duration-300 ease-out group-hover:rotate-0 group-hover:scale-103 motion-reduce:transition-none",
               rotations[index % rotations.length],
             )}
           >
@@ -91,7 +80,7 @@ async function CustomerDesigns({ cardCaption }: { cardCaption: string }) {
               <p className="text-[11px] text-[#9caf88]">{cardCaption}</p>
             </div>
           </div>
-        </motion.div>
+        </motion.li>
       ))}
     </>
   );
@@ -101,21 +90,22 @@ function CustomerDesignsSkeleton() {
   return (
     <>
       {Array.from({ length: 5 }).map((_, index) => (
-        <div
+        <li
           key={index}
-          className={cn("space-y-4", rotations[index % rotations.length])}
+          aria-hidden="true"
+          className={rotations[index % rotations.length]}
         >
-          <Card className="p-0 pb-8">
-            <CardContent className="p-3">
-              <Skeleton className="aspect-square w-full" />
+          <Card className="rounded-none p-3 pb-10">
+            <CardContent className="p-0">
+              <Skeleton className="h-53.75 w-full" />
             </CardContent>
           </Card>
 
-          <div className="space-y-2 text-center">
+          <div className="space-y-2 pt-4 text-center">
             <Skeleton className="mx-auto h-4 w-24" />
             <Skeleton className="mx-auto h-3 w-16" />
           </div>
-        </div>
+        </li>
       ))}
     </>
   );
@@ -141,51 +131,20 @@ export default async function DesignedByOurCustomers({
           </LandingTitle>
 
           <motion.p
-            initial={{
-              opacity: 0,
-              y: 8,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.4,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            {...reveal({ y: 8, amount: 0.4 })}
             className="mx-auto mb-12 mt-4 max-w-100 text-center text-sm md:text-base"
           >
             {section.description ?? t("Description")}
           </motion.p>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             <Suspense fallback={<CustomerDesignsSkeleton />}>
               <CustomerDesigns cardCaption={t("CardCaption")} />
             </Suspense>
-          </div>
+          </ul>
 
           <motion.div
-            initial={{
-              opacity: 0,
-              y: 6,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.5,
-            }}
-            transition={{
-              duration: 0.45,
-              delay: 0.1,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            {...reveal({ y: 8, delay: 0.12, amount: 0.5 })}
             className="mt-8 text-center"
           >
             <MainButton href="/builder" label={t("PrimaryCta")} />

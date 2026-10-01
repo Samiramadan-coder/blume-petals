@@ -35,7 +35,7 @@ export default async function AppFooter() {
       <div className="container max-w-7xl">
         <header className="flex items-center justify-between flex-wrap gap-6">
           <div className="flex flex-col gap-6">
-            <AppLogo width={80} />
+            <AppLogo width={80} preload={false} />
             <p className="text-primary text-sm max-w-70">
               {t("DesignYourDream")}
             </p>
@@ -50,7 +50,13 @@ export default async function AppFooter() {
         <div className="relative">
           <Separator className="bg-primary/30 h-px my-8" />
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-foreground px-4">
-            <svg width="24" height="24" viewBox="0 0 36 36" fill="none">
+            <svg
+              aria-hidden="true"
+              width="24"
+              height="24"
+              viewBox="0 0 36 36"
+              fill="none"
+            >
               <path
                 d="M18 32V14"
                 stroke="#CBB682"
@@ -81,10 +87,13 @@ export default async function AppFooter() {
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="space-y-4">
-            <div className="text-sm font-semibold uppercase text-primary">
+            <h2
+              id="footer-shop"
+              className="text-sm font-semibold uppercase text-primary"
+            >
               {t("Shop")}
-            </div>
-            <nav>
+            </h2>
+            <nav aria-labelledby="footer-shop">
               <ul className="space-y-2.5">
                 {categoriesData.data.items.slice(0, 5).map((item) => (
                   <li key={item.slug}>
@@ -98,10 +107,13 @@ export default async function AppFooter() {
           </div>
 
           <div className="space-y-4">
-            <div className="text-sm font-semibold uppercase text-primary">
+            <h2
+              id="footer-company"
+              className="text-sm font-semibold uppercase text-primary"
+            >
               {t("Company")}
-            </div>
-            <nav>
+            </h2>
+            <nav aria-labelledby="footer-company">
               <ul className="space-y-2.5">
                 <li>
                   <FooterNavLink href="/about">{t("AboutUs")}</FooterNavLink>
@@ -114,10 +126,13 @@ export default async function AppFooter() {
           </div>
 
           <div className="space-y-4">
-            <div className="text-sm font-semibold uppercase text-primary">
+            <h2
+              id="footer-support"
+              className="text-sm font-semibold uppercase text-primary"
+            >
               {t("Support")}
-            </div>
-            <nav>
+            </h2>
+            <nav aria-labelledby="footer-support">
               <ul className="space-y-2.5">
                 <li>
                   <FooterNavLink href="/contact">
@@ -140,17 +155,20 @@ export default async function AppFooter() {
           </div>
 
           <div className="space-y-4">
-            <div className="text-sm font-semibold uppercase text-primary">
+            <h2
+              id="footer-connect"
+              className="text-sm font-semibold uppercase text-primary"
+            >
               {t("Connect")}
-            </div>
-            <nav>
+            </h2>
+            <nav aria-labelledby="footer-connect">
               <ul className="space-y-2.5">
                 <li>
                   <FooterNavLink
                     href={settingsData.data.connect.instagram_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaInstagram className="text-primary" />
+                        <FaInstagram aria-hidden="true" className="text-primary" />
                       </div>
                     }
                   >
@@ -165,7 +183,7 @@ export default async function AppFooter() {
                     href={settingsData.data.connect.whatsapp_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaWhatsapp className="text-primary" />
+                        <FaWhatsapp aria-hidden="true" className="text-primary" />
                       </div>
                     }
                   >
@@ -178,7 +196,7 @@ export default async function AppFooter() {
                     href={settingsData.data.connect.email_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaEnvelope className="text-primary" />
+                        <FaEnvelope aria-hidden="true" className="text-primary" />
                       </div>
                     }
                   >
@@ -193,7 +211,7 @@ export default async function AppFooter() {
                     href={settingsData.data.connect.phone_url ?? "#"}
                     icon={
                       <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                        <FaPhoneAlt className="text-primary" />
+                        <FaPhoneAlt aria-hidden="true" className="text-primary" />
                       </div>
                     }
                   >
@@ -214,7 +232,14 @@ export default async function AppFooter() {
           </div>
           <div className="flex-1 flex justify-end items-center gap-2">
             <div className="bg-white/8 px-2.5 py-1.5 rounded">
-              <svg width="32" height="12" viewBox="0 0 55 17" fill="none">
+              <svg
+                role="img"
+                aria-label="Visa"
+                width="32"
+                height="12"
+                viewBox="0 0 55 17"
+                fill="none"
+              >
                 <text
                   x="0"
                   y="13"
@@ -230,7 +255,13 @@ export default async function AppFooter() {
             </div>
 
             <div className="bg-white/8 px-1.5 py-1.5 rounded">
-              <svg width="36" height="22" viewBox="0 0 40 22">
+              <svg
+                role="img"
+                aria-label="Mastercard"
+                width="36"
+                height="22"
+                viewBox="0 0 40 22"
+              >
                 <circle
                   cx="14"
                   cy="11"

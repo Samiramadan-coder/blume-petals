@@ -38,6 +38,7 @@ export default function HeaderNavLink({
         ${scrolled || pathname !== "/" ? "text-foreground" : "text-white/92"}
       `}
       href={href}
+      aria-current={isActive ? "page" : undefined}
     >
       {children}
     </Link>

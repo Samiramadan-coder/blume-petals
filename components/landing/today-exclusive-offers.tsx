@@ -1,4 +1,6 @@
+import Image from "next/image";
 import { Badge } from "../ui/badge";
+import { reveal } from "@/lib/motion";
 import { Countdown } from "./count-down";
 import MainButton from "../ui/main-button";
 import LandingTitle from "./landing-title";
@@ -21,27 +23,18 @@ export default async function TodayExclusiveOffers() {
   }
 
   return (
-    <section className="bg-[url('/images/home/today-exclusive-offers/rose.webp')] bg-cover bg-center bg-no-repeat">
+    <section className="relative isolate overflow-hidden bg-black">
+      <Image
+        src="/images/home/today-exclusive-offers/rose.webp"
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-10 object-cover object-center"
+      />
+
       <div className="container max-w-7xl">
         <div className="flex flex-wrap items-center justify-center gap-10 py-20 md:justify-between">
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: -10,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.25,
-            }}
-            transition={{
-              duration: 0.55,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
+          <motion.div {...reveal({ x: -10, amount: 0.25 })}>
             <Badge
               variant="ghost"
               className="mb-4 bg-[#ed8074] px-4 py-1.5 text-xs font-bold uppercase text-white"
@@ -60,25 +53,7 @@ export default async function TodayExclusiveOffers() {
             <MainButton href="/shop?is_on_sale=1" label={t("PrimaryCta")} />
           </motion.div>
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              x: 10,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.25,
-            }}
-            transition={{
-              duration: 0.55,
-              delay: 0.06,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
+          <motion.div {...reveal({ x: 10, delay: 0.06, amount: 0.25 })}>
             <Countdown
               targetDate={getTomorrowEndDate()}
               labels={{

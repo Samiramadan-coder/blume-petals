@@ -34,6 +34,8 @@ type FormInputProps<T extends FieldValues> = {
   prefix?: ReactNode;
   suffix?: ReactNode;
   description?: ReactNode;
+  autoComplete?: React.HTMLInputAutoCompleteAttribute;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
 };
 
 export default function FormInput<T extends FieldValues>({
@@ -50,8 +52,11 @@ export default function FormInput<T extends FieldValues>({
   prefix,
   suffix,
   description,
+  autoComplete,
+  inputMode,
 }: FormInputProps<T>) {
   const error = get(errors, name);
+  const errorId = `${name}-error`;
 
   const inputRegister =
     type === "number"
@@ -98,7 +103,11 @@ export default function FormInput<T extends FieldValues>({
                 id={name}
                 type={type}
                 placeholder={placeholder}
+                autoComplete={autoComplete}
+                inputMode={inputMode}
                 aria-invalid={!!error}
+                aria-required={required}
+                aria-describedby={error ? errorId : undefined}
                 disabled={disabled}
                 className={cn(
                   "h-full min-w-0 flex-1 rounded-none border-0 bg-transparent shadow-none placeholder:text-base",
@@ -119,7 +128,11 @@ export default function FormInput<T extends FieldValues>({
               id={name}
               type={type}
               placeholder={placeholder}
+              autoComplete={autoComplete}
+              inputMode={inputMode}
               aria-invalid={!!error}
+              aria-required={required}
+              aria-describedby={error ? errorId : undefined}
               disabled={disabled}
               className={cn(
                 "h-12 border-border placeholder:text-base",
@@ -128,7 +141,7 @@ export default function FormInput<T extends FieldValues>({
             />
           )}
 
-          <FieldError errors={[error]} />
+          <FieldError id={errorId} errors={[error]} />
           {description && <FieldDescription>{description}</FieldDescription>}
         </div>
       </FieldContent>

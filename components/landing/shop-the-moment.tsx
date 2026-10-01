@@ -8,6 +8,7 @@ import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
+import { reveal, stagger } from "@/lib/motion";
 
 import type { Occasion } from "@/types/landing";
 
@@ -34,27 +35,14 @@ async function Occasions() {
         const direction = index % 3 === 0 ? -10 : index % 3 === 2 ? 10 : 0;
 
         return (
-          <motion.div
+          <motion.li
             key={item.id}
-            initial={{
-              opacity: 0,
+            {...reveal({
               x: direction,
               y: direction === 0 ? 8 : 0,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
+              delay: stagger(index),
               amount: 0.15,
-            }}
-            transition={{
-              duration: 0.55,
-              delay: index * 0.06,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            })}
             className={cn(
               "h-full",
               index === 0 || index === 3 ? "md:row-span-2" : "",
@@ -63,7 +51,7 @@ async function Occasions() {
             <Card className="group relative h-full min-h-55 overflow-hidden rounded-4xl p-0">
               <Image
                 src={item.banner_url}
-                alt={item.name}
+                alt=""
                 fill
                 className="object-cover"
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -71,15 +59,14 @@ async function Occasions() {
 
               <Link
                 href={`/shop?occasion=${item.slug}`}
-                aria-label={item.name}
                 className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition-colors duration-300 hover:bg-black/20"
               >
-                <p className="w-full bg-[linear-gradient(to_top,rgba(20,12,0,0.7)_0%,transparent_100%)] px-5 pb-4 pt-12 text-base font-semibold text-white">
+                <h3 className="w-full bg-[linear-gradient(to_top,rgba(20,12,0,0.7)_0%,transparent_100%)] px-5 pb-4 pt-12 text-base font-semibold text-white">
                   {item.name}
-                </p>
+                </h3>
               </Link>
             </Card>
-          </motion.div>
+          </motion.li>
         );
       })}
     </>
@@ -90,13 +77,16 @@ function OccasionsSkeleton() {
   return (
     <>
       {Array.from({ length: 6 }).map((_, index) => (
-        <Skeleton
+        <li
           key={index}
+          aria-hidden="true"
           className={cn(
-            "min-h-55 rounded-4xl",
+            "h-full",
             index === 0 || index === 3 ? "md:row-span-2" : "",
           )}
-        />
+        >
+          <Skeleton className="h-full min-h-55 rounded-4xl" />
+        </li>
       ))}
     </>
   );
@@ -117,11 +107,11 @@ export default async function ShopTheMoment({
 
           <LandingTitle>{section.title ?? t("Title")}</LandingTitle>
 
-          <div className="grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3">
             <Suspense fallback={<OccasionsSkeleton />}>
               <Occasions />
             </Suspense>
-          </div>
+          </ul>
         </div>
       </div>
     </section>

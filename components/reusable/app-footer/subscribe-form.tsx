@@ -52,6 +52,8 @@ export default function SubscribeForm() {
       <div className="flex w-full max-w-sm overflow-hidden rounded-full border border-primary/30 bg-primary/10">
         <Input
           type="email"
+          autoComplete="email"
+          aria-label={t("EmailAria")}
           placeholder={t("EmailPlaceholder")}
           className="h-11 flex-1 border-0 bg-transparent px-5 text-[#e6dcd2] placeholder:text-[#e6dcd2]/60 focus-visible:ring-0"
           {...register("email")}
@@ -59,7 +61,6 @@ export default function SubscribeForm() {
 
         <Button
           type="submit"
-          aria-label="Submit"
           className="h-11 rounded-full bg-primary text-foreground px-6"
         >
           {isSubmitting && <Spinner />} {t("Subscribe")}

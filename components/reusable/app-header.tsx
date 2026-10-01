@@ -65,7 +65,10 @@ export default async function AppHeader() {
       <div className="container max-w-7xl flex items-center justify-between gap-4 py-3">
         <AppLogo width={90} />
 
-        <nav className=" items-center gap-8 hidden lg:flex">
+        <nav
+          aria-label={t("MainNav")}
+          className=" items-center gap-8 hidden lg:flex"
+        >
           <HeaderNavLink href="/">{t("Home")}</HeaderNavLink>
           <HeaderNavLink href="/shop">{t("Shop")}</HeaderNavLink>
           <HeaderNavLink href="/builder">{t("Builder")}</HeaderNavLink>

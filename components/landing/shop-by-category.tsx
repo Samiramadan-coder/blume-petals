@@ -5,6 +5,7 @@ import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
 import LandingTitle from "./landing-title";
 import LandingSubtitle from "./landing-subtitle";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 
 import * as motion from "motion/react-client";
 
@@ -30,32 +31,20 @@ async function Categories() {
   return (
     <>
       {data.data.items.slice(0, 5).map((item, index) => (
-        <motion.div
+        <motion.li
           key={item.id}
-          initial={{
-            opacity: 0,
-            x: index % 2 === 0 ? -10 : 10,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
+          {...reveal({
+            x: alternateX(index),
+            delay: stagger(index),
             amount: 0.15,
-          }}
-          transition={{
-            duration: 0.55,
-            delay: index * 0.06,
-            ease: [0.16, 1, 0.3, 1],
-          }}
+          })}
         >
           <Link href={`/shop?category=${item.slug}`} className="block">
             <Card className="group relative overflow-hidden rounded-2xl border-0 bg-background p-0 shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
               <CardContent className="relative min-h-81 p-0">
                 <Image
                   src={item.banner_url}
-                  alt={item.name}
+                  alt=""
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                   className="object-cover"
@@ -71,7 +60,7 @@ async function Categories() {
               </CardContent>
             </Card>
           </Link>
-        </motion.div>
+        </motion.li>
       ))}
     </>
   );
@@ -81,7 +70,9 @@ function CategoriesSkeleton() {
   return (
     <>
       {Array.from({ length: 5 }).map((_, index) => (
-        <Skeleton key={index} className="min-h-81 rounded-2xl" />
+        <li key={index} aria-hidden="true">
+          <Skeleton className="min-h-81 rounded-2xl" />
+        </li>
       ))}
     </>
   );
@@ -101,11 +92,11 @@ export default async function ShopByCategory({
 
         <LandingTitle>{section.title ?? t("Title")}</LandingTitle>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <Suspense fallback={<CategoriesSkeleton />}>
             <Categories />
           </Suspense>
-        </div>
+        </ul>
       </div>
     </section>
   );

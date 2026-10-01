@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import * as motion from "motion/react-client";
 
 import { http } from "@/lib/http";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 
 import type { Product } from "@/types/products";
 import type { AppSettings } from "@/types/landing";
@@ -53,22 +54,7 @@ async function PerfectAddOnsContent() {
           <LandingTitle className="mb-6">{t("Title")}</LandingTitle>
 
           <motion.p
-            initial={{
-              opacity: 0,
-              x: 8,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            viewport={{
-              once: true,
-              amount: 0.3,
-            }}
-            transition={{
-              duration: 0.5,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            {...reveal({ x: 10, amount: 0.3 })}
             className="mb-12 mt-3 max-w-sm text-sm text-foreground md:text-base"
           >
             {t("Description")}
@@ -78,23 +64,11 @@ async function PerfectAddOnsContent() {
             {addOns.data.items.map((item, index) => (
               <motion.div
                 key={item.id}
-                initial={{
-                  opacity: 0,
-                  x: index % 2 === 0 ? -8 : 8,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  x: 0,
-                }}
-                viewport={{
-                  once: true,
+                {...reveal({
+                  x: alternateX(index),
+                  delay: stagger(index),
                   amount: 0.15,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.045,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                })}
               >
                 <AddOnCard item={item} />
               </motion.div>

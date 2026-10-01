@@ -1,4 +1,20 @@
 {
+  "Metadata": {
+    "Home": {
+      "Title": "Blúme Petals | Design Your Dream Bouquet",
+      "Description": "Design your dream bouquet with our custom builder or shop luxury artificial flower arrangements, with delivery and pickup across the UAE.",
+      "ImageAlt": "A Blúme Petals bouquet of roses"
+    },
+    "About": {
+      "Title": "About Blúme Petals | Crafted Luxury, Made to Last",
+      "Description": "Blúme Petals crafts luxury artificial flower arrangements in the UAE — fully customizable, made to last, and designed for every moment that matters.",
+      "ImageAlt": "Blúme Petals flower arrangements in gold vases"
+    },
+    "Contact": {
+      "Title": "Contact Us",
+      "Description": "Get in touch with Blúme Petals. Send us a message about custom bouquets, orders or delivery across the UAE and we'll get back to you shortly."
+    }
+  },
   "Common": {
     "Next": "Next",
     "Previous": "Previous",
@@ -106,7 +122,9 @@
     "LogoutError": "Logout failed. Please try again.",
     "LogoutSuccess": "Successfully logged out.",
     "Logout": "Logout",
-    "Contact": "Contact Us"
+    "Contact": "Contact Us",
+    "SkipToContent": "Skip to main content",
+    "MainNav": "Main navigation"
   },
   "AppFooter": {
     "DesignYourDream": "Design your dream bouquet — crafted for every moment that matters.",
@@ -137,7 +155,8 @@
     "WhatsAppUs": "WhatsApp Us",
     "EmailUs": "hello@blumepetals.ae",
     "CallUs": "+971 50 123 4567",
-    "Copyright": "© 2026 Blúme Petals. All rights reserved."
+    "Copyright": "© 2026 Blúme Petals. All rights reserved.",
+    "EmailAria": "Email address"
   },
   "LandingHero": {
     "Eyebrow": "Crafted just for you",
@@ -198,7 +217,8 @@
         "Title": "Add a Message",
         "Description": "A personalized note, handwritten by our team."
       }
-    }
+    },
+    "ImageAlt": "Flowers, a ribbon and a card laid out for building a custom bouquet"
   },
   "LandingShopTheMoment": {
     "Eyebrow": "Shop the moment",

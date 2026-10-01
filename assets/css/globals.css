@@ -155,6 +155,12 @@
   transform-origin: center;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-zoom {
+    animation: none;
+  }
+}
+
 .rich-content p {
   margin-block: 0rem;
 }

@@ -10,15 +10,15 @@ export default function MainButton({
   href: string;
 }) {
   return (
-    <Link href={href}>
-      <Button
-        variant="default"
-        aria-label={label}
-        className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
-      >
+    <Button
+      asChild
+      variant="default"
+      className="rounded-full h-12 w-44 bg-secondary text-secondary-foreground hover:bg-secondary cursor-pointer"
+    >
+      <Link href={href}>
         {label}
         <ArrowRight className="rtl:rotate-180" />
-      </Button>
-    </Link>
+      </Link>
+    </Button>
   );
 }

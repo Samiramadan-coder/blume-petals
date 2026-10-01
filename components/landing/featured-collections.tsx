@@ -7,6 +7,7 @@ import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
 
 import { http } from "@/lib/http";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 
 import type { Product } from "@/types/products";
 
@@ -30,23 +31,11 @@ async function FeaturedProducts() {
       {data.data.items.slice(0, 4).map((item, index) => (
         <motion.div
           key={item.id}
-          initial={{
-            opacity: 0,
-            x: index % 2 === 0 ? -10 : 10,
-          }}
-          whileInView={{
-            opacity: 1,
-            x: 0,
-          }}
-          viewport={{
-            once: true,
+          {...reveal({
+            x: alternateX(index),
+            delay: stagger(index),
             amount: 0.15,
-          }}
-          transition={{
-            duration: 0.55,
-            delay: index * 0.06,
-            ease: [0.16, 1, 0.3, 1],
-          }}
+          })}
         >
           <CardItem
             showCategory={false}
