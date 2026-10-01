@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState } from "react";
 import * as motion from "motion/react-client";
 
 import { useTranslations } from "next-intl";
@@ -29,19 +30,33 @@ export default function ContactForm() {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema(t)),
   });
 
+  // The ref blocks a second submit that lands before React re-renders
+  // (double click, Enter while sending); the state drives the button.
+  const isSendingRef = useRef(false);
+  const [isSending, setIsSending] = useState(false);
+
   const onSubmit: SubmitHandler<ContactFormData> = async (data) => {
+    if (isSendingRef.current) return;
+
+    isSendingRef.current = true;
+    setIsSending(true);
+
     const result = await sendContactForm(data);
 
     if (result.success) {
+      // Stay locked: the page is navigating away.
       toast.success(t("SendedSuccessfully"));
       router.push("/");
       return;
     }
+
+    isSendingRef.current = false;
+    setIsSending(false);
 
     if (result.errors) {
       Object.entries(result.errors).forEach(([field, message]) => {
@@ -66,7 +81,7 @@ export default function ContactForm() {
       <Card className="mt-8 rounded-lg py-8 shadow-sm">
         <CardContent className="px-4 sm:px-8">
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={(event) => void handleSubmit(onSubmit)(event)}
             className="grid grid-cols-1 gap-4 md:grid-cols-2"
           >
             <motion.div
@@ -120,7 +135,7 @@ export default function ContactForm() {
               className="text-center md:col-span-2"
             >
               <AuthSubmitBtn
-                isLoading={isSubmitting}
+                isLoading={isSending}
                 label={t("SendMessage")}
               />
             </motion.div>

@@ -3,7 +3,7 @@ import { T } from "@/constants/shared";
 
 export const contactFormSchema = (t: T) =>
   z.object({
-    email: z.email(t("Fields.Email.Invalid")),
+    email: z.string().trim().pipe(z.email(t("Fields.Email.Invalid"))),
 
     phone: z
       .string()
@@ -12,6 +12,7 @@ export const contactFormSchema = (t: T) =>
 
     message: z
       .string()
+      .trim()
       .min(1, t("Fields.Message.Required"))
       .min(10, t("Fields.Message.MinLength")),
   });

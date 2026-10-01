@@ -13,6 +13,14 @@
     "Contact": {
       "Title": "Contact Us",
       "Description": "Get in touch with Blúme Petals. Send us a message about custom bouquets, orders or delivery across the UAE and we'll get back to you shortly."
+    },
+    "Terms": {
+      "Title": "Terms & Conditions",
+      "Description": "Read the Blúme Petals terms and conditions covering orders, delivery, cancellations, refunds and use of our website."
+    },
+    "Privacy": {
+      "Title": "Privacy Policy",
+      "Description": "Learn how Blúme Petals collects, uses and protects your personal information when you browse our website or place an order."
     }
   },
   "Common": {
@@ -691,6 +699,11 @@
     "NoNotifications": "You have no notifications.",
     "LoadMore": "Load More",
     "Unread": "Unread Count",
+    "UnreadLabel": "Unread",
+    "MarkAsRead": "Mark as read",
+    "Delete": "Delete notification",
+    "DeleteTitle": "Delete notification",
+    "DeleteDescription": "Are you sure you want to delete this notification? This action cannot be undone.",
     "Filters": {
       "All": "All",
       "Orders": "Orders",

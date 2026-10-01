@@ -19,12 +19,14 @@ export function DialogDelete({
   trigger,
   title,
   description,
+  confirmLabel,
   onConfirm,
 }: {
   loading: boolean;
   trigger: React.ReactNode;
   title?: string;
   description?: string;
+  confirmLabel?: string;
   onConfirm: () => Promise<void>;
 }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -55,11 +57,12 @@ export function DialogDelete({
         <DialogFooter className="sm:justify-end">
           <Button
             type="button"
-            aria-label="Confirm Delete"
+            aria-label={confirmLabel ?? "Confirm Delete"}
             onClick={handleConfirm}
             variant="destructive"
+            disabled={loading}
           >
-            {loading ? <Spinner /> : "Confirm"}
+            {loading ? <Spinner /> : (confirmLabel ?? "Confirm")}
           </Button>
         </DialogFooter>
       </DialogContent>
