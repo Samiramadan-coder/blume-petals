@@ -1,210 +1,40 @@
-// import { BuilderFormData } from "@/types/builder-page";
-// import { GoogleGenAI } from "@google/genai";
-
-// const MODEL = "gemini-3-pro-image";
-
-// function getMimeType(url: string): string {
-//   const cleanUrl = url.split("?")[0].toLowerCase();
-
-//   if (cleanUrl.endsWith(".jpg") || cleanUrl.endsWith(".jpeg")) {
-//     return "image/jpeg";
-//   }
-
-//   if (cleanUrl.endsWith(".webp")) {
-//     return "image/webp";
-//   }
-
-//   if (cleanUrl.endsWith(".bmp")) {
-//     return "image/bmp";
-//   }
-
-//   return "image/png";
-// }
-
-// export async function generateBouquet(formData: BuilderFormData) {
-//   const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-
-//   if (!apiKey) {
-//     throw new Error("NEXT_PUBLIC_GEMINI_API_KEY is missing");
-//   }
-
-//   if (!formData.template_url) {
-//     throw new Error("Template image is missing");
-//   }
-
-//   const flowers = formData.slots.filter(
-//     (slot) => slot.qty > 0 && slot.image_url && slot.name,
-//   );
-
-//   if (!flowers.length) {
-//     throw new Error("No flowers selected");
-//   }
-
-//   // Gemini 3.1 Flash Image يدعم حتى 10 مراجع
-//   // 1 base template + 9 flower types
-//   if (flowers.length > 9) {
-//     throw new Error(
-//       "Maximum supported selection is 9 flower types plus the base template.",
-//     );
-//   }
-
-//   const totalFlowers = flowers.reduce((total, flower) => total + flower.qty, 0);
-
-//   const flowerReferences = flowers
-//     .map(
-//       (flower, index) => `
-// Reference image ${index + 2}
-// Flower name: ${flower.name}
-// Required quantity: exactly ${flower.qty} stems.
-// Do not use more than ${flower.qty} stems.
-// Do not use fewer than ${flower.qty} stems.
-// `,
-//     )
-//     .join("\n");
-
-//   const prompt = `
-// Using reference image 1 as the exact floral arrangement base template.
-
-// Reference image 1 may be a vase, basket, flower box, wrapped bouquet base, bag, tray, or another floral container or presentation shape.
-
-// Preserve the base template exactly:
-// - shape
-// - proportions
-// - material
-// - finish
-// - opening or support structure
-// - placement and presentation style
-// - camera angle
-
-// Total requested flowers: exactly ${totalFlowers} stems.
-
-// The following images are exact flower product references.
-
-// ${flowerReferences}
-
-// Create a professional florist-style floral arrangement using the provided base template and the provided flower references.
-
-// Treat every reference image as an exact product reference, not merely visual inspiration.
-
-// Use every requested flower type.
-
-// Follow the requested quantity for every flower type exactly.
-
-// Each requested flower type must appear in the final arrangement with exactly the requested number of stems.
-
-// Do not use more or fewer stems than requested for any flower type.
-
-// The final arrangement must contain exactly ${totalFlowers} stems in total.
-
-// Do not invent additional flower species.
-// Do not replace a requested flower with another flower type.
-// Do not omit any requested flower type.
-
-// Preserve from every flower reference:
-// - flower type
-// - flower color
-// - petal shape
-// - foliage
-// - overall appearance
-
-// Arrangement requirements:
-// - arrange the flowers naturally according to the shape of the base template
-// - place fuller stems toward the back and center when appropriate
-// - place smaller blooms toward the front when appropriate
-// - use natural height variation
-// - use realistic stem overlap
-// - make the flower placement believable for the provided template
-// - use natural flower angles
-// - turn some flowers slightly to create depth
-// - create a balanced professional florist composition
-// - avoid overcrowding
-
-// Base template requirements:
-// - preserve the exact template
-// - do not redesign it
-// - preserve its original color
-// - preserve its proportions
-// - preserve its material
-// - preserve its original camera angle
-
-// Photography requirements:
-// - photorealistic
-// - professional ecommerce product photography
-// - clean white studio background
-// - soft even studio lighting
-// - realistic natural shadows
-// - full template visible
-// - full floral arrangement visible
-// - centered composition
-// - no illustration style
-// - no text
-// - no hands
-// - no props
-// - no additional objects
-// `;
-
-//   const ai = new GoogleGenAI({
-//     apiKey,
-//   });
-
-//   const input = [
-//     {
-//       type: "image" as const,
-//       uri: formData.template_url,
-//       mime_type: getMimeType(formData.template_url),
-//     },
-
-//     ...flowers.map((flower) => ({
-//       type: "image" as const,
-//       uri: flower.image_url,
-//       mime_type: getMimeType(flower.image_url),
-//     })),
-
-//     {
-//       type: "text" as const,
-//       text: prompt,
-//     },
-//   ];
-
-//   try {
-//     const interaction = await ai.interactions.create({
-//       model: MODEL,
-//       input,
-//       response_format: {
-//         type: "image",
-//         mime_type: "image/jpeg",
-//         aspect_ratio: "4:5",
-//         image_size: "1K",
-//       },
-//     });
-
-//     const generatedImage = interaction.output_image;
-
-//     if (!generatedImage?.data) {
-//       console.error("Gemini response:", interaction);
-//       throw new Error("Gemini did not return an image");
-//     }
-
-//     const mimeType = generatedImage.mime_type || "image/jpeg";
-
-//     return {
-//       imageUrl: `data:${mimeType};base64,${generatedImage.data}`,
-//     };
-//   } catch (error) {
-//     console.error("Bouquet generation failed:", error);
-
-//     throw error instanceof Error
-//       ? error
-//       : new Error("Failed to generate bouquet");
-//   }
-// }
-
-import { BuilderFormData } from "@/types/builder-page";
 import { GoogleGenAI } from "@google/genai";
+import type { Flower } from "@/types/products";
+import type { BuilderFormData } from "@/types/builder-page";
 
 // const MODEL = "gemini-3-pro-image";
 
 const MODEL = "gemini-3.1-flash-image";
+
+// 1 container + 9 floral items
+const MAX_FLORAL_ITEMS = 9;
+
+const IMAGE_CHECK_TIMEOUT = 15000;
+
+export type BouquetGenerationErrorCode =
+  | "missing_api_key"
+  | "missing_container"
+  | "no_flowers"
+  | "flower_unavailable"
+  | "invalid_image"
+  | "too_many_flowers"
+  | "no_image_returned"
+  | "request_failed";
+
+export class BouquetGenerationError extends Error {
+  code: BouquetGenerationErrorCode;
+
+  constructor(code: BouquetGenerationErrorCode, message: string) {
+    super(message);
+    this.name = "BouquetGenerationError";
+    this.code = code;
+  }
+}
+
+export type BouquetAssets = {
+  containerUrl: string;
+  items: { qty: number; imageUrl: string }[];
+};
 
 function getMimeType(url: string): string {
   const cleanUrl = url.split("?")[0].toLowerCase();
@@ -224,211 +54,246 @@ function getMimeType(url: string): string {
   return "image/png";
 }
 
-export async function generateBouquet(formData: BuilderFormData) {
-  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+// Gemini fetches the images itself, so they must be absolute http(s) URLs
+function isRemoteImageUrl(url: string): boolean {
+  try {
+    const { protocol } = new URL(url);
 
-  if (!apiKey) {
-    throw new Error("NEXT_PUBLIC_GEMINI_API_KEY is missing");
+    return protocol === "https:" || protocol === "http:";
+  } catch {
+    return false;
   }
+}
 
-  if (!formData.template_url) {
-    throw new Error("Container image is missing");
-  }
+// Make sure the URL really resolves to an image before paying for a generation
+function assertImageLoads(url: string): Promise<void> {
+  if (typeof Image === "undefined") return Promise.resolve();
 
-  const flowers = formData.slots
-    .filter(
-      (slot) => slot.qty > 0 && slot.image_url?.trim() && slot.name?.trim(),
-    )
-    .map((slot) => ({
-      name: slot.name.trim(),
-      qty: slot.qty,
-      image_url: slot.image_url.trim(),
-    }));
+  return new Promise((resolve, reject) => {
+    const image = new Image();
 
-  if (!flowers.length) {
-    throw new Error("No flowers selected");
-  }
+    const fail = () =>
+      reject(
+        new BouquetGenerationError(
+          "invalid_image",
+          `Image could not be loaded: ${url}`,
+        ),
+      );
 
-  if (flowers.length > 9) {
-    throw new Error(
-      "Maximum supported selection is 9 flower types plus the container.",
+    const timeout = setTimeout(fail, IMAGE_CHECK_TIMEOUT);
+
+    image.onload = () => {
+      clearTimeout(timeout);
+      resolve();
+    };
+
+    image.onerror = () => {
+      clearTimeout(timeout);
+      fail();
+    };
+
+    image.src = url;
+  });
+}
+
+/* Resolve the current selection against the catalog and keep only what Gemini needs */
+export function resolveBouquetAssets(
+  formData: BuilderFormData,
+  catalog: Flower[],
+): BouquetAssets {
+  const containerUrl = formData.template_url?.trim();
+
+  if (!containerUrl) {
+    throw new BouquetGenerationError(
+      "missing_container",
+      "Container image is missing",
     );
   }
 
-  const totalStems = flowers.reduce((total, flower) => total + flower.qty, 0);
+  if (!isRemoteImageUrl(containerUrl)) {
+    throw new BouquetGenerationError(
+      "invalid_image",
+      `Container image URL is not valid: ${containerUrl}`,
+    );
+  }
 
-  const inventoryList = flowers
-    .map((flower, index) => {
-      return `${index + 1}. ${flower.name} — exactly ${flower.qty} stems`;
-    })
-    .join("\n");
+  // One entry per image, so the same asset is never sent twice
+  const items = new Map<string, number>();
 
-  const referenceGuide = flowers
-    .map((flower, index) => {
-      return `
-Reference image ${index + 2}
-Flower name: ${flower.name}
-Allowed quantity: exactly ${flower.qty} stems
+  for (const slot of formData.slots) {
+    if (!(slot.qty > 0)) continue;
 
-This is an exact flower inventory reference.
-Preserve exactly:
-- flower type
-- bloom shape
-- petal structure
-- color
-- foliage
-- natural visual identity
+    const flower = catalog.find((flower) => flower.id === slot.variant_id);
 
-Do not reinterpret this flower.
-Do not stylize it.
-Do not simplify it.
-Do not replace it.
-Do not transform it into another flower type.
-Do not add new buds, fillers, or foliage from your own imagination.
+    if (!flower) {
+      throw new BouquetGenerationError(
+        "flower_unavailable",
+        `Selected flower ${slot.variant_id} is not in the builder catalog`,
+      );
+    }
+
+    // The catalog image is the source of truth, not the copy stored in the slot
+    const imageUrl = flower.image_url?.trim();
+
+    if (!imageUrl || !isRemoteImageUrl(imageUrl)) {
+      throw new BouquetGenerationError(
+        "invalid_image",
+        `Selected flower ${slot.variant_id} has no valid image`,
+      );
+    }
+
+    items.set(imageUrl, (items.get(imageUrl) ?? 0) + slot.qty);
+  }
+
+  if (!items.size) {
+    throw new BouquetGenerationError("no_flowers", "No flowers selected");
+  }
+
+  if (items.size > MAX_FLORAL_ITEMS) {
+    throw new BouquetGenerationError(
+      "too_many_flowers",
+      `Maximum supported selection is ${MAX_FLORAL_ITEMS} flower types plus the container.`,
+    );
+  }
+
+  return {
+    containerUrl,
+    items: Array.from(items, ([imageUrl, qty]) => ({ imageUrl, qty })),
+  };
+}
+
+/*
+  Build the Gemini input.
+
+  Catalog names are deliberately NOT sent: a name is a second, weaker description
+  of the asset, and when it disagrees with the photo (a "rose" that is really a
+  hydrangea) Gemini draws the name. The photo is the only description of an asset.
+  Every image is preceded by its own label so the model cannot mix up the order.
+*/
+export function buildBouquetInput({ containerUrl, items }: BouquetAssets) {
+  const totalUnits = items.reduce((total, item) => total + item.qty, 0);
+  const itemIds = items.map((_, index) => `F${index + 1}`);
+  const itemList = itemIds.join(", ");
+  const single = items.length === 1;
+
+  const rules = `
+You are compositing a product photo of a floral arrangement from a closed set of supplied visual assets.
+
+You will receive ${items.length + 1} reference photos, each one introduced by its own label:
+- CONTAINER: the exact container.
+- ${itemList}: the ${single ? "only floral item" : `only ${items.length} floral items`} that exist for this arrangement.
+
+RULE 1 - CLOSED ASSET SET
+Use ONLY the supplied visual assets: the CONTAINER and ${itemList}.
+If an element is not visible in the provided assets, it MUST NOT appear in the output.
+There is no other flower, bud, leaf, greenery, grass, filler, berry, branch, ribbon, wrapping, paper, card, tag, text, logo, prop or decoration available to you. You cannot add what you do not have.
+The finished arrangement contains exactly ${items.length} ${single ? "kind" : "kinds"} of floral item, never ${items.length + 1}. Anything that does not match one of the ${items.length} reference ${single ? "photo" : "photos"} is an invented item.
+
+RULE 2 - THE PHOTO IS THE ONLY DESCRIPTION OF AN ASSET
+The labels are neutral ids. Do not guess a species or a "typical" look for an item. Reproduce what the photo shows and nothing else:
+- the same kind of bloom or plant, with the same shape and structure
+- the same colours, exactly as photographed
+- only the leaves and stems that are attached to that item in its own photo
+Do not turn an item into a different flower. Do not recolour, tint, brighten or shift the hue of an item. Do not create colour variants, extra buds, or variations that are not visible in its photo. Do not open a bloom further or reveal parts of it (centres, stamens) that its photo does not show.
+Do not merge two items into a hybrid, and do not simplify an item into a different plant when the arrangement is crowded.
+The output may only contain colours that are visible on the CONTAINER or on ${itemList}. No other colour may appear on any flower, leaf or stem.
+Colours do not travel between assets: the colour of the CONTAINER or of one item must never tint another item.
+
+RULE 3 - WHAT IS NOT AN ASSET
+A reference photo may also show things that are not part of the item: a hand holding it, a price tag, printed text, a logo, a watermark, a backdrop. Ignore them. Never reproduce them.
+
+RULE 4 - REPETITION IS HOW THE ARRANGEMENT GETS FULL
+ALLOWED: repeat the supplied floral items as many times as needed.
+FORBIDDEN: invent anything new to fill space.
+Density must be achieved by repeating supplied items, not by inventing new ones.
+Each label states how many units of that item were selected. One unit is the item as its photo shows it. Use at least that many units, keep that mix between the items, and if a gap remains, fill it with one more copy of a supplied item.
 `;
-    })
-    .join("\n");
 
-  const prompt = `
-You are a professional florist and luxury floral arrangement designer.
+  const task = `
+TASK
+Create one photorealistic photo of a single floral arrangement: the floral items ${itemList} arranged in the CONTAINER.
 
-You will receive:
-- Reference image 1: the exact container to use
-- Reference images 2 to ${flowers.length + 1}: the exact flower inventory references
+Selected mix (${totalUnits} units in total):
+${items.map((item, index) => `- ${itemIds[index]}: ${item.qty}`).join("\n")}
+${single ? `\nOnly one floral item was supplied, so the whole arrangement is made of ${itemIds[0]} repeated. Do not add a second kind of flower or any greenery for variety.\n` : `\nEvery supplied item must be clearly visible. Do not drop an item and do not replace it with something else.\n`}
+Container
+- Keep the CONTAINER exactly as photographed: same shape, colour, material, finish and proportions. Do not redesign or replace it.
 
-Create one single photorealistic floral arrangement image.
+Arrangement
+- Dense, full and professionally composed, with no empty gaps. Fill every gap by repeating ${itemList}.
+- Cover the container opening with the supplied items themselves.
+- Natural height variation, realistic overlap, balanced composition. Every item stays recognisable as its reference photo.
+- Hide stem ends and mechanics. No floating or isolated stems.
 
-Hard constraints. These instructions are mandatory and must be followed exactly.
+Photo
+- Plain, seamless, uniform white studio background. Nothing else in the scene: no table objects, no props, no scenery, no hands, no text.
+- Soft even studio lighting with a natural shadow under the container.
+- Whole container and whole arrangement visible, centred, not cropped.
+- True-to-reference colours. No colour grading that shifts the colours of the assets.
 
-1. Container preservation
-- Reference image 1 is the exact container.
-- Preserve its exact shape, color, material, finish, proportions, opening, silhouette, and overall identity.
-- Do not replace the container.
-- Do not redesign the container.
-- Do not change the container style.
-- Do not change the container size relationship relative to the flowers.
-- Do not generate a different vase or a different vessel.
-
-2. Allowed flower inventory only
-- Use only the flower types shown in the supplied flower reference images.
-- Use no flower type other than the supplied references.
-- Use no foliage type other than the foliage already visible in the supplied flower references.
-- Do not add any new flower type.
-- Do not add any new foliage type.
-- Do not add filler flowers.
-- Do not add berries, branches, grass, accessories, ribbon, card, logo, text, or decorative elements.
-- Do not introduce any new color that is not already present in the supplied flower references.
-
-3. Exact quantity control
-Use exactly and only these flower types and quantities:
-${inventoryList}
-
-Total requested stems: exactly ${totalStems} stems.
-
-- The arrangement must not contain more than the allowed quantities.
-- The arrangement must not contain fewer than the allowed quantities.
-- Do not omit any requested type.
-- Do not invent extra stems.
-- Do not convert one flower type into another.
-- Do not create additional flowers to make the arrangement fuller.
-- Fullness must come only from arranging the provided flower types and quantities more professionally.
-- If a reference stem naturally includes more than one bloom or a bud, still treat it as one stem of that exact flower reference.
-- Do not invent extra flower categories from buds or side blooms.
-
-4. Preserve flower identity strictly
-For each flower reference image, preserve exactly:
-- the flower species or type
-- the bloom shape
-- the petal structure
-- the color palette
-- the foliage style
-- the overall visual identity
-
-${referenceGuide}
-
-5. Density and bouquet structure
-- Make the arrangement dense, full, luxurious, and professionally composed.
-- Eliminate visible empty gaps between flowers.
-- Fully cover the container rim and upper neck area with blooms and low foliage so the arrangement looks naturally connected to the container.
-- No floral foam, wires, tape, cut stem ends, mechanics, or internal structure may be visible.
-- No isolated long stems may stick out on their own.
-- No floating flowers.
-- Do not leave exposed stems visible in the upper visible arrangement area.
-- Stems should be visually hidden behind the flower mass and foliage as much as possible.
-- The bouquet mass should feel cohesive, connected, compact, and visually full.
-- Increase fullness through tighter flower grouping and better distribution, not by adding unrequested flowers.
-
-6. Composition rules
-- Use larger fuller blooms to build the main mass.
-- Use medium blooms to connect sections.
-- Use smaller blooms only from the supplied flower references to fill gaps.
-- Repeat the supplied flower types across more than one area for visual cohesion.
-- Keep the design elegantly asymmetrical but visually balanced.
-- Create clear height gradation.
-- Low flowers near the edges.
-- Medium flowers in the inner body.
-- A limited number of slightly elevated blooms near the top.
-- Keep transitions smooth.
-- Keep the arrangement proportional to the container.
-- The visible flower portion should be roughly between one and one and a half times the container height when appropriate for the container shape.
-- Every raised bloom must connect visually to the main flower mass.
-- Avoid abrupt height jumps.
-- Avoid overcrowding that destroys flower readability.
-- Keep each flower readable while still maintaining density.
-
-7. Photography and framing
-- Highly photorealistic
-- Premium commercial floral photography
-- Soft refined lighting
-- Natural colors
-- Neutral elegant background
-- Slight front angle that shows depth
-- Full arrangement visible
-- Full container visible
-- No cropped edges
-- No illustration style
-
-Final instruction
-Produce one image only.
-Follow the inventory and reference images literally.
-Do not change the container.
-Do not change the supplied flower types.
-Do not change the supplied flower shapes.
-Do not add anything from your own imagination.
-Do not exceed the selected quantities.
-Do not use any flower, foliage, filler, or visual element outside the supplied references.
-
-Strictly avoid:
-visible gaps, sparse design, random distribution, imbalance, isolated long stems, exposed stems, floating flowers, equal height everywhere, abrupt height changes, excessive arrangement height, visible foam, visible wires, altered container shape, altered container color, altered flower type, altered petal shapes, altered bloom structure, added flowers, added foliage, added filler, distorted petals, unrealistic sizes, artificial colors, cluttered background, cropped container, cropped arrangement, text, logos, cards, or ribbons.
+FINAL CHECK - apply before producing the image
+1. Count the different kinds of floral item in the image. There must be exactly ${items.length}, and each one must match its reference photo: ${itemList}.
+   Every flower, leaf and stem in the image is a copy of ${itemList}. If something is not, remove it and put a copy of a supplied item in its place.
+2. Every colour in the arrangement is visible in the reference photo of the item it belongs to. If a colour is not, correct it to the reference.
+3. Nothing was invented: no extra flower type, no extra greenery or filler, no ribbon, wrapping or accessory, no background element.
+4. Use ONLY the supplied visual assets. Repeat them; never invent.
 `;
+
+  return [
+    { type: "text" as const, text: rules },
+
+    { type: "text" as const, text: "CONTAINER - the exact container:" },
+    {
+      type: "image" as const,
+      uri: containerUrl,
+      mime_type: getMimeType(containerUrl),
+    },
+
+    ...items.flatMap((item, index) => [
+      {
+        type: "text" as const,
+        text: `${itemIds[index]} - floral item ${index + 1} of ${items.length}, selected units: ${item.qty} of ${totalUnits}. Reproduce exactly as photographed:`,
+      },
+      {
+        type: "image" as const,
+        uri: item.imageUrl,
+        mime_type: getMimeType(item.imageUrl),
+      },
+    ]),
+
+    { type: "text" as const, text: task },
+  ];
+}
+
+export async function generateBouquet(
+  formData: BuilderFormData,
+  catalog: Flower[],
+) {
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+  if (!apiKey) {
+    throw new BouquetGenerationError(
+      "missing_api_key",
+      "NEXT_PUBLIC_GEMINI_API_KEY is missing",
+    );
+  }
+
+  const assets = resolveBouquetAssets(formData, catalog);
+
+  await Promise.all(
+    [assets.containerUrl, ...assets.items.map((item) => item.imageUrl)].map(
+      assertImageLoads,
+    ),
+  );
 
   const ai = new GoogleGenAI({
     apiKey,
   });
 
-  const input = [
-    {
-      type: "image" as const,
-      uri: formData.template_url,
-      mime_type: getMimeType(formData.template_url),
-    },
-
-    ...flowers.map((flower) => ({
-      type: "image" as const,
-      uri: flower.image_url,
-      mime_type: getMimeType(flower.image_url),
-    })),
-
-    {
-      type: "text" as const,
-      text: prompt,
-    },
-  ];
-
   try {
     const interaction = await ai.interactions.create({
       model: MODEL,
-      input,
+      input: buildBouquetInput(assets),
       response_format: {
         type: "image",
         mime_type: "image/jpeg",
@@ -441,7 +306,10 @@ visible gaps, sparse design, random distribution, imbalance, isolated long stems
 
     if (!generatedImage?.data) {
       console.error("Gemini response:", interaction);
-      throw new Error("Gemini did not return an image");
+      throw new BouquetGenerationError(
+        "no_image_returned",
+        "Gemini did not return an image",
+      );
     }
 
     const mimeType = generatedImage.mime_type || "image/jpeg";
@@ -452,8 +320,11 @@ visible gaps, sparse design, random distribution, imbalance, isolated long stems
   } catch (error) {
     console.error("Bouquet generation failed:", error);
 
-    throw error instanceof Error
+    throw error instanceof BouquetGenerationError
       ? error
-      : new Error("Failed to generate bouquet");
+      : new BouquetGenerationError(
+          "request_failed",
+          error instanceof Error ? error.message : "Failed to generate bouquet",
+        );
   }
 }

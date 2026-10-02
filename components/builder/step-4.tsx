@@ -1,24 +1,47 @@
 import Image from "next/image";
 import { toast } from "sonner";
-import { useState } from "react";
+import { T } from "@/constants/shared";
+import { Flower } from "@/types/products";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { saveDesign } from "@/lib/custom-builder";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BuilderFormData } from "@/types/builder-page";
-import { generateBouquet } from "@/lib/generateBouquet";
 import { ImageIcon, Loader2, Sparkles } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { useSearchParams } from "next/navigation";
+import { BouquetGenerationError, generateBouquet } from "@/lib/generateBouquet";
+
+// Translate a generation failure into a message the customer can act on
+function getGenerationErrorMessage(error: unknown, t: T): string {
+  const code = error instanceof BouquetGenerationError ? error.code : null;
+
+  switch (code) {
+    case "no_flowers":
+      return t("GenerationErrors.NoFlowers");
+    case "flower_unavailable":
+      return t("GenerationErrors.FlowerUnavailable");
+    case "missing_container":
+    case "invalid_image":
+      return t("GenerationErrors.InvalidImage");
+    case "too_many_flowers":
+      return t("GenerationErrors.TooManyFlowers");
+    default:
+      return t("GenerationErrors.Failed");
+  }
+}
 
 export default function Step4({
   image,
+  flowers,
   getValues,
   setValue,
 }: {
   image: string | null;
+  flowers: Flower[];
   getValues: UseFormGetValues<BuilderFormData>;
   setValue: UseFormSetValue<BuilderFormData>;
 }) {
@@ -28,6 +51,16 @@ export default function Step4({
   const [generationError, setGenerationError] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const designId = searchParams.get("designId");
+  const isMounted = useRef(true);
+
+  // A generation that finishes after leaving this step must not write its result
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   // Handle bouquet generation and saving design
   const handleGenerateBouquet = async () => {
@@ -37,17 +70,21 @@ export default function Step4({
       setIsGenerating(true);
       setGenerationError(null);
 
-      const result = await generateBouquet(getValues());
+      const result = await generateBouquet(getValues(), flowers);
+
+      if (!isMounted.current) return;
 
       setValue("image", result.imageUrl);
     } catch (error) {
       console.error(error);
 
-      setGenerationError(
-        error instanceof Error ? error.message : "Failed to generate bouquet",
-      );
+      if (!isMounted.current) return;
+
+      setGenerationError(getGenerationErrorMessage(error, t));
     } finally {
-      setIsGenerating(false);
+      if (isMounted.current) {
+        setIsGenerating(false);
+      }
     }
   };
 
@@ -142,21 +179,22 @@ export default function Step4({
             <Button
               type="button"
               size="lg"
+              variant={image ? "outline" : "default"}
               className="w-full"
               onClick={handleGenerateBouquet}
-              disabled={isGenerating}
+              disabled={isGenerating || loadingSaveDesign}
             >
               {isGenerating ? (
                 <>
                   <Loader2 className="animate-spin" />
                   {t("Generating")}
                 </>
-              ) : !image ? (
+              ) : (
                 <>
                   <Sparkles />
                   {t("GenerateBouquet")}
                 </>
-              ) : null}
+              )}
             </Button>
           )}
 
@@ -166,7 +204,7 @@ export default function Step4({
               type="button"
               size="lg"
               className="w-full"
-              disabled={loadingSaveDesign}
+              disabled={loadingSaveDesign || isGenerating}
             >
               {loadingSaveDesign && <Loader2 className="animate-spin" />}{" "}
               {t("SaveDesign")}

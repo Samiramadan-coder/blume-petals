@@ -260,7 +260,12 @@ export default function BuilderForm({
         )}
 
         {currentStep === 3 && (
-          <Step4 getValues={getValues} setValue={setValue} image={image} />
+          <Step4
+            getValues={getValues}
+            setValue={setValue}
+            image={image}
+            flowers={flowers}
+          />
         )}
       </div>
 

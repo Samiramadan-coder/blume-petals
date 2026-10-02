@@ -159,6 +159,7 @@ export default function Step2({
       if (addedInPass === 0) break;
     }
 
+    setValue("image", "");
     setValue("slots", updatedSlots);
 
     toast.success(t("AutoFillCompleted"));

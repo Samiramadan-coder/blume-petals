@@ -774,6 +774,14 @@
     "GeneratingYourBouquet": "Generating your bouquet",
     "GenerateBouquet": "Generate Bouquet",
     "Generating": "Generating....",
+    "RegenerateBouquet": "Regenerate Bouquet",
+    "GenerationErrors": {
+      "NoFlowers": "Add flowers to your bouquet before generating a preview.",
+      "FlowerUnavailable": "One of your selected flowers is no longer available. Go back and update your selection.",
+      "InvalidImage": "One of the selected images could not be loaded. Please try again.",
+      "TooManyFlowers": "A preview supports up to 9 different flower types. Remove a flower type and try again.",
+      "Failed": "We couldn't generate your bouquet. Please try again."
+    },
     "AIGenerate": "AI generated preview. The final arrangement may vary slightly.",
     "SaveDesign": "Save Design",
     "DesignSavedSuccessfully": "Design saved successfully",
