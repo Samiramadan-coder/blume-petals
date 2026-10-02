@@ -680,7 +680,16 @@
     "PaymentOnDelivery": "الدفع عند الاستلام",
     "Off": "خصم",
     "YouMightAlsoLike": "قد يعجبك أيضًا",
-    "CustomDesign": "تصميم مخصص"
+    "CustomDesign": "تصميم مخصص",
+    "UpdateQuantitySuccess": "تم تحديث الكمية بنجاح.",
+    "UpdateQuantityError": "فشل تحديث الكمية. يرجى المحاولة مرة أخرى.",
+    "PaymentFailed": "فشل الدفع. يرجى المحاولة مرة أخرى.",
+    "IncreaseQuantity": "زيادة كمية {name}",
+    "DecreaseQuantity": "تقليل كمية {name}",
+    "RemoveFromCart": "إزالة {name} من السلة",
+    "RemoveFromCartTitle": "إزالة المنتج",
+    "RemoveFromCartConfirmation": "هل أنت متأكد أنك تريد إزالة هذا المنتج من السلة؟",
+    "PromoCode": "رمز العرض"
   },
   "Notifications": {
     "Title": "الإشعارات",

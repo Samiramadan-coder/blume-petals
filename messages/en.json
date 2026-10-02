@@ -690,7 +690,14 @@
     "PaymentOnDelivery": "Payment On Delivery",
     "Off": "Off",
     "YouMightAlsoLike": "You might also like",
-    "CustomDesign": "Custom Build"
+    "CustomDesign": "Custom Build",
+    "PaymentFailed": "Payment failed. Please try again.",
+    "IncreaseQuantity": "Increase quantity of {name}",
+    "DecreaseQuantity": "Decrease quantity of {name}",
+    "RemoveFromCart": "Remove {name} from cart",
+    "RemoveFromCartTitle": "Remove item",
+    "RemoveFromCartConfirmation": "Are you sure you want to remove this item from your cart?",
+    "PromoCode": "Promo code"
   },
   "Notifications": {
     "Title": "Notifications",

@@ -2,35 +2,55 @@
 
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
+import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
-import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Truck, Store } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useCart } from "@/providers/cart-provider";
+import NoDataFounded from "../reusable/no-data-founded";
 import AddresssPreview from "./complete-order/address-preview";
 import OrderFinalDetails from "./complete-order/order-final-details";
 import PickupLocationsPreview from "./complete-order/pickup-location-preview";
 
+const formatMoney = (value: number) => value.toFixed(2);
+
 export default function CompleteOrder({
-  total,
   couponCode,
-  discount,
+  discount: couponDiscount,
 }: {
-  total: number;
   couponCode: string | null;
   discount: number;
 }) {
-  const { addresses, pickupLocations, countries } = useCart();
+  const cart = useCart();
+  const { addresses, pickupLocations, countries } = cart;
+  const locale = useLocale();
   const t = useTranslations("Shop");
+  // The cart is emptied as soon as the order is created, while this page is
+  // still showing (waiting for the payment redirect). Keep what was ordered
+  // so the summary doesn't collapse to zero in that window.
+  const [{ items, summary }] = useState({
+    items: cart.items,
+    summary: cart.summary,
+  });
   const [notes, setNotes] = useState("");
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">(
     "delivery",
   );
-  const [selectedAddress, setSelectedAddress] = useState(
+  const [selectedAddressId, setSelectedAddress] = useState<string | undefined>(
     addresses[0]?.id.toString(),
   );
   const [selectedPickupLocation, setSelectedPickupLocation] = useState<
     string | null
   >(pickupLocations[0]?.id.toString() || null);
+
+  // Falls back to the first address when nothing valid is selected, e.g. when
+  // the first address was just added from this page.
+  const selectedAddress = addresses.some(
+    (a) => a.id.toString() === selectedAddressId,
+  )
+    ? selectedAddressId
+    : addresses[0]?.id.toString();
 
   // Delivery fee calculation based on selected address and delivery method
   // If the delivery method is "pickup", the delivery fee is 0. Otherwise,
@@ -44,6 +64,10 @@ export default function CompleteOrder({
 
     return selectedAddressObj ? +selectedAddressObj?.city.delivery_fee : 0;
   }, [addresses, deliveryMethod, selectedAddress]);
+
+  const total = summary ? +summary.total : 0;
+  // The discount arrives through the URL, so keep it within the cart total.
+  const discount = Math.min(Math.max(couponDiscount, 0), total);
 
   // Final total calculation
   // The final total is calculated by subtracting the discount from the total and adding the delivery fee.
@@ -61,91 +85,131 @@ export default function CompleteOrder({
     );
   }, [deliveryMethod, selectedAddress, selectedPickupLocation]);
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-10">
-      <div>
-        <div className="flex items-center gap-4">
-          <div
-            onClick={() => setDeliveryMethod("delivery")}
-            className={cn(
-              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex flex-col md:flex-row gap-2 items-center justify-center cursor-pointer",
-              deliveryMethod === "delivery" && "border-primary bg-primary/10",
-            )}
-          >
-            <Truck
-              className={deliveryMethod === "delivery" ? "text-primary" : ""}
-            />
-            <div className="text-center">
-              <p className="font-semibold">{t("Delivery")}</p>
-              {deliveryFee ? (
-                <p className="text-sm text-primary mt-1">
-                  {t("AED")} {deliveryFee}
-                </p>
-              ) : null}
-            </div>
-          </div>
-
-          <div
-            onClick={() => setDeliveryMethod("pickup")}
-            className={cn(
-              "bg-white flex-1 border-2 border-border rounded-lg h-30 flex flex-col md:flex-row gap-2 items-center justify-center cursor-pointer",
-              deliveryMethod === "pickup" && "border-primary bg-primary/10",
-            )}
-          >
-            <Store
-              className={deliveryMethod === "pickup" ? "text-primary" : ""}
-            />
-            <div className="text-center">
-              <p className="font-semibold">{t("Pickup")}</p>
-              <p className="text-sm text-primary mt-1">{t("Free")}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 space-y-6">
-          {deliveryMethod === "delivery" && (
-            <AddresssPreview
-              countries={countries}
-              addresses={addresses}
-              selectedAddress={selectedAddress}
-              setSelectedAddress={setSelectedAddress}
-            />
-          )}
-
-          {deliveryMethod === "pickup" && (
-            <PickupLocationsPreview
-              pickupLocations={pickupLocations}
-              selectedPickupLocation={selectedPickupLocation}
-              setSelectedPickupLocation={setSelectedPickupLocation}
-            />
-          )}
-
-          <div>
-            <h3 className="mb-2 text-foreground font-semibold">
-              {t("OrderNotes")}
-            </h3>
-            <Textarea
-              className="bg-white h-40"
-              placeholder={t("OrderNotesPlaceholder")}
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-            />
-          </div>
-        </div>
+  if (items.length === 0) {
+    return (
+      <div className="space-y-4">
+        <NoDataFounded label={t("EmptyCartState")} />
+        <Button asChild className="h-11 rounded-full px-7">
+          <Link href="/shop">{t("Title")}</Link>
+        </Button>
       </div>
+    );
+  }
 
-      <OrderFinalDetails
-        total={total}
-        discount={discount}
-        deliveryFee={deliveryFee}
-        finalTotal={finalTotal}
-        deliveryMethod={deliveryMethod}
-        showButton={showButton}
-        couponCode={couponCode}
-        addressId={selectedAddress}
-        pickupLocationId={selectedPickupLocation}
-        note={notes}
-      />
-    </div>
+  const methodClassName =
+    "bg-white flex-1 border-2 border-border rounded-lg h-30 flex flex-col md:flex-row gap-2 items-center justify-center cursor-pointer outline-none transition-colors motion-reduce:transition-none focus-visible:ring-3 focus-visible:ring-ring/50";
+
+  return (
+    <>
+      <h1
+        id="delivery-method-heading"
+        className={cn("mb-6 font-semibold text-xl md:text-3xl", {
+          "font-heading": locale === "en",
+        })}
+      >
+        {t("HowToReceiveOrder")}
+      </h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-10">
+        <div>
+          <div
+            role="group"
+            aria-labelledby="delivery-method-heading"
+            className="flex items-center gap-4"
+          >
+            <button
+              type="button"
+              aria-pressed={deliveryMethod === "delivery"}
+              onClick={() => setDeliveryMethod("delivery")}
+              className={cn(
+                methodClassName,
+                deliveryMethod === "delivery" && "border-primary bg-primary/10",
+              )}
+            >
+              <Truck
+                className={deliveryMethod === "delivery" ? "text-primary" : ""}
+              />
+              <span className="block text-center">
+                <span className="block font-semibold">{t("Delivery")}</span>
+                {deliveryFee ? (
+                  <span className="block text-sm text-primary mt-1">
+                    {t("AED")} {formatMoney(deliveryFee)}
+                  </span>
+                ) : null}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              aria-pressed={deliveryMethod === "pickup"}
+              onClick={() => setDeliveryMethod("pickup")}
+              className={cn(
+                methodClassName,
+                deliveryMethod === "pickup" && "border-primary bg-primary/10",
+              )}
+            >
+              <Store
+                className={deliveryMethod === "pickup" ? "text-primary" : ""}
+              />
+              <span className="block text-center">
+                <span className="block font-semibold">{t("Pickup")}</span>
+                <span className="block text-sm text-primary mt-1">
+                  {t("Free")}
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <div className="mt-6 space-y-6">
+            {deliveryMethod === "delivery" && (
+              <AddresssPreview
+                countries={countries}
+                addresses={addresses}
+                selectedAddress={selectedAddress ?? ""}
+                setSelectedAddress={setSelectedAddress}
+              />
+            )}
+
+            {deliveryMethod === "pickup" && (
+              <PickupLocationsPreview
+                pickupLocations={pickupLocations}
+                selectedPickupLocation={selectedPickupLocation}
+                setSelectedPickupLocation={setSelectedPickupLocation}
+              />
+            )}
+
+            <div>
+              <label
+                htmlFor="order-notes"
+                className="block mb-2 text-foreground font-semibold"
+              >
+                {t("OrderNotes")}
+              </label>
+              <Textarea
+                id="order-notes"
+                className="bg-white h-40"
+                placeholder={t("OrderNotesPlaceholder")}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        <OrderFinalDetails
+          items={items}
+          total={formatMoney(total)}
+          discount={discount ? formatMoney(discount) : null}
+          deliveryFee={formatMoney(deliveryFee)}
+          finalTotal={formatMoney(finalTotal)}
+          deliveryMethod={deliveryMethod}
+          showButton={showButton}
+          couponCode={couponCode}
+          addressId={selectedAddress ?? null}
+          pickupLocationId={selectedPickupLocation}
+          note={notes}
+        />
+      </div>
+    </>
   );
 }

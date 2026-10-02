@@ -23,17 +23,21 @@ export default function PickupLocationsPreview({
 
   return (
     <div>
-      <h3 className="mb-2 text-foreground font-semibold">
+      <h3
+        id="pickup-location-heading"
+        className="mb-2 text-foreground font-semibold"
+      >
         {t("PickupLocation")}
       </h3>
       <RadioGroup
         value={selectedPickupLocation || undefined}
         onValueChange={setSelectedPickupLocation}
+        aria-labelledby="pickup-location-heading"
         className="w-full"
       >
         {pickupLocations.map((location) => (
           <FieldLabel
-            htmlFor={location.id.toString()}
+            htmlFor={`pickup-location-${location.id}`}
             className="bg-white p-4 cursor-pointer"
             key={location.id}
           >
@@ -68,7 +72,7 @@ export default function PickupLocationsPreview({
               </FieldContent>
               <RadioGroupItem
                 value={location.id.toString()}
-                id={location.id.toString()}
+                id={`pickup-location-${location.id}`}
               />
             </Field>
           </FieldLabel>

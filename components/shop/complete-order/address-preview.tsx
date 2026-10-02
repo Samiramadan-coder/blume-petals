@@ -28,7 +28,10 @@ export default function AddresssPreview({
       <AddressForm countries={countries} />
 
       <div>
-        <h3 className="mb-2 text-foreground font-semibold">
+        <h3
+          id="shipping-address-heading"
+          className="mb-2 text-foreground font-semibold"
+        >
           {t("ShippingAddress")}
         </h3>
         {addresses.length === 0 ? (
@@ -39,13 +42,14 @@ export default function AddresssPreview({
           <RadioGroup
             value={selectedAddress}
             onValueChange={setSelectedAddress}
+            aria-labelledby="shipping-address-heading"
             className="w-full"
           >
-            {addresses.map((address, index) => (
+            {addresses.map((address) => (
               <FieldLabel
-                htmlFor={address.id.toString()}
+                htmlFor={`address-${address.id}`}
                 className="bg-white p-4 cursor-pointer"
-                key={index}
+                key={address.id}
               >
                 <Field orientation="horizontal">
                   <FieldContent>
@@ -68,7 +72,7 @@ export default function AddresssPreview({
                   </FieldContent>
                   <RadioGroupItem
                     value={address.id.toString()}
-                    id={address.id.toString()}
+                    id={`address-${address.id}`}
                   />
                 </Field>
               </FieldLabel>

@@ -17,8 +17,8 @@ export default function CardItems() {
   return (
     <>
       {items.length > 0 ? (
-        items.map((item, index) => (
-          <Card className="w-full rounded-xl border-0 bg-white" key={index}>
+        items.map((item) => (
+          <Card className="w-full rounded-xl border-0 bg-white" key={item.id}>
             <CardContent
               className={cn("flex items-center gap-4 px-4", {
                 "opacity-70": !item.variant.in_stock,
@@ -29,6 +29,7 @@ export default function CardItems() {
                   src={item.design?.image_url ?? item.product.image_url}
                   alt={item.product.name}
                   fill
+                  sizes="96px"
                   className="object-cover"
                 />
               </div>
@@ -56,14 +57,21 @@ export default function CardItems() {
                       </p>
                     )}
                   </div>
-                  <DeleteFromCart itemId={item.id} />
+                  <DeleteFromCart
+                    itemId={item.id}
+                    productName={item.product.name}
+                  />
                 </div>
 
                 <div className="mt-auto flex items-end justify-between gap-4">
                   <p className="text-sm md:text-lg font-semibold text-primary">
                     {t("AED")} {item.variant.price}
                   </p>
-                  <UpdateQuantity initialQuantity={item.qty} itemId={item.id} />
+                  <UpdateQuantity
+                    itemId={item.id}
+                    initialQuantity={item.qty}
+                    productName={item.product.name}
+                  />
                 </div>
               </div>
             </CardContent>

@@ -1,6 +1,7 @@
 "use server";
 
 import { updateTag } from "next/cache";
+import { unstable_rethrow } from "next/navigation";
 import { http, ValidationError } from "./http";
 import { Coupon, CouponFormValues } from "@/types/products";
 import { OrderItem } from "@/types/account";
@@ -67,6 +68,8 @@ export async function removeFromCartAction(
     updateTag("cart");
     return { success: true };
   } catch (error) {
+    // A 401 redirects to logout; don't report it as a failed request.
+    unstable_rethrow(error);
     console.error("Error removing from cart:", error);
     return { success: false };
   }
@@ -89,6 +92,7 @@ export async function updateCartQuantityAction(
     updateTag("cart");
     return { success: true };
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error updating cart quantity:", error);
     if (error instanceof ValidationError) {
       return {
@@ -103,7 +107,7 @@ export async function updateCartQuantityAction(
 
 // Order Checkout
 type CheckoutOrderResponse =
-  | { success: false }
+  | { success: false; message?: string }
   | { success: true; orderId: number };
 
 export async function checkoutOrderAction(formData: {
@@ -116,10 +120,18 @@ export async function checkoutOrderAction(formData: {
     );
 
     updateTag("cart-count");
+    updateTag("cart");
     updateTag("orders");
     return { success: true, orderId: data.data.order.id };
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error checking out order:", error);
+    if (error instanceof ValidationError) {
+      return {
+        success: false,
+        message: Object.values(error.errors).flat().join(", ") || undefined,
+      };
+    }
     return { success: false };
   }
 }
@@ -140,6 +152,7 @@ export async function completePaymentAction(
     updateTag("orders");
     return { success: true, paymentUrl: data.data.payment_url };
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error completing payment:", error);
     return { success: false };
   }
@@ -181,6 +194,7 @@ export async function validateCouponCodeAction(
       coupon: data.data.coupon,
     };
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error validating coupon code:", error);
     if (error instanceof ValidationError) {
       const errors = Object.fromEntries(

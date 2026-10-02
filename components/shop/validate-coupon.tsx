@@ -17,22 +17,22 @@ import { CouponFormValues, couponSchema, Summary } from "@/types/products";
 
 export default function ValidateCoupon({ summary }: { summary: Summary }) {
   const t = useTranslations("Shop");
-  const [isCouponApplied, setIsCouponApplied] = useState(false);
+  const tCommon = useTranslations("Common");
+  // Only a code the API accepted is carried to checkout; whatever is typed
+  // in the input but not applied (or rejected) must not reach the order.
+  const [appliedCode, setAppliedCode] = useState<string | null>(null);
   const [currentSummary, setCurrentSummary] = useState<
     Summary & {
       discount: string;
-      old_total: string;
     }
   >({
     ...summary,
-    old_total: summary.total,
     discount: "",
   });
 
   const {
     register,
     setError,
-    getValues,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<CouponFormValues>({
@@ -41,10 +41,20 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
   });
 
   const onSubmit: SubmitHandler<CouponFormValues> = async (data) => {
-    const result = await validateCouponCodeAction(data.coupon_code);
+    // `handleSubmit` does not block a second submit while one is in flight.
+    if (isSubmitting) return;
+
+    let result: Awaited<ReturnType<typeof validateCouponCodeAction>>;
+
+    try {
+      result = await validateCouponCodeAction(data.coupon_code);
+    } catch {
+      toast.error(tCommon("ErrorHappened"));
+      return;
+    }
 
     if (result.success) {
-      setIsCouponApplied(true);
+      setAppliedCode(result.coupon.code ?? data.coupon_code);
       setCurrentSummary((prev) => ({
         ...prev,
         total: result.coupon.total,
@@ -54,7 +64,7 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
       return;
     }
 
-    if (result.success === false && result.errors) {
+    if (result.errors) {
       Object.entries(result.errors).forEach(([field, message]) => {
         if (!message) return;
         toast.error(message);
@@ -65,15 +75,30 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
       });
       return;
     }
+
+    toast.error(tCommon("ErrorHappened"));
   };
+
+  const checkoutQuery = appliedCode
+    ? {
+        coupon_code: appliedCode,
+        discount: currentSummary.discount,
+      }
+    : undefined;
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="flex items-center gap-3 mb-2">
           <div className="flex-1">
             <Input
               {...register("coupon_code")}
+              aria-label={t("PromoCode")}
+              aria-invalid={errors.coupon_code ? true : undefined}
+              aria-describedby={
+                errors.coupon_code ? "coupon-code-error" : undefined
+              }
+              autoComplete="off"
               placeholder={t("PromoCodePlaceholder")}
               className="h-12 rounded-full border-border bg-white px-4 shadow-none placeholder:text-muted-foreground"
             />
@@ -81,14 +106,15 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
 
           <Button
             type="submit"
-            aria-label="Apply coupon code"
-            className="h-12 text-base rounded-full bg-primary px-7 font-semibold text-white hover:bg-primary hover:scale-105"
+            disabled={isSubmitting}
+            aria-busy={isSubmitting}
+            className="h-12 text-base rounded-full bg-primary px-7 font-semibold text-white hover:bg-primary hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
           >
             {isSubmitting ? <Spinner /> : t("Apply")}
           </Button>
         </div>
 
-        <FieldError errors={[errors.coupon_code]} />
+        <FieldError id="coupon-code-error" errors={[errors.coupon_code]} />
       </form>
 
       <Card className="rounded-xl border-0 bg-white">
@@ -114,8 +140,8 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
             </span>
           </div> */}
 
-          {isCouponApplied && (
-            <div className="flex bg-red-400 text-white p-2 rounded-md items-center text-base italic justify-between font-semibold">
+          {appliedCode && (
+            <div className="flex bg-red-400 text-white p-2 rounded-md items-center text-base italic justify-between font-semibold animate-in fade-in duration-300 motion-reduce:animate-none">
               <span>{t("Discount")}</span>
               <span>
                 {t("AED")} {currentSummary.discount}
@@ -134,17 +160,14 @@ export default function ValidateCoupon({ summary }: { summary: Summary }) {
         </CardContent>
       </Card>
 
-      <Link
-        href={`/cart/order?total=${currentSummary.old_total}&coupon_code=${getValues("coupon_code")}&discount=${currentSummary.discount || ""}`}
-        className="w-full"
+      <Button
+        asChild
+        className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-primary hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
       >
-        <Button
-          aria-label="Proceed to checkout"
-          className="h-16 w-full rounded-full bg-primary text-lg font-semibold text-white hover:bg-primary hover:scale-105"
-        >
+        <Link href={{ pathname: "/cart/order", query: checkoutQuery }}>
           {t("ProceedToCheckout")} · {currentSummary.total}
-        </Button>
-      </Link>
+        </Link>
+      </Button>
     </>
   );
 }
