@@ -22,6 +22,7 @@ export default async function Page({
 }: {
   searchParams: Promise<SerachParams>;
 }) {
+  const t = await getTranslations("CustomBuilder");
   const { designId } = await searchParams;
   let design;
 
@@ -64,12 +65,20 @@ export default async function Page({
     <main className="pb-12">
       <BuilderHeader />
 
-      <BuilderForm
-        templates={templates.data.items}
-        flowers={flowers.data.items}
-        giftOptions={giftOptions.data}
-        design={design}
-      />
+      {templates.data.items.length === 0 ? (
+        <div className="container max-w-3xl py-10">
+          <p className="text-primary font-semibold text-lg">
+            {t("NoTemplatesAvailable")}
+          </p>
+        </div>
+      ) : (
+        <BuilderForm
+          templates={templates.data.items}
+          flowers={flowers.data.items}
+          giftOptions={giftOptions.data}
+          design={design}
+        />
+      )}
     </main>
   );
 }

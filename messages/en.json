@@ -775,6 +775,7 @@
     "GenerateBouquet": "Generate Bouquet",
     "Generating": "Generating....",
     "RegenerateBouquet": "Regenerate Bouquet",
+    "NoTemplatesAvailable": "No templates available, please add some templates first.",
     "GenerationErrors": {
       "NoFlowers": "Add flowers to your bouquet before generating a preview.",
       "FlowerUnavailable": "One of your selected flowers is no longer available. Go back and update your selection.",

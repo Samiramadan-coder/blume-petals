@@ -769,6 +769,7 @@
     "GenerateBouquet": "توليد الباقة",
     "Generating": "جاري التوليد....",
     "RegenerateBouquet": "إعادة توليد الباقة",
+    "NoTemplatesAvailable": "لا توجد قوالب متاحة، يرجى إضافة بعض القوالب أولاً.",
     "GenerationErrors": {
       "NoFlowers": "أضف الزهور إلى باقتك قبل توليد المعاينة.",
       "FlowerUnavailable": "إحدى الزهور المختارة لم تعد متوفرة. ارجع وحدّث اختيارك.",
