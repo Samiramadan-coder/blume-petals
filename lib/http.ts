@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { getServerLanguage, getTokenHeaders } from "./actions";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -100,7 +99,17 @@ function createHttp(baseURL: string) {
   ): Promise<HttpResponse<T>> {
     const { params, headers: extraHeaders, ...restConfig } = config;
 
-    const url = buildUrl(baseURL, path, params);
+    const isServer = typeof window === "undefined";
+
+    // In the browser, requests go to the same-origin proxy
+    // (app/api/v1/[...path]/route.ts), which attaches the HTTP-only token and
+    // the locale. Never call a Server Action from here: it would POST to the
+    // current page URL before every API request.
+    const url = buildUrl(
+      isServer ? baseURL : window.location.origin,
+      path,
+      params,
+    );
 
     const headers = new Headers();
     Object.entries(defaultHeaders).forEach(([key, value]) => {
@@ -113,15 +122,17 @@ function createHttp(baseURL: string) {
       });
     }
 
-    const tokenHeaders = await getTokenHeaders();
-    const language = await getServerLanguage();
+    if (isServer) {
+      const { cookies } = await import("next/headers");
+      const cookieStore = await cookies();
 
-    Object.entries(tokenHeaders).forEach(([key, value]) => {
-      headers.set(key, value);
-    });
+      const token = cookieStore.get("token")?.value;
+      headers.set("Authorization", token ? `Bearer ${token}` : "");
 
-    if (language) {
-      headers.set("Accept-Language", language);
+      const language = cookieStore.get("NEXT_LOCALE")?.value;
+      if (language) {
+        headers.set("Accept-Language", language);
+      }
     }
 
     let requestBody: BodyInit | undefined;
