@@ -106,8 +106,8 @@ export default async function AppFooter() {
               </h2>
               <nav aria-labelledby="footer-shop">
                 <ul className="space-y-2.5">
-                  {categories.items.slice(0, 5).map((item) => (
-                    <li key={item.slug}>
+                  {categories.items.slice(0, 5).map((item, index) => (
+                    <li key={index}>
                       <FooterNavLink href={`/shop?category=${item.slug}`}>
                         {item.name}
                       </FooterNavLink>
@@ -181,7 +181,10 @@ export default async function AppFooter() {
                       href={settings.connect.instagram_url ?? "#"}
                       icon={
                         <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                          <FaInstagram aria-hidden="true" className="text-primary" />
+                          <FaInstagram
+                            aria-hidden="true"
+                            className="text-primary"
+                          />
                         </div>
                       }
                     >
@@ -196,7 +199,10 @@ export default async function AppFooter() {
                       href={settings.connect.whatsapp_url ?? "#"}
                       icon={
                         <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                          <FaWhatsapp aria-hidden="true" className="text-primary" />
+                          <FaWhatsapp
+                            aria-hidden="true"
+                            className="text-primary"
+                          />
                         </div>
                       }
                     >
@@ -209,7 +215,10 @@ export default async function AppFooter() {
                       href={settings.connect.email_url ?? "#"}
                       icon={
                         <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                          <FaEnvelope aria-hidden="true" className="text-primary" />
+                          <FaEnvelope
+                            aria-hidden="true"
+                            className="text-primary"
+                          />
                         </div>
                       }
                     >
@@ -224,7 +233,10 @@ export default async function AppFooter() {
                       href={settings.connect.phone_url ?? "#"}
                       icon={
                         <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
-                          <FaPhoneAlt aria-hidden="true" className="text-primary" />
+                          <FaPhoneAlt
+                            aria-hidden="true"
+                            className="text-primary"
+                          />
                         </div>
                       }
                     >

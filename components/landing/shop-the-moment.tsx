@@ -8,7 +8,7 @@ import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
-import { reveal, stagger } from "@/lib/motion";
+import { revealContainerVariants, revealItemVariants } from "@/lib/motion";
 
 import type { Occasion } from "@/types/landing";
 
@@ -17,6 +17,9 @@ import LandingSubtitle from "./landing-subtitle";
 
 import { getTranslations } from "next-intl/server";
 import { HomePageSections } from "@/types/home-page";
+
+const GRID_CLASS =
+  "grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3";
 
 async function Occasions() {
   const { data, ok } = await http.get<{
@@ -30,18 +33,22 @@ async function Occasions() {
   }
 
   return (
-    <>
+    <motion.ul
+      variants={revealContainerVariants}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.1 }}
+      className={GRID_CLASS}
+    >
       {data.data.items.map((item, index) => {
         const direction = index % 3 === 0 ? -10 : index % 3 === 2 ? 10 : 0;
 
         return (
           <motion.li
             key={item.id}
-            {...reveal({
+            variants={revealItemVariants({
               x: direction,
               y: direction === 0 ? 8 : 0,
-              delay: stagger(index),
-              amount: 0.15,
             })}
             className={cn(
               "h-full",
@@ -69,13 +76,13 @@ async function Occasions() {
           </motion.li>
         );
       })}
-    </>
+    </motion.ul>
   );
 }
 
 function OccasionsSkeleton() {
   return (
-    <>
+    <ul className={GRID_CLASS}>
       {Array.from({ length: 6 }).map((_, index) => (
         <li
           key={index}
@@ -88,7 +95,7 @@ function OccasionsSkeleton() {
           <Skeleton className="h-full min-h-55 rounded-4xl" />
         </li>
       ))}
-    </>
+    </ul>
   );
 }
 
@@ -107,11 +114,9 @@ export default async function ShopTheMoment({
 
           <LandingTitle>{section.title ?? t("Title")}</LandingTitle>
 
-          <ul className="grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3">
-            <Suspense fallback={<OccasionsSkeleton />}>
-              <Occasions />
-            </Suspense>
-          </ul>
+          <Suspense fallback={<OccasionsSkeleton />}>
+            <Occasions />
+          </Suspense>
         </div>
       </div>
     </section>

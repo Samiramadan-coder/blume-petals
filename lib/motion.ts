@@ -31,6 +31,28 @@ export const alternateX = (index: number) =>
 
 export const stagger = (index: number) => index * STAGGER;
 
+// Group reveal: one viewport observer on the container drives every child, so
+// items stagger in a single cascade instead of each waiting on its own
+// intersection plus an index-based delay.
+export const revealContainerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: STAGGER,
+    },
+  },
+};
+
+export const revealItemVariants = ({ x = 0, y = 0 }: RevealOptions = {}) => ({
+  hidden: { opacity: 0, x, y },
+  show: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    transition: { duration: 0.5, ease: EASE_OUT },
+  },
+});
+
 export const heroContainerVariants = {
   hidden: {},
   show: {

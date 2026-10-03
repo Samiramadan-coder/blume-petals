@@ -73,6 +73,7 @@ export default async function AppHeader() {
           <HeaderNavLink href="/shop">{t("Shop")}</HeaderNavLink>
           <HeaderNavLink href="/builder">{t("Builder")}</HeaderNavLink>
           <HeaderNavLink href="/about">{t("About")}</HeaderNavLink>
+          <HeaderNavLink href="/occasions">{t("Occasions")}</HeaderNavLink>
           <HeaderNavLink href="/contact">{t("Contact")}</HeaderNavLink>
         </nav>
 
