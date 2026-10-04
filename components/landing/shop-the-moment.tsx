@@ -51,6 +51,9 @@ async function Occasions() {
 
               <Link
                 href={`/shop?occasion=${item.slug}`}
+                // Each prefetch renders /shop on the server; one per card is a
+                // burst of requests that the host blocks with a 403.
+                prefetch={false}
                 className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition-colors duration-300 hover:bg-black/20"
               >
                 <h3 className="w-full bg-[linear-gradient(to_top,rgba(20,12,0,15)_0%,transparent_100%)] px-5 pb-4 pt-12 text-base font-semibold text-white">

@@ -25,7 +25,11 @@ async function Categories() {
             amount: 0.15,
           })}
         >
-          <Link href={`/shop?category=${item.slug}`} className="block">
+          <Link
+            href={`/shop?category=${item.slug}`}
+            prefetch={false}
+            className="block"
+          >
             <Card className="group relative overflow-hidden rounded-2xl border-0 bg-background p-0 shadow-[0_10px_30px_rgba(61,46,0,0.08)]">
               <CardContent className="relative min-h-81 p-0">
                 <Image

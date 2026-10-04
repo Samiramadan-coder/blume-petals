@@ -57,6 +57,7 @@ export default async function CardItem({
     >
       <Link
         href={`/shop/${item.slug}`}
+        prefetch={false}
         aria-label={`View ${item.name} details`}
         className="absolute inset-0 z-10 rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset"
       />

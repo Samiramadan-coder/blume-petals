@@ -33,6 +33,7 @@ export default function FooterNavLink({
       `}
       href={href}
       target={target}
+      prefetch={false}
     >
       {icon}
       {children}

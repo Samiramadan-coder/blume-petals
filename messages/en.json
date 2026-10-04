@@ -797,5 +797,12 @@
       "Accessories": "Accessories",
       "Preview": "Preview"
     }
+  },
+  "NotFound": {
+    "Eyebrow": "Page not found",
+    "Title": "This page has wilted away",
+    "Description": "The page you are looking for may have been moved, renamed, or is no longer available. Let's get you back to something beautiful.",
+    "BackHome": "Back to Home",
+    "BrowseShop": "Browse the Shop"
   }
 }
