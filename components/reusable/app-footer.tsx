@@ -268,13 +268,14 @@ export default async function AppFooter() {
                 <text
                   x="0"
                   y="13"
-                  fontFamily="Inter, sans-serif"
                   fontSize="14"
                   fontWeight="700"
                   fill="#CBB682"
                   fillOpacity="0.7"
+                  direction="ltr"
+                  textAnchor="start"
                 >
-                  VISA
+                  {t("Visa")}
                 </text>
               </svg>
             </div>
