@@ -35,18 +35,22 @@ export default async function AppHeader() {
             tags: ["user"],
           },
         }),
+
         http.get<{
           data: { pagination: Pagination };
         }>("/api/v1/favorites", {
           next: {
             tags: ["wishlist-count"],
+            revalidate: 120,
           },
         }),
+
         http.get<{
           data: { cart: { items: [] } };
         }>("/api/v1/cart", {
           next: {
             tags: ["cart-count"],
+            revalidate: 120,
           },
         }),
       ]);

@@ -13,7 +13,9 @@ import { alternateX, reveal, stagger } from "@/lib/motion";
 async function FeaturedProducts() {
   const { data, ok } = await http.get<{
     data: { items: Product[] };
-  }>("/api/v1/products?sort=rating&made_to_order=0");
+  }>("/api/v1/products?sort=rating&made_to_order=0", {
+    next: { revalidate: 180 },
+  });
 
   if (!ok) {
     throw new Error("Failed to fetch featured collections");
