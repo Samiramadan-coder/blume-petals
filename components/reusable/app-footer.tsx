@@ -106,8 +106,8 @@ export default async function AppFooter() {
               </h2>
               <nav aria-labelledby="footer-shop">
                 <ul className="space-y-2.5">
-                  {categories.items.slice(0, 5).map((item, index) => (
-                    <li key={index}>
+                  {categories.items.slice(0, 5).map((item) => (
+                    <li key={item.slug}>
                       <FooterNavLink href={`/shop?category=${item.slug}`}>
                         {item.name}
                       </FooterNavLink>
@@ -152,9 +152,6 @@ export default async function AppFooter() {
                   </FooterNavLink>
                 </li>
                 <li>
-                  <FooterNavLink href="/faq">{t("FAQ")}</FooterNavLink>
-                </li>
-                <li>
                   <FooterNavLink href="/privacy-policy">
                     {t("PrivacyPolicy")}
                   </FooterNavLink>
@@ -179,6 +176,7 @@ export default async function AppFooter() {
                   <li>
                     <FooterNavLink
                       href={settings.connect.instagram_url ?? "#"}
+                      target="_blank"
                       icon={
                         <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                           <FaInstagram
@@ -197,6 +195,7 @@ export default async function AppFooter() {
                   <li>
                     <FooterNavLink
                       href={settings.connect.whatsapp_url ?? "#"}
+                      target="_blank"
                       icon={
                         <div className="bg-white/10 min-w-7 h-7 flex items-center justify-center rounded-full">
                           <FaWhatsapp
@@ -305,6 +304,33 @@ export default async function AppFooter() {
               </svg>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="bg-black/20 py-4">
+        <div className="container max-w-7xl flex items-center justify-center gap-4">
+          <span
+            aria-hidden="true"
+            className="hidden sm:block h-px w-16 bg-linear-to-r from-transparent to-primary/40 rtl:bg-linear-to-l"
+          />
+          <p className="text-white/40 text-xs tracking-wide text-center">
+            {t.rich("Credit", {
+              link: (chunks) => (
+                <a
+                  href="https://sidratech.ae/"
+                  target="_blank"
+                  rel="noopener"
+                  className="font-semibold text-primary/80 underline decoration-primary/0 underline-offset-4 transition-colors duration-200 ease-in-out hover:text-primary hover:decoration-primary/60"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
+          <span
+            aria-hidden="true"
+            className="hidden sm:block h-px w-16 bg-linear-to-l from-transparent to-primary/40 rtl:bg-linear-to-r"
+          />
         </div>
       </div>
     </footer>

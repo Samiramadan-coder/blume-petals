@@ -6,10 +6,12 @@ export default function FooterNavLink({
   href,
   children,
   icon,
+  target,
 }: {
   href: string;
   children: React.ReactNode;
   icon?: React.ReactNode;
+  target?: string;
 }) {
   const pathname = usePathname();
   const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -27,9 +29,10 @@ export default function FooterNavLink({
         gap-3
         text-white/70
         hover:text-white
-        ${isActive ? "white" : ""} 
+        ${isActive ? "text-white" : ""} 
       `}
       href={href}
+      target={target}
     >
       {icon}
       {children}
