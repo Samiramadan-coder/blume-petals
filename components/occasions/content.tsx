@@ -22,7 +22,9 @@ async function Occasions() {
       variants={revealContainerVariants}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.1 }}
+      // "some", not a ratio: stacked in one column the list is many screens
+      // tall, so a fixed fraction of it can never be in view at once.
+      viewport={{ once: true, amount: "some" }}
       className={GRID_CLASS}
     >
       {occasions.map((item, index) => {
