@@ -1,14 +1,15 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
+
 import Image from "next/image";
-import { PackageX } from "lucide-react";
 import { cn } from "@/lib/utils";
-import UpdateQuantity from "./update-quantity";
-import { useCart } from "@/providers/cart-provider";
-import DeleteFromCart from "./delete-form-cart";
-import { useTranslations } from "next-intl";
-import NoDataFounded from "../reusable/no-data-founded";
 import { Badge } from "../ui/badge";
+import { PackageX } from "lucide-react";
+import { useTranslations } from "next-intl";
+import UpdateQuantity from "./update-quantity";
+import DeleteFromCart from "./delete-form-cart";
+import { useCart } from "@/providers/cart-provider";
+import NoDataFounded from "../reusable/no-data-founded";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function CardItems() {
   const { items } = useCart();
@@ -26,8 +27,8 @@ export default function CardItems() {
             >
               <div className="relative size-24 shrink-0 overflow-hidden rounded-xl">
                 <Image
-                  src={item.design?.image_url ?? item.product.image_url}
-                  alt={item.product.name}
+                  src={item.design?.image_url ?? item.product?.image_url}
+                  alt={item.product?.name}
                   fill
                   sizes="96px"
                   className="object-cover"
@@ -38,7 +39,7 @@ export default function CardItems() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <h3 className="flex items-center gap-2 text-sm md:text-lg font-semibold text-foreground">
-                      {item.product.name}
+                      {item?.product?.name}
                       {item.design && (
                         <Badge className="text-sm py-1.5 bg-secondary/30 text-secondary">
                           {t("CustomDesign")}
@@ -59,7 +60,7 @@ export default function CardItems() {
                   </div>
                   <DeleteFromCart
                     itemId={item.id}
-                    productName={item.product.name}
+                    productName={item?.product?.name}
                   />
                 </div>
 
@@ -70,7 +71,7 @@ export default function CardItems() {
                   <UpdateQuantity
                     itemId={item.id}
                     initialQuantity={item.qty}
-                    productName={item.product.name}
+                    productName={item?.product?.name}
                   />
                 </div>
               </div>
