@@ -25,6 +25,7 @@ export type Occasion = {
   sort_order: number;
   starts_at: string | null;
   type: string;
+  description: string;
 };
 
 export type AppSettings = {

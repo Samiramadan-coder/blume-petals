@@ -18,8 +18,7 @@ import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
 import { HomePageSections } from "@/types/home-page";
 
-const GRID_CLASS =
-  "grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3";
+const GRID_CLASS = "grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3";
 
 async function Occasions() {
   const { data, ok } = await http.get<{
@@ -68,8 +67,12 @@ async function Occasions() {
                 href={`/shop?occasion=${item.slug}`}
                 className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition-colors duration-300 hover:bg-black/20"
               >
-                <h3 className="w-full bg-[linear-gradient(to_top,rgba(20,12,0,0.7)_0%,transparent_100%)] px-5 pb-4 pt-12 text-base font-semibold text-white">
+                <h3 className="w-full bg-[linear-gradient(to_top,rgba(20,12,0,15)_0%,transparent_100%)] px-5 pb-4 pt-12 text-base font-semibold text-white">
                   {item.name}
+                  <span
+                    className="block text-sm font-normal leading-relaxed mt-2"
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  ></span>
                 </h3>
               </Link>
             </Card>
