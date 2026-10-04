@@ -2,6 +2,8 @@ export const sidebarNavItems = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
   { label: "Builder", href: "/builder" },
+  { label: "Occasions", href: "/occasions" },
+  { label: "Contact", href: "/contact" },
   { label: "About", href: "/about" },
 ];
 
@@ -10,7 +12,6 @@ export const sidebarUserNavItems = [
   { label: "MyOrders", href: "/account/orders" },
   { label: "MyDesigns", href: "/account/designs" },
   { label: "SavedAddresses", href: "/account/addresses" },
-  { label: "Settings", href: "/account/settings" },
 ];
 
 export const sidebarAuthNavItems = [

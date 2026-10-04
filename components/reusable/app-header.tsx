@@ -28,35 +28,31 @@ export default async function AppHeader() {
   let addedToCartCount = 0;
 
   if (isAuthenticated) {
-    // Fetch user data
-    const { data: userData } = await http.get<UserResponse>("/api/v1/auth/me", {
-      next: {
-        tags: ["user"],
-      },
-    });
+    const [{ data: userData }, { data: wishlistData }, { data: cartData }] =
+      await Promise.all([
+        http.get<UserResponse>("/api/v1/auth/me", {
+          next: {
+            tags: ["user"],
+          },
+        }),
+        http.get<{
+          data: { pagination: Pagination };
+        }>("/api/v1/favorites", {
+          next: {
+            tags: ["wishlist-count"],
+          },
+        }),
+        http.get<{
+          data: { cart: { items: [] } };
+        }>("/api/v1/cart", {
+          next: {
+            tags: ["cart-count"],
+          },
+        }),
+      ]);
 
     user = userData.data.user;
-
-    // Fetch wishlist count
-    const { data: wishlistData } = await http.get<{
-      data: { pagination: Pagination };
-    }>("/api/v1/favorites", {
-      next: {
-        tags: ["wishlist-count"],
-      },
-    });
-
     wishlistCount = wishlistData.data.pagination.total;
-
-    // Fetch cart count
-    const { data: cartData } = await http.get<{
-      data: { cart: { items: [] } };
-    }>("/api/v1/cart", {
-      next: {
-        tags: ["cart-count"],
-      },
-    });
-
     addedToCartCount = cartData.data.cart.items.length;
   }
 

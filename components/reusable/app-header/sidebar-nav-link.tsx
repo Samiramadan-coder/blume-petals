@@ -20,7 +20,7 @@ export default function SidebarNavLink({
     <Link
       href={href}
       onClick={onClick}
-      className={`text-foreground text-base ${isActive ? "font-semibold text-primary" : ""}`}
+      className={`text-foreground text-xs font-medium uppercase ${isActive ? "font-semibold text-primary" : ""}`}
     >
       {label}
     </Link>

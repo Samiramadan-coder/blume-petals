@@ -126,12 +126,6 @@ export default function AppHeaderControl({
                 >
                   {tAccount("SavedAddresses")}
                 </DropdownMenuItem>
-                {/* <DropdownMenuItem
-                  className="py-2 text-foreground cursor-pointer rounded-none"
-                  onClick={() => router.push("/account/settings")}
-                >
-                  {tAccount("Settings")}
-                </DropdownMenuItem> */}
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <LogoutBtn className="h-10" />
@@ -174,7 +168,10 @@ export default function AppHeaderControl({
             <Menu className={cn(`size-5`, textColor)} />
           </Button>
         </SheetTrigger>
-        <SheetContent showCloseButton={true}>
+        <SheetContent
+          showCloseButton={true}
+          side={locale === "en" ? "left" : "right"}
+        >
           <SheetHeader>
             <SheetTitle
               className={cn(
@@ -182,7 +179,7 @@ export default function AppHeaderControl({
                 { "font-heading": locale === "en" },
               )}
             >
-              Blúme Petals
+              {t("Title")}
             </SheetTitle>
           </SheetHeader>
           <div className="flex flex-col gap-4 px-4">
