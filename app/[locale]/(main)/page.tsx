@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { http } from "@/lib/http";
 import { buildPageMetadata } from "@/lib/seo";
 import Hero from "@/components/landing/hero";
 import MotionProvider from "@/providers/motion-provider";
-import type { HomePageSections } from "@/types/home-page";
-import { getLocale, getTranslations } from "next-intl/server";
+import { getHomeSections } from "@/lib/common-requestes";
 import HowItWorks from "@/components/landing/how-it-works";
+import { getLocale, getTranslations } from "next-intl/server";
 import PerfectAddOns from "@/components/landing/perfect-add-ons";
 import ShopTheMoment from "@/components/landing/shop-the-moment";
 import BouquetBuilder from "@/components/landing/bouquet-builder";
@@ -35,26 +34,20 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const { data, ok } = await http.get<{ data: { sections: HomePageSections } }>(
-    "/api/v1/pages/home",
-  );
-
-  if (!ok) {
-    throw new Error("Failed to fetch home page content");
-  }
+  const homeSections = await getHomeSections();
 
   return (
     <MotionProvider>
       <main className="bg-[#f5f2ed]">
-        <Hero section={data.data.sections.hero} />
-        <ShopByCategory section={data.data.sections.categories} />
-        <HowItWorks section={data.data.sections.how_it_works} />
-        <BouquetBuilder section={data.data.sections.bouquet_builder} />
-        <ShopTheMoment section={data.data.sections.shop_the_moment} />
-        <FeaturedCollections section={data.data.sections.our_selection} />
+        <Hero section={homeSections.hero} />
+        <ShopByCategory section={homeSections.categories} />
+        <HowItWorks section={homeSections.how_it_works} />
+        <BouquetBuilder section={homeSections.bouquet_builder} />
+        <ShopTheMoment section={homeSections.shop_the_moment} />
+        <FeaturedCollections section={homeSections.our_selection} />
         <PerfectAddOns />
         <TodayExclusiveOffers />
-        <DesignedByOurCustomers section={data.data.sections.real_creations} />
+        <DesignedByOurCustomers section={homeSections.real_creations} />
         <SubscribeSection />
       </main>
     </MotionProvider>

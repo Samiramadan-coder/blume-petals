@@ -10,8 +10,8 @@ import { Suspense } from "react";
 import { http } from "@/lib/http";
 import { cookies } from "next/headers";
 import { Link } from "@/i18n/navigation";
-import { AppSettings } from "@/types/landing";
 import { getTranslations } from "next-intl/server";
+import { getSettings } from "@/lib/common-requestes";
 import ProductInfo from "@/components/shop/product-info";
 import ProductImages from "@/components/shop/product-images";
 import ProductAddOns from "@/components/shop/product-add-ons";
@@ -60,20 +60,18 @@ async function Product({
   const { addOnsPage, reviewPage } = searchParams;
   const t = await getTranslations("AppHeader");
 
-  // Fetch product details from the API
-  const { data: productData, ok: ok1 } = await http.get<{
-    data: {
-      product: ProductDetailsType;
-    };
-  }>(`/api/v1/products/${slug}`);
+  const [{ data: productData, ok: ok1 }, appSettings] = await Promise.all([
+    http.get<{
+      data: {
+        product: ProductDetailsType;
+      };
+    }>(`/api/v1/products/${slug}`),
 
-  // Fetch app settings from the API
-  const { data: appSettings, ok: ok2 } = await http.get<{
-    data: AppSettings;
-  }>(`/api/v1/settings`);
+    getSettings(),
+  ]);
 
-  if (!ok1 || !ok2) {
-    throw new Error("Failed to fetch product or app settings");
+  if (!ok1) {
+    throw new Error("Failed to fetch product details");
   }
 
   const product = productData.data.product;
@@ -106,7 +104,7 @@ async function Product({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <ProductImages productImages={images} />
         <ProductVariants productDetails={product} token={token} />
-        {appSettings.data.showAddition && (
+        {appSettings.showAddition && (
           <ProductAddOns currentAddOnsPage={addOnsPage} />
         )}
         <ProductInfo product={product} reviewCurrentPage={reviewPage} />

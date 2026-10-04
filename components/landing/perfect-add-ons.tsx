@@ -1,19 +1,14 @@
-import { Suspense } from "react";
-import * as motion from "motion/react-client";
-
 import { http } from "@/lib/http";
-import { alternateX, reveal, stagger } from "@/lib/motion";
-
-import type { Product } from "@/types/products";
-import type { AppSettings } from "@/types/landing";
-
+import { Suspense } from "react";
 import LandingTitle from "./landing-title";
-import LandingSubtitle from "./landing-subtitle";
 import AddOnCard from "../shop/add-on-card";
-
-import { Skeleton } from "@/components/ui/skeleton";
-
+import * as motion from "motion/react-client";
+import type { Product } from "@/types/products";
+import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getSettings } from "@/lib/common-requestes";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 
 async function PerfectAddOnsContent() {
   const [t, addOnsResponse, appSettingsResponse] = await Promise.all([
@@ -29,19 +24,16 @@ async function PerfectAddOnsContent() {
       },
     }),
 
-    http.get<{
-      data: AppSettings;
-    }>("/api/v1/settings"),
+    getSettings(),
   ]);
 
   const { data: addOns, ok: ok1 } = addOnsResponse;
-  const { data: appSettings, ok: ok2 } = appSettingsResponse;
 
-  if (!ok1 || !ok2) {
-    throw new Error("Failed to fetch add-ons or app settings");
+  if (!ok1) {
+    throw new Error("Failed to fetch add-ons");
   }
 
-  if (!appSettings.data.showAddition) {
+  if (!appSettingsResponse.showAddition) {
     return null;
   }
 

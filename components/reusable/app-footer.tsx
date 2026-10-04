@@ -5,40 +5,18 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import AppLogo from "./app-logo";
-import { http } from "@/lib/http";
 import { Separator } from "../ui/separator";
 import { LocaleSwitcher } from "./locale-switcher";
-import { unstable_rethrow } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { AppSettings, Category } from "@/types/landing";
 import SubscribeForm from "./app-footer/subscribe-form";
 import FooterNavLink from "./app-footer/footer-nav-link";
-
-// The footer renders in the (main) layout on every page, so a failed request
-// here (e.g. the API rate limiting the burst of requests a locale switch
-// causes) must not throw: it would take the whole page down with it. Render
-// the footer without that data instead.
-async function getFooterData<T>(path: string): Promise<T | null> {
-  try {
-    const { data } = await http.get<{ data: T }>(path);
-
-    return data.data;
-  } catch (error) {
-    // Let the 401 redirect from `http` through.
-    unstable_rethrow(error);
-    console.error(`Failed to fetch footer data from ${path}`, error);
-
-    return null;
-  }
-}
+import { getCategories, getSettings } from "@/lib/common-requestes";
 
 export default async function AppFooter() {
   const t = await getTranslations("AppFooter");
 
-  const categories = await getFooterData<{ items: Category[] }>(
-    "/api/v1/categories",
-  );
-  const settings = await getFooterData<AppSettings>("/api/v1/settings");
+  const categories = await getCategories();
+  const settings = await getSettings();
 
   return (
     <footer className="pt-16 bg-foreground">
@@ -106,7 +84,7 @@ export default async function AppFooter() {
               </h2>
               <nav aria-labelledby="footer-shop">
                 <ul className="space-y-2.5">
-                  {categories.items.slice(0, 5).map((item) => (
+                  {categories.slice(0, 5).map((item) => (
                     <li key={item.slug}>
                       <FooterNavLink href={`/shop?category=${item.slug}`}>
                         {item.name}

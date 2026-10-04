@@ -1,14 +1,11 @@
 import Image from "next/image";
-import * as motion from "motion/react-client";
-
+import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Link } from "@/i18n/navigation";
 import MainButton from "../ui/main-button";
-
-import { getLocale, getTranslations } from "next-intl/server";
-
-import { cn } from "@/lib/utils";
+import * as motion from "motion/react-client";
 import { HomePageSections } from "@/types/home-page";
+import { getLocale, getTranslations } from "next-intl/server";
 import { heroContainerVariants, heroItemVariants } from "@/lib/motion";
 
 export default async function Hero({

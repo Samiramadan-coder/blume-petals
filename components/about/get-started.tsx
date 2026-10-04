@@ -5,26 +5,19 @@ import {
   FaPhoneAlt,
 } from "react-icons/fa";
 import { Button } from "../ui/button";
+import { reveal } from "@/lib/motion";
 import AboutTitle from "./about-title";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 import AboutSubtitle from "./about-subtitle";
 import * as motion from "motion/react-client";
 import { getTranslations } from "next-intl/server";
-import { http } from "@/lib/http";
-import { AppSettings } from "@/types/landing";
-import { reveal } from "@/lib/motion";
+import { getSettings } from "@/lib/common-requestes";
 
 export default async function GetStarted() {
   const t = await getTranslations("AboutGetStarted");
 
-  const { data: settingsData, ok: ok2 } = await http.get<{
-    data: AppSettings;
-  }>(`/api/v1/settings`);
-
-  if (!ok2) {
-    throw new Error("Failed to fetch app settings");
-  }
+  const settingsData = await getSettings();
 
   return (
     <section className="overflow-hidden">
@@ -73,46 +66,46 @@ export default async function GetStarted() {
             </p>
 
             <Link
-              href={settingsData.data.connect.instagram_url}
+              href={settingsData.connect.instagram_url}
               className="group flex items-center gap-2"
             >
               <FaInstagram aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {settingsData.data.connect.instagram}
+                {settingsData.connect.instagram}
               </span>
             </Link>
 
             <Link
-              href={settingsData.data.connect.whatsapp_url}
+              href={settingsData.connect.whatsapp_url}
               className="group flex items-center gap-2"
             >
               <FaWhatsapp aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {settingsData.data.connect.whatsapp}
+                {settingsData.connect.whatsapp}
               </span>
             </Link>
 
             <Link
-              href={settingsData.data.connect.email_url}
+              href={settingsData.connect.email_url}
               className="group flex items-center gap-2"
             >
               <FaEnvelope aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {settingsData.data.connect.email}
+                {settingsData.connect.email}
               </span>
             </Link>
 
             <Link
-              href={settingsData.data.connect.phone_url}
+              href={settingsData.connect.phone_url}
               className="group flex items-center gap-2"
             >
               <FaPhoneAlt aria-hidden="true" className="text-primary" />
 
               <span className="text-sm text-foreground/55 transition-colors group-hover:text-foreground">
-                {settingsData.data.connect.phone}
+                {settingsData.connect.phone}
               </span>
             </Link>
           </motion.div>

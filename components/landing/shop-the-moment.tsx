@@ -1,35 +1,21 @@
 import Image from "next/image";
 import { Suspense } from "react";
-import * as motion from "motion/react-client";
-
 import { Card } from "../ui/card";
-import { Skeleton } from "../ui/skeleton";
-
 import { cn } from "@/lib/utils";
-import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
-import { revealContainerVariants, revealItemVariants } from "@/lib/motion";
-
-import type { Occasion } from "@/types/landing";
-
+import { Skeleton } from "../ui/skeleton";
 import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
 import LandingSubtitle from "./landing-subtitle";
-
 import { getTranslations } from "next-intl/server";
 import { HomePageSections } from "@/types/home-page";
+import { getOccasions } from "@/lib/common-requestes";
+import { revealContainerVariants, revealItemVariants } from "@/lib/motion";
 
 const GRID_CLASS = "grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3";
 
 async function Occasions() {
-  const { data, ok } = await http.get<{
-    data: {
-      items: Occasion[];
-    };
-  }>("/api/v1/occasions");
-
-  if (!ok) {
-    throw new Error("Failed to fetch occasions");
-  }
+  const occasions = await getOccasions();
 
   return (
     <motion.ul
@@ -39,7 +25,7 @@ async function Occasions() {
       viewport={{ once: true, amount: 0.1 }}
       className={GRID_CLASS}
     >
-      {data.data.items.map((item, index) => {
+      {occasions.map((item, index) => {
         const direction = index % 3 === 0 ? -10 : index % 3 === 2 ? 10 : 0;
 
         return (

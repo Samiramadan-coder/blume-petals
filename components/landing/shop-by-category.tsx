@@ -1,36 +1,22 @@
 import Image from "next/image";
 import { Suspense } from "react";
-
-import { http } from "@/lib/http";
 import { Link } from "@/i18n/navigation";
 import LandingTitle from "./landing-title";
-import LandingSubtitle from "./landing-subtitle";
-import { alternateX, reveal, stagger } from "@/lib/motion";
-
 import * as motion from "motion/react-client";
-
-import type { Category } from "@/types/landing";
-
+import LandingSubtitle from "./landing-subtitle";
 import { getTranslations } from "next-intl/server";
-
-import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HomePageSections } from "@/types/home-page";
+import { getCategories } from "@/lib/common-requestes";
+import { Card, CardContent } from "@/components/ui/card";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 
 async function Categories() {
-  const { data, ok } = await http.get<{
-    data: {
-      items: Category[];
-    };
-  }>("/api/v1/categories");
-
-  if (!ok) {
-    throw new Error("Failed to fetch categories");
-  }
+  const data = await getCategories();
 
   return (
     <>
-      {data.data.items.slice(0, 5).map((item, index) => (
+      {data.slice(0, 5).map((item, index) => (
         <motion.li
           key={item.id}
           {...reveal({

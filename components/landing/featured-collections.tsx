@@ -1,25 +1,18 @@
 import { Suspense } from "react";
-import * as motion from "motion/react-client";
-
-import LandingTitle from "./landing-title";
-import LandingSubtitle from "./landing-subtitle";
-
-import { getTranslations } from "next-intl/server";
-
 import { http } from "@/lib/http";
-import { alternateX, reveal, stagger } from "@/lib/motion";
-
-import type { Product } from "@/types/products";
-
 import CardItem from "../shop/card-item";
+import LandingTitle from "./landing-title";
+import * as motion from "motion/react-client";
+import type { Product } from "@/types/products";
+import LandingSubtitle from "./landing-subtitle";
+import { getTranslations } from "next-intl/server";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HomePageSections } from "@/types/home-page";
+import { alternateX, reveal, stagger } from "@/lib/motion";
 
 async function FeaturedProducts() {
   const { data, ok } = await http.get<{
-    data: {
-      items: Product[];
-    };
+    data: { items: Product[] };
   }>("/api/v1/products?sort=rating&made_to_order=0");
 
   if (!ok) {

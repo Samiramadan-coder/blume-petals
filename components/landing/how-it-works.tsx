@@ -9,13 +9,6 @@ import { alternateX, reveal, stagger } from "@/lib/motion";
 import type { HomePageSections } from "@/types/home-page";
 import { getLocale, getTranslations } from "next-intl/server";
 
-const images = [
-  "/images/home/how-it-works/1.webp",
-  "/images/home/how-it-works/2.webp",
-  "/images/home/how-it-works/3.webp",
-  "/images/home/how-it-works/4.webp",
-];
-
 export default async function HowItWorks({
   section,
 }: {
@@ -51,7 +44,7 @@ export default async function HowItWorks({
                   <CardContent className="p-0">
                     <div className="relative overflow-hidden rounded-[24px]">
                       <Image
-                        src={step.image ?? images[index]}
+                        src={step.image ?? ""}
                         alt=""
                         width={500}
                         height={500}
