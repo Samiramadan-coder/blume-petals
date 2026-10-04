@@ -8,7 +8,7 @@ export const getCategories = cache(async () => {
   const { data, ok } = await http.get<{
     data: { items: Category[] };
   }>("/api/v1/categories", {
-    next: { revalidate: 60 },
+    next: { revalidate: 0 },
   });
 
   if (!ok) {
@@ -38,7 +38,7 @@ export const getOccasions = cache(async () => {
   const { data, ok } = await http.get<{
     data: { items: Occasion[] };
   }>("/api/v1/occasions", {
-    next: { revalidate: 60 },
+    next: { revalidate: 0 },
   });
 
   if (!ok) {
