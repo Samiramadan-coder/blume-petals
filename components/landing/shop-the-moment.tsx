@@ -15,7 +15,10 @@ import { revealContainerVariants, revealItemVariants } from "@/lib/motion";
 const GRID_CLASS = "grid grid-cols-1 gap-4 md:auto-rows-[220px] md:grid-cols-3";
 
 async function Occasions() {
+  const t = await getTranslations("LandingShopTheMoment");
   const occasions = await getOccasions();
+
+  console.log(occasions);
 
   return (
     <motion.ul
@@ -40,29 +43,49 @@ async function Occasions() {
               index === 0 || index === 3 ? "md:row-span-2" : "",
             )}
           >
-            <Card className="group relative h-full min-h-55 overflow-hidden rounded-4xl p-0">
+            <Card className="group relative h-full min-h-55 overflow-hidden rounded-[28px] border-0 p-0">
               <Image
                 src={item.banner_url}
-                alt=""
+                alt={item.name}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(min-width: 768px) 33vw, 100vw"
               />
 
               <Link
                 href={`/shop?occasion=${item.slug}`}
-                // Each prefetch renders /shop on the server; one per card is a
-                // burst of requests that the host blocks with a 403.
                 prefetch={false}
-                className="absolute inset-0 flex cursor-pointer items-end bg-black/10 text-white transition-colors duration-300 hover:bg-black/20"
+                className="absolute inset-0 flex cursor-pointer flex-col justify-end"
               >
-                <h3 className="w-full bg-[linear-gradient(to_top,rgba(20,12,0,15)_0%,transparent_100%)] px-5 pb-4 pt-12 text-base font-semibold text-white">
-                  {item.name}
-                  <span
-                    className="block text-sm font-normal leading-relaxed mt-2"
-                    dangerouslySetInnerHTML={{ __html: item.description }}
-                  ></span>
-                </h3>
+                {/* overlay */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/20 to-transparent" />
+
+                <div className="relative z-10 flex h-full flex-col justify-end p-6">
+                  {/* Top content */}
+                  <div className="mb-2 pt-3">
+                    <span className="text-xs font-medium uppercase tracking-[0.18em] text-white/70">
+                      {t("occaasion")}
+                    </span>
+
+                    <h3 className="mt-2 text-2xl font-semibold leading-tight text-white">
+                      {item.name}
+                    </h3>
+                  </div>
+
+                  {/* Bottom */}
+                  <div className="flex items-end justify-between gap-4">
+                    <span className="rounded-full bg-black/25 px-4 py-2 text-sm text-white backdrop-blur-sm">
+                      {item.products_count ?? 0} {t("designs")}
+                    </span>
+
+                    <span className="flex items-center gap-2 rounded-full border border-white/40 bg-black/20 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition-all duration-300 group-hover:bg-white group-hover:text-black">
+                      {t("shopNow")}
+                      <span className="transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180">
+                        →
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </Link>
             </Card>
           </motion.li>

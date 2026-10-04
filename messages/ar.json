@@ -233,16 +233,9 @@
     "ImageAlt": "زهور وشريط وبطاقة مرتبة لتصميم باقة مخصصة"
   },
   "LandingShopTheMoment": {
-    "Eyebrow": "تسوق حسب المناسبة",
-    "Title": "اختر باقتك للمناسبة",
-    "Occasions": {
-      "Valentine": "عيد الحب",
-      "Birthday": "عيد ميلاد",
-      "Wedding": "زفاف",
-      "Eid": "العيد",
-      "Anniversary": "ذكرى سنوية",
-      "MothersDay": "عيد الأم"
-    }
+    "occaasion": "المناسبة",
+    "shopNow": "تسوق الآن",
+    "designs": "تصاميم"
   },
   "LandingFeaturedCollections": {
     "Eyebrow": "تشكيلتنا المختارة",

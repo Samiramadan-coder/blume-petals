@@ -233,16 +233,9 @@
     "ImageAlt": "Flowers, a ribbon and a card laid out for building a custom bouquet"
   },
   "LandingShopTheMoment": {
-    "Eyebrow": "Shop the moment",
-    "Title": "Shop by Occasion",
-    "Occasions": {
-      "Valentine": "Valentine's Day",
-      "Birthday": "Birthday",
-      "Wedding": "Wedding",
-      "Eid": "Eid",
-      "Anniversary": "Anniversary",
-      "MothersDay": "Mother's Day"
-    }
+    "occaasion": "Occasion",
+    "shopNow": "Shop Now",
+    "designs": "Designs"
   },
   "LandingFeaturedCollections": {
     "Eyebrow": "Our Selection",

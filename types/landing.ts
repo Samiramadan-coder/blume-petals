@@ -26,6 +26,7 @@ export type Occasion = {
   starts_at: string | null;
   type: string;
   description: string;
+  products_count: number;
 };
 
 export type AppSettings = {
