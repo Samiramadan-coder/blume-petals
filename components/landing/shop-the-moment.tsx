@@ -18,8 +18,6 @@ async function Occasions() {
   const t = await getTranslations("LandingShopTheMoment");
   const occasions = await getOccasions();
 
-  console.log(occasions);
-
   return (
     <motion.ul
       variants={revealContainerVariants}

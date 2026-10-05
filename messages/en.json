@@ -721,6 +721,12 @@
     "SendMessage": "Send Message",
     "SendedSuccessfully": "Your message has been sent successfully. We will get back to you shortly.",
     "SendError": "Failed to send your message. Please try again.",
+    "SocialMedia": "Social Media",
+    "SocialMediaDescription": "Stay connected with us through our social channels.",
+    "WhatsApp": "WhatsApp",
+    "Instagram": "Instagram",
+    "Email": "Email",
+    "Phone": "Phone",
     "Fields": {
       "Email": {
         "Label": "Email",
