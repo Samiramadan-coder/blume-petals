@@ -98,18 +98,18 @@ export default function NotificationItem({
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-3">
           <Title
-            className={cn("min-w-0 font-semibold text-foreground wrap-anywhere", {
-              "text-sm": isPopup,
-              "text-base": !isPopup,
-            })}
+            className={cn(
+              "min-w-0 font-semibold text-foreground wrap-anywhere",
+              {
+                "text-sm": isPopup,
+                "text-base": !isPopup,
+              },
+            )}
           >
-            {isOrder && notification.link ? (
+            {notification.link ? (
               // The link stretches over the whole item (::after), so the item
               // is clickable without nesting the action buttons inside an <a>.
-              <Link
-                href={notification.link}
-                className="outline-none after:absolute after:inset-0 focus-visible:after:ring-3 focus-visible:after:ring-ring/50 focus-visible:after:ring-inset"
-              >
+              <Link href={notification.link} target="_blank">
                 {notification.title}
               </Link>
             ) : (

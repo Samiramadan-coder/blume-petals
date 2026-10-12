@@ -156,10 +156,7 @@ async function ListOfProducts({
           "flex items-center justify-between gap-6 border-b border-border pb-6",
         )}
       >
-        <p
-          role="status"
-          className="text-sm font-semibold text-foreground/70"
-        >
+        <p role="status" className="text-sm font-semibold text-foreground/70">
           {products?.pagination.total ?? 0} {t("Products")}
         </p>
 
